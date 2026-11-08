@@ -94,10 +94,11 @@ class ReviewScreen extends ConsumerWidget {
       })),
       body: Column(children: [
         TabStrip([
-          for (var j = 0; j < capseq.length; j++)
+          // while this page is unfinished the pages after it are shut
+          for (var j = 0, open = openTo([for (final kk in capseq) pageBlock(st, kk).isEmpty], i); j < capseq.length; j++)
             () {
               final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
-              return stripTab(stTitle(kk), j == i, () => store.mut(id, (s) => s['sp'] = j),
+              return stripTab(stTitle(kk), j == i, j <= open ? () => store.mut(id, (s) => s['sp'] = j) : null,
                   end: !done ? null : b.isNotEmpty ? const CircleAvatar(radius: 3, backgroundColor: amber) : fi.probs > 0 ? Text('${fi.probs}', style: const TextStyle(color: red, fontWeight: FontWeight.w700)) : null);
             }(),
         ]),

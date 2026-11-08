@@ -346,13 +346,20 @@ String dtab(J d) {
 List<(J, int)> zoneDamages(J st, String z) => [for (var i = 0; i < manual(st).length; i++) if (dtab(manual(st)[i]) == z) (manual(st)[i], i)];
 List<int> labelOrder(J st) => [for (final z in dz) ...zoneDamages(st, z).map((e) => e.$2)];
 List<int> unlabelledOrder(J st) => labelOrder(st).where((i) => !dmgDone(manual(st)[i], fuelOf(st))).toList();
+// the next photo to label: this tab's first, then the first one still to label (a tab opens only when the ones before it are done)
 int nextUnlabelled(J st, int from) {
-  final o = labelOrder(st), p = o.indexOf(from);
+  final o = labelOrder(st), p = o.indexOf(from), z = from >= 0 && from < manual(st).length ? dtab(manual(st)[from]) : null;
   for (var j = 1; j <= o.length; j++) {
     final i = o[(p + j + o.length) % o.length];
-    if (!dmgDone(manual(st)[i], fuelOf(st))) return i;
+    if (!dmgDone(manual(st)[i], fuelOf(st)) && dtab(manual(st)[i]) == z) return i;
   }
-  return -1;
+  return unlabelledOrder(st).firstOrNull ?? -1;
+}
+
+// how far a strip opens: up to the first unfinished tab, and never short of the current one
+int openTo(List<bool> done, int cur) {
+  final f = done.indexOf(false);
+  return f < 0 ? done.length - 1 : (f > cur ? f : cur);
 }
 
 String dmgLine(J d) => '${d['panel']}: ${dshort(d['panel'], d['type'])}${(d['ex'] ?? '') != '' && d['ex'] != d['panel'] ? ' (${(d['ex'] as String).toLowerCase()})' : ''}, ${d['sev']}${(d['size'] ?? '') != '' ? ', ${d['size']} in' : ''}';

@@ -278,8 +278,12 @@ class DamageEditor extends ConsumerWidget {
               _sq(LucideIcons.trash2, () {
                 final file = d['f'] as String?;
                 store.mut(id, (s) {
+                  final z = dtab(dmgById(s, did)!);
                   manual(s).removeWhere((x) => x['id'] == did);
                   syncDamages(s);
+                  // stay on this tab: a photo still to label there, else its first; with none left, the first photo still to label
+                  final same = zoneDamages(s, z), todo = same.where((e) => !dmgDone(e.$1, fuelOf(s)));
+                  s['li'] = (todo.firstOrNull ?? same.firstOrNull)?.$2 ?? unlabelledOrder(s).firstOrNull ?? 0;
                 });
                 dropFile(file);
               }, color: red),
@@ -363,6 +367,10 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     if (!o.contains(li)) li = unlabelledOrder(st).firstOrNull ?? o.first;
     final d = manual(st)[li], z = dtab(d), pos = o.indexOf(li);
     final left = unlabelledOrder(st).length, ok = dmgDone(d, fuel), guess = labelled(d, fuel) && d['ai'] == true;
+    // while this tab has photos to label the tabs after it are shut, and the pages stop at its last photo
+    final zs = [for (final zz in dz) if (zoneDamages(st, zz).isNotEmpty) zz];
+    final open = openTo([for (final zz in zs) zoneDamages(st, zz).every((e) => dmgDone(e.$1, fuel))], zs.indexOf(z));
+    final count = [for (var k = 0; k <= open; k++) zoneDamages(st, zs[k]).length].fold(0, (a, b) => a + b);
     pc ??= PageController(initialPage: pos);
     WidgetsBinding.instance.addPostFrameCallback((_) => _follow(pos));
     Widget arrow(IconData ic, int? to) => to == null
@@ -372,12 +380,11 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
       appBar: PhaseHeader('Damages', 1, onBack: () => store.mut(widget.id, (s) => s['phase'] = 'capture')),
       body: Column(children: [
         TabStrip([
-          for (final zz in dz)
-            if (zoneDamages(st, zz).isNotEmpty)
-              () {
-                final l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length;
-                return stripTab('${stTitle(zz)} $done/${l.length}', zz == z, () => _go(l.first.$2), color: done == l.length ? bid : null);
-              }(),
+          for (var k = 0; k < zs.length; k++)
+            () {
+              final zz = zs[k], l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length;
+              return stripTab('${stTitle(zz)} $done/${l.length}', zz == z, k <= open ? () => _go(l.first.$2) : null, color: done == l.length ? bid : null);
+            }(),
         ]),
         const Divider(height: 1),
         Expanded(
@@ -395,7 +402,7 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
             },
             child: PageView.builder(
             controller: pc,
-            itemCount: o.length,
+            itemCount: count,
             onPageChanged: (p) {
               final oo = labelOrder(store.ins[widget.id]!);
               if ((!sliding || dragging) && p < oo.length) _go(oo[p]);
@@ -403,7 +410,7 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
             itemBuilder: (c, p) {
               final dd = manual(st)[o[p]], zz = dtab(dd), zzl = zoneDamages(st, zz), nn = zzl.indexWhere((e) => e.$2 == o[p]) + 1;
               return ListView(key: ValueKey(dd['id']), padding: const EdgeInsets.all(16), children: [
-                DamageEditor(widget.id, dd['id'], title: '${stTitle(zz)} · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < o.length - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
+                DamageEditor(widget.id, dd['id'], title: '${stTitle(zz)} · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < count - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
                 if (p > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[p - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
               ]);
             },

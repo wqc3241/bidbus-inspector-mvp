@@ -51,7 +51,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 
 ## Damages
 
-- Every damage photo, one per screen, section by section (Exterior, Tires & Wheels, Paint, Interior, Mechanicals, Underbody). Underbody holds the damages at underbody places, and unplaced ones taken or added there; placing one at an engine bay place moves it to Mechanicals, and the other way round.
+- Every damage photo, one per screen, section by section (Exterior, Tires & Wheels, Paint, Interior, Mechanicals, Underbody). A strip of the sections with damage photos at the top: a section opens only when every section before it is labelled (shut ones show light and take no tap), and the pages stop at the last photo of the open sections. After a label the next photo to label on the same section comes first, then the first one still to label; deleting a photo stays on its section. Underbody holds the damages at underbody places, and unplaced ones taken or added there; placing one at an engine bay place moves it to Mechanicals, and the other way round.
 - AI first guess of place, type and severity from that section's list; confirm or change.
 - Place on a picture: Exterior is a top view of the car (each part named; side windows and rear glass are their own places) plus tiles for other lights, wipers, fuel door, other. Paint: top view of the 11 panels. Tires & Wheels: the four wheels, each with Tire and Wheel. Interior: Cabin (seat plan, headliner, carpet, sunroof, other) and Features tabs. Mechanicals: Engine bay (Frunk on an EV) and Underbody tabs.
 - Places and their types come from `damage_places` in the question list.
@@ -63,7 +63,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 - One page per section: Start, Exterior, Tires & Wheels, Paint, Interior, OBDII, Mechanicals, Underbody, with Next. Underbody has the underbody photos, damages and the Structure and frame, Rust and Battery pack (EV) checks.
 - One row per check, OK by default; tap opens a drawer with OK and its problems (one per check), plus panel, wheel or codes when needed. Problems show amber or red by level.
 - Photos, then damages, then mods, as tiles. Tap a photo to retake; tap a damage to relabel, retake or remove; Add a damage takes a photo or an upload, then the label form.
-- Section strip pinned at the top, the same look as the Damages strip (no numbers, no tick, no underline; the current section's whole cell grey): problem count, or needs something; tap to jump.
+- Section strip pinned at the top, the same look as the Damages strip (no numbers, no tick, no underline; the current section's whole cell grey): problem count, or needs something; tap to jump. While the page is unfinished the tabs after it are shut (light, no tap): a tab opens only when every page before it is complete, and tabs up to the current one stay open.
 - Exterior: the 360 view tile after Walk-around; tap opens it in a bottom sheet.
 - Paint: a top view of the car with each panel and its mils (High in red); tap a panel to correct it or mark N/A; then panel photos, paint damage tiles, the Paint and panels row. A High reading ticks Panel repainted with that panel.
 - Tires & Wheels: four wheel cards (LF, LR, RR, RF; a card has the red frame until that wheel's tread depth is in), each with photos, damages and values in scroll pickers; the Match or Mismatch question.

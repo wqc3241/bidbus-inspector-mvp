@@ -412,7 +412,8 @@ class TabStrip extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(height: 48, child: ListView(scrollDirection: Axis.horizontal, children: tabs));
 }
 
-Widget stripTab(String label, bool on, VoidCallback tap, {Color? color, Widget? end}) {
+// a tab with no tap is shut: it shows light and does nothing
+Widget stripTab(String label, bool on, VoidCallback? tap, {Color? color, Widget? end}) {
   final t = Material(
     color: on ? line : Colors.transparent,
     child: InkWell(
@@ -420,7 +421,7 @@ Widget stripTab(String label, bool on, VoidCallback tap, {Color? color, Widget? 
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
-          Text(label, style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: color ?? (on ? Colors.black : muted))),
+          Text(label, style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: tap == null && !on ? const Color(0xFFC6CACF) : color ?? (on ? Colors.black : muted))),
           if (end != null) Padding(padding: const EdgeInsets.only(left: 4), child: end),
         ]),
       ),
