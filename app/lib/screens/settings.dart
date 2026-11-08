@@ -1,0 +1,72 @@
+// Server URL, app passcode, inspector name, default report email; shows the health check.
+import 'package:flutter/material.dart';
+
+import '../services/api.dart';
+import '../services/store.dart';
+import '../widgets/ui.dart';
+
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  final url = TextEditingController(text: store.server), pass = TextEditingController(text: store.passcode);
+  final name = TextEditingController(text: store.inspector), email = TextEditingController(text: store.defaultEmail);
+  String? health;
+  bool? ok;
+
+  @override
+  void initState() {
+    super.initState();
+    _check();
+  }
+
+  Future<void> _check() async {
+    setState(() => health = 'Checking');
+    try {
+      final r = await Api(url.text.trim(), pass.text.trim()).health();
+      setState(() {
+        ok = r['ok'] == true && r['passcode_ok'] == true;
+        health = r['ok'] != true ? 'Server error' : r['passcode_ok'] == true ? 'OK' : 'Wrong passcode';
+      });
+    } catch (_) {
+      setState(() {
+        ok = false;
+        health = 'Server not reached';
+      });
+    }
+  }
+
+  Future<void> _save() async {
+    await store.saveSettings(server: url.text, passcode: pass.text, inspector: name.text, email: email.text);
+    await _check();
+  }
+
+  Widget _f(String l, TextEditingController c, {bool obscure = false, TextInputType? kb}) => Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(l, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 8),
+          TextField(controller: c, obscureText: obscure, keyboardType: kb, autocorrect: false),
+        ]),
+      );
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: const TitleBar('Settings'),
+        body: ListView(padding: const EdgeInsets.all(16), children: [
+          _f('Server URL', url, kb: TextInputType.url),
+          _f('App passcode', pass, obscure: true),
+          _f('Inspector name', name),
+          _f('Default report email', email, kb: TextInputType.emailAddress),
+          Row(children: [
+            Icon(ok == true ? Icons.check_circle : Icons.error_outline, color: ok == true ? bid : ok == false ? red : muted, size: 20),
+            const SizedBox(width: 8),
+            Text('Server: ${health ?? ''}', style: TextStyle(fontWeight: FontWeight.w600, color: ok == true ? bid : ok == false ? red : muted)),
+          ]),
+        ]),
+        bottomNavigationBar: BottomBar(PBtn('Save', _save)),
+      );
+}
