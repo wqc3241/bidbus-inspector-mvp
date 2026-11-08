@@ -46,9 +46,13 @@ class PhaseHeader extends StatelessWidget implements PreferredSizeWidget {
               child: Row(children: [
                 for (var i = 0; i < phases.length; i++)
                   Expanded(
-                      child: Text(phases[i],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: i == phase ? Colors.white : i < phase ? const Color(0xFF86EFAC) : const Color(0xFF9CA3AF)))),
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(phases[i],
+                                  maxLines: 1,
+                                  style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: i == phase ? Colors.white : i < phase ? const Color(0xFF86EFAC) : const Color(0xFF9CA3AF)))))),
               ]),
             ),
           ]),
@@ -214,7 +218,7 @@ class ShotTile extends StatelessWidget {
             ]),
           ),
           const SizedBox(height: 4),
-          Text(label, maxLines: 2, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11)),
+          FitLabel(label, const TextStyle(fontSize: 11)),
           if (sub != null) Text(sub!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: muted)),
         ]),
       ),
@@ -233,7 +237,8 @@ class Opt {
   const Opt(this.value, {String? label, this.color, this.tag, this.locked = false}) : label = label ?? value;
 }
 
-Future<String?> showChoice(BuildContext context, String title, List<Opt> opts, List<String?> sel, {String? sub, Widget? body, List<Widget> actions = const []}) =>
+// radio: false for a list of actions (Take photo, Upload), which have no selected state
+Future<String?> showChoice(BuildContext context, String title, List<Opt> opts, List<String?> sel, {String? sub, Widget? body, List<Widget> actions = const [], bool radio = true}) =>
     showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
@@ -265,7 +270,7 @@ Future<String?> showChoice(BuildContext context, String title, List<Opt> opts, L
                             if (o.locked) const Padding(padding: EdgeInsets.only(right: 6), child: Icon(LucideIcons.camera, size: 15, color: muted)),
                             Expanded(child: Text(o.label, style: TextStyle(fontSize: 15, color: o.locked ? muted : (o.color ?? Colors.black), fontWeight: FontWeight.w500))),
                             if (o.tag != null) Padding(padding: const EdgeInsets.only(right: 8), child: Text(o.tag!, style: TextStyle(fontSize: 12, color: o.color ?? muted, fontWeight: FontWeight.w700))),
-                            Icon(sel.contains(o.value) ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: sel.contains(o.value) ? bid : const Color(0xFFB0B5BA), size: 22),
+                            if (radio) Icon(sel.contains(o.value) ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: sel.contains(o.value) ? bid : const Color(0xFFB0B5BA), size: 22),
                           ]),
                         ),
                       ),
@@ -370,4 +375,42 @@ class NoSignal extends StatelessWidget {
               Text('No signal', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
             ])),
       );
+}
+
+// a centred label that wraps between words only: the font shrinks until its longest word fits the width
+class FitLabel extends StatelessWidget {
+  final String text;
+  final TextStyle style;
+  final int lines;
+  const FitLabel(this.text, this.style, {super.key, this.lines = 2});
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(builder: (c, b) {
+        final sc = MediaQuery.textScalerOf(c), s = DefaultTextStyle.of(c).style.merge(style);
+        var widest = 0.0;
+        for (final w in text.split(' ')) {
+          final tp = TextPainter(text: TextSpan(text: w, style: s), textDirection: TextDirection.ltr, textScaler: sc)..layout();
+          if (tp.width > widest) widest = tp.width;
+        }
+        final k = b.maxWidth.isFinite && widest > b.maxWidth ? b.maxWidth / widest * .95 : 1.0;
+        return Text(text, textAlign: TextAlign.center, maxLines: lines, overflow: TextOverflow.ellipsis, style: s.copyWith(fontSize: s.fontSize! * k, letterSpacing: (s.letterSpacing ?? 0) * k));
+      });
+}
+
+// scrolls its child into view when it first shows: the current tab of a strip
+class ShowMe extends StatefulWidget {
+  final Widget child;
+  const ShowMe(this.child, {super.key});
+  @override
+  State<ShowMe> createState() => _ShowMeState();
+}
+
+class _ShowMeState extends State<ShowMe> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => mounted ? Scrollable.ensureVisible(context, alignment: .5, duration: const Duration(milliseconds: 250)) : null);
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

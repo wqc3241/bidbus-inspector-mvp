@@ -68,7 +68,7 @@ Widget _pillBtn(String label, bool on, VoidCallback? tap, {double w = 74}) => Ge
         margin: const EdgeInsets.symmetric(vertical: 3),
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
         decoration: BoxDecoration(color: on ? Colors.black : Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: on ? Colors.black : const Color(0xFFD5D8DB))),
-        child: Text(label, textAlign: TextAlign.center, maxLines: 2, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: tap == null ? const Color(0xFFB0B5BA) : on ? Colors.white : Colors.black)),
+        child: FitLabel(label, TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: tap == null ? const Color(0xFFB0B5BA) : on ? Colors.white : Colors.black)),
       ),
     );
 
@@ -130,7 +130,8 @@ class WhereView extends StatefulWidget {
   final J d;
   final String fuel;
   final ValueChanged<String> onPick;
-  const WhereView(this.d, this.fuel, this.onPick, {super.key});
+  final String? shot; // the shot the damage was taken at
+  const WhereView(this.d, this.fuel, this.onPick, {super.key, this.shot});
   @override
   State<WhereView> createState() => _WhereViewState();
 }
@@ -140,7 +141,8 @@ class _WhereViewState extends State<WhereView> {
   @override
   Widget build(BuildContext context) {
     final d = widget.d, z = d['zone'] ?? 'Exterior', gs = whereGroups(z, widget.fuel), have = placesFor(z, widget.fuel).map((q) => q['p'] as String).toSet();
-    final t = (tab ?? groupOf(gs, d['panel'])).clamp(0, gs.length - 1), g = gs[t], sel = d['panel'] as String?;
+    final under = (d['panel'] ?? '') == '' && (widget.shot ?? '').startsWith('ph_under') ? gs.indexWhere((g) => g.$1 == 'Underbody') : -1;
+    final t = (tab ?? (under >= 0 ? under : groupOf(gs, d['panel']))).clamp(0, gs.length - 1), g = gs[t], sel = d['panel'] as String?;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       if (gs.length > 1)
         Padding(
@@ -200,7 +202,7 @@ class _WhereViewState extends State<WhereView> {
                   child: Column(children: [
                     Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: sel == p ? Colors.white : Colors.black87),
                     const SizedBox(height: 4),
-                    Text(_wlbl[p] ?? p, textAlign: TextAlign.center, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: sel == p ? Colors.white : Colors.black)),
+                    FitLabel(_wlbl[p] ?? p, TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: sel == p ? Colors.white : Colors.black), lines: 3),
                   ]),
                 ),
               ),
@@ -333,7 +335,7 @@ class DamageEditor extends ConsumerWidget {
       ),
       const SizedBox(height: 20),
       const Sub3('Where', LucideIcons.mapPin),
-      WhereView(d, fuel, (p) {
+      WhereView(d, fuel, shot: d['sec'] is String && d['at'] is int ? (capList(d['sec'], st).elementAtOrNull(d['at']) ?? {})['id'] : null, (p) {
         store.mut(id, (s) {
           setLabel(dmgById(s, did)!, 'panel', p, fuel);
           syncDamages(s);
@@ -398,11 +400,12 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
               if (zoneDamages(st, zz).isNotEmpty)
                 () {
                   final l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length, on = zz == z;
-                  return TextButton.icon(
+                  final b = TextButton.icon(
                     onPressed: () => _go(l.first.$2),
                     icon: done == l.length ? const Icon(LucideIcons.check, size: 14) : const SizedBox(),
                     label: Text('$zz $done/${l.length}', style: TextStyle(fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: done == l.length ? bid : Colors.black, decoration: on ? TextDecoration.underline : null)),
                   );
+                  return on ? ShowMe(b) : b;
                 }(),
           ]),
         ),
@@ -414,7 +417,7 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
               if (v < -200 && pos < o.length - 1) _go(o[pos + 1]);
               if (v > 200 && pos > 0) _go(o[pos - 1]);
             },
-            child: ListView(padding: const EdgeInsets.all(16), children: [
+            child: ListView(key: ValueKey(d['id']), padding: const EdgeInsets.all(16), children: [
               DamageEditor(widget.id, d['id'], title: '$z · $n of ${zl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, pos < o.length - 1 ? o[pos + 1] : null)])), key: ValueKey(d['id'])),
               if (pos > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[pos - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
             ]),
@@ -465,7 +468,7 @@ class DamageFormPage extends ConsumerWidget {
 
 // Add a damage: a photo from the camera or the library, then the label form
 Future<void> addDamage(BuildContext context, String id, String zone, {String? wheel, bool replace = false}) async {
-  final src = await showChoice(context, 'Add a damage', const [Opt('camera', label: 'Take photo'), Opt('library', label: 'Upload')], const []);
+  final src = await showChoice(context, 'Add a damage', const [Opt('camera', label: 'Take photo'), Opt('library', label: 'Upload')], const [], radio: false);
   if (src == null || !context.mounted) return;
   String? did;
   if (src == 'camera') {

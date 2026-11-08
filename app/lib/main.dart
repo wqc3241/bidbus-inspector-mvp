@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'camera/camera_screen.dart';
 import 'data/ql.dart';
+import 'data/vehicles.dart';
 import 'screens/home.dart';
 import 'screens/inspection.dart';
 import 'screens/new_inspection.dart';
@@ -16,6 +17,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await loadQl();
+  await loadVehicles();
   await store.init();
   runApp(const ProviderScope(child: App()));
 }

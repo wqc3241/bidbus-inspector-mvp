@@ -99,8 +99,8 @@ class SentScreen extends ConsumerWidget {
             Text('Report sent to ${st['report_email']}', textAlign: TextAlign.center, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
             Text('${carLine(st)} · signed by ${st['signName']}', textAlign: TextAlign.center, style: const TextStyle(color: muted)),
             const SizedBox(height: 16),
-            OutlinedButton.icon(onPressed: () => launchUrl(Uri.parse(up['seller_url']), mode: LaunchMode.externalApplication), icon: const Icon(LucideIcons.fileText, size: 18), label: const Text('Open seller report')),
-            OutlinedButton.icon(onPressed: () => launchUrl(Uri.parse(up['dealer_url']), mode: LaunchMode.externalApplication), icon: const Icon(LucideIcons.fileText, size: 18), label: const Text('Open dealer report')),
+            OutlinedButton.icon(onPressed: () => openReport(context, up['seller_url']), icon: const Icon(LucideIcons.fileText, size: 18), label: const Text('Open seller report')),
+            OutlinedButton.icon(onPressed: () => openReport(context, up['dealer_url']), icon: const Icon(LucideIcons.fileText, size: 18), label: const Text('Open dealer report')),
             TextButton.icon(
                 onPressed: () async {
                   try {
@@ -135,4 +135,14 @@ class SentScreen extends ConsumerWidget {
       bottomNavigationBar: BottomBar(PBtn('Back to inspections', () => context.go('/'), icon: LucideIcons.list)),
     );
   }
+}
+
+// a report link: in the browser, else in a browser view inside the app, else a message
+Future<void> openReport(BuildContext context, String? url) async {
+  final u = Uri.tryParse(url ?? '');
+  if (u == null || !u.hasScheme) return;
+  for (final mode in [LaunchMode.externalApplication, LaunchMode.inAppBrowserView]) {
+    if (await launchUrl(u, mode: mode).catchError((_) => false)) return;
+  }
+  if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not open the report')));
 }

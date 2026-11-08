@@ -102,3 +102,20 @@ def test_upload_refuses_other_file_types(client):
     client.put("/api/inspections/u1", headers=PASS, json={"report_email": "a@b.co", "car": {}, "record": {"photos": []}})
     assert client.put("/api/inspections/u1/files/x.html", headers=PASS, content=b"<script>").status_code == 400
     assert client.put("/api/inspections/u1/files/video_360.m3u8", headers=PASS, content=b"#EXTM3U").status_code == 400
+
+
+def test_date_is_the_day_on_the_phone(client):
+    # started 8:48 PM on Nov 7 on the phone, which is already Nov 8 in UTC on the server
+    from datetime import datetime, timezone
+
+    from app.email import date, inspected_on
+    rec = sample("bmw-x3")
+    rec["source"]["started"]["at"] = "2026-11-07T20:48:12.345678"
+    token = secrets.token_urlsafe(24)
+    with SessionLocal() as s:
+        insp = Inspection(id=str(uuid.uuid4()), report_email="tom@example.com", inspector="Tom", car=CARS["bmw-x3"], record=rec, status="sent",
+                          report_token=token, cr=build_cr(rec), created_at=datetime(2026, 11, 8, 5, 28, tzinfo=timezone.utc))
+        s.add(insp)
+        s.commit()
+        assert date(inspected_on(insp)) == "Nov 7, 2026"
+    assert "Nov 7, 2026" in client.get(f"/r/{token}/seller").text

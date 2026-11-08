@@ -2,6 +2,8 @@
 // (assets/ci360, v4.9.5, MIT). Bundled and loaded from the phone, so it works offline. Drag to turn; the frame number shows.
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -40,6 +42,8 @@ class _SpinViewState extends State<SpinView> {
     final html = File('$dir/spin.html')
       ..writeAsStringSync('''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <style>html,body{margin:0;background:#fff}#v{width:100%}</style></head><body><div id="v"></div>
+<script>/* the frames are files on the phone: a CORS image load from a file page fails, so plain loads */
+Object.defineProperty(HTMLImageElement.prototype, 'crossOrigin', {set: function () {}, get: function () { return null; }});</script>
 <script src="ci360.min.js"></script>
 <script>CI360.init(document.getElementById('v'), {imageListX: ${names.map((n) => '"$n"').toList()}, amountX: ${names.length}, aspectRatio: '16/9',
   hints: false, initialIconShown: false, zoomControls: false, fullscreen: false, lazyload: false,
@@ -49,7 +53,7 @@ class _SpinViewState extends State<SpinView> {
 
   @override
   Widget build(BuildContext context) => Column(mainAxisSize: MainAxisSize.min, children: [
-        AspectRatio(aspectRatio: 16 / 9, child: ClipRRect(borderRadius: BorderRadius.circular(12), child: WebViewWidget(controller: c))),
+        AspectRatio(aspectRatio: 16 / 9, child: ClipRRect(borderRadius: BorderRadius.circular(12), child: WebViewWidget(controller: c, gestureRecognizers: {Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer())}))),
         const SizedBox(height: 8),
         Text('Frame ${f + 1} of ${widget.frames.length} · ${_sides[(f / 4.5).round() % 8]}', style: const TextStyle(color: muted)),
       ]);

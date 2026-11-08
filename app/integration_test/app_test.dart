@@ -121,8 +121,13 @@ void main() {
       return find.descendant(of: find.ancestor(of: find.text(label), matching: find.byType(Column)).first, matching: find.byType(TextField));
     }
 
-    final trim = await field('Trim');
-    if (t.widget<TextField>(trim).controller!.text.isEmpty) await t.enterText(trim, 'xDrive30i');
+    // the VIN decode picks year, make and model from the lists; a trim it does not give is picked from its list
+    if (!t.widget<FilledButton>(find.ancestor(of: find.text('At the car: check ID'), matching: find.byType(FilledButton))).enabled) {
+      await t.tap(find.descendant(of: find.ancestor(of: find.text('Trim'), matching: find.byType(Column)).first, matching: find.byType(DropdownButtonFormField<String>)));
+      await t.pumpAndSettle();
+      await t.tap(find.byType(DropdownMenuItem<String>).hitTestable().first);
+      await t.pumpAndSettle();
+    }
     await t.enterText(await field('Owner name (optional)'), 'Daniel Kim');
     await t.pumpAndSettle();
     await shot('new-inspection');

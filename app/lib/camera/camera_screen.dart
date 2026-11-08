@@ -113,7 +113,11 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   DateTime? recAt;
   J? recSlot; // the slot a recording belongs to, whatever the inspector taps meanwhile
   bool stopping = false;
+  bool noCam = false; // the camera cannot be opened (broken, in use, iPhone Mirroring): every shot is picked from the library
   DeviceOrientation? side; // the landscape side the pass is locked to
+  final stripCtl = ScrollController();
+  Object? stripAt; // what the strip last scrolled to
+  ScrollPosition? stripPos; // and in which list: the strip is rebuilt when the end-of-Exterior dialog opens or closes
 
   J get st => store.ins[widget.id]!;
   String get fuel => fuelOf(st);
@@ -150,6 +154,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       await _open(zoom == .5 && ultra != null ? ultra! : wide!);
     } catch (e) {
       debugPrint('camera: $e');
+      if (mounted) setState(() => noCam = true);
     }
   }
 
@@ -166,6 +171,14 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (zoom == 2) await c.setZoomLevel(2.clamp(minZ, maxZ).toDouble());
     if (!mounted) return c.dispose();
     setState(() => cc = c);
+  }
+
+  // the box around CameraPreview has the same ratio the preview draws itself (landscape when capture is locked landscape),
+  // so cover-filling the screen crops a little and never stretches the picture
+  double _previewRatio(CameraController c) {
+    final o = c.value.lockedCaptureOrientation ?? c.value.deviceOrientation;
+    final land = o == DeviceOrientation.landscapeLeft || o == DeviceOrientation.landscapeRight;
+    return land ? c.value.aspectRatio : 1 / c.value.aspectRatio;
   }
 
   // lock the capture orientation to the current landscape side (landscape left when the phone is upright or flat)
@@ -186,8 +199,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       if (rec) _stopVideo();
       cc = null;
       c.dispose();
-    } else if (s == AppLifecycleState.resumed && cc == null && wide != null) {
-      _open(zoom == .5 && ultra != null ? ultra! : wide!);
+    } else if (s == AppLifecycleState.resumed && cc == null && wide != null && !noCam) {
+      _open(zoom == .5 && ultra != null ? ultra! : wide!).catchError((_) => mounted ? setState(() => noCam = true) : null);
     }
   }
 
@@ -195,6 +208,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     recTimer?.cancel();
+    stripCtl.dispose();
     cc?.dispose();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -237,6 +251,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     k = nk;
     i = capNext(st, l, 0);
     banner = true;
+    tag = null;
     _save();
   }
 
@@ -246,12 +261,14 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     note = '';
     rec = false;
     if (r != null && r['free'] == true) {
+      tag = null;
       k = r['k'];
       i = r['i'];
       free = true;
       return;
     }
     if (r != null && !(r['k'] == k && (r['i'] as int) <= i)) {
+      tag = null;
       k = r['k'];
       i = (r['i'] as int).clamp(0, l.length);
       return;
@@ -270,6 +287,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       if (pk == null || !camseq.contains(pk)) return;
       k = pk;
       i = l.length - 1;
+      tag = null;
     }
     rec = false;
     note = '';
@@ -278,8 +296,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   // ---------- capture ----------
   Future<void> _shutter({bool library = false}) async {
-    if (busy || (cc == null && !library) || i >= l.length) return;
+    if (busy || (cc == null && !library && !noCam) || i >= l.length) return;
+    library = library || noCam;
     final x = l[i], it = x['it'] as J;
+    if (it['kind'] == 'video' && library) return _pickVideo();
     if (it['kind'] == 'video' && !library) {
       rec ? await _stopVideo() : await _startVideo();
       return;
@@ -289,6 +309,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       if (!library) await _lockSide();
       final from = library ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
+      tag = null;
       final mstay = isMulti(x['id']) && !widget.args.single, again = !mstay && capHas(st, x), id = x['id'] as String;
       final key = x['panel'] != null ? 'paint-${x['panel']}'.replaceAll(' ', '_') : x['wheel'] != null ? '$id-${x['wheel']}' : id;
       final kind = readKind[id];
@@ -370,6 +391,29 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     setState(() {});
   }
 
+  Future<void> _pickVideo() async {
+    final x = l[i], id = x['id'] as String, f = await ImagePicker().pickVideo(source: ImageSource.gallery);
+    if (f == null) return;
+    setState(() => busy = true);
+    try {
+      final ext = f.path.contains('.') ? f.path.substring(f.path.lastIndexOf('.')).toLowerCase() : '.mp4';
+      final rel = '${store.dirOf(widget.id)}/$id-${DateTime.now().millisecondsSinceEpoch}$ext';
+      await File(f.path).copy(store.abs(rel));
+      final again = capHas(st, x);
+      store.mut(widget.id, (s) {
+        if (again) dropFile(m(s, 'files')[id]);
+        capMark(s, x, 'library', rel);
+        if (id == 'video_360') s['spin'] = null;
+      });
+      if (id == 'video_360') _cutSpin(rel);
+      if (widget.args.single) return await _close();
+      again || capRet != null ? capResume() : capAdvance();
+      _save();
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
   void _cutSpin(String rel) {
     final id = widget.id;
     cutSpinFrames(store.abs(rel), store.abs(store.dirOf(id))).then((frames) {
@@ -380,10 +424,11 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 
   Future<void> _tag(String t) async {
-    if (busy || cc == null || i >= l.length || k == 'OBDII' || (l[i]['it'] as J)['kind'] == 'video') return;
+    if (busy || (cc == null && !noCam) || i >= l.length || k == 'OBDII' || (l[i]['it'] as J)['kind'] == 'video') return;
     setState(() => busy = true);
     try {
-      final from = (await cc!.takePicture()).path, at = i, sec = k;
+      final at = i, sec = k, from = noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
+      if (from == null) return;
       if (t == 'dmg') {
         final zone = dzone[sec] ?? 'Exterior', hint = dmgHint(st, sec, at);
         final did = 'd${DateTime.now().microsecondsSinceEpoch}';
@@ -415,7 +460,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (busy) return;
     setState(() => busy = true);
     try {
-      final from = library ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
+      final from = library || noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
       final zone = widget.args.dmg!, redo = widget.args.redo;
       if (redo != null) {
@@ -503,7 +548,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   Widget _strip() {
     final list = l, out = <Widget>[], next = capNext(st, list, 0);
-    Widget cell(Widget child, {Color? bg, bool cur = false, VoidCallback? on}) => GestureDetector(
+    int? at;
+    Widget cell(Widget child, {Color? bg, bool cur = false, VoidCallback? on}) {
+      if (cur) at = out.length;
+      return GestureDetector(
           onTap: on,
           child: Container(
             width: 46,
@@ -513,6 +561,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             child: Center(child: child),
           ),
         );
+    }
+
     for (var j = 0; j < list.length; j++) {
       final x = list[j], has = capHas(st, x), sk = capSkipped(st, x), mn = isMulti(x['id']) ? ((m(st, 'multi')[x['id']] ?? []) as List).length : 0;
       if (mn > 0) {
@@ -537,7 +587,17 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         if (mods[d]['sec'] == k && mods[d]['at'] == j) out.add(cell(const Icon(LucideIcons.wrench, color: Colors.white, size: 18), bg: modBlue, cur: sel == ('m', d), on: rec ? null : () => setState(() => sel = ('m', d))));
       }
     }
-    return SizedBox(height: 52, child: ListView(scrollDirection: Axis.horizontal, children: out));
+    // the strip follows the current cell, or its end in free mode (the mockup's capScroll)
+    final want = (free || ask ? null : at, out.length);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !stripCtl.hasClients) return;
+      final p = stripCtl.position, a = want.$1;
+      if (want == stripAt && identical(p, stripPos)) return;
+      stripAt = want;
+      stripPos = p;
+      stripCtl.animateTo((a == null ? p.maxScrollExtent : a * 52 - p.viewportDimension / 2 + 23).clamp(0, p.maxScrollExtent), duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+    });
+    return SizedBox(height: 52, child: ListView(controller: stripCtl, scrollDirection: Axis.horizontal, children: out));
   }
 
   void _jump(int j) => setState(() {
@@ -593,7 +653,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                 final z = (pinch0 * d.scale).clamp(minZ, maxZ);
                 if (zoom != .5) c.setZoomLevel(z);
               },
-              child: FittedBox(fit: BoxFit.cover, child: SizedBox(width: c.value.previewSize?.height ?? 1, height: c.value.previewSize?.width ?? 1, child: CameraPreview(c))),
+              child: FittedBox(fit: BoxFit.cover, child: SizedBox(width: 100 * _previewRatio(c), height: 100, child: CameraPreview(c))),
             ),
           if (flash) Container(color: Colors.white54),
           SafeArea(child: dmgMode ? _dmgLayout() : _passLayout()),
@@ -611,14 +671,14 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             padding: const EdgeInsets.all(8),
             child: Row(children: [_btn(LucideIcons.chevronLeft, () => Navigator.of(context).pop()), const Spacer(), _pill(zoneTitle[zone]!.replaceAll('damages', 'damage')), const Spacer(), const SizedBox(width: 40)]),
           ),
-          Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [SvgPicture.asset('assets/guides/damage.svg', height: 150), const SizedBox(height: 10), _pill('One damage per photo', size: 15)]))),
+          Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [SvgPicture.asset('assets/guides/damage.svg', height: MediaQuery.of(context).size.height * .45), const SizedBox(height: 8), _pill('One damage per photo', size: 13)]))),
         ]),
       ),
       SizedBox(
         width: 110,
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           _btn(LucideIcons.upload, busy ? null : () => _dmgShot(library: true), label: 'Upload'),
-          _shutterBtn(false, busy || cc == null ? null : () => _dmgShot()),
+          _shutterBtn(false, busy || (cc == null && !noCam) ? null : () => _dmgShot()),
           const SizedBox(height: 56),
         ]),
       ),
@@ -661,7 +721,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (rv) hint = vid ? 'Taken. Record again to replace it.' : 'Taken. The shutter retakes it.';
     if (multiStay) hint = '${multiHint[id] ?? 'One photo each'}. ${arr.isNotEmpty ? '${arr.length} taken. Take another, or tap Done.' : 'Take as many as you need, then tap Done.'}';
     final selLbl = sel == null ? null : sel!.$1 == 'd' ? 'Damage' : 'Mod';
-    final tagOk = !widget.args.single, tagOff = k == 'OBDII' || vid || busy || cc == null || rec;
+    final tagOk = !widget.args.single, tagOff = k == 'OBDII' || vid || busy || (cc == null && !noCam) || rec;
     final recS = recAt == null ? 0 : DateTime.now().difference(recAt!).inSeconds;
     final g = guideFor(x, fuel, guides);
     final scale = zoom == .5 ? .6 : zoom == 2 ? 1.35 : 1.0;
@@ -671,26 +731,38 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
           top,
           Expanded(
             child: Stack(children: [
-              if (!free && !ask)
-                Center(
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    if (tag != null && tag!.$3 == i) _pill('${tag!.$1 == 'dmg' ? 'Damage' : 'Mod'} ${tag!.$2}', bg: tag!.$1 == 'dmg' ? const Color(0xFFC2410C) : modBlue, ic: tag!.$1 == 'dmg' ? LucideIcons.triangleAlert : LucideIcons.wrench, size: 16),
+              // scaled down to fit above the strip; in free mode only the last tag shows
+              Positioned.fill(
+                child: LayoutBuilder(
+                  builder: (c, b) => Center(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: SizedBox(
+                        width: b.maxWidth,
+                        child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    if (tag != null && tag!.$3 == i && sel == null) _pill('${tag!.$1 == 'dmg' ? 'Damage' : 'Mod'} ${tag!.$2}', bg: tag!.$1 == 'dmg' ? const Color(0xFFC2410C) : modBlue, ic: tag!.$1 == 'dmg' ? LucideIcons.triangleAlert : LucideIcons.wrench, size: 16),
+                    if ((!free && !ask) || sel != null) ...[
                     if (rec) _pill('● ${recS ~/ 60}:${'${recS % 60}'.padLeft(2, '0')}', bg: const Color(0xFFDC2626), size: 15),
-                    if (g != null && selLbl == null) Transform.scale(scale: scale, child: SvgPicture.asset(g, height: 120)),
+                    if (g != null && selLbl == null) Transform.scale(scale: scale, child: SvgPicture.asset(g, height: MediaQuery.of(context).size.height * .45)),
                     const SizedBox(height: 6),
-                    _pill(selLbl ?? lbl),
+                    _pill(selLbl ?? lbl, size: 15),
                     if (selLbl == null && (note.isNotEmpty || hint.isNotEmpty))
-                      Padding(padding: const EdgeInsets.only(top: 6), child: Text(note.isNotEmpty ? note : hint, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 14, shadows: [Shadow(blurRadius: 6)]))),
+                      Padding(padding: const EdgeInsets.only(top: 6), child: Text(note.isNotEmpty ? note : hint, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 12, shadows: [Shadow(blurRadius: 6)]))),
                     if (selLbl == null) ...[
                       if (x['panel'] != null && !rv)
-                        TextButton(onPressed: () => setState(_notOnCar), child: _pill('Not on this car', bg: Colors.white24, size: 15))
+                        TextButton(onPressed: () => setState(_notOnCar), child: _pill('Not on this car', bg: Colors.white24, size: 13))
                       else if (multiStay && arr.isNotEmpty)
-                        TextButton(onPressed: () => setState(_undoMulti), child: _pill('Remove photo ${arr.length}', bg: Colors.white24, ic: LucideIcons.trash2, size: 14))
+                        TextButton(onPressed: () => setState(_undoMulti), child: _pill('Remove photo ${arr.length}', bg: Colors.white24, ic: LucideIcons.trash2, size: 13))
                       else if (it['optional'] == true && !rv && !rec)
-                        TextButton(onPressed: () => setState(_skip), child: _pill('Skip, optional', bg: Colors.white24, size: 15)),
+                        TextButton(onPressed: () => setState(_skip), child: _pill('Skip, optional', bg: Colors.white24, size: 13)),
+                    ],
                     ],
                   ]),
+                      ),
+                    ),
+                  ),
                 ),
+              ),
               if (k != 'start')
                 Positioned(
                   right: 8,
@@ -722,7 +794,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           if (isLib(id) && !free && !ask) _btn(LucideIcons.upload, busy ? null : () => _shutter(library: true), label: 'Upload') else const SizedBox(height: 40),
           if (tagOk) _round(const Color(0xFFF59E0B), LucideIcons.triangleAlert, 'Damage', tagOff ? null : () => _tag('dmg')),
-          if (!free && !ask) _shutterBtn(vid, busy || cc == null ? null : () => _shutter()),
+          if (!free && !ask) _shutterBtn(vid, busy || (cc == null && !noCam) ? null : () => _shutter()),
           if (tagOk) _round(const Color(0xFF60A5FA), LucideIcons.wrench, 'Mod', tagOff ? null : () => _tag('mod')),
           if (sel != null)
             _btn(LucideIcons.trash2, _deleteSel, label: 'Delete', bg: red)
@@ -807,16 +879,16 @@ extension on Widget {
               color: Colors.black54,
               child: Center(
                 child: Container(
-                  width: 420,
+                  width: 480,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     const Text('Please record any exterior damage/modification images before proceeding.', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 16),
                     Row(children: [
-                      Expanded(child: OutlinedButton(onPressed: done, child: const Text("I'm done"))),
+                      Expanded(child: OutlinedButton(onPressed: done, child: const FittedBox(fit: BoxFit.scaleDown, child: Text("I'm done", maxLines: 1)))),
                       const SizedBox(width: 12),
-                      Expanded(child: FilledButton(onPressed: record, child: const Text('Record damage now'))),
+                      Expanded(child: FilledButton(onPressed: record, child: const FittedBox(fit: BoxFit.scaleDown, child: Text('Record damage now', maxLines: 1)))),
                     ]),
                   ]),
                 ),

@@ -73,6 +73,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.35.2
   build_runner: ^2.17.1
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -118,3 +119,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# app icon: the Bidbus logo (reference/mockup/assets/logo.html) on brand green, rendered to tool/app_icon.png
+flutter_launcher_icons:
+  ios: true
+  android: true
+  image_path: tool/app_icon.png
+  remove_alpha_ios: true

@@ -180,6 +180,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
   final pad = SignatureController(penStrokeWidth: 3, penColor: Colors.black, exportBackgroundColor: Colors.white);
   late final name = TextEditingController(text: store.ins[widget.id]!['signName'] ?? '');
   bool signing = false;
+  final endLoc = here(); // asked when the seller gets the phone, so Sign does not wait for GPS
 
   @override
   void initState() {
@@ -192,7 +193,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
     final id = widget.id, png = await pad.toPngBytes(), rel = '${store.dirOf(id)}/signature.png';
     if (png == null) return setState(() => signing = false);
     await File(store.abs(rel)).writeAsBytes(png);
-    final end = await here();
+    final end = {...await endLoc, 'at': DateTime.now().toIso8601String()};
     store.mut(id, (s) {
       m(s, 'files')['signature'] = rel;
       s['signName'] = name.text.trim();

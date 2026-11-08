@@ -17,7 +17,7 @@ import 'home.dart';
 
 // a private document photo from the camera or the library
 Future<void> takeDoc(BuildContext context, String id, String doc) async {
-  final src = await showChoice(context, short[doc] ?? 'Photo', const [Opt('camera', label: 'Take photo'), Opt('library', label: 'Pick from library')], const []);
+  final src = await showChoice(context, short[doc] ?? 'Photo', const [Opt('camera', label: 'Take photo'), Opt('library', label: 'Pick from library')], const [], radio: false);
   if (src == null) return;
   final x = await ImagePicker().pickImage(source: src == 'camera' ? ImageSource.camera : ImageSource.gallery);
   if (x == null) return;
@@ -41,12 +41,14 @@ String idBlock(J st) {
   return '';
 }
 
+// the end is saved at once; the location is added when GPS answers
 Future<void> endVisit(BuildContext context, String id) async {
-  final at = await here();
+  final at = DateTime.now().toIso8601String();
   store.mut(id, (st) {
     st['status'] = 'ended';
-    st['end'] = at;
+    st['end'] = {'at': at, 'loc': null};
   });
+  here().then((h) => store.mut(id, (st) => st['end'] = {'at': at, 'loc': h['loc']}));
   if (context.mounted) context.go('/');
 }
 

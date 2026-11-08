@@ -41,6 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _save() async {
     await store.saveSettings(server: url.text, passcode: pass.text, inspector: name.text, email: email.text);
+    if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Saved'), duration: Duration(seconds: 2)));
     await _check();
   }
 

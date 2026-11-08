@@ -37,14 +37,18 @@ Future<List<String>> cutSpinFrames(String video, String dir) async => ((await _f
 
 Future<Map<String, dynamic>> here() async {
   final at = DateTime.now().toIso8601String();
+  try {
+    var p = await Geolocator.checkPermission();
+    if (p == LocationPermission.denied) p = await Geolocator.requestPermission();
+    if (p == LocationPermission.denied || p == LocationPermission.deniedForever) return {'at': at, 'loc': null};
+  } catch (_) {
+    return {'at': at, 'loc': null};
+  }
   return _here(at).timeout(const Duration(seconds: 12), onTimeout: () => {'at': at, 'loc': null});
 }
 
 Future<Map<String, dynamic>> _here(String at) async {
   try {
-    var p = await Geolocator.checkPermission();
-    if (p == LocationPermission.denied) p = await Geolocator.requestPermission();
-    if (p == LocationPermission.denied || p == LocationPermission.deniedForever) return {'at': at, 'loc': null};
     final pos = await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).catchError((_) async => (await Geolocator.getLastKnownPosition())!);
     return {'at': at, 'loc': '${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)}'};
   } catch (_) {

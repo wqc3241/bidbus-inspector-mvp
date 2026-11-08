@@ -1,9 +1,11 @@
-// New inspection: YMMT, fuel and report email required; a typed VIN is decoded (NHTSA vPIC via the server) to prefill.
+// New inspection: year, make, model and trim picked from lists (assets/vehicles.json), each with Other to type;
+// fuel and report email required. A typed VIN is decoded (NHTSA vPIC via the server) to prefill.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 
 import '../data/ql.dart';
+import '../data/vehicles.dart';
 import '../logic/insp.dart';
 import '../services/store.dart';
 import '../widgets/ui.dart';
@@ -15,11 +17,45 @@ class NewInspectionScreen extends StatefulWidget {
 }
 
 class _NewInspectionScreenState extends State<NewInspectionScreen> {
-  final vin = TextEditingController(), make = TextEditingController(), model = TextEditingController(), trim = TextEditingController();
-  final miles = TextEditingController(), owner = TextEditingController(), email = TextEditingController(text: store.defaultEmail);
-  int? year;
+  final vin = TextEditingController(), miles = TextEditingController(), owner = TextEditingController(), email = TextEditingController(text: store.defaultEmail);
+  // a pick from the list, or Other with the typed value
+  final typed = {for (final k in ['year', 'make', 'model', 'trim']) k: TextEditingController()};
+  final pick = <String, String?>{'year': null, 'make': null, 'model': null, 'trim': null};
   String? fuel;
-  final years = [for (var y = DateTime.now().year + 1; y >= 1981; y--) y];
+
+  String _val(String k) => pick[k] == other ? typed[k]!.text.trim() : (pick[k] ?? '');
+  int? get year {
+    final y = int.tryParse(_val('year'));
+    return y != null && y >= 1981 && y <= DateTime.now().year + 1 ? y : null;
+  }
+
+  List<String> _opts(String k) {
+    final y = year, mk = _val('make'), md = _val('model');
+    final list = switch (k) {
+      'year' => yearsList(),
+      'make' => y == null ? <String>[] : makesFor(y),
+      'model' => y == null || pick['make'] == other ? <String>[] : modelsFor(mk, y),
+      _ => y == null || pick['make'] == other || pick['model'] == other ? <String>[] : trimsFor(mk, md, y),
+    };
+    return [...list, other];
+  }
+
+  // a change resets what depends on it
+  void _set(String k, String? v, {String? text}) {
+    const order = ['year', 'make', 'model', 'trim'];
+    pick[k] = v;
+    if (text != null) typed[k]!.text = text;
+    for (final d in order.sublist(order.indexOf(k) + 1)) {
+      if (pick[d] != null && pick[d] != other && !_opts(d).contains(pick[d])) pick[d] = null;
+    }
+  }
+
+  // a decoded value picks the list entry it matches, else goes in Other
+  void _fill(String k, String? v) {
+    if (v == null || v.trim().isEmpty) return;
+    final m = matchOption(_opts(k).where((o) => o != other).toList(), v);
+    m != null ? _set(k, m) : _set(k, other, text: v.trim());
+  }
 
   Future<void> _decode(String v) async {
     if (v.length != 17 || !store.online) return;
@@ -27,16 +63,16 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
       final r = await store.api.vin(v);
       if (!mounted) return;
       setState(() {
-        if (years.contains(r['year'])) year = r['year'];
-        if ((r['make'] ?? '') != '') make.text = r['make'];
-        if ((r['model'] ?? '') != '') model.text = r['model'];
-        if ((r['trim'] ?? '') != '') trim.text = r['trim'];
+        _fill('year', r['year']?.toString());
+        _fill('make', r['make']);
+        _fill('model', r['model']);
+        _fill('trim', r['trim']);
         if (fuels.contains(r['fuel'])) fuel = r['fuel'];
       });
     } catch (_) {}
   }
 
-  bool get ready => year != null && make.text.trim().isNotEmpty && model.text.trim().isNotEmpty && trim.text.trim().isNotEmpty && fuel != null && RegExp(r'^\S+@\S+\.\S+$').hasMatch(email.text.trim());
+  bool get ready => year != null && _val('make').isNotEmpty && _val('model').isNotEmpty && _val('trim').isNotEmpty && fuel != null && RegExp(r'^\S+@\S+\.\S+$').hasMatch(email.text.trim());
 
   void _go() {
     final id = const Uuid().v4();
@@ -45,7 +81,7 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
       fuel: fuel!,
       email: email.text.trim(),
       inspector: store.inspector,
-      car: {'year': year, 'make': make.text.trim(), 'model': model.text.trim(), 'trim': trim.text.trim(), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim()},
+      car: {'year': year, 'make': _val('make'), 'model': _val('model'), 'trim': _val('trim'), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim()},
     ));
     context.pushReplacement('/i/$id');
   }
@@ -70,17 +106,44 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
         ]),
       );
 
+  Widget _pick(String k, String label) {
+    final opts = _opts(k), cur = opts.contains(pick[k]) ? pick[k] : null;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        _label(label),
+        DropdownButtonFormField<String>(
+          key: ValueKey('$k-${opts.length}-$cur'),
+          initialValue: cur,
+          isExpanded: true,
+          items: [for (final o in opts) DropdownMenuItem(value: o, child: Text(o, overflow: TextOverflow.ellipsis))],
+          onChanged: (v) => setState(() => _set(k, v)),
+        ),
+        if (pick[k] == other)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: TextField(
+              controller: typed[k],
+              keyboardType: k == 'year' ? TextInputType.number : TextInputType.text,
+              maxLength: k == 'year' ? 4 : null,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(counterText: ''),
+              onChanged: (_) => setState(() => _set(k, other)),
+            ),
+          ),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: const TitleBar('New inspection'),
         body: ListView(padding: const EdgeInsets.all(16), children: [
           _f('VIN (optional)', vin, max: 17, caps: true, on: (v) => _decode(v.trim().toUpperCase())),
-          _label('Year'),
-          DropdownButtonFormField<int>(initialValue: year, items: [for (final y in years) DropdownMenuItem(value: y, child: Text('$y'))], onChanged: (v) => setState(() => year = v)),
-          const SizedBox(height: 16),
-          _f('Make', make),
-          _f('Model', model),
-          _f('Trim', trim),
+          _pick('year', 'Year'),
+          _pick('make', 'Make'),
+          _pick('model', 'Model'),
+          _pick('trim', 'Trim'),
           _label('Fuel type'),
           DropdownButtonFormField<String>(initialValue: fuel, items: [for (final f in fuels) DropdownMenuItem(value: f, child: Text(f))], onChanged: (v) => setState(() => fuel = v)),
           const SizedBox(height: 16),

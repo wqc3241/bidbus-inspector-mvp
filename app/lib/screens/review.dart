@@ -97,7 +97,7 @@ class ReviewScreen extends ConsumerWidget {
             for (var j = 0; j < capseq.length; j++)
               () {
                 final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
-                return InkWell(
+                final tab = InkWell(
                   onTap: () => store.mut(id, (s) => s['sp'] = j),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -110,11 +110,13 @@ class ReviewScreen extends ConsumerWidget {
                     ]),
                   ),
                 );
+                return j == i ? ShowMe(tab) : tab;
               }(),
           ]),
         ),
         const Divider(height: 1),
-        Expanded(child: ListView(padding: const EdgeInsets.fromLTRB(16, 16, 16, 24), children: [_card(context, st, k, f)])),
+        // each page opens at its top
+        Expanded(child: ListView(key: ValueKey(k), padding: const EdgeInsets.fromLTRB(16, 16, 16, 24), children: [_card(context, st, k, f)])),
       ]),
       bottomNavigationBar: BottomBar(ul.isNotEmpty
           ? PBtn('Label ${ul.length > 1 ? '${ul.length} damage photos' : 'the damage photo'}', () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => DamageFormPage(id, ul.first.$1['id']))), icon: LucideIcons.pen)

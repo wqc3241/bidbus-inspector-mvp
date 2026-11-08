@@ -20,6 +20,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 ## New inspection
 
 - Fields: VIN (optional), Year, Make, Model, Trim, Fuel type, Mileage (optional), Owner name (optional), Report email.
+- Home build: Year, Make, Model and Trim are lists from `data/vehicles.json` (Honda, Toyota, Lexus, Tesla, VinFast, BMW, Mercedes-Benz, model years 2013 to 2027; each trim with its first and last model year), each ending with Other to type the value. A decoded VIN picks the entry it matches, otherwise fills Other.
 - VIN of 17 characters: call `GET /api/vin/{vin}` (server proxies NHTSA vPIC `DecodeVinValues`) and prefill year, make, model, trim, fuel type. Fuel mapping: Electric → Electric (EV); Plug-in Hybrid Electric Vehicle (PHEV) → Plug-in hybrid; Hybrid (HEV) or Strong/Mild HEV → Hybrid; else Gas or diesel. Offline: skip the decode.
 - Bottom button At the car: check ID, off until the required fields are in.
 
