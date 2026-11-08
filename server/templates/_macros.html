@@ -1,0 +1,28 @@
+{% macro gallery(app) %}{% if media %}
+<div class="gal {{ app }}" data-gal>
+ <div class="{{ app }}-hero g-hero">
+  <div class="g-track">{% for x in media %}<div class="g-sl {{ x.kind }}" data-g="{{ x.g }}" data-lbl="{{ x.lbl }}">
+   {%- if x.kind == "spin" %}<div class="cloudimage-360" data-folder="{{ x.folder }}" data-filename-x="spin-{index}.jpg" data-amount-x="36" data-index-zero-base="2"></div>
+   {%- elif x.kind == "video" %}<video src="{{ x.src }}" controls playsinline preload="metadata"></video>
+   {%- else %}<img src="{{ x.src }}" alt="{{ x.lbl }}" loading="lazy">{% endif %}</div>{% endfor %}</div>
+  <button type="button" class="g-nav prev" data-step="-1" aria-label="Previous">{{ I("left", 18) }}</button>
+  <button type="button" class="g-nav next" data-step="1" aria-label="Next">{{ I("right", 18) }}</button>
+  <button type="button" class="g-x" aria-label="Close">{{ I("x", 18) }}</button>
+  <span class="g-cap"><span></span></span><span class="pc"></span>
+ </div>
+ <div class="g-strip {{ app }}">{% for x in media %}<button type="button" class="pt" data-i="{{ loop.index0 }}" aria-label="{{ x.lbl }}">
+  {%- if x.kind == "video" %}{{ I("play", 14) }}{% else %}<img src="{{ x.src }}" alt="" loading="lazy">{% endif %}{% if x.kind == "spin" %}<i>360°</i>{% endif %}</button>{% endfor %}</div>
+ <div class="g-grps {{ app }}"><button type="button" data-g="all" aria-pressed="true">{{ I("grid", 14) }}All<em>{{ media|length }}</em></button>
+  {%- for g in groups %}<button type="button" data-g="{{ g.g }}" aria-pressed="false">{{ I(g.icon, 14) }}{{ g.name }}<em>{{ g.n }}</em></button>{% endfor %}</div>
+</div>{% endif %}
+{% endmacro %}
+
+{% macro highlights(cls) %}<div class="hls {{ cls }}">{% for ic, st, label, val in highlight %}
+ <div class="hl2 {{ st }}"><span class="hli">{{ I(ic, 30) }}<em>{{ "✓" if st == "ok" else "–" if st == "na" else val if ic == "key" else "×" }}</em></span><span>{{ label }}</span><b>{{ val }}</b></div>{% endfor %}
+</div>{% endmacro %}
+
+{% macro lines(row, tags) %}{% for x in row.lines %}
+ {%- set txt %}{{ x.text }}{% if tags and x.lv %} <em class="lvt {{ x.lv }}">{{ level_text[x.lv] }}</em>{% endif %}{% if x.sub %}<small>{{ x.sub }}</small>{% endif %}{% endset %}
+ {%- if x.photo %}<dd class="dmg"><a class="dth" href="{{ x.photo }}"><img src="{{ x.photo }}" alt="" loading="lazy"></a><div class="dtxt">{{ txt }}</div></dd>
+ {%- else %}<dd class="neg"><span>×</span><div class="dtxt">{{ txt }}</div></dd>{% endif %}
+{%- endfor %}{% endmacro %}
