@@ -98,7 +98,6 @@ class ReviewScreen extends ConsumerWidget {
             () {
               final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
               return stripTab(stTitle(kk), j == i, () => store.mut(id, (s) => s['sp'] = j),
-                  pre: '${j + 1}',
                   end: !done ? null : b.isNotEmpty ? const CircleAvatar(radius: 3, backgroundColor: amber) : fi.probs > 0 ? Text('${fi.probs}', style: const TextStyle(color: red, fontWeight: FontWeight.w700)) : null);
             }(),
         ]),
