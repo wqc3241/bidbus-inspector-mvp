@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
-{% block title %}{{ name }} {{ trim }} · Condition report{% endblock %}
+{% block title %}{{ title }} · Condition report{% endblock %}
 {% block page %}seller{% endblock %}
 {% block body %}
 <header class="sh2"><span class="s-logo">bidbus</span></header>
 <main class="s-page">
  <span class="s-crumb">Dashboard <b>› Condition report</b></span>
- <div class="s-card pad"><div class="s-car">{{ name }} {{ trim }}</div><div class="s-meta">{{ I("gauge", 14) }}{{ miles }} mi&nbsp; {{ I("calendar", 14) }}{{ date }}</div></div>
+ <div class="s-card pad"><div class="s-car">{{ title }}</div><div class="s-meta">{{ I("gauge", 14) }}{{ miles }} mi&nbsp; {{ I("calendar", 14) }}{{ date }}</div></div>
  <div class="s-card">{{ m.gallery("s") }}</div>
  <div class="s-card pad">{{ m.highlights("s") }}</div>
  <div class="s-card pad"><div class="s-ch">{{ I("tire", 18) }}</div><div class="tcells">{% for t in tires %}

@@ -9,8 +9,9 @@ import '../services/store.dart';
 import '../widgets/ui.dart';
 
 String carLine(J st) {
-  final c = st['car'] as J;
-  return [c['year'], c['make'], c['model'], c['trim']].where((x) => x != null && '$x'.isNotEmpty).join(' ');
+  final c = st['car'] as J, md = '${c['model'] ?? ''}', tr = '${c['trim'] ?? ''}';
+  final model = md.isNotEmpty && tr.toLowerCase().startsWith('${md.toLowerCase()} ') ? null : c['model']; // Lexus "LC" + "LC 500h"
+  return [c['year'], c['make'], model, c['trim']].where((x) => x != null && '$x'.isNotEmpty).join(' ');
 }
 
 String statusText(J st) {

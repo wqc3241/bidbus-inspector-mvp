@@ -132,3 +132,10 @@ def test_dealer_specs_show_the_fuel_picked_on_the_phone(client):
     assert "Diesel" in specs and ">Gas<" not in specs
     gas = client.get(f"/r/{make('bmw-x3')[0]}/dealer").text.split("Vehicle Details")[-1]
     assert ">Gas<" in gas
+
+
+def test_a_trim_that_starts_with_the_model_is_not_repeated():
+    from app.email import car_line
+    assert car_line({"year": 2020, "make": "Lexus", "model": "LC", "trim": "LC 500h"}) == "2020 Lexus LC 500h"
+    assert car_line({"year": 2020, "make": "BMW", "model": "X3", "trim": "xDrive30i"}) == "2020 BMW X3 xDrive30i"
+    assert car_line({"year": 2021, "make": "Toyota", "model": "RAV4", "trim": "RAV4 Prime XSE"}) == "2021 Toyota RAV4 Prime XSE"

@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 
 from . import config, spin, storage
 from .cr import CAT
-from .email import inspected_when
+from .email import car_line, inspected_when
 from .db import Inspection, get_session
 
 router = APIRouter(prefix="/r")
@@ -151,7 +151,7 @@ def view(insp: Inspection) -> dict:
     if v["fuel"] == "Electric (EV)" and v["ev_battery_health_pct"] is not None:
         specs.append(("Battery health", f"{v['ev_battery_health_pct']}%"))
 
-    return {"name": " ".join(str(car[k]) for k in ("year", "make", "model") if car.get(k)), "trim": car.get("trim") or "",
+    return {"name": " ".join(str(car[k]) for k in ("year", "make", "model") if car.get(k)), "trim": car.get("trim") or "", "title": car_line(car),
             "miles": f"{miles:,}" if miles is not None else "", "date": inspected_when(insp),
             "media": media, "groups": groups, "rows": rows, "videos": other_videos, "tires": tires, "highlight": highlight,
             "overall": cr["overall_condition"], "note": (cr["inspector_note"] or "").strip(), "protection": protection,

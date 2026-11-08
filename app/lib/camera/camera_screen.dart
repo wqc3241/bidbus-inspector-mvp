@@ -802,7 +802,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                     const SizedBox(height: 6),
                     _pill(selLbl ?? lbl, size: 15),
                     if (selLbl != null || note.isNotEmpty || hint.isNotEmpty)
-                      Padding(padding: const EdgeInsets.only(top: 6), child: Text(selLbl != null ? (showing ? 'Delete it, or tap the green shutter to retake it.' : 'Take the new photo.') : note.isNotEmpty ? note : hint, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 12, shadows: [Shadow(blurRadius: 6)]))),
+                      Container(margin: const EdgeInsets.only(top: 6), padding: showing ? const EdgeInsets.symmetric(horizontal: 10, vertical: 4) : null, decoration: showing ? BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(10)) : null, child: Text(selLbl != null ? (showing ? 'Delete it, or tap the green shutter to retake it.' : 'Take the new photo.') : note.isNotEmpty ? note : hint, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 12, shadows: [Shadow(blurRadius: 6)]))),
                     if (selLbl == null) ...[
                       if (x['panel'] != null && !rv)
                         TextButton(onPressed: () => setState(_notOnCar), child: _pill('Not on this car', bg: Colors.white24, size: 13))

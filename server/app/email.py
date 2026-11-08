@@ -12,7 +12,9 @@ BTN = 'display:inline-block;margin:0 8px 8px 0;padding:12px 18px;border-radius:8
 
 
 def car_line(car: dict) -> str:
-    return " ".join(str(car[k]) for k in ("year", "make", "model", "trim") if car.get(k))
+    md, tr = str(car.get("model") or ""), str(car.get("trim") or "")
+    skip = "model" if md and tr.lower().startswith(md.lower() + " ") else None  # a trim that starts with the model (Lexus "LC 500h")
+    return " ".join(str(car[k]) for k in ("year", "make", "model", "trim") if car.get(k) and k != skip)
 
 
 def date(d) -> str:
