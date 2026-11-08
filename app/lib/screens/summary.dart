@@ -124,7 +124,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
           ),
         ]),
         visitCard(st),
-        Section(title: 'VIN and mileage', trailing: vals['idconf'] == true ? okVal('Confirmed') : const Text('Required', style: TextStyle(color: amber, fontWeight: FontWeight.w700)), children: [
+        Section(title: 'VIN and mileage', trailing: vals['idconf'] == true && idReady(st) ? okVal('Confirmed') : const Text('Required', style: TextStyle(color: amber, fontWeight: FontWeight.w700)), children: [
           Row(children: [
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text('VIN', style: TextStyle(color: muted, fontSize: 12)), Text(vin.isEmpty ? '–' : vin, style: const TextStyle(fontFamily: 'monospace', fontSize: 17, fontWeight: FontWeight.w700))])),
             IconButton(onPressed: () => _edit('vin'), icon: const Icon(LucideIcons.pen, size: 18)),
@@ -146,7 +146,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
           OutlinedButton.icon(
             onPressed: idReady(st) && vals['idconf'] != true ? () => store.mut(id, (s) => m(s, 'vals')['idconf'] = true) : null,
             icon: const Icon(LucideIcons.check, size: 16),
-            label: Text(vals['idconf'] == true ? 'VIN and mileage confirmed' : 'Confirm VIN and mileage'),
+            label: Text(vals['idconf'] == true && idReady(st) ? 'VIN and mileage confirmed' : 'Confirm VIN and mileage'),
           ),
         ]),
         Section(children: [
@@ -189,11 +189,12 @@ class _SignScreenState extends ConsumerState<SignScreen> {
   }
 
   Future<void> _sign() async {
+    if (sumBlock(store.ins[widget.id]!).isNotEmpty) return;
     setState(() => signing = true);
     final id = widget.id, png = await pad.toPngBytes(), rel = '${store.dirOf(id)}/signature.png';
     if (png == null) return setState(() => signing = false);
     await File(store.abs(rel)).writeAsBytes(png);
-    final end = {...await endLoc, 'at': DateTime.now().toIso8601String()};
+    final end = {...await endLoc, 'at': nowIso()}; // the moment the seller signs: the end of the inspection
     store.mut(id, (s) {
       m(s, 'files')['signature'] = rel;
       s['signName'] = name.text.trim();
@@ -208,7 +209,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
   @override
   Widget build(BuildContext context) {
     final id = widget.id, st = ref.watch(storeProvider).ins[id]!, pl = problemsList(st), tot = totals(st), dl = tot['dlist'] as List;
-    final can = st['agree'] == true && name.text.trim().isNotEmpty && pad.isNotEmpty && !signing;
+    final why = sumBlock(st), can = why.isEmpty && st['agree'] == true && name.text.trim().isNotEmpty && pad.isNotEmpty && !signing;
     const disc = [
       'This inspection records the condition of the vehicle that our inspector could see and test today, at your location. The vehicle was not lifted or taken apart.',
       'It describes the vehicle at the time of the inspection. It is not a warranty.',
@@ -261,7 +262,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
           Align(alignment: Alignment.centerRight, child: TextButton(onPressed: () => setState(pad.clear), child: const Text('Clear'))),
         ]),
       ]),
-      bottomNavigationBar: BottomBar(PBtn('Sign', can ? _sign : null, icon: LucideIcons.pen)),
+      bottomNavigationBar: BottomBar(PBtn(why.isEmpty ? 'Sign' : why, can ? _sign : null, icon: why.isEmpty ? LucideIcons.pen : null)),
     );
   }
 }

@@ -156,4 +156,17 @@ void main() {
     manual(st).first['ai'] = true;
     expect(sumBlock(st), 'Label 1 damage photo');
   });
+
+  test('a VIN that fails the check digit cannot be confirmed or signed', () {
+    final st = run('Gas or diesel', '5UXTY5C00L9B00231'), v = m(st, 'vals');
+    expect(idReady(st), false);
+    v['idconf'] = true; // confirmed before this rule
+    expect(sumBlock(st), 'Fix the VIN: the check digit is wrong');
+    v['vin_read'] = '5UXTY5C00L9B00230';
+    v['idconf'] = false;
+    expect(idReady(st), true);
+    expect(sumBlock(st), 'Confirm the VIN and mileage');
+    v['idconf'] = true;
+    expect(sumBlock(st), 'Pick the overall condition'); // past the VIN
+  });
 }

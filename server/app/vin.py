@@ -13,7 +13,7 @@ def fuel(r: dict) -> str:
         return "Electric (EV)"
     if "HEV" in el:  # HEV, Strong HEV, Mild HEV
         return "Hybrid"
-    return "Gas or diesel"
+    return "Diesel" if "diesel" in ft else "Gas"
 
 
 def decode(vin: str) -> dict:

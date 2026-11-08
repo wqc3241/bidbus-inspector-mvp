@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 
 from . import config, spin, storage
 from .cr import CAT
-from .email import inspected_on
+from .email import inspected_when
 from .db import Inspection, get_session
 
 router = APIRouter(prefix="/r")
@@ -147,13 +147,12 @@ def view(insp: Inspection) -> dict:
                   else ("Title, odometer, legal", True) if light == "Red" else ("Purchase Protection", False))
     banners = sorted((line(i) for i in cr["issues"] if LEVEL.get(i["level"])), key=lambda x: ["stop", "sev", "yel"].index(x["lv"]))
     specs = [("VIN", v["vin"]), ("Year", car.get("year")), ("Make", car.get("make")), ("Model", car.get("model")), ("Trim", car.get("trim")),
-             ("Odometer", f"{miles:,} mi" if miles is not None else None), ("Fuel", FUEL_WORD.get(v["fuel"], v["fuel"])), ("Keys", kc)]
+             ("Odometer", f"{miles:,} mi" if miles is not None else None), ("Fuel", car["fuel"] if car.get("fuel") in ("Gas", "Diesel") else FUEL_WORD.get(v["fuel"], v["fuel"])), ("Keys", kc)]
     if v["fuel"] == "Electric (EV)" and v["ev_battery_health_pct"] is not None:
         specs.append(("Battery health", f"{v['ev_battery_health_pct']}%"))
 
-    d = inspected_on(insp)
     return {"name": " ".join(str(car[k]) for k in ("year", "make", "model") if car.get(k)), "trim": car.get("trim") or "",
-            "miles": f"{miles:,}" if miles is not None else "", "date": f"{d:%b} {d.day}, {d.year}",
+            "miles": f"{miles:,}" if miles is not None else "", "date": inspected_when(insp),
             "media": media, "groups": groups, "rows": rows, "videos": other_videos, "tires": tires, "highlight": highlight,
             "overall": cr["overall_condition"], "note": (cr["inspector_note"] or "").strip(), "protection": protection,
             "banners": banners, "specs": specs}

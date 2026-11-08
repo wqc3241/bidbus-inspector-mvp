@@ -146,7 +146,7 @@ Payload inspectionPayload(J st) {
     'checks': checks, 'tires': tires, 'tires_match': (vals['tires_match'] ?? '') == '' ? null : vals['tires_match'], 'paint': paint,
     'features': {'sunroof': (feat['sunroof'] ?? '') == '' ? null : feat['sunroof'], 'navigation': (feat['navigation'] ?? '') == '' ? null : feat['navigation']},
     'damages': damages, 'overall_condition': (st['overall'] ?? '') == '' ? null : st['overall'], 'inspector_note': st['note'] ?? '',
-    'signature': {'seller_name': st['signName'] ?? '', 'agreed': st['agree'] == true, 'signed': st['signed'] == true},
+    'signature': {'seller_name': st['signName'] ?? '', 'agreed': st['agree'] == true, 'signed': st['signed'] == true}, // when and where: source.ended
   };
   return Payload(record, files);
 }

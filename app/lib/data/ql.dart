@@ -39,6 +39,15 @@ void initQl(J q) {
 List<String> strs(dynamic l) => (l as List? ?? const []).cast<String>();
 
 const fuels = ['Gas or diesel', 'Hybrid', 'Plug-in hybrid', 'Electric (EV)'];
+// what New inspection offers: Gas and Diesel are picked apart and both use the 'Gas or diesel' items
+const fuelChoices = ['Gas', 'Diesel', 'Hybrid', 'Plug-in hybrid', 'Electric (EV)'];
+// local time with its UTC offset (2026-11-07T21:28:12-08:00): the server can place it in time and still show the phone's clock
+String nowIso() {
+  final n = DateTime.now(), o = n.timeZoneOffset.inMinutes.abs();
+  return '${n.toIso8601String().split('.').first}${n.timeZoneOffset.isNegative ? '-' : '+'}${'${o ~/ 60}'.padLeft(2, '0')}:${'${o % 60}'.padLeft(2, '0')}';
+}
+
+String fuelGroup(String choice) => choice == 'Gas' || choice == 'Diesel' ? 'Gas or diesel' : choice;
 const ev = 'Electric (EV)';
 
 bool fuelOk(String? cars, String fuel) {

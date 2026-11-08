@@ -12,6 +12,8 @@ import '../data/ql.dart';
 import '../logic/insp.dart';
 import '../services/store.dart';
 import '../services/media.dart' show cutSpinFrames;
+import '../data/paint_car_data.dart';
+import '../widgets/paint_car.dart';
 import '../widgets/spin_view.dart';
 import '../widgets/ui.dart';
 import 'check_id.dart';
@@ -207,12 +209,19 @@ class ReviewScreen extends ConsumerWidget {
     ]);
   }
 
-  Widget _mods(J st, String k) {
-    final a = ((m(st, 'multi')[modslot[k]] ?? []) as List).where((x) => x['sec'] == k).toList();
-    if (a.isEmpty) return const SizedBox();
+  // a mod tile opens the camera on that photo: it shows there, to delete or retake
+  Widget _mods(BuildContext context, J st, String k) {
+    final all = (m(st, 'multi')[modslot[k]] ?? []) as List, at = [for (var q = 0; q < all.length; q++) if (all[q]['sec'] == k) q];
+    if (at.isEmpty) return const SizedBox();
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Sub3('Mods', LucideIcons.wrench),
-      tiles([for (var q = 0; q < a.length; q++) ShotTile('Mod ${q + 1}', file: a[q]['f'] != null ? store.abs(a[q]['f']) : null, icon: LucideIcons.wrench)]),
+      tiles([
+        for (var n = 0; n < at.length; n++)
+          ShotTile('Mod ${n + 1}',
+              file: all[at[n]]['f'] != null ? store.abs(all[at[n]]['f']) : null,
+              icon: LucideIcons.wrench,
+              onTap: () => context.push('/i/$id/cam', extra: CamArgs(k: k, i: all[at[n]]['at'] as int?, single: true, sel: ('m', at[n])))),
+      ]),
     ]);
   }
 
@@ -273,7 +282,7 @@ class ReviewScreen extends ConsumerWidget {
     return [
       _shots(context, st, k),
       if (zoneTitle.containsKey(k)) _damages(context, st, k),
-      _mods(st, k),
+      _mods(context, st, k),
       if (entries.isNotEmpty) ...[RowList(entries), const SizedBox(height: 16)],
       RowList([...rows, ...checkRowItems(context, id, st, si.checks)]),
     ];
@@ -325,7 +334,7 @@ class ReviewScreen extends ConsumerWidget {
       const SizedBox(height: 12),
       _shots(context, st, 'Tires', w: w),
       _damages(context, st, 'Tires', w: w),
-      _mods(st, 'Tires'),
+      _mods(context, st, 'Tires'),
       RowList([
         RowBtn('Brand', (r['brand'] ?? '') != '' ? setVal(r['brand']) : const Text('Optional', style: TextStyle(color: muted)), sub: r['auto'] == true && (r['brand'] ?? '') != '' ? 'Read from photo' : null, onTap: () => pick('brand')),
         RowBtn('Size', (r['size'] ?? '') != '' ? setVal((r['size'] as String).replaceFirst('R', ' R')) : const Text('Optional', style: TextStyle(color: muted)), onTap: () => pick('size')),
@@ -370,20 +379,19 @@ class ReviewScreen extends ConsumerWidget {
     }
 
     return [
-      PanelGrid((p) {
-        final panel = p, r = (m(st, 'paint')[panel] as J?) ?? {}, hi = paintHigh(r), has = (r['v'] ?? '') != '';
-        return GestureDetector(
-          onTap: () => edit(panel),
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(color: hi ? const Color(0xFFFDE8EE) : Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: hi ? red : !has && r['na'] != true ? amber : const Color(0xFFD5D8DB))),
-            child: Column(children: [
-              Text(r['na'] == true ? 'N/A' : has ? '${r['v']}' : '–', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: hi ? red : Colors.black)),
-              Text(paintShort[panel]!, style: const TextStyle(fontSize: 11, color: muted)),
-            ]),
-          ),
-        );
-      }),
+      // the mockup's paint diagram: the car from above, one reading per panel
+      PaintCar(
+          readings: true,
+          make: (st['car'] as J?)?['make'],
+          cell: (panel) {
+            final r = (m(st, 'paint')[panel] as J?) ?? {}, has = (r['v'] ?? '') != '';
+            return PaintReadingCell(
+                panel: panel,
+                value: r['na'] == true ? 'N/A' : has ? '${r['v']}' : '–',
+                label: paintReadPanels.firstWhere((x) => x.$1 == panel).$3,
+                state: r['na'] == true ? 'na' : paintHigh(r) ? 'hi' : !has ? 'ms' : '',
+                onTap: () => edit(panel));
+          }),
       const SizedBox(height: 20),
       _shots(context, st, 'Paint'),
       _damages(context, st, 'Paint'),

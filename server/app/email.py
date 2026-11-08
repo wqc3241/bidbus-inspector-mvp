@@ -19,12 +19,22 @@ def date(d) -> str:
     return f"{d:%b} {d.day}, {d.year}"
 
 
-def inspected_on(insp):
-    """The day on the phone when the inspection started (its local time), else the day the server got it."""
+def _at(insp, key: str):
     try:
-        return datetime.fromisoformat(insp.record["source"]["started"]["at"])
+        return datetime.fromisoformat(insp.record["source"][key]["at"])
     except (TypeError, KeyError, ValueError):
-        return insp.created_at
+        return None
+
+
+def inspected_on(insp):
+    """when the inspection ended on the phone (its local time), else when it started, else when the server got it"""
+    return _at(insp, "ended") or _at(insp, "started") or insp.created_at
+
+
+def inspected_when(insp) -> str:
+    """the date, with the time the inspection ended when the phone sent it"""
+    end = _at(insp, "ended")
+    return date(end) + f", {end.hour % 12 or 12}:{end.minute:02d} {'AM' if end.hour < 12 else 'PM'}" if end else date(inspected_on(insp))
 
 
 def send(to: str, subject: str, html: str, text: str) -> bool:
@@ -39,7 +49,7 @@ def send(to: str, subject: str, html: str, text: str) -> bool:
 
 def send_report(insp, seller_url: str, dealer_url: str) -> bool:
     car, miles = car_line(insp.car or {}), insp.cr["condition_report"]["vehicle"]["mileage"]
-    lines = [car, f"{miles:,} mi" if miles is not None else "", f"Inspected {date(inspected_on(insp))}"]
+    lines = [car, f"{miles:,} mi" if miles is not None else "", f"Inspected {inspected_when(insp)}"]
     html = ("".join(f"<p style=\"margin:0 0 6px\">{escape(x)}</p>" for x in lines if x) +
             f'<p style="margin:18px 0"><a href="{escape(seller_url)}" style="{BTN}">Seller report</a>'
             f'<a href="{escape(dealer_url)}" style="{BTN}">Dealer report</a></p>')

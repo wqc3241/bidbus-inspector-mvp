@@ -3,6 +3,9 @@ import hmac
 import logging
 import mimetypes
 import secrets
+import threading
+from contextlib import asynccontextmanager
+from datetime import datetime
 from typing import Annotated
 
 from fastapi import APIRouter, BackgroundTasks, Depends, FastAPI, File, Form, Header, HTTPException, Path, Request, UploadFile
@@ -18,7 +21,16 @@ from .db import Inspection, SessionLocal, get_session, now
 from .vin import decode
 
 log = logging.getLogger(__name__)
-app = FastAPI(title="Bidbus Field", docs_url=None, redoc_url=None, openapi_url=None)
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    # a build cut off by a restart (deploy, crash) never finishes: run it again, off the request path so the health check is not held up
+    threading.Thread(target=resume_builds, daemon=True).start()
+    yield
+
+
+app = FastAPI(title="Bidbus Field", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 
 
 def _passcode_ok(authorization: str | None) -> bool:
@@ -92,9 +104,23 @@ def _status(s: Session, insp: Inspection) -> dict:
             "report_sent_at": insp.report_sent_at.isoformat() if insp.report_sent_at else None}
 
 
+class EmailNotSent(Exception):
+    pass
+
+
 def _send_report(insp: Inspection) -> None:
-    email.send_report(insp, *_urls(insp.report_token))
-    insp.status, insp.report_sent_at = "sent", now()
+    if not email.send_report(insp, *_urls(insp.report_token)):  # no RESEND_API_KEY
+        raise EmailNotSent("The report was built but the email was not sent")
+    insp.status, insp.report_sent_at, insp.validation_errors = "sent", now(), None
+
+
+def _signed_at(record: dict) -> datetime | None:
+    """when the seller signed: the record's 'ended' is taken as the seller taps Sign (stored when the phone sends its UTC offset)"""
+    try:
+        d = datetime.fromisoformat(record["source"]["ended"]["at"]) if record["signature"]["signed"] else None
+    except (TypeError, KeyError, ValueError):
+        return None
+    return d if d and d.tzinfo else None
 
 
 @api.put("/inspections/{inspection_id}")
@@ -102,6 +128,7 @@ def put_inspection(inspection_id: InspectionId, body: InspectionIn, s: DB):
     insp = s.get(Inspection, inspection_id) or Inspection(id=inspection_id)
     insp.report_email, insp.inspector, insp.car, insp.record = body.report_email, body.inspector, body.car, body.record
     insp.status, insp.validation_errors, insp.files_expected = "receiving", None, len(storage.expected(body.record))
+    insp.signed_at = _signed_at(body.record)
     s.add(insp)
     s.commit()
     return {"status": insp.status, "missing": _missing(s, insp)}
@@ -132,6 +159,7 @@ def complete(inspection_id: InspectionId, tasks: BackgroundTasks, s: DB):
     if insp.status in ("building", "sent"):  # a repeated call does not build or email twice
         return {"status": insp.status}
     insp.status = "building"
+    insp.report_token = insp.report_token or secrets.token_urlsafe(24)  # set before the build, so a build run twice emails the same links
     s.commit()
     tasks.add_task(build, inspection_id)
     return {"status": "building"}
@@ -141,6 +169,8 @@ def build(inspection_id: str) -> None:
     """docs/06-backend.md, Build pipeline"""
     with SessionLocal() as s:
         insp = s.get(Inspection, inspection_id)
+        if not insp or insp.status != "building":  # built already (an older container during a deploy) or the record was sent again
+            return
         try:
             try:
                 spin.ensure_frames(storage.folder(inspection_id))
@@ -160,8 +190,17 @@ def build(inspection_id: str) -> None:
         except Exception as e:
             log.exception("build %s failed", inspection_id)
             s.rollback()
-            insp.status, insp.validation_errors = "failed", insp.validation_errors or [f"{type(e).__name__}: {e}"]
+            reason = str(e) if isinstance(e, EmailNotSent) else f"{type(e).__name__}: {e}"
+            insp.status, insp.validation_errors = "failed", insp.validation_errors or [reason]
             s.commit()
+
+
+def resume_builds() -> None:
+    """builds left in 'building' when the server stopped"""
+    with SessionLocal() as s:
+        ids = list(s.scalars(select(Inspection.id).where(Inspection.status == "building")))
+    for i in ids:
+        build(i)
 
 
 @api.get("/inspections/{inspection_id}")
@@ -174,7 +213,11 @@ def resend_email(inspection_id: InspectionId, s: DB):
     insp = _inspection(s, inspection_id)
     if not insp.cr or not insp.report_token or insp.status not in ("sent", "failed"):
         raise HTTPException(status_code=409, detail="The report is not built")
-    _send_report(insp)
+    try:
+        _send_report(insp)
+    except Exception:
+        log.exception("resend %s failed", inspection_id)
+        raise HTTPException(status_code=502, detail="Email not sent")
     s.commit()
     return _status(s, insp)
 

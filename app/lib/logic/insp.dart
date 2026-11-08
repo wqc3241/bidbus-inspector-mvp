@@ -460,7 +460,7 @@ List<J> featMissingList(J st) => featq.where((q) => (m(st, 'feat')[q[0]] ?? '') 
 int featMissing(J st) => featMissingList(st).length;
 int keysMissing(J st) => m(st, 'vals')['keys_n'] == null ? 1 : 0;
 int tmMissing(J st) => byId['tires_match'] != null && (m(st, 'vals')['tires_match'] ?? '') == '' ? 1 : 0;
-bool idReady(J st) => ((m(st, 'vals')['vin_read'] ?? '') as String).length == 17 && (m(st, 'vals')['odo_read'] ?? '') != '';
+bool idReady(J st) => vinCheck((m(st, 'vals')['vin_read'] ?? '') as String) && (m(st, 'vals')['odo_read'] ?? '') != ''; // the CR refuses a VIN that fails the check digit
 
 class SecInfo {
   final int miss, unl, fqm, probs;
@@ -522,6 +522,8 @@ String sumBlock(J st) {
   if (paintMissing(st).isNotEmpty) return 'Add the paint reading: ${paintMissing(st).join(', ')}';
   final unc = sumUnconfirmed(st);
   if (unc.isNotEmpty) return 'Review ${unc.length} more section${unc.length > 1 ? 's' : ''}';
+  final vin = (m(st, 'vals')['vin_read'] ?? '') as String;
+  if (vin.length == 17 && !vinCheck(vin)) return RegExp(r'^[A-HJ-NPR-Z0-9]{17}$').hasMatch(vin) ? 'Fix the VIN: the check digit is wrong' : 'Fix the VIN: no I, O, Q or spaces';
   if (!idReady(st) || m(st, 'vals')['idconf'] != true) return 'Confirm the VIN and mileage';
   if ((st['overall'] ?? '') == '') return 'Pick the overall condition';
   return '';

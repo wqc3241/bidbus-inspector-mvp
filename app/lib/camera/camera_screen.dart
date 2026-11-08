@@ -20,7 +20,8 @@ class CamArgs {
   final bool run, single;
   final String? k, dmg, redo, aw; // dmg: damage camera for that zone; redo: damage id to retake; aw: wheel for a new tire damage
   final int? i;
-  const CamArgs({this.run = false, this.single = false, this.k, this.i, this.dmg, this.redo, this.aw});
+  final (String, int)? sel; // opens on this damage ('d') or mod ('m') tag
+  const CamArgs({this.run = false, this.single = false, this.k, this.i, this.dmg, this.redo, this.aw, this.sel});
 }
 
 const readKind = {'ph_odo': 'odometer', 'ph_vin_dash': 'vin', 'ph_vin_door': 'vin', 'tire_photo': 'tire', 'tread_photo': 'tread', 'paint': 'paint_meter', 'ph_ev_battery': 'ev_battery', 'ph_keys': 'keys'};
@@ -106,6 +107,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   late int i;
   bool free = false, ask = false, rec = false, busy = false, flash = false, banner = false;
   (String, int)? sel; // a picked damage ('d') or mod ('m') tag in the strip
+  Object? liveFor; // the taken shot or tag the inspector chose to retake: the camera shows live again
   Map<String, dynamic>? capRet;
   (String, int, int)? tag; // last tag taken: kind, number in section, slot
   String note = '';
@@ -122,6 +124,27 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   J get st => store.ins[widget.id]!;
   String get fuel => fuelOf(st);
   bool get dmgMode => widget.args.dmg != null;
+
+  // the photo already taken for what is on screen (a taken shot, a picked tag, the damage being retaken); null: live camera
+  String? get shown {
+    final s = sel;
+    if (s != null) return ((s.$1 == 'd' ? manual(st) : (m(st, 'multi')[modslot[k]] ?? []) as List)[s.$2] as Map)['f'];
+    if (dmgMode) {
+      final d = manual(st).where((d) => d['id'] == widget.args.redo).firstOrNull;
+      return d == null ? null : d['f'];
+    }
+    if (i >= l.length || free || ask) return null;
+    final x = l[i], id = x['id'] as String;
+    if ((x['it'] as J)['kind'] == 'video' || !capHas(st, x)) return null;
+    if (isMulti(id)) {
+      final a = (m(st, 'multi')[id] ?? []) as List;
+      return widget.args.single && a.isNotEmpty ? a.last['f'] : null;
+    }
+    return m(st, 'files')[x['panel'] != null ? 'paint:${x['panel']}' : x['wheel'] != null ? '$id-${x['wheel']}' : id];
+  }
+
+  Object get here => (k, i, sel);
+  bool get showing => shown != null && liveFor != here;
   List<J> get l => capList(k, st);
 
   @override
@@ -131,6 +154,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     final a = widget.args, saved = st['cap'] as J?;
+    sel = a.sel;
     k = a.dmg ?? a.k ?? saved?['k'] ?? firstOpenSection(st) ?? 'Exterior';
     final lst = capList(k, st);
     i = a.i ?? capNext(st, lst, 0);
@@ -298,6 +322,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   Future<void> _shutter({bool library = false}) async {
     if (busy || (cc == null && !library && !noCam) || i >= l.length) return;
     library = library || noCam;
+    if (showing && !library) return setState(() => liveFor = here);
+    if (sel != null) return _retakeSel(library: library);
     final x = l[i], it = x['it'] as J;
     if (it['kind'] == 'video' && library) return _pickVideo();
     if (it['kind'] == 'video' && !library) {
@@ -323,6 +349,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         }
         capMark(s, x, library ? 'library' : 'camera', rel);
       });
+      liveFor = null;
       flash = !library;
       note = '';
       if (widget.args.single) return await _close();
@@ -423,8 +450,33 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     }).catchError((e) => debugPrint('spin: $e'));
   }
 
+  // retake a picked damage or mod photo: the tag keeps its place and its label
+  Future<void> _retakeSel({bool library = false}) async {
+    final s = sel!;
+    setState(() => busy = true);
+    try {
+      final from = library ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
+      if (from == null) return;
+      final rel = await keepPhoto(widget.id, from, s.$1 == 'd' ? 'damage' : 'mod', library: library);
+      store.mut(widget.id, (x) {
+        final e = (s.$1 == 'd' ? manual(x) : (m(x, 'multi')[modslot[k]] ?? []) as List)[s.$2] as Map;
+        dropFile(e['f']);
+        e['f'] = rel;
+        e['src'] = library ? 'library' : 'camera';
+      });
+      flash = !library;
+      liveFor = null;
+      if (widget.args.single) return await _close();
+    } finally {
+      if (mounted) setState(() => busy = false);
+      Future.delayed(const Duration(milliseconds: 180), () => mounted ? setState(() => flash = false) : null);
+    }
+  }
+
   Future<void> _tag(String t) async {
     if (busy || (cc == null && !noCam) || i >= l.length || k == 'OBDII' || (l[i]['it'] as J)['kind'] == 'video') return;
+    sel = null;
+    if (showing && !noCam) return setState(() => liveFor = here); // a taken photo is on screen: show the camera first
     setState(() => busy = true);
     try {
       final at = i, sec = k, from = noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
@@ -522,17 +574,18 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         ),
       );
 
-  Widget _shutterBtn(bool video, VoidCallback? on) => GestureDetector(
+  Widget _shutterBtn(bool video, VoidCallback? on, {bool again = false}) => GestureDetector(
         onTap: on,
         child: Container(
           width: 76,
           height: 76,
-          decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 4)),
+          decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: again ? const Color(0xFF4ADE80) : Colors.white, width: 4)),
           padding: const EdgeInsets.all(5),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
             decoration: BoxDecoration(color: video ? const Color(0xFFDC2626) : Colors.white, borderRadius: BorderRadius.circular(video && rec ? 8 : 40)),
             margin: EdgeInsets.all(video && rec ? 14 : 0),
+            child: again ? const Icon(LucideIcons.rotateCcw, color: Colors.black, size: 26) : null,
           ),
         ),
       );
@@ -633,6 +686,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       }
     });
     setState(() => sel = null);
+    if (widget.args.single) _close();
   }
 
   @override
@@ -655,6 +709,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
               },
               child: FittedBox(fit: BoxFit.cover, child: SizedBox(width: 100 * _previewRatio(c), height: 100, child: CameraPreview(c))),
             ),
+          if (showing) Positioned.fill(child: Image.file(File(store.abs(shown!)), fit: BoxFit.cover, cacheWidth: 1600, gaplessPlayback: true, key: ValueKey(shown))),
           if (flash) Container(color: Colors.white54),
           SafeArea(child: dmgMode ? _dmgLayout() : _passLayout()),
         ]),
@@ -671,14 +726,14 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             padding: const EdgeInsets.all(8),
             child: Row(children: [_btn(LucideIcons.chevronLeft, () => Navigator.of(context).pop()), const Spacer(), _pill(zoneTitle[zone]!.replaceAll('damages', 'damage')), const Spacer(), const SizedBox(width: 40)]),
           ),
-          Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [SvgPicture.asset('assets/guides/damage.svg', height: MediaQuery.of(context).size.height * .45), const SizedBox(height: 8), _pill('One damage per photo', size: 13)]))),
+          Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [if (!showing) SvgPicture.asset('assets/guides/damage.svg', height: MediaQuery.of(context).size.height * .45), const SizedBox(height: 8), _pill(showing ? 'Tap the green shutter to retake it' : 'One damage per photo', size: 13)]))),
         ]),
       ),
       SizedBox(
         width: 110,
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           _btn(LucideIcons.upload, busy ? null : () => _dmgShot(library: true), label: 'Upload'),
-          _shutterBtn(false, busy || (cc == null && !noCam) ? null : () => _dmgShot()),
+          _shutterBtn(false, busy || (cc == null && !noCam) ? null : () => showing && !noCam ? setState(() => liveFor = here) : _dmgShot(), again: showing),
           const SizedBox(height: 56),
         ]),
       ),
@@ -718,7 +773,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (hint.isEmpty && id == 'ph_engine_oil') hint = 'No dipstick? Take the oil level screen.';
     if (hint.isEmpty && id == 'ph_ext_roof') hint = 'Hold the phone up high, the whole roof in view.';
     if (it['optional'] == true && !rv) hint = 'Optional. ${hint.isEmpty ? 'Skip it if you cannot get to it.' : hint}';
-    if (rv) hint = vid ? 'Taken. Record again to replace it.' : 'Taken. The shutter retakes it.';
+    if (rv) hint = vid ? 'Taken. Record again to replace it.' : showing ? 'Taken. Tap the green shutter to retake it.' : 'Take the new photo.';
     if (multiStay) hint = '${multiHint[id] ?? 'One photo each'}. ${arr.isNotEmpty ? '${arr.length} taken. Take another, or tap Done.' : 'Take as many as you need, then tap Done.'}';
     final selLbl = sel == null ? null : sel!.$1 == 'd' ? 'Damage' : 'Mod';
     final tagOk = !widget.args.single, tagOff = k == 'OBDII' || vid || busy || (cc == null && !noCam) || rec;
@@ -743,11 +798,11 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                     if (tag != null && tag!.$3 == i && sel == null) _pill('${tag!.$1 == 'dmg' ? 'Damage' : 'Mod'} ${tag!.$2}', bg: tag!.$1 == 'dmg' ? const Color(0xFFC2410C) : modBlue, ic: tag!.$1 == 'dmg' ? LucideIcons.triangleAlert : LucideIcons.wrench, size: 16),
                     if ((!free && !ask) || sel != null) ...[
                     if (rec) _pill('● ${recS ~/ 60}:${'${recS % 60}'.padLeft(2, '0')}', bg: const Color(0xFFDC2626), size: 15),
-                    if (g != null && selLbl == null) Transform.scale(scale: scale, child: SvgPicture.asset(g, height: MediaQuery.of(context).size.height * .45)),
+                    if (g != null && selLbl == null && !showing) Transform.scale(scale: scale, child: SvgPicture.asset(g, height: MediaQuery.of(context).size.height * .45)),
                     const SizedBox(height: 6),
                     _pill(selLbl ?? lbl, size: 15),
-                    if (selLbl == null && (note.isNotEmpty || hint.isNotEmpty))
-                      Padding(padding: const EdgeInsets.only(top: 6), child: Text(note.isNotEmpty ? note : hint, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 12, shadows: [Shadow(blurRadius: 6)]))),
+                    if (selLbl != null || note.isNotEmpty || hint.isNotEmpty)
+                      Padding(padding: const EdgeInsets.only(top: 6), child: Text(selLbl != null ? (showing ? 'Delete it, or tap the green shutter to retake it.' : 'Take the new photo.') : note.isNotEmpty ? note : hint, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 12, shadows: [Shadow(blurRadius: 6)]))),
                     if (selLbl == null) ...[
                       if (x['panel'] != null && !rv)
                         TextButton(onPressed: () => setState(_notOnCar), child: _pill('Not on this car', bg: Colors.white24, size: 13))
@@ -794,7 +849,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           if (isLib(id) && !free && !ask) _btn(LucideIcons.upload, busy ? null : () => _shutter(library: true), label: 'Upload') else const SizedBox(height: 40),
           if (tagOk) _round(const Color(0xFFF59E0B), LucideIcons.triangleAlert, 'Damage', tagOff ? null : () => _tag('dmg')),
-          if (!free && !ask) _shutterBtn(vid, busy || (cc == null && !noCam) ? null : () => _shutter()),
+          if ((!free && !ask) || sel != null) _shutterBtn(vid && sel == null, busy || (cc == null && !noCam) ? null : () => _shutter(), again: showing),
           if (tagOk) _round(const Color(0xFF60A5FA), LucideIcons.wrench, 'Mod', tagOff ? null : () => _tag('mod')),
           if (sel != null)
             _btn(LucideIcons.trash2, _deleteSel, label: 'Delete', bg: red)

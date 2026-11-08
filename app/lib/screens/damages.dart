@@ -11,7 +11,10 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../camera/camera_screen.dart';
 import '../data/ql.dart';
 import '../logic/insp.dart';
+import '../data/paint_car_data.dart';
 import '../services/store.dart';
+import '../widgets/car_map.dart';
+import '../widgets/paint_car.dart';
 import '../widgets/ui.dart';
 
 J? dmgById(J st, String did) => manual(st).where((d) => d['id'] == did).firstOrNull;
@@ -72,66 +75,15 @@ Widget _pillBtn(String label, bool on, VoidCallback? tap, {double w = 74}) => Ge
       ),
     );
 
-class CarMap extends StatelessWidget {
-  final String? sel;
-  final Set<String> have;
-  final ValueChanged<String> onPick;
-  const CarMap(this.sel, this.have, this.onPick, {super.key});
-  Widget _p(String place, String label, {double w = 78}) => _pillBtn(label, sel == place, have.contains(place) ? () => onPick(place) : null, w: w);
-  Widget _side(String s) => Column(children: [
-        _p('Headlight', 'Headlight'), _p('$s front fender', 'Front fender'), _p('Mirror', 'Mirror'), _p('$s front window', 'Front window'), _p('$s front door', 'Front door'),
-        _p('$s rear door', 'Rear door'), _p('$s rear window', 'Rear window'), _p('$s quarter panel', 'Quarter'), _p('Tail light', 'Tail light'),
-      ]);
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(color: const Color(0xFFF1F3F5), borderRadius: BorderRadius.circular(16)),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          _side('Left'),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(40), border: Border.all(color: const Color(0xFFC5CBD3), width: 2)),
-              child: Column(children: [
-                _p('Front bumper', 'Front bumper', w: 110), const SizedBox(height: 14), _p('Hood', 'Hood', w: 90), const SizedBox(height: 14), _p('Windshield', 'Windshield', w: 100),
-                const SizedBox(height: 18), _p('Roof', 'Roof', w: 80), const SizedBox(height: 18), _p('Rear glass', 'Rear glass', w: 100), const SizedBox(height: 14), _p('Trunk or liftgate', 'Trunk', w: 90),
-                const SizedBox(height: 14), _p('Rear bumper', 'Rear bumper', w: 110),
-              ]),
-            ),
-          ),
-          _side('Right'),
-        ]),
-      );
-}
-
-// 11 body panels seen from above (Damages Paint, Review Paint)
-const paintGrid = [
-  ['Left front fender', 'Hood', 'Right front fender'], ['Left front door', 'Roof', 'Right front door'], ['Left rear door', '', 'Right rear door'], ['Left quarter panel', 'Trunk or liftgate', 'Right quarter panel'],
-];
-const paintShort = {'Left front fender': 'LF fender', 'Hood': 'Hood', 'Hood or frunk lid': 'Hood', 'Right front fender': 'RF fender', 'Left front door': 'LF door', 'Roof': 'Roof', 'Right front door': 'RF door', 'Left rear door': 'LR door', 'Right rear door': 'RR door', 'Left quarter panel': 'L quarter', 'Trunk or liftgate': 'Trunk', 'Right quarter panel': 'R quarter'};
-
-class PanelGrid extends StatelessWidget {
-  final Widget Function(String panel) cell;
-  const PanelGrid(this.cell, {super.key});
-  @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(color: const Color(0xFFF1F3F5), borderRadius: BorderRadius.circular(16)),
-        child: Column(children: [
-          const Text('Front', style: TextStyle(fontSize: 11, color: muted)),
-          for (final r in paintGrid) Row(children: [for (final p in r) Expanded(child: Padding(padding: const EdgeInsets.all(3), child: p.isEmpty ? const SizedBox() : cell(p)))]),
-          const Text('Rear', style: TextStyle(fontSize: 11, color: muted)),
-        ]),
-      );
-}
+final _paintShort = {for (final p in paintPickPanels) p.$1: p.$2};
 
 class WhereView extends StatefulWidget {
   final J d;
   final String fuel;
   final ValueChanged<String> onPick;
   final String? shot; // the shot the damage was taken at
-  const WhereView(this.d, this.fuel, this.onPick, {super.key, this.shot});
+  final String? make; // for the brand mark on the paint diagram
+  const WhereView(this.d, this.fuel, this.onPick, {super.key, this.shot, this.make});
   @override
   State<WhereView> createState() => _WhereViewState();
 }
@@ -149,28 +101,9 @@ class _WhereViewState extends State<WhereView> {
           padding: const EdgeInsets.only(bottom: 10),
           child: SegmentedButton<int>(segments: [for (var j = 0; j < gs.length; j++) ButtonSegment(value: j, label: Text(gs[j].$1))], selected: {t}, showSelectedIcon: false, onSelectionChanged: (v) => setState(() => tab = v.first)),
         ),
-      if (g.$2 == 'car') CarMap(sel, have, widget.onPick),
-      if (g.$2 == 'paint') PanelGrid((p) => _pillBtn(paintShort[p]!, sel == pn(p), have.contains(pn(p)) ? () => widget.onPick(pn(p)) : null)),
-      if (g.$2 == 'tires')
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(color: const Color(0xFFF1F3F5), borderRadius: BorderRadius.circular(16)),
-          child: Column(children: [
-            for (final r in [['lf', 'rf'], ['lr', 'rr']])
-              Row(children: [
-                for (final w in r)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: Column(children: [
-                        Text(wheelName(w), style: const TextStyle(fontWeight: FontWeight.w700)),
-                        for (final part in ['tire', 'wheel']) _pillBtn(part == 'tire' ? 'Tire' : 'Wheel', sel == '${wheelName(w)} $part', () => widget.onPick('${wheelName(w)} $part'), w: 110),
-                      ]),
-                    ),
-                  ),
-              ]),
-          ]),
-        ),
+      if (g.$2 == 'car') CarTopMap(sel: sel, have: have, onPick: widget.onPick),
+      if (g.$2 == 'paint') PaintCar(make: widget.make, cell: (p) => PaintPickCell(_paintShort[p]!, on: sel == p, onTap: have.contains(p) ? () => widget.onPick(p) : null)),
+      if (g.$2 == 'tires') TireMap(sel: sel, onPick: widget.onPick),
       if (g.$2 == 'cab')
         Container(
           padding: const EdgeInsets.all(10),
@@ -208,7 +141,7 @@ class _WhereViewState extends State<WhereView> {
               ),
           ]),
         ),
-      if (sel != null && sel.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 8), child: Text(sel, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700))),
+      if (sel != null && sel.isNotEmpty && g.$2 != 'car' && g.$2 != 'tires') Padding(padding: const EdgeInsets.only(top: 8), child: Text(sel, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700))),
     ]);
   }
 }
@@ -335,7 +268,7 @@ class DamageEditor extends ConsumerWidget {
       ),
       const SizedBox(height: 20),
       const Sub3('Where', LucideIcons.mapPin),
-      WhereView(d, fuel, shot: d['sec'] is String && d['at'] is int ? (capList(d['sec'], st).elementAtOrNull(d['at']) ?? {})['id'] : null, (p) {
+      WhereView(d, fuel, make: (st['car'] as J?)?['make'], shot: d['sec'] is String && d['at'] is int ? (capList(d['sec'], st).elementAtOrNull(d['at']) ?? {})['id'] : null, (p) {
         store.mut(id, (s) {
           setLabel(dmgById(s, did)!, 'panel', p, fuel);
           syncDamages(s);

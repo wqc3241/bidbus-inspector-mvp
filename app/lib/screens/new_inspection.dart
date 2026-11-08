@@ -18,6 +18,7 @@ class NewInspectionScreen extends StatefulWidget {
 
 class _NewInspectionScreenState extends State<NewInspectionScreen> {
   final vin = TextEditingController(), miles = TextEditingController(), owner = TextEditingController(), email = TextEditingController(text: store.defaultEmail);
+  final inspector = TextEditingController(text: store.inspector);
   // a pick from the list, or Other with the typed value
   final typed = {for (final k in ['year', 'make', 'model', 'trim']) k: TextEditingController()};
   final pick = <String, String?>{'year': null, 'make': null, 'model': null, 'trim': null};
@@ -67,21 +68,22 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
         _fill('make', r['make']);
         _fill('model', r['model']);
         _fill('trim', r['trim']);
-        if (fuels.contains(r['fuel'])) fuel = r['fuel'];
+        if (fuelChoices.contains(r['fuel'])) fuel = r['fuel'];
       });
     } catch (_) {}
   }
 
-  bool get ready => year != null && _val('make').isNotEmpty && _val('model').isNotEmpty && _val('trim').isNotEmpty && fuel != null && RegExp(r'^\S+@\S+\.\S+$').hasMatch(email.text.trim());
+  bool get ready => inspector.text.trim().isNotEmpty && year != null && _val('make').isNotEmpty && _val('model').isNotEmpty && _val('trim').isNotEmpty && fuel != null && RegExp(r'^\S+@\S+\.\S+$').hasMatch(email.text.trim());
 
   void _go() {
     final id = const Uuid().v4();
+    if (store.inspector.isEmpty) store.saveSettings(server: store.server, passcode: store.passcode, inspector: inspector.text, email: store.defaultEmail); // next time it is filled in
     store.add(newInspection(
       id: id,
-      fuel: fuel!,
+      fuel: fuelGroup(fuel!),
       email: email.text.trim(),
-      inspector: store.inspector,
-      car: {'year': year, 'make': _val('make'), 'model': _val('model'), 'trim': _val('trim'), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim()},
+      inspector: inspector.text.trim(),
+      car: {'year': year, 'make': _val('make'), 'model': _val('model'), 'trim': _val('trim'), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim(), 'fuel': fuel},
     ));
     context.pushReplacement('/i/$id');
   }
@@ -145,11 +147,12 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
           _pick('model', 'Model'),
           _pick('trim', 'Trim'),
           _label('Fuel type'),
-          DropdownButtonFormField<String>(initialValue: fuel, items: [for (final f in fuels) DropdownMenuItem(value: f, child: Text(f))], onChanged: (v) => setState(() => fuel = v)),
+          DropdownButtonFormField<String>(initialValue: fuel, items: [for (final f in fuelChoices) DropdownMenuItem(value: f, child: Text(f))], onChanged: (v) => setState(() => fuel = v)),
           const SizedBox(height: 16),
           _f('Mileage (optional)', miles, kb: TextInputType.number, max: 7),
           _f('Owner name (optional)', owner),
           _f('Report email', email, kb: TextInputType.emailAddress),
+          _f('Inspector name', inspector),
         ]),
         bottomNavigationBar: BottomBar(PBtn('At the car: check ID', ready ? _go : null)),
       );

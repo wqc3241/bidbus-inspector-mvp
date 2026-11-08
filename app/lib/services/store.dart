@@ -189,7 +189,7 @@ class Store extends ChangeNotifier {
         final p = st['rec'] != null ? Payload(st['rec'], (st['recFiles'] as Map).cast<String, String>()) : inspectionPayload(st), car = st['car'] as J;
         final r = await a.putInspection(id, {
           'report_email': st['report_email'], 'inspector': st['inspector'],
-          'car': {'year': car['year'], 'make': car['make'], 'model': car['model'], 'trim': car['trim'], 'owner_name': car['owner_name']}, 'record': p.record,
+          'car': {'year': car['year'], 'make': car['make'], 'model': car['model'], 'trim': car['trim'], 'owner_name': car['owner_name'], 'fuel': ?car['fuel']}, 'record': p.record,
         });
         var missing = (r['missing'] as List).cast<String>();
         final extra = p.files.keys.where((n) => n.startsWith('spin-')).where((n) => !(m(st, 'up')['spin'] as List? ?? []).contains(n)).toList();
@@ -253,7 +253,9 @@ void applyReading(J st, J item, J r) {
         vals['vin_door'] = r['vin'];
         vals['vin_scan'] = 1;
       }
-      if (vals['vin_man'] != true && (item['door'] != true || (vals['vin_read'] ?? '') == '')) {
+      // the windshield reading leads; a reading that passes the check digit replaces one that does not, never the other way
+      final cur = (vals['vin_read'] ?? '') as String, v = '${r['vin']}', better = vinCheck(v) && !vinCheck(cur);
+      if (vals['vin_man'] != true && (cur == '' || better || (item['door'] != true && (vinCheck(v) || !vinCheck(cur))))) {
         vals['vin_read'] = r['vin'];
         vals['idconf'] = false;
       }

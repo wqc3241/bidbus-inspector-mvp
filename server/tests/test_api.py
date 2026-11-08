@@ -30,8 +30,9 @@ def test_api_needs_the_passcode(client):
     ({"ElectrificationLevel": "HEV (Hybrid Electric Vehicle) - Level Unknown", "FuelTypePrimary": "Gasoline"}, "Hybrid"),
     ({"ElectrificationLevel": "Strong HEV (Hybrid Electric Vehicle)"}, "Hybrid"),
     ({"ElectrificationLevel": "Mild HEV (Hybrid Electric Vehicle)"}, "Hybrid"),
-    ({"FuelTypePrimary": "Gasoline"}, "Gas or diesel"),
-    ({"FuelTypePrimary": "Diesel"}, "Gas or diesel"),
+    ({"FuelTypePrimary": "Gasoline"}, "Gas"),
+    ({"FuelTypePrimary": "Diesel"}, "Diesel"),
+    ({"FuelTypePrimary": "Gasoline", "FuelTypeSecondary": "Diesel"}, "Gas"),
 ])
 def test_vin_decode_fuel(client, monkeypatch, fields, fuel):
     result = {"ModelYear": "2020", "Make": "BMW", "Model": "X3", "Trim": "", "ElectrificationLevel": "", "FuelTypePrimary": "", **fields}
@@ -202,6 +203,60 @@ def test_validation_failure(client, mails):
     assert "damage 1: place 'Moon roof' is not in the Exterior list" in st["validation_errors"]
     assert mails[0]["subject"] == "Condition report not made: 2020 BMW X3 xDrive30i" and "Moon roof" in mails[0]["text"]
     assert client.post(f"/api/inspections/{iid}/resend-email", headers=PASS).status_code == 409
+
+
+def test_build_cut_off_by_a_restart_runs_again(client, mails):
+    # the server stopped after 'building' was saved: the next start builds it, once
+    from app import main
+    from app.db import Inspection, SessionLocal
+    iid = str(uuid.uuid4())
+    upload(client, iid, put_record(client, iid, sample("bmw-x3")).json()["missing"])
+    with SessionLocal() as s:
+        s.get(Inspection, iid).status = "building"
+        s.commit()
+    assert client.post(f"/api/inspections/{iid}/complete", headers=PASS).json() == {"status": "building"} and not mails
+    main.resume_builds()
+    st = client.get(f"/api/inspections/{iid}", headers=PASS).json()
+    assert st["status"] == "sent" and st["seller_url"] and len(mails) == 1
+    main.resume_builds()
+    main.build(iid)  # a late duplicate task does nothing once it is built
+    assert len(mails) == 1 and client.get(f"/api/inspections/{iid}", headers=PASS).json()["seller_url"] == st["seller_url"]
+
+
+def test_email_not_sent_is_a_failure(client, monkeypatch):
+    # no Resend key (or Resend says no): the report is built but not called sent, and resend says so
+    from app.db import Inspection, SessionLocal
+    iid = str(uuid.uuid4())
+    upload(client, iid, put_record(client, iid, sample("bmw-x3")).json()["missing"])
+    client.post(f"/api/inspections/{iid}/complete", headers=PASS)
+    st = client.get(f"/api/inspections/{iid}", headers=PASS).json()
+    assert st["status"] == "failed" and st["seller_url"] is None and st["report_sent_at"] is None
+    assert st["validation_errors"] == ["The report was built but the email was not sent"]
+    with SessionLocal() as s:
+        token = s.get(Inspection, iid).report_token
+    assert client.get(f"/r/{token}/seller").status_code == 200
+    assert client.post(f"/api/inspections/{iid}/resend-email", headers=PASS).status_code == 502
+    monkeypatch.setattr(email, "send", lambda *a: True)
+    r = client.post(f"/api/inspections/{iid}/resend-email", headers=PASS)
+    assert r.status_code == 200 and r.json()["status"] == "sent" and r.json()["validation_errors"] == [] and r.json()["report_sent_at"]
+
+
+def test_end_time_and_signing_are_recorded(client, mails):
+    # the phone sends local times with their offset; the report and email show when the inspection ended, signed_at is stored
+    from app.db import Inspection, SessionLocal
+    iid, rec = str(uuid.uuid4()), sample("bmw-x3")
+    rec["source"]["started"]["at"], rec["source"]["ended"]["at"] = "2026-11-07T20:48:00-08:00", "2026-11-07T21:28:12-08:00"
+    rec["source"]["ended"]["loc"] = "33.6819, -117.8362"  # where the seller signed
+    upload(client, iid, put_record(client, iid, rec).json()["missing"])
+    client.post(f"/api/inspections/{iid}/complete", headers=PASS)
+    st = client.get(f"/api/inspections/{iid}", headers=PASS).json()
+    assert st["status"] == "sent", st
+    with SessionLocal() as s:
+        insp = s.get(Inspection, iid)
+        assert insp.signed_at is not None and insp.inspector == "Tom" and insp.record["source"]["ended"]["loc"] == "33.6819, -117.8362"
+    assert "Inspected Nov 7, 2026, 9:28 PM" in mails[0]["text"]
+    token = st["seller_url"].split("/")[-2]
+    assert "Nov 7, 2026, 9:28 PM" in client.get(f"/r/{token}/seller").text and "Nov 7, 2026, 9:28 PM" in client.get(f"/r/{token}/dealer").text
 
 
 def test_documents_taken_on_site_are_expected(client):

@@ -82,4 +82,17 @@ void main() {
       }
     });
   }
+
+  test('Gas and Diesel are picked apart and both use the Gas or diesel items', () {
+    expect(fuelChoices, ['Gas', 'Diesel', 'Hybrid', 'Plug-in hybrid', 'Electric (EV)']);
+    expect([for (final f in fuelChoices) fuelGroup(f)], ['Gas or diesel', 'Gas or diesel', 'Hybrid', 'Plug-in hybrid', 'Electric (EV)']);
+    expect(fuelChoices.map(fuelGroup).every(fuels.contains), true);
+  });
+
+  test('times are local with their UTC offset', () {
+    final t = nowIso(), back = DateTime.parse(t).toLocal(), now = DateTime.now();
+    expect(RegExp(r'^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+-]\d\d:\d\d$').hasMatch(t), true, reason: t);
+    expect(now.difference(back).inSeconds.abs() < 5, true);
+    expect(t.substring(11, 16), '${'${now.hour}'.padLeft(2, '0')}:${'${now.minute}'.padLeft(2, '0')}');
+  });
 }

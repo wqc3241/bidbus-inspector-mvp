@@ -43,7 +43,7 @@ String idBlock(J st) {
 
 // the end is saved at once; the location is added when GPS answers
 Future<void> endVisit(BuildContext context, String id) async {
-  final at = DateTime.now().toIso8601String();
+  final at = nowIso();
   store.mut(id, (st) {
     st['status'] = 'ended';
     st['end'] = {'at': at, 'loc': null};
@@ -119,7 +119,7 @@ class CheckIdScreen extends ConsumerWidget {
 
   // the start time is saved at once and the camera opens; the location is added when GPS answers
   void _start(BuildContext context) {
-    final at = DateTime.now().toIso8601String();
+    final at = nowIso();
     store.mut(id, (st) {
       st['start'] = {'at': at, 'loc': null};
       st['phase'] = 'capture';

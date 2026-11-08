@@ -119,3 +119,16 @@ def test_date_is_the_day_on_the_phone(client):
         s.commit()
         assert date(inspected_on(insp)) == "Nov 7, 2026"
     assert "Nov 7, 2026" in client.get(f"/r/{token}/seller").text
+
+
+def test_dealer_specs_show_the_fuel_picked_on_the_phone(client):
+    # Gas and Diesel are picked apart on the phone; the record and CR keep 'Gas or diesel'
+    token = secrets.token_urlsafe(24)
+    with SessionLocal() as s:
+        s.add(Inspection(id=str(uuid.uuid4()), report_email="tom@example.com", inspector="Tom", car={**CARS["bmw-x3"], "fuel": "Diesel"},
+                         record=sample("bmw-x3"), status="sent", report_token=token, cr=build_cr(sample("bmw-x3"))))
+        s.commit()
+    specs = client.get(f"/r/{token}/dealer").text.split("Vehicle Details")[-1]
+    assert "Diesel" in specs and ">Gas<" not in specs
+    gas = client.get(f"/r/{make('bmw-x3')[0]}/dealer").text.split("Vehicle Details")[-1]
+    assert ">Gas<" in gas

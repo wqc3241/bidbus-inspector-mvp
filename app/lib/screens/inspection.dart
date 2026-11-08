@@ -106,7 +106,9 @@ class SentScreen extends ConsumerWidget {
                   try {
                     await s.resendEmail(id);
                     if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email sent again')));
-                  } catch (_) {}
+                  } catch (_) {
+                    if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email not sent. Try again later.')));
+                  }
                 },
                 icon: const Icon(LucideIcons.mail, size: 18),
                 label: const Text('Resend email')),

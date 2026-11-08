@@ -21,7 +21,7 @@ The inspection takes about 18 minutes.
 **1.2 New inspection**
 - Year (1981 to next year), Make, Model, Trim: required.
 - VIN (optional, 17 characters): when typed, decode with NHTSA vPIC and prefill year, make, model, trim and fuel type.
-- Fuel type, required: Gas or diesel, Hybrid, Plug-in hybrid, Electric (EV). It decides which items show.
+- Fuel type, required: Gas, Diesel, Hybrid, Plug-in hybrid, Electric (EV). It decides which items show; Gas and Diesel show the question list's "Gas or diesel" items, and the record's fuel stays "Gas or diesel" for both.
 - Mileage (optional), owner name (optional).
 - Report email, required, prefilled with the default from Settings.
 - Button At the car: check ID.

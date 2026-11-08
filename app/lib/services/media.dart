@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as img;
 
+import '../data/ql.dart' show nowIso;
+
 // bakes the EXIF orientation into the pixels; returns the clockwise turn applied (0, 90, 180, 270), or -1 when the file had no orientation
 Future<int> saveUpright(String from, String to, {int extraTurn = 0}) => compute(_upright, [from, to, extraTurn]);
 
@@ -36,7 +38,7 @@ const _frames = MethodChannel('bidbus/frames');
 Future<List<String>> cutSpinFrames(String video, String dir) async => ((await _frames.invokeMethod<List>('spin', {'video': video, 'dir': dir})) ?? []).cast<String>();
 
 Future<Map<String, dynamic>> here() async {
-  final at = DateTime.now().toIso8601String();
+  final at = nowIso();
   try {
     var p = await Geolocator.checkPermission();
     if (p == LocationPermission.denied) p = await Geolocator.requestPermission();
