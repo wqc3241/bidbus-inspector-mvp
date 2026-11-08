@@ -1,0 +1,114 @@
+<title>Inspection Journey</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#F3F4F2;--panel:#FFFFFF;--fg:#15181C;--muted:#5F656D;--line:#DADDD8;--accent:#307E1B;--accent-soft:#E3F0DC;--frame:#E9EBE7;--shadow:0 1px 2px rgba(20,30,20,.06),0 8px 24px -12px rgba(20,30,20,.18);--scrim:rgba(12,14,12,.82)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121412;--panel:#1B1E1B;--fg:#ECEEEA;--muted:#A3A9A1;--line:#30342F;--accent:#7CC25E;--accent-soft:#22331C;--frame:#262A25;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);--scrim:rgba(0,0,0,.86);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121412;--panel:#1B1E1B;--fg:#ECEEEA;--muted:#A3A9A1;--line:#30342F;--accent:#7CC25E;--accent-soft:#22331C;--frame:#262A25;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);--scrim:rgba(0,0,0,.86);color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{margin:0;font-size:clamp(24px,3.4vw,32px);font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+header p{margin:6px 0 0;font-size:15px;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+nav a{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--fg);text-decoration:none;font-size:13px;font-weight:500}
+nav a b{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:700}
+section{margin-top:36px}
+section>h2{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:19px;font-weight:650;letter-spacing:-.01em}
+section>h2 b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--panel);font-size:14px;font-weight:700}
+.strip{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x proximity;align-items:flex-start}
+figure{margin:0;flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ph{width:270px}.land{width:min(560px,86vw)}.web{width:100%}
+.fr{display:block;width:100%;padding:0;border:1px solid var(--line);background:var(--frame);border-radius:18px;overflow:auto;cursor:zoom-in;box-shadow:var(--shadow);max-height:590px}
+.web .fr{max-height:680px;border-radius:12px}
+.fr img{display:block;width:100%;height:auto}
+figcaption{display:flex;gap:8px;align-items:baseline;font-size:13px;font-weight:500;color:var(--fg);padding-left:2px}
+figcaption span{font-variant-numeric:tabular-nums;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.02em}
+.webs{display:grid;gap:22px;margin-top:8px}
+dialog{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh;width:100vw;height:100vh}
+dialog::backdrop{background:var(--scrim)}
+.lb{position:absolute;inset:0;overflow:auto;display:flex;justify-content:center;padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.lb img{display:block;height:auto;max-width:100%;align-self:flex-start;border-radius:10px}
+.x{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));width:40px;height:40px;border-radius:50%;border:0;background:var(--panel);color:var(--fg);font-size:22px;line-height:1;cursor:pointer;box-shadow:var(--shadow)}
+@media (max-width:600px){.ph{width:240px}.fr{max-height:520px}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Inspection Journey</h1>
+  <p>2018 Toyota RAV4 XLE AWD</p>
+  <nav>
+    <a href="#seller-before"><b>1</b>Seller · before the inspection</a>
+    <a href="#inspector"><b>2</b>Inspector app</a>
+    <a href="#seller-after"><b>3</b>Seller · after the inspection</a>
+    <a href="#dealer"><b>4</b>Dealer</a>
+  </nav>
+</header>
+
+<section id="seller-before">
+  <h2><b>1</b>Seller · before the inspection</h2>
+  <div class="strip">
+    <figure class="ph"><button class="fr" type="button"><img src="img/s1-dashboard.png" alt="My Vehicles"></button><figcaption><span>1.1</span>My Vehicles</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/s2-vehicle-review.png" alt="Vehicle Review"></button><figcaption><span>1.2</span>Vehicle Review</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/s3-book.png" alt="Book Inspection"></button><figcaption><span>1.3</span>Book Inspection</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/s4-booked.png" alt="Inspection booked"></button><figcaption><span>1.4</span>Inspection booked</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/s5-documents.png" alt="Documents"></button><figcaption><span>1.5</span>Documents</figcaption></figure>
+  </div>
+</section>
+
+<section id="inspector">
+  <h2><b>2</b>Inspector app</h2>
+  <div class="strip">
+    <figure class="ph"><button class="fr" type="button"><img src="img/i1-cars.png" alt="Cars to inspect"></button><figcaption><span>2.1</span>Cars to inspect</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i2-brief.png" alt="Car brief"></button><figcaption><span>2.2</span>Car brief</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i3-checkid.png" alt="Check ID"></button><figcaption><span>2.3</span>Check ID</figcaption></figure>
+    <figure class="land"><button class="fr" type="button"><img src="img/i4-camera.png" alt="Camera"></button><figcaption><span>2.4</span>Camera</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i5-damages.png" alt="Damages"></button><figcaption><span>2.5</span>Damages</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i6-review.png" alt="Review"></button><figcaption><span>2.6</span>Review</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i7-summary.png" alt="Summary"></button><figcaption><span>2.7</span>Summary</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i8-sign.png" alt="Seller signs"></button><figcaption><span>2.8</span>Seller signs</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/i9-sent.png" alt="Sent"></button><figcaption><span>2.9</span>Sent</figcaption></figure>
+  </div>
+</section>
+
+<section id="seller-after">
+  <h2><b>3</b>Seller · after the inspection</h2>
+  <div class="strip">
+    <figure class="ph"><button class="fr" type="button"><img src="img/s6-inspected.png" alt="My Vehicles"></button><figcaption><span>3.1</span>My Vehicles</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/s7-report.png" alt="Condition report"></button><figcaption><span>3.2</span>Condition report</figcaption></figure>
+  </div>
+</section>
+
+<section id="dealer">
+  <h2><b>4</b>Dealer</h2>
+  <div class="strip">
+    <figure class="ph"><button class="fr" type="button"><img src="img/d2-runlist-app.png" alt="Run list, app"></button><figcaption><span>4.1</span>Run list · app</figcaption></figure>
+    <figure class="ph"><button class="fr" type="button"><img src="img/d4-details-app.png" alt="Vehicle details, app"></button><figcaption><span>4.2</span>Vehicle details · app</figcaption></figure>
+  </div>
+  <div class="webs">
+    <figure class="web"><button class="fr" type="button"><img src="img/d1-runlist-web.png" alt="Run list, web"></button><figcaption><span>4.3</span>Run list · web</figcaption></figure>
+    <figure class="web"><button class="fr" type="button"><img src="img/d3-details-web.png" alt="Vehicle details, web"></button><figcaption><span>4.4</span>Vehicle details · web</figcaption></figure>
+  </div>
+</section>
+</div>
+
+<dialog id="lb" aria-label="Screen"><div class="lb"><img alt=""></div><button class="x" type="button" aria-label="Close">×</button></dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('lb'), big = dlg.querySelector('img');
+  document.querySelectorAll('.fr').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var im = b.querySelector('img');
+      big.src = im.src; big.alt = im.alt;
+      big.style.width = Math.max(390, Math.round((im.naturalWidth || 780) / 2)) + 'px';
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      dlg.querySelector('.lb').scrollTop = 0;
+    });
+  });
+  function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  dlg.querySelector('.x').addEventListener('click', close);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.classList.contains('lb')) close(); });
+})();
+</script>

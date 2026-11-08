@@ -16,6 +16,9 @@ Start a Claude Code session in this folder and say: **"Read CLAUDE.md and build 
 | `guides/` | Camera guide outlines (SVG, PNG) |
 | `reference/mockup/` | Clickable mockup of every screen (`internal-mvp.html`) and its source |
 | `reference/condition-report/` | Seller and dealer report reference page and its source |
+| `reference/field-phases/` | DEV-190 phase 1 UI images (1.1 to 1.7) |
+| `reference/inspection-journey/` | One car end to end: inspector app, seller report, dealer screens |
+| `reference/dealer-screens/` | Dealer screens for an inspected car |
 | `verify/` | Mockup test scripts (Node + Playwright) |
 
 ## You supply

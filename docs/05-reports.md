@@ -6,7 +6,7 @@ The server renders two HTML pages from `condition_report` (output of `tools/cr_f
 - Dealer report: `GET /r/{token}/dealer`
 - `token`: 32 random URL-safe characters per inspection; no login. Media inside the pages load from `/r/{token}/media/{file}`.
 
-Look and layout: `reference/condition-report/condition-report.html` (open it in a browser; the Seller and Dealer phones). Its code is `reference/condition-report/app.js` (`sellerHTML`, `dealerHTML`, `highlights`, `gallery`, `media`, `tireCells`) and `extra.css`. Port that markup and CSS into server-side templates (Jinja2) fed by real data. Mobile first, works on desktop.
+Look and layout: `reference/condition-report/condition-report.html` and, for the dealer side, `reference/dealer-screens/dealer-screens.html`; the seller report as one screen: `reference/inspection-journey/inspection-journey.html` (3.2) (open it in a browser; the Seller and Dealer phones). Its code is `reference/condition-report/app.js` (`sellerHTML`, `dealerHTML`, `highlights`, `gallery`, `media`, `tireCells`) and `extra.css`. Port that markup and CSS into server-side templates (Jinja2) fed by real data. Mobile first, works on desktop.
 
 ## Both reports
 

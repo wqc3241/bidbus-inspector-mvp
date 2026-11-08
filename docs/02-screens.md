@@ -1,6 +1,6 @@
 # 02 Screens
 
-Open `reference/mockup/internal-mvp.html` in a desktop browser to click through every screen; Build notes shows the notes for the screen on show. Build the screens below; where the mockup shows Cars to inspect, Car brief, Carfax, points to check or Text the seller an upload link, use this file instead.
+Open `reference/mockup/internal-mvp.html` in a desktop browser to click through every screen; Build notes shows the notes for the screen on show. Still images of each screen: `reference/field-phases/bidbus-field-phases.html` (phase 1, UI 1.1 to 1.7) and `reference/inspection-journey/inspection-journey.html` (2.1 to 2.9). Build the screens below; where the mockup shows Cars to inspect, Car brief, Carfax, points to check or Text the seller an upload link, use this file instead.
 
 ## Style
 

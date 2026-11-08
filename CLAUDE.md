@@ -47,6 +47,9 @@ Everything else follows DEV-190 exactly: question list, one camera pass, Damage 
 | Seller and dealer reports | `docs/05-reports.md`, reference page `reference/condition-report/condition-report.html` |
 | Camera guide outlines | `guides/svg`, `guides/png` (bundle the SVGs as assets, draw with `flutter_svg`) |
 | Flutter app structure and packages | `docs/10-flutter-app.md` |
+| DEV-190 UI images 1.1 to 1.7 (phase 1 section only; phases 2 and 3 are out of scope) | `reference/field-phases/bidbus-field-phases.html` |
+| Whole journey for one car: inspector app screens, seller report, dealer screens | `reference/inspection-journey/inspection-journey.html` |
+| Dealer screens for an inspected car (layout reference for the dealer report) | `reference/dealer-screens/dealer-screens.html` |
 
 When the mockup and a doc differ, the doc wins. When `docs/` and `data/question-list.json` differ on a question or option, the question list wins.
 
