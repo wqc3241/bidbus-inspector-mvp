@@ -85,9 +85,8 @@ void main() {
       m(st, 'vals')['idconf'] = true;
       expect(sumBlock(st), 'Pick the overall condition');
       st['overall'] = 'Pretty great';
-      expect(sumBlock(st), 'Write the note');
+      expect(sumBlock(st), ''); // the note is optional (question list S3)
       st['note'] = 'Clean car.';
-      expect(sumBlock(st), '');
       st['agree'] = true;
       st['signed'] = true;
       st['end'] = {'at': '2026-11-07T13:21:00', 'loc': '37.5841, -122.3661'};

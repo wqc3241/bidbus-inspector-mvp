@@ -11,6 +11,8 @@ import '../camera/camera_screen.dart';
 import '../data/ql.dart';
 import '../logic/insp.dart';
 import '../services/store.dart';
+import '../services/media.dart' show cutSpinFrames;
+import '../widgets/spin_view.dart';
 import '../widgets/ui.dart';
 import 'check_id.dart';
 import 'damages.dart';
@@ -321,6 +323,7 @@ class ReviewScreen extends ConsumerWidget {
       const SizedBox(height: 12),
       _shots(context, st, 'Tires', w: w),
       _damages(context, st, 'Tires', w: w),
+      _mods(st, 'Tires'),
       RowList([
         RowBtn('Brand', (r['brand'] ?? '') != '' ? setVal(r['brand']) : const Text('Optional', style: TextStyle(color: muted)), sub: r['auto'] == true && (r['brand'] ?? '') != '' ? 'Read from photo' : null, onTap: () => pick('brand')),
         RowBtn('Size', (r['size'] ?? '') != '' ? setVal((r['size'] as String).replaceFirst('R', ' R')) : const Text('Optional', style: TextStyle(color: muted)), onTap: () => pick('size')),
@@ -387,33 +390,33 @@ class ReviewScreen extends ConsumerWidget {
   }
 }
 
-// 360 view: drag to turn, frame number shown; works offline from the frames saved on the phone
-void showSpin(BuildContext context, J st) {
-  final frames = ((st['spin'] as List?) ?? []).cast<String>();
-  var f = 0;
-  const names = ['Left front corner', 'Left side', 'Left rear corner', 'Rear', 'Right rear corner', 'Right side', 'Right front corner', 'Front'];
+// 360 view: Scaleflex cloudimage-360-view over the 36 frames saved on the phone (lib/widgets/spin_view.dart).
+// If the frames were never cut (the app was closed while cutting), they are cut again here from the walk-around.
+Future<void> showSpin(BuildContext context, J st) async {
+  final id = st['id'] as String;
+  var frames = ((st['spin'] as List?) ?? []).cast<String>();
+  final video = m(st, 'files')['video_360'] as String?;
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
-    builder: (c) => StatefulBuilder(
-      builder: (c, set) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            const Text('360 view', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
-            const SizedBox(height: 12),
-            if (frames.isEmpty)
-              const Padding(padding: EdgeInsets.all(30), child: CircularProgressIndicator())
-            else
-              GestureDetector(
-                onHorizontalDragUpdate: (d) => set(() => f = (f - (d.delta.dx / 8).round()) % frames.length),
-                child: AspectRatio(aspectRatio: 16 / 9, child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.file(File(store.abs(frames[f])), fit: BoxFit.cover, gaplessPlayback: true))),
-              ),
-            const SizedBox(height: 8),
-            Text(frames.isEmpty ? '' : 'Frame ${f + 1} of ${frames.length} · ${names[(f / 4.5).round() % 8]}', style: const TextStyle(color: muted)),
-          ]),
-        ),
+    builder: (c) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('360 view', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 12),
+          Consumer(builder: (c, ref, _) {
+            final f = ((ref.watch(storeProvider).ins[id]?['spin'] as List?) ?? []).cast<String>();
+            return f.length == 36 ? SpinView([for (final x in f) store.abs(x)]) : const Padding(padding: EdgeInsets.all(30), child: CircularProgressIndicator());
+          }),
+        ]),
       ),
     ),
   );
+  if (frames.length != 36 && video != null && File(store.abs(video)).existsSync()) {
+    frames = (await cutSpinFrames(store.abs(video), store.abs(store.dirOf(id)))).map((f) => f.substring(store.docs.length + 1)).toList();
+    store.mut(id, (s) {
+      if (m(s, 'files')['video_360'] == video) s['spin'] = frames;
+    });
+  }
 }

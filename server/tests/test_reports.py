@@ -74,4 +74,31 @@ def test_spin_view_when_frames_are_there(client, media_dir):
     for k in range(1, 37):
         (media_dir / iid / f"spin-{k:02d}.jpg").write_bytes(b"x")
     html = client.get(f"/r/{token}/dealer").text
-    assert 'class="cloudimage-360"' in html and "js-cloudimage-360-view@3.2.1" in html
+    assert 'class="cloudimage-360"' in html and "js-cloudimage-360-view@4.9.5" in html
+
+
+def test_media_serves_only_public_files_with_their_type(client, media_dir):
+    import json
+    from conftest import SAMPLES
+    from app.db import Inspection, SessionLocal
+    rec = json.loads((SAMPLES / "inspection-bmw-x3.json").read_text())
+    with SessionLocal() as s:
+        s.add(Inspection(id="m1", record=rec, status="sent", report_token="tok-media", cr={"built": True}))
+        s.commit()
+    d = media_dir / "m1"
+    d.mkdir(parents=True)
+    photo = rec["photos"][0]["file"]
+    for n in (photo, "ph_license.jpg", "signature.png", "spin-01.jpg", "notes.html"):
+        (d / n).write_bytes(b"x")
+    r = client.get(f"/r/tok-media/media/{photo}")
+    assert r.status_code == 200 and r.headers["content-type"] == "image/jpeg" and r.headers["x-content-type-options"] == "nosniff"
+    assert client.get("/r/tok-media/media/spin-01.jpg").status_code == 200
+    for n in ("ph_license.jpg", "PH_LICENSE.jpg", "signature.png", "notes.html", "unknown.jpg"):
+        assert client.get(f"/r/tok-media/media/{n}").status_code == 404, n
+
+
+def test_upload_refuses_other_file_types(client):
+    from conftest import PASS
+    client.put("/api/inspections/u1", headers=PASS, json={"report_email": "a@b.co", "car": {}, "record": {"photos": []}})
+    assert client.put("/api/inspections/u1/files/x.html", headers=PASS, content=b"<script>").status_code == 400
+    assert client.put("/api/inspections/u1/files/video_360.m3u8", headers=PASS, content=b"#EXTM3U").status_code == 400

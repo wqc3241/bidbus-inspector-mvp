@@ -33,6 +33,8 @@ CLI alternative: `npm i -g @railway/cli`, `railway login`, `railway init`, `rail
 | `APP_PASSCODE` | any long random string; typed once in the app Settings together with the server URL |
 | `ANTHROPIC_API_KEY` | your Anthropic key |
 | `AI_MODEL` | `claude-sonnet-5-5` |
+| `OPENAI_API_KEY` | your OpenAI key (when set, AI readings use OpenAI) |
+| `OPENAI_MODEL` | `gpt-5.5` |
 | `RESEND_API_KEY` | your Resend key |
 | `EMAIL_FROM` | `Bidbus Field <onboarding@resend.dev>` until you verify a domain |
 

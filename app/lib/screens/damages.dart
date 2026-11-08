@@ -280,7 +280,13 @@ class DamageEditor extends ConsumerWidget {
   final String id, did;
   final Widget? nav;
   final String? title;
-  const DamageEditor(this.id, this.did, {super.key, this.nav, this.title});
+  final VoidCallback? onLabelled; // Damages moves on once place, type and severity are picked
+  const DamageEditor(this.id, this.did, {super.key, this.nav, this.title, this.onLabelled});
+
+  void _drawer(BuildContext context) => labelDrawer(context, id, did).then((_) {
+        final s = store.ins[id], d = s == null ? null : dmgById(s, did);
+        if (onLabelled != null && d != null && dmgDone(d, fuelOf(s!))) onLabelled!();
+      });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final st = ref.watch(storeProvider).ins[id]!, d = dmgById(st, did), fuel = fuelOf(st);
@@ -332,16 +338,16 @@ class DamageEditor extends ConsumerWidget {
           setLabel(dmgById(s, did)!, 'panel', p, fuel);
           syncDamages(s);
         });
-        if (placeOf(dmgById(store.ins[id]!, did)!['zone'] ?? 'Exterior', p) != null) labelDrawer(context, id, did);
+        if (placeOf(dmgById(store.ins[id]!, did)!['zone'] ?? 'Exterior', p) != null) _drawer(context);
       }),
       if (pl != null) ...[
         const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
           child: RowList([
-            if (pl['ex'] == true && pl['fix'] != true) RowBtn(pl['exl'] ?? 'Where', (d['ex'] ?? '') != '' ? setVal(d['ex']) : needVal(), onTap: () => labelDrawer(context, id, did)),
-            RowBtn('Type', (d['type'] ?? '') != '' ? setVal(dshort(d['panel'], d['type'])) : needVal(), onTap: () => labelDrawer(context, id, did)),
-            RowBtn('Severity', (d['sev'] ?? '') != '' ? setVal('${d['sev']}${(d['size'] ?? '') != '' ? ' · ${d['size']} in' : ''}') : needVal(), onTap: () => labelDrawer(context, id, did)),
+            if (pl['ex'] == true && pl['fix'] != true) RowBtn(pl['exl'] ?? 'Where', (d['ex'] ?? '') != '' ? setVal(d['ex']) : needVal(), onTap: () => _drawer(context)),
+            RowBtn('Type', (d['type'] ?? '') != '' ? setVal(dshort(d['panel'], d['type'])) : needVal(), onTap: () => _drawer(context)),
+            RowBtn('Severity', (d['sev'] ?? '') != '' ? setVal('${d['sev']}${(d['size'] ?? '') != '' ? ' · ${d['size']} in' : ''}') : needVal(), onTap: () => _drawer(context)),
           ]),
         ),
       ],
@@ -409,7 +415,7 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
               if (v > 200 && pos > 0) _go(o[pos - 1]);
             },
             child: ListView(padding: const EdgeInsets.all(16), children: [
-              DamageEditor(widget.id, d['id'], title: '$z · $n of ${zl.length}', nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, pos < o.length - 1 ? o[pos + 1] : null)])), key: ValueKey(d['id'])),
+              DamageEditor(widget.id, d['id'], title: '$z · $n of ${zl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, pos < o.length - 1 ? o[pos + 1] : null)])), key: ValueKey(d['id'])),
               if (pos > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[pos - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
             ]),
           ),

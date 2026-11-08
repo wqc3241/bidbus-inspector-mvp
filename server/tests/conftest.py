@@ -7,7 +7,7 @@ from pathlib import Path
 os.environ.setdefault("DATABASE_URL", "sqlite:///" + str(Path(__file__).parent / "test.db"))
 os.environ.setdefault("APP_PASSCODE", "test-passcode")
 os.environ.setdefault("MEDIA_DIR", str(Path(__file__).parent / "media"))
-os.environ["ANTHROPIC_API_KEY"] = os.environ["RESEND_API_KEY"] = ""  # no network in tests
+os.environ["ANTHROPIC_API_KEY"] = os.environ["OPENAI_API_KEY"] = os.environ["RESEND_API_KEY"] = ""  # no network in tests
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pytest  # noqa: E402

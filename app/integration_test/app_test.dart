@@ -156,8 +156,7 @@ void main() {
     await tap(find.text('Hood'));
     await shot('damages-drawer');
     await tap(find.text('Dent'));
-    await tap(find.text('Minor').last);
-    await tap(find.text('Next photo'));
+    await tap(find.text('Minor').last); // labelled: Damages moves on to the next photo by itself
     await tap(find.text('Tire'));
     await tap(find.text('Uneven wear'));
     await tap(find.text('Moderate').last);
@@ -180,6 +179,12 @@ void main() {
         await tap(find.text('Lights'));
         await shot('review-drawer');
         await tap(find.text('OK').last);
+        // 360 view: cloudimage-360-view over the frames on the phone
+        await tap(find.text('360 view'));
+        await wait(const Duration(seconds: 4));
+        await shot('review-360');
+        Navigator.of(t.element(find.text('360 view').last)).pop();
+        await t.pumpAndSettle();
       }
       await shot('review-$k');
       await tap(find.textContaining('Next: '));

@@ -10,7 +10,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../camera/camera_screen.dart';
 import '../data/ql.dart';
 import '../logic/insp.dart';
-import '../services/media.dart';
+import '../services/media.dart' show here;
 import '../services/store.dart';
 import '../widgets/ui.dart';
 import 'home.dart';
@@ -21,11 +21,11 @@ Future<void> takeDoc(BuildContext context, String id, String doc) async {
   if (src == null) return;
   final x = await ImagePicker().pickImage(source: src == 'camera' ? ImageSource.camera : ImageSource.gallery);
   if (x == null) return;
-  final rel = '${store.dirOf(id)}/$doc.jpg';
-  final turn = await saveUpright(x.path, store.abs(rel));
+  final rel = await keepPhoto(id, x.path, doc, library: src == 'library');
   store.mut(id, (st) {
+    dropFile(m(st, 'files')[doc]);
     m(st, 'files')[doc] = rel;
-    m(st, 'turn')[rel] = turn < 0 ? 0 : turn;
+    m(st, 'src')[doc] = src;
     m(st, 'docs')[doc] = DateTime.now().toIso8601String();
     if (doc == 'ph_family') m(st, 'shots')['ph_family'] = true;
   });

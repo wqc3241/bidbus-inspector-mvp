@@ -179,6 +179,7 @@ def dealer(token: str, request: Request, s: Session = Depends(get_session)):
 def media(token: str, name: str, s: Session = Depends(get_session)):
     insp = _built(token, s)
     path = storage.folder(insp.id) / name
-    if not storage.ok_name(name) or name.split(".")[0] in storage.PRIVATE or not path.is_file():
+    if not storage.ok_name(name) or not storage.public(insp.record or {}, name) or not path.is_file():
         raise HTTPException(status_code=404, detail="No such file")
-    return FileResponse(path, headers={"Cache-Control": "private, max-age=86400"})
+    return FileResponse(path, media_type=storage.TYPES[name.rsplit(".", 1)[-1].lower()],
+                        headers={"Cache-Control": "private, max-age=86400", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "sandbox; default-src 'none'"})

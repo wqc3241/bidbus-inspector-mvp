@@ -1,10 +1,12 @@
 """AI photo readings with the Anthropic API (docs/04-ai-reading.md)."""
 import base64
 import io
+import json
 import logging
 import re
 
 import anthropic
+import httpx
 from PIL import Image
 
 from . import config
@@ -111,8 +113,23 @@ def client():
     return anthropic.Anthropic(api_key=config.ANTHROPIC_API_KEY, timeout=20.0, max_retries=0)
 
 
+def openai_read(name: str, props: dict, text: str, image_b64: str) -> dict:
+    """OpenAI Chat Completions with a strict JSON schema: the same fields as the tool for this kind"""
+    schema = {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
+    body = {"model": config.OPENAI_MODEL,
+            "messages": [{"role": "user", "content": [{"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}},
+                                                      {"type": "text", "text": text}]}],
+            "response_format": {"type": "json_schema", "json_schema": {"name": name, "strict": True, "schema": schema}}}
+    if config.OPENAI_MODEL.startswith(("gpt-5", "o")):
+        body["reasoning_effort"] = "low"
+    r = httpx.post("https://api.openai.com/v1/chat/completions", json=body, timeout=20,
+                   headers={"Authorization": f"Bearer {config.OPENAI_API_KEY}"})
+    r.raise_for_status()
+    return json.loads(r.json()["choices"][0]["message"]["content"])
+
+
 def read(kind: str, image: bytes, section=None, fuel=None, hint=None) -> dict:
-    if kind not in KINDS or not config.ANTHROPIC_API_KEY:
+    if kind not in KINDS or not (config.OPENAI_API_KEY or config.ANTHROPIC_API_KEY):
         return {"ok": False}
     try:
         name, props, text = KINDS[kind]
@@ -123,6 +140,9 @@ def read(kind: str, image: bytes, section=None, fuel=None, hint=None) -> dict:
             text += "\n" + "\n".join(f"{p}: {'; '.join(ts)}" for p, ts in pairs.items())
             if hint:
                 text += f"\nThe damage is at {hint}; use it as the place."
+        if config.OPENAI_API_KEY:
+            data = openai_read(name, props, text, jpeg(image))
+            return {"ok": True, **validate(kind, data, pairs, hint)}
         msg = client().messages.create(
             model=config.AI_MODEL, max_tokens=2000, tools=[tool],
             # forced tool_choice ({"type": "tool"}) is refused (400) by Claude Sonnet 5.5 and Opus 5.5, so the prompt names the tool

@@ -54,6 +54,8 @@ dependencies:
   uuid: ^4.6.0
   intl: ^0.20.3
   url_launcher: ^6.3.3
+  webview_flutter: ^4.14.1
+  webview_flutter_android: ^4.14.1
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +89,7 @@ flutter:
   assets:
     - assets/
     - assets/guides/
+    - assets/ci360/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

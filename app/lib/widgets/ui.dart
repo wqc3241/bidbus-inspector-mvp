@@ -113,7 +113,7 @@ class RowBtn extends StatelessWidget {
 }
 
 Widget okVal(String t) => Row(mainAxisSize: MainAxisSize.min, children: [const Icon(LucideIcons.check, size: 15, color: bid), const SizedBox(width: 4), Text(t, style: const TextStyle(color: bid, fontWeight: FontWeight.w600))]);
-Widget needVal([String t = 'Pick']) => Text(t, style: const TextStyle(color: amber, fontWeight: FontWeight.w700));
+Widget needVal([String t = 'Pick']) => Text(t, style: const TextStyle(color: Color(0xFFE1255D), fontWeight: FontWeight.w700));
 Widget alertVal(Color c, [String t = '']) => Row(mainAxisSize: MainAxisSize.min, children: [Icon(LucideIcons.triangleAlert, size: 15, color: c), if (t.isNotEmpty) ...[const SizedBox(width: 4), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.w600))]]);
 Widget setVal(String t) => Text(t, style: const TextStyle(fontWeight: FontWeight.w600));
 

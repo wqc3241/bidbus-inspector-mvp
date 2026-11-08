@@ -157,7 +157,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
             }),
           ]),
         ]),
-        Section(title: "Inspector's note", trailing: const Text('Required', style: TextStyle(color: amber, fontWeight: FontWeight.w700)), children: [
+        Section(title: "Inspector's note", children: [
           TextField(controller: note, maxLines: 5, onChanged: (v) => store.mut(id, (s) => s['note'] = v), decoration: const InputDecoration(hintText: 'What a dealer should know about this car')),
         ]),
       ]),
@@ -165,6 +165,9 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
     );
   }
 }
+
+// the disclosure the seller agrees to; its version is saved with the signature
+const discVersion = '2026-11-07';
 
 class SignScreen extends ConsumerStatefulWidget {
   final String id;
@@ -194,6 +197,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
       m(s, 'files')['signature'] = rel;
       s['signName'] = name.text.trim();
       s['signed'] = true;
+      s['discVer'] = discVersion;
       s['end'] = end;
       s['phase'] = 'sent';
     });

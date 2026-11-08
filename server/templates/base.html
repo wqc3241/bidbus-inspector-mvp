@@ -7,7 +7,6 @@
 <title>{% block title %}{% endblock %}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-{% if media and media[0].kind == "spin" %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-cloudimage-360-view@3.2.1/dist/static/css/style.css">{% endif %}
 <style>
 /* ported from reference/condition-report (base-v24.html styles used by app.js, and extra.css) */
 :root { --g: #138842; --bid: #045826; --pink: #e1255d; }
@@ -181,7 +180,8 @@ document.querySelectorAll("[data-gal]").forEach(function (gal) {
   show();
 });
 </script>
-{% if media and media[0].kind == "spin" %}<script type="module" src="https://cdn.jsdelivr.net/npm/js-cloudimage-360-view@3.2.1/+esm"></script>{% endif %}
+{% if media and media[0].kind == "spin" %}<script src="https://cdn.jsdelivr.net/npm/js-cloudimage-360-view@4.9.5/dist/js-cloudimage-360-view.min.js"></script>
+<script>window.CI360.initAll();</script>{% endif %}
 {% block scripts %}{% endblock %}
 </body>
 </html>

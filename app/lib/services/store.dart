@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:background_downloader/background_downloader.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -16,6 +17,7 @@ import '../db/db.dart';
 import '../logic/insp.dart';
 import '../logic/payload.dart';
 import 'api.dart';
+import 'media.dart';
 
 const defaultServer = String.fromEnvironment('API_BASE_URL', defaultValue: 'https://server-production-c5da.up.railway.app');
 final storeProvider = ChangeNotifierProvider<Store>((ref) => store);
@@ -42,7 +44,8 @@ class Store extends ChangeNotifier {
     defaultEmail = s['email'] ?? '';
     try {
       server = await _secure.read(key: 'server') ?? defaultServer;
-      passcode = await _secure.read(key: 'passcode') ?? '';
+      // a phone build can carry the passcode (--dart-define=PASSCODE=...); Settings can change it
+      passcode = await _secure.read(key: 'passcode') ?? const String.fromEnvironment('PASSCODE');
     } catch (_) {}
     try {
       final c = Connectivity();
@@ -122,16 +125,26 @@ class Store extends ChangeNotifier {
     try {
       for (final st in list) {
         final q = (st['aiq'] as List? ?? []);
+        // after the signature the record is fixed: readings still queued are dropped
+        if (st['status'] != 'progress') {
+          if (q.isNotEmpty) mut(st['id'], (s) => (s['aiq'] as List).clear());
+          continue;
+        }
         while (q.isNotEmpty && online) {
           final item = (q.first as Map).cast<String, dynamic>();
           J res;
           try {
             final f = File(abs(item['f']));
             res = f.existsSync() ? await api.read(item['kind'], f, section: item['section'], fuel: st['fuel'], hint: item['hint']) : {'ok': false};
+          } on DioException catch (e) {
+            // no answer from the server (no signal, timeout, server down, passcode): keep the reading for the next round
+            final code = e.response?.statusCode ?? 0;
+            if (e.response == null || code == 401 || code >= 500) break;
+            res = {'ok': false};
           } on Exception catch (_) {
-            if (!online) break;
             res = {'ok': false};
           }
+          if (item['kind'] == 'upright' && res['ok'] == true && (res['turn_deg'] ?? 0) != 0) await rotateFile(abs(item['f']), (res['turn_deg'] as num).toInt());
           mut(st['id'], (s) {
             (s['aiq'] as List).removeAt(0);
             if (res['ok'] == true) applyReading(s, item, res);
@@ -144,8 +157,12 @@ class Store extends ChangeNotifier {
   }
 
   // ---------- upload: the record first, then each file, then complete ----------
+  // the record is built once at the signature and sent as signed on every round
   void markSigned(String id) {
     mut(id, (st) {
+      final p = inspectionPayload(st);
+      st['rec'] = p.record;
+      st['recFiles'] = p.files;
       st['status'] = 'saved';
       st['up'] = {'state': 'saved', 'done': 0, 'total': 0};
     });
@@ -169,7 +186,7 @@ class Store extends ChangeNotifier {
     final st = ins[id]!, a = api;
     try {
       if (st['status'] != 'building') {
-        final p = inspectionPayload(st), car = st['car'] as J;
+        final p = st['rec'] != null ? Payload(st['rec'], (st['recFiles'] as Map).cast<String, String>()) : inspectionPayload(st), car = st['car'] as J;
         final r = await a.putInspection(id, {
           'report_email': st['report_email'], 'inspector': st['inspector'],
           'car': {'year': car['year'], 'make': car['make'], 'model': car['model'], 'trim': car['trim'], 'owner_name': car['owner_name']}, 'record': p.record,
@@ -271,12 +288,15 @@ void applyReading(J st, J item, J r) {
         vals['keys_auto'] = 1;
         keysSync(st);
       }
+    case 'upright':
+      if (r['turn_deg'] != null) m(st, 'turn')[item['f']] = r['turn_deg'];
     case 'damage':
       final d = manual(st).where((x) => x['id'] == item['did']).firstOrNull;
       if (d == null) break;
       final fuel = fuelOf(st), pl = placeOf(d['zone'] ?? 'Exterior', r['place']);
       if (r['place'] != null && r['type'] != null && r['severity'] != null) d['aiWas'] = {'place': r['place'], 'type': r['type'], 'severity': r['severity']};
-      if ((d['panel'] ?? '') == '' && pl != null) {
+      final hinted = item['hint'] != null && d['panel'] == item['hint'] && d['panel'] == r['place'] && (d['sev'] ?? '') == '';
+      if (((d['panel'] ?? '') == '' || hinted) && pl != null) {
         d['panel'] = r['place'];
         final ts = placeOpts(pl, fuel);
         d['type'] = ts.contains(r['type']) ? r['type'] : (ts.length == 1 ? ts[0] : '');

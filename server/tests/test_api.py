@@ -26,6 +26,7 @@ def test_api_needs_the_passcode(client):
     ({"ElectrificationLevel": "BEV (Battery Electric Vehicle)", "FuelTypePrimary": "Electric"}, "Electric (EV)"),
     ({"FuelTypePrimary": "Electric"}, "Electric (EV)"),
     ({"ElectrificationLevel": "PHEV (Plug-in Hybrid Electric Vehicle)", "FuelTypePrimary": "Gasoline"}, "Plug-in hybrid"),
+    ({"ElectrificationLevel": "PHEV (Plug-in Hybrid Electric Vehicle)", "FuelTypePrimary": "Electric"}, "Plug-in hybrid"),
     ({"ElectrificationLevel": "HEV (Hybrid Electric Vehicle) - Level Unknown", "FuelTypePrimary": "Gasoline"}, "Hybrid"),
     ({"ElectrificationLevel": "Strong HEV (Hybrid Electric Vehicle)"}, "Hybrid"),
     ({"ElectrificationLevel": "Mild HEV (Hybrid Electric Vehicle)"}, "Hybrid"),
@@ -234,3 +235,20 @@ def test_ai_mechanicals_includes_underbody_places():
     from app.ai import allowed_pairs
     pairs = allowed_pairs("Mechanicals", "Gas or diesel")
     assert "Structure" in pairs and "Fluids" in pairs
+
+
+def test_ai_uses_openai_when_its_key_is_set(client, monkeypatch):
+    import json as _json
+    from app import ai
+    monkeypatch.setattr(config, "OPENAI_API_KEY", "sk-test")
+    seen = {}
+
+    def post(url, json, timeout, headers):
+        seen.update(url=url, body=json, auth=headers["Authorization"])
+        return httpx.Response(200, json={"choices": [{"message": {"content": _json.dumps({"mileage": 61325})}}]}, request=httpx.Request("POST", url))
+    monkeypatch.setattr(ai.httpx, "post", post)
+    r = client.post("/api/ai/read", headers=PASS, data={"kind": "odometer"}, files={"image": ("o.jpg", photo(), "image/jpeg")})
+    assert r.json() == {"ok": True, "mileage": 61325}
+    assert seen["url"].endswith("/v1/chat/completions") and seen["auth"] == "Bearer sk-test"
+    fmt = seen["body"]["response_format"]["json_schema"]
+    assert fmt["strict"] is True and fmt["schema"]["required"] == ["mileage"]

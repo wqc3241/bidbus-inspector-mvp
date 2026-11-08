@@ -42,16 +42,20 @@ Future<String> keepPhoto(String id, String from, String key, {bool library = fal
   var turn = await saveUpright(from, store.abs(rel));
   if (turn < 0) {
     turn = 0;
+    // a library photo with no orientation: the AI says how far to turn it; offline it waits in the queue, ahead of its own reading
+    var done = !library;
     if (library && store.online) {
       try {
         final r = await store.api.read('upright', File(store.abs(rel)));
         final t = (r['turn_deg'] as num?)?.toInt() ?? 0;
-        if (r['ok'] == true && t != 0) {
-          await rotateFile(store.abs(rel), t);
+        if (r['ok'] == true) {
+          done = true;
+          if (t != 0) await rotateFile(store.abs(rel), t);
           turn = t;
         }
       } catch (_) {}
     }
+    if (!done) store.queueRead(id, {'kind': 'upright', 'f': rel});
   }
   store.mut(id, (st) => m(st, 'turn')[rel] = turn);
   if (read != null) store.queueRead(id, {...read, 'f': rel});
@@ -107,6 +111,9 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   String note = '';
   Timer? recTimer;
   DateTime? recAt;
+  J? recSlot; // the slot a recording belongs to, whatever the inspector taps meanwhile
+  bool stopping = false;
+  DeviceOrientation? side; // the landscape side the pass is locked to
 
   J get st => store.ins[widget.id]!;
   String get fuel => fuelOf(st);
@@ -153,12 +160,23 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     await old?.dispose();
     final c = CameraController(d, ResolutionPreset.veryHigh, enableAudio: true, imageFormatGroup: ImageFormatGroup.jpeg);
     await c.initialize();
-    await c.lockCaptureOrientation();
+    await _lockSide(c);
     minZ = await c.getMinZoomLevel();
     maxZ = await c.getMaxZoomLevel();
     if (zoom == 2) await c.setZoomLevel(2.clamp(minZ, maxZ).toDouble());
     if (!mounted) return c.dispose();
     setState(() => cc = c);
+  }
+
+  // lock the capture orientation to the current landscape side (landscape left when the phone is upright or flat)
+  Future<void> _lockSide([CameraController? cam]) async {
+    final c = cam ?? cc;
+    if (c == null) return;
+    final o = c.value.deviceOrientation;
+    final want = o == DeviceOrientation.landscapeLeft || o == DeviceOrientation.landscapeRight ? o : side ?? DeviceOrientation.landscapeLeft;
+    if (want == side && cam == null) return;
+    side = want;
+    await c.lockCaptureOrientation(want);
   }
 
   @override
@@ -184,9 +202,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 
   void _save() => store.mut(widget.id, (s) => s['cap'] = {'k': k, 'i': i});
-  void _close() {
+  Future<void> _close() async {
+    if (rec) await _stopVideo();
     _save();
-    Navigator.of(context).pop();
+    if (mounted && Navigator.of(context).canPop()) Navigator.of(context).pop();
   }
 
   // ---------- the mockup's pass logic ----------
@@ -267,6 +286,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     }
     setState(() => busy = true);
     try {
+      if (!library) await _lockSide();
       final from = library ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
       final mstay = isMulti(x['id']) && !widget.args.single, again = !mstay && capHas(st, x), id = x['id'] as String;
@@ -284,7 +304,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       });
       flash = !library;
       note = '';
-      if (widget.args.single) return _close();
+      if (widget.args.single) return await _close();
       if (again) {
         capResume();
         note = 'Retaken: ${shotLabel(x)}';
@@ -301,8 +321,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 
   Future<void> _startVideo() async {
+    await _lockSide();
     await cc!.startVideoRecording();
-    final max = vmax[l[i]['id']] ?? 30;
+    recSlot = l[i];
+    final max = vmax[recSlot!['id']] ?? 30;
     setState(() {
       rec = true;
       recAt = DateTime.now();
@@ -316,8 +338,16 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   Future<void> _stopVideo() async {
     recTimer?.cancel();
-    if (cc == null || !cc!.value.isRecordingVideo) return setState(() => rec = false);
-    final x = l[i], id = x['id'] as String, f = await cc!.stopVideoRecording();
+    if (stopping) return;
+    if (cc == null || !cc!.value.isRecordingVideo || recSlot == null) return setState(() => rec = false);
+    stopping = true;
+    final x = recSlot!, id = x['id'] as String;
+    final XFile f;
+    try {
+      f = await cc!.stopVideoRecording();
+    } finally {
+      stopping = false;
+    }
     final ext = f.path.contains('.') ? f.path.substring(f.path.lastIndexOf('.')) : '.mp4';
     final rel = '${store.dirOf(widget.id)}/$id-${DateTime.now().millisecondsSinceEpoch}$ext';
     await File(f.path).copy(store.abs(rel));
@@ -328,7 +358,9 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       if (id == 'video_360') s['spin'] = null;
     });
     if (id == 'video_360') _cutSpin(rel);
+    recSlot = null;
     setState(() => rec = false);
+    if (widget.args.single) return _close();
     if (again) {
       capResume();
     } else {
@@ -416,6 +448,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     final c = cc;
     if (c == null) return;
     final switchLens = (z == .5) != (zoom == .5) && ultra != null;
+    if (switchLens && rec) return;
     zoom = z;
     if (switchLens) return _open(z == .5 ? ultra! : wide!);
     await c.setZoomLevel((z == .5 ? 1.0 : z).clamp(minZ, maxZ));
@@ -484,7 +517,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       final x = list[j], has = capHas(st, x), sk = capSkipped(st, x), mn = isMulti(x['id']) ? ((m(st, 'multi')[x['id']] ?? []) as List).length : 0;
       if (mn > 0) {
         for (var q = 0; q < mn; q++) {
-          out.add(cell(const Icon(LucideIcons.check, color: Colors.white, size: 18), bg: bid, on: () => _jump(j)));
+          out.add(cell(const Icon(LucideIcons.check, color: Colors.white, size: 18), bg: bid, on: rec ? null : () => _jump(j)));
         }
         if (j == i && !widget.args.single) out.add(cell(const Icon(LucideIcons.plus, color: Colors.white54, size: 18), cur: true));
       } else {
@@ -492,16 +525,16 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
           has ? const Icon(LucideIcons.check, color: Colors.white, size: 18) : sk ? const Text('–', style: TextStyle(color: Colors.white)) : Text('${j + 1}', style: const TextStyle(color: Colors.white54)),
           bg: has ? bid : null,
           cur: j == i && sel == null && !free && !ask,
-          on: has || sk || j == next || j == i ? () => _jump(j) : null,
+          on: !rec && (has || sk || j == next || j == i) ? () => _jump(j) : null,
         ));
       }
       for (var d = 0; d < manual(st).length; d++) {
         final dm = manual(st)[d];
-        if (dm['sec'] == k && dm['at'] == j) out.add(cell(const Icon(LucideIcons.triangleAlert, color: Colors.white, size: 18), bg: const Color(0xFFC2410C), cur: sel == ('d', d), on: () => setState(() => sel = ('d', d))));
+        if (dm['sec'] == k && dm['at'] == j) out.add(cell(const Icon(LucideIcons.triangleAlert, color: Colors.white, size: 18), bg: const Color(0xFFC2410C), cur: sel == ('d', d), on: rec ? null : () => setState(() => sel = ('d', d))));
       }
       final mods = (m(st, 'multi')[modslot[k]] ?? []) as List;
       for (var d = 0; d < mods.length; d++) {
-        if (mods[d]['sec'] == k && mods[d]['at'] == j) out.add(cell(const Icon(LucideIcons.wrench, color: Colors.white, size: 18), bg: modBlue, cur: sel == ('m', d), on: () => setState(() => sel = ('m', d))));
+        if (mods[d]['sec'] == k && mods[d]['at'] == j) out.add(cell(const Icon(LucideIcons.wrench, color: Colors.white, size: 18), bg: modBlue, cur: sel == ('m', d), on: rec ? null : () => setState(() => sel = ('m', d))));
       }
     }
     return SizedBox(height: 52, child: ListView(scrollDirection: Axis.horizontal, children: out));
@@ -597,7 +630,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     final top = Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       child: Row(children: [
-        if (canBack && !free && !ask) _btn(LucideIcons.chevronLeft, () => setState(capBack)) else if (free) _btn(LucideIcons.chevronLeft, () => setState(() => free = false)) else const SizedBox(width: 40),
+        if (rec) const SizedBox(width: 40) else if (canBack && !free && !ask) _btn(LucideIcons.chevronLeft, () => setState(capBack)) else if (free) _btn(LucideIcons.chevronLeft, () => setState(() => free = false)) else const SizedBox(width: 40),
         const SizedBox(width: 8),
         Expanded(child: Center(child: _pill('${run ? '${camseq.indexOf(k) + 1}/${camseq.length}  ' : ''}${stTitle(k)}${i < n && !free && !ask ? ' · ${i + 1} of $n' : ''}', bg: banner ? bid : Colors.black54))),
         const SizedBox(width: 8),

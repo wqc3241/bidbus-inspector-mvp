@@ -58,7 +58,13 @@ List<J> capList(String k, J st) {
     ];
   }
   if (k == 'Paint') return [];
-  var ml = stepItems(k, st).media.where((it) => !(it['id'] as String).startsWith('ph_mod_')).map((it) => <String, dynamic>{'id': it['id'], 'it': it}).toList();
+  // engine sound and exhaust videos are hidden when the engine will not start
+  final noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
+  var ml = stepItems(k, st)
+      .media
+      .where((it) => !(it['id'] as String).startsWith('ph_mod_') && !(noStart && (it['id'] == 'video_engine' || it['id'] == 'video_exhaust')))
+      .map((it) => <String, dynamic>{'id': it['id'], 'it': it})
+      .toList();
   if (k == 'Exterior') {
     final vi = ml.indexWhere((x) => x['id'] == 'video_360') + 1;
     ml = [...ml.sublist(0, vi), ...paintSlots(st), ...ml.sublist(vi)];
@@ -205,19 +211,27 @@ List<String> paintHighs(J st) => [for (final x in paintPanels) if (paintHigh(m(s
 List<String> paintWhere(List<String> highs) => highs.map(pn).where((h) => (extra['ck_paint']![1] as List).contains(h)).toList();
 
 // a high reading ticks Panel repainted with that panel, only when the check is OK or already that problem
+// what labelled damage photos set on Paint and panels is kept
 void syncPaint(J st) {
-  final highs = paintHighs(st), probs = lst(st, 'probs', 'ck_paint');
+  final highs = paintHighs(st), dp = dmgVals(st, 'ck_paint', null), dx = dmgVals(st, 'ck_paint', null, 'x');
+  final hand = lst(st, 'probs', 'ck_paint').where((p) => !dp.contains(p)).toList();
   if (highs.isNotEmpty) {
-    if (probs.isNotEmpty && probs[0] != paintOpt) return;
-    setLst(st, 'probs', 'ck_paint', [paintOpt]);
-    setLst(st, 'extra', 'ck_paint', paintWhere(highs));
+    if (hand.isNotEmpty && hand.first != paintOpt) return;
+    setLst(st, 'probs', 'ck_paint', [paintOpt, ...dp.where((p) => p != paintOpt)]);
+    setLst(st, 'extra', 'ck_paint', {...dx, ...paintWhere(highs)}.toList());
     st['paintAuto'] = true;
   } else if (st['paintAuto'] == true) {
-    if (probs.isNotEmpty && probs[0] == paintOpt) setLst(st, 'probs', 'ck_paint', []);
-    setLst(st, 'extra', 'ck_paint', []);
+    if (hand.isNotEmpty && hand.first == paintOpt) setLst(st, 'probs', 'ck_paint', dp);
+    setLst(st, 'extra', 'ck_paint', dx);
     st['paintAuto'] = false;
   }
 }
+
+// panels with a photo but no reading (and not marked not on this car): the report needs every reading
+List<String> paintMissing(J st) => [
+      for (final x in paintPanels)
+        if ((m(st, 'paint')[x[1]] as J?)?['na'] != true && ((m(st, 'paint')[x[1]] as J?)?['v'] ?? '') == '') x[1]
+    ];
 
 // ---------- keys ----------
 void keysSync(J st) {
@@ -267,7 +281,7 @@ String? pickCheck(J st, String id, String? w, String v) {
     if (id == 'ck_paint' && v == paintOpt) {
       final hs = paintWhere(paintHighs(st));
       if (hs.isNotEmpty) {
-        setLst(src, 'extra', 'ck_paint', hs);
+        setLst(src, 'extra', 'ck_paint', {...dmgVals(st, 'ck_paint', w, 'x'), ...hs}.toList());
         st['paintAuto'] = true;
         auto = true;
       }
@@ -490,6 +504,7 @@ String pageBlock(J st, String k) {
   if (f.unl > 0) return 'Label ${f.unl} damage photo${f.unl > 1 ? 's' : ''}';
   if (f.tdm.isNotEmpty) return 'Pick the tread depth: ${f.tdm.join(', ')}';
   if (f.fqm > 0) return k == 'Tires' ? 'Answer: do the 4 tires match?' : keysMissing(st) > 0 ? 'Pick the number of keys' : 'Answer sunroof and navigation';
+  if (k == 'Paint' && paintMissing(st).isNotEmpty) return 'Add the paint reading: ${paintMissing(st).join(', ')}';
   return '';
 }
 
@@ -504,11 +519,11 @@ String sumBlock(J st) {
   if (tmMissing(st) > 0) return 'Answer: do the 4 tires match?';
   if (keysMissing(st) > 0) return 'Pick the number of keys';
   if (featMissing(st) > 0) return 'Answer sunroof and navigation';
+  if (paintMissing(st).isNotEmpty) return 'Add the paint reading: ${paintMissing(st).join(', ')}';
   final unc = sumUnconfirmed(st);
   if (unc.isNotEmpty) return 'Review ${unc.length} more section${unc.length > 1 ? 's' : ''}';
   if (!idReady(st) || m(st, 'vals')['idconf'] != true) return 'Confirm the VIN and mileage';
   if ((st['overall'] ?? '') == '') return 'Pick the overall condition';
-  if ((st['note'] as String? ?? '').trim().isEmpty) return 'Write the note';
   return '';
 }
 

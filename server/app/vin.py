@@ -6,10 +6,11 @@ URL = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/{}?format=json"
 
 def fuel(r: dict) -> str:
     el, ft = (r.get("ElectrificationLevel") or "").upper(), (r.get("FuelTypePrimary") or "").lower()
-    if el.startswith("BEV") or ft == "electric":
-        return "Electric (EV)"
+    # a plug-in hybrid often has FuelTypePrimary Electric (Volt, Prius Prime): check PHEV first
     if el.startswith("PHEV"):
         return "Plug-in hybrid"
+    if el.startswith("BEV") or ft == "electric":
+        return "Electric (EV)"
     if "HEV" in el:  # HEV, Strong HEV, Mild HEV
         return "Hybrid"
     return "Gas or diesel"

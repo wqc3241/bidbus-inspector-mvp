@@ -20,7 +20,7 @@ String statusText(J st) {
     'uploading' || 'building' => 'Uploading${(up['total'] ?? 0) > 0 ? ' (${up['done']} of ${up['total']})' : ''}',
     'sent' => 'Report sent',
     'ended' => 'Visit ended',
-    'failed' => 'Report not made',
+    'failed' => (up['errors'] as List? ?? []).isEmpty ? 'Report not made' : '${(up['errors'] as List).first}${(up['errors'] as List).length > 1 ? ' (+${(up['errors'] as List).length - 1} more)' : ''}',
     _ => 'In progress',
   };
 }
@@ -46,7 +46,7 @@ class HomeScreen extends ConsumerWidget {
                       if (((st['car'] as J)['vin'] ?? '') != '') Text((st['car'] as J)['vin'], style: const TextStyle(fontFamily: 'monospace', fontSize: 12.5, color: Color(0xFF595959))),
                     ]),
                   ),
-                  Text(statusText(st), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: st['status'] == 'sent' ? bid : st['status'] == 'failed' || st['status'] == 'ended' ? red : muted)),
+                  Flexible(child: Text(statusText(st), textAlign: TextAlign.right, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: st['status'] == 'sent' ? bid : st['status'] == 'failed' || st['status'] == 'ended' ? red : muted))),
                 ]),
               ),
             ),
