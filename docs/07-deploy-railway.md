@@ -47,6 +47,6 @@ Resend's test sender `onboarding@resend.dev` only delivers to the email address 
 ## Local run
 
 ```
-docker compose up        # Postgres + the app on http://localhost:8000, reading .env
+docker compose up        # Postgres + the app on http://localhost:8000, reading .env (set POSTGRES_PASSWORD there)
 ```
 Add a `docker-compose.yml` with `postgres:16` and the app built from the Dockerfile, media in a named volume.
