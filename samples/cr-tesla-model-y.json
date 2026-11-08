@@ -1,0 +1,1036 @@
+{
+ "condition_report": {
+  "source": {
+   "system": "bidbus_field",
+   "listing_id": "my",
+   "inspector": "inspector@bidbus.com",
+   "started": {
+    "at": "3:01 PM",
+    "loc": "37.5630, -122.3255"
+   },
+   "ended": {
+    "at": "3:22 PM",
+    "loc": "37.5630, -122.3255"
+   }
+  },
+  "vehicle": {
+   "vin": "7SAYGDEE5NF000422",
+   "vin_matches_listing": true,
+   "mileage": 28495,
+   "mileage_listing": 28410,
+   "fuel": "Electric (EV)",
+   "ev_battery_health_pct": 93,
+   "keys": "One key",
+   "keys_count": 1
+  },
+  "owner_check": "Yes",
+  "light": "Red",
+  "highlight": {
+   "structural_damage": "Yes",
+   "structural_damage_issues": [
+    "I2",
+    "I6"
+   ],
+   "keys": 1,
+   "keys_read_from_photo": true,
+   "odor": "OK",
+   "mechanical": "Issue",
+   "mechanical_issues": [
+    "I8",
+    "I11",
+    "I12"
+   ]
+  },
+  "not_listed_reasons": [],
+  "rows": [
+   {
+    "row": "Exterior",
+    "result": "Problems",
+    "issues": [
+     "I1",
+     "I3"
+    ],
+    "photos": [
+     "ph_ext_roof.jpg"
+    ],
+    "damage_photos": [
+     "damage-1.jpg",
+     "damage-3.jpg"
+    ],
+    "videos": [
+     "video_360.mp4"
+    ]
+   },
+   {
+    "row": "Paint",
+    "result": "Problems",
+    "issues": [
+     "I4",
+     "I9"
+    ],
+    "photos": [
+     "paint-left-front-fender.jpg",
+     "paint-left-front-door.jpg",
+     "paint-left-rear-door.jpg",
+     "paint-left-quarter-panel.jpg",
+     "paint-trunk-or-liftgate.jpg",
+     "paint-right-quarter-panel.jpg",
+     "paint-right-rear-door.jpg",
+     "paint-right-front-door.jpg",
+     "paint-right-front-fender.jpg",
+     "paint-hood-or-frunk-lid.jpg",
+     "paint-roof.jpg"
+    ],
+    "damage_photos": [
+     "damage-4.jpg"
+    ]
+   },
+   {
+    "row": "Tires",
+    "result": "Problems",
+    "issues": [
+     "I5",
+     "I10"
+    ],
+    "photos": [
+     "tire_photo-lf.jpg",
+     "tread_photo-lf.jpg",
+     "tire_photo-lr.jpg",
+     "tread_photo-lr.jpg",
+     "tire_photo-rr.jpg",
+     "tread_photo-rr.jpg",
+     "tire_photo-rf.jpg",
+     "tread_photo-rf.jpg"
+    ],
+    "damage_photos": [
+     "damage-5.jpg"
+    ]
+   },
+   {
+    "row": "Underbody",
+    "result": "Problems",
+    "issues": [
+     "I2",
+     "I6"
+    ],
+    "photos": [
+     "ph_under_lf.jpg",
+     "ph_under_lr.jpg",
+     "ph_under_rear.jpg",
+     "ph_under_rr.jpg",
+     "ph_under_rf.jpg",
+     "ph_under_front.jpg"
+    ],
+    "damage_photos": [
+     "damage-2.jpg",
+     "damage-6.jpg"
+    ]
+   },
+   {
+    "row": "Mechanicals",
+    "result": "Problems",
+    "issues": [
+     "I8",
+     "I11",
+     "I12"
+    ],
+    "photos": [
+     "ph_frunk.jpg",
+     "ph_ev_port.jpg"
+    ],
+    "damage_photos": [
+     "damage-8.jpg"
+    ]
+   },
+   {
+    "row": "Interior",
+    "result": "Problems",
+    "issues": [
+     "I7"
+    ],
+    "photos": [
+     "ph_int_dash.jpg",
+     "ph_int_screen.jpg",
+     "ph_int_front.jpg",
+     "ph_int_rear.jpg",
+     "ph_int_cargo.jpg"
+    ],
+    "damage_photos": [
+     "damage-7.jpg"
+    ]
+   },
+   {
+    "row": "OBD-II",
+    "result": "Problems",
+    "issues": [
+     "I13"
+    ],
+    "photos": [
+     "ph_ev_alerts-1.jpg",
+     "ph_ev_alerts-2.jpg",
+     "ph_ev_battery-1.jpg",
+     "ph_ev_battery-2.jpg",
+     "ph_ev_charging-1.jpg"
+    ],
+    "damage_photos": []
+   },
+   {
+    "row": "Additionals",
+    "result": "Problems",
+    "issues": [
+     "I14"
+    ],
+    "photos": [
+     "ph_vin_dash.jpg",
+     "ph_vin_door.jpg",
+     "ph_odo.jpg",
+     "ph_keys.jpg"
+    ],
+    "damage_photos": []
+   }
+  ],
+  "issues": [
+   {
+    "id": "I1",
+    "text": "Left rear door: Dent, Moderate, 2 in",
+    "cr_row": "Exterior",
+    "section": "Exterior",
+    "place": "Left rear door",
+    "type": "Dent",
+    "severity": "Moderate",
+    "size_in": 2,
+    "level": "Disclosed",
+    "check": null,
+    "option": null,
+    "photo": "damage-1.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "dents",
+    "ai_first_guess": {
+     "place": "Left rear door",
+     "type": "Scratch",
+     "severity": "Moderate"
+    },
+    "inspector_changed_ai": true
+   },
+   {
+    "id": "I2",
+    "text": "Trunk or liftgate: Structure, Severe",
+    "cr_row": "Underbody",
+    "section": "Exterior",
+    "place": "Trunk or liftgate",
+    "type": "Structure",
+    "severity": "Severe",
+    "size_in": null,
+    "level": "Red",
+    "check": "ck_structure",
+    "option": "Rear structure repaired or damaged",
+    "photo": "damage-2.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "additional_damage",
+    "ai_first_guess": {
+     "place": "Trunk or liftgate",
+     "type": "Structure",
+     "severity": "Severe"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "id": "I3",
+    "text": "Windshield: Chip under 1 in, Minor, 1 in",
+    "cr_row": "Exterior",
+    "section": "Exterior",
+    "place": "Windshield",
+    "type": "Windshield chip under 1 in",
+    "severity": "Minor",
+    "size_in": 1,
+    "level": "Disclosed",
+    "check": "ck_glass",
+    "option": "Windshield chip under 1 in",
+    "photo": "damage-3.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "windshield_damage",
+    "ai_first_guess": {
+     "place": "Windshield",
+     "type": "Windshield chip under 1 in",
+     "severity": "Minor"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "id": "I4",
+    "text": "Right front door: Overspray or colour mismatch, Minor",
+    "cr_row": "Paint",
+    "section": "Paint",
+    "place": "Right front door",
+    "type": "Overspray or colour mismatch",
+    "severity": "Minor",
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_paint",
+    "option": "Overspray or colour mismatch",
+    "where": "Right front door",
+    "photo": "damage-4.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "previous_paint_work",
+    "ai_first_guess": {
+     "place": "Right front door",
+     "type": "Overspray or colour mismatch",
+     "severity": "Minor"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "id": "I5",
+    "text": "Right front wheel: Curb rash, Minor, 3 in",
+    "cr_row": "Tires",
+    "section": "Tires",
+    "place": "Right front wheel",
+    "type": "Curb rash",
+    "severity": "Minor",
+    "size_in": 3,
+    "level": "Disclosed",
+    "check": "ck_wheel",
+    "option": "Curb rash",
+    "wheel": "rf",
+    "photo": "damage-5.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "wheel_damage",
+    "ai_first_guess": {
+     "place": "Right front wheel",
+     "type": "Curb rash",
+     "severity": "Minor"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "id": "I6",
+    "text": "Carpet: Structure, Moderate",
+    "cr_row": "Underbody",
+    "section": "Interior",
+    "place": "Carpet",
+    "type": "Structure",
+    "severity": "Moderate",
+    "size_in": null,
+    "level": "Red",
+    "check": "ck_structure",
+    "option": "Frame rails, floor or subframe repaired or damaged",
+    "photo": "damage-6.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "additional_damage",
+    "ai_first_guess": {
+     "place": "Carpet",
+     "type": "Structure",
+     "severity": "Moderate"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "id": "I7",
+    "text": "Front seats: Worn, Minor, 2 in",
+    "cr_row": "Interior",
+    "section": "Interior",
+    "place": "Front seats",
+    "type": "Seats worn",
+    "severity": "Minor",
+    "size_in": 2,
+    "level": "Disclosed",
+    "check": "ck_seats",
+    "option": "Seats worn",
+    "photo": "damage-7.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "additional_damage",
+    "ai_first_guess": {
+     "place": "Front seats",
+     "type": "Seats worn",
+     "severity": "Minor"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "id": "I8",
+    "text": "Suspension: Struts or shocks leaking or worn, Moderate",
+    "cr_row": "Mechanicals",
+    "section": "Underbody",
+    "place": "Suspension",
+    "type": "Struts or shocks leaking or worn",
+    "severity": "Moderate",
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_susp",
+    "option": "Struts or shocks leaking or worn",
+    "photo": "damage-8.jpg",
+    "from": "damage photo",
+    "bidbus_damage_type": "additional_damage",
+    "ai_first_guess": {
+     "place": "Suspension",
+     "type": "Struts or shocks leaking or worn",
+     "severity": "Moderate"
+    },
+    "inspector_changed_ai": false
+   },
+   {
+    "text": "Paint and panels: Panel repainted (the meter reads high)",
+    "sub": "Right rear door",
+    "cr_row": "Paint",
+    "section": "Paint",
+    "type": "Panel repainted (the meter reads high)",
+    "severity": null,
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_paint",
+    "option": "Panel repainted (the meter reads high)",
+    "from": "check row",
+    "photo": null,
+    "id": "I9",
+    "place": "Right rear door",
+    "mils": 11.2
+   },
+   {
+    "text": "Tire: Uneven wear",
+    "sub": "Right rear",
+    "cr_row": "Tires",
+    "section": "Tires",
+    "type": "Uneven wear",
+    "severity": null,
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_tire",
+    "option": "Uneven wear",
+    "from": "check row",
+    "photo": null,
+    "id": "I10",
+    "place": "Right rear",
+    "wheel": "rr"
+   },
+   {
+    "text": "Power-on: Slow to wake or needs a 12 V jump",
+    "cr_row": "Mechanicals",
+    "section": "Mechanicals",
+    "type": "Slow to wake or needs a 12 V jump",
+    "severity": null,
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_ev_power",
+    "option": "Slow to wake or needs a 12 V jump",
+    "from": "check row",
+    "photo": null,
+    "id": "I11",
+    "place": "Power-on"
+   },
+   {
+    "text": "Brakes: Brake pads under 3 mm",
+    "sub": "Left front",
+    "cr_row": "Mechanicals",
+    "section": "Mechanicals",
+    "type": "Brake pads under 3 mm",
+    "severity": null,
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_brakes",
+    "option": "Brake pads under 3 mm",
+    "from": "check row",
+    "photo": null,
+    "id": "I12",
+    "place": "Left front"
+   },
+   {
+    "text": "Warning lights: Airbag (SRS)",
+    "cr_row": "OBD-II",
+    "section": "OBDII",
+    "type": "Airbag (SRS)",
+    "severity": null,
+    "size_in": null,
+    "level": "Yellow",
+    "check": "ck_lights_dash",
+    "option": "Airbag (SRS)",
+    "from": "check row",
+    "photo": null,
+    "id": "I13",
+    "place": "Warning lights"
+   },
+   {
+    "text": "Keys: Only one key",
+    "cr_row": "Additionals",
+    "section": "Additionals",
+    "type": "Only one key",
+    "severity": null,
+    "size_in": null,
+    "level": "Disclosed",
+    "check": "ck_keys",
+    "option": "Only one key",
+    "from": "check row",
+    "photo": null,
+    "id": "I14",
+    "place": "Keys"
+   }
+  ],
+  "road_test": "Not done",
+  "tires": [
+   {
+    "wheel": "lf",
+    "name": "Left front",
+    "tread_32nds": 7,
+    "tread": "Fair",
+    "bidbus_tier": "10001_20000",
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "read_from_photo": {
+     "tread": true,
+     "brand_size": true
+    },
+    "issues": []
+   },
+   {
+    "wheel": "lr",
+    "name": "Left rear",
+    "tread_32nds": 6,
+    "tread": "Fair",
+    "bidbus_tier": "10001_20000",
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "read_from_photo": {
+     "tread": true,
+     "brand_size": true
+    },
+    "issues": []
+   },
+   {
+    "wheel": "rr",
+    "name": "Right rear",
+    "tread_32nds": 5,
+    "tread": "Fair",
+    "bidbus_tier": "10001_20000",
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "read_from_photo": {
+     "tread": true,
+     "brand_size": true
+    },
+    "issues": [
+     "I10"
+    ]
+   },
+   {
+    "wheel": "rf",
+    "name": "Right front",
+    "tread_32nds": 7,
+    "tread": "Fair",
+    "bidbus_tier": "10001_20000",
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "read_from_photo": {
+     "tread": true,
+     "brand_size": true
+    },
+    "issues": [
+     "I5"
+    ]
+   }
+  ],
+  "tires_match": "Match",
+  "paint": [
+   {
+    "panel": "Left front fender",
+    "mils": 4.3,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Left front door",
+    "mils": 5,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Left rear door",
+    "mils": 4.8,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Left quarter panel",
+    "mils": 4.6,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Trunk or liftgate",
+    "mils": 4.4,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Right quarter panel",
+    "mils": 5.1,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Right rear door",
+    "mils": 11.2,
+    "not_on_car": false,
+    "high": true,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Right front door",
+    "mils": 4.7,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Right front fender",
+    "mils": 4.5,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Hood or frunk lid",
+    "mils": 4.3,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   },
+   {
+    "panel": "Roof",
+    "mils": 5,
+    "not_on_car": false,
+    "high": false,
+    "read_from_photo": true
+   }
+  ],
+  "media": {
+   "videos": [
+    {
+     "question_id": "video_360",
+     "file": "video_360.mp4",
+     "max_seconds": 60
+    }
+   ],
+   "spin_frames": [
+    "spin-01.jpg",
+    "spin-02.jpg",
+    "spin-03.jpg",
+    "spin-04.jpg",
+    "spin-05.jpg",
+    "spin-06.jpg",
+    "spin-07.jpg",
+    "spin-08.jpg",
+    "spin-09.jpg",
+    "spin-10.jpg",
+    "spin-11.jpg",
+    "spin-12.jpg",
+    "spin-13.jpg",
+    "spin-14.jpg",
+    "spin-15.jpg",
+    "spin-16.jpg",
+    "spin-17.jpg",
+    "spin-18.jpg",
+    "spin-19.jpg",
+    "spin-20.jpg",
+    "spin-21.jpg",
+    "spin-22.jpg",
+    "spin-23.jpg",
+    "spin-24.jpg",
+    "spin-25.jpg",
+    "spin-26.jpg",
+    "spin-27.jpg",
+    "spin-28.jpg",
+    "spin-29.jpg",
+    "spin-30.jpg",
+    "spin-31.jpg",
+    "spin-32.jpg",
+    "spin-33.jpg",
+    "spin-34.jpg",
+    "spin-35.jpg",
+    "spin-36.jpg"
+   ],
+   "modification_photos": [
+    "ph_mod_ext-1.jpg",
+    "ph_mod_int-1.jpg",
+    "ph_mod_mech-1.jpg"
+   ]
+  },
+  "features": {
+   "sunroof": "No sunroof",
+   "navigation": "Works"
+  },
+  "overall_condition": "Pretty great",
+  "inspector_note": "Clean car for its age. See the paint readings and the damages listed.",
+  "seller_ack": {
+   "seller_name": "Daniel Kim",
+   "agreed": true,
+   "signed": true
+  }
+ },
+ "vehicle_patch": {
+  "self_inspection_data_merge": {
+   "interior_damage": [
+    {
+     "name": "none"
+    }
+   ],
+   "technology_issues": [
+    {
+     "name": "none"
+    }
+   ],
+   "mechanical_issues": [
+    {
+     "name": "electrical",
+     "description": "Airbag (SRS)"
+    }
+   ],
+   "check_engine_light_on": "no",
+   "vehicle_drivability": "drivable",
+   "frame_damage": "yes",
+   "tire_mileage": {
+    "overall": "10001_20000",
+    "all_same": "yes",
+    "individual": {
+     "driver_front": "10001_20000",
+     "passenger_front": "10001_20000",
+     "driver_rear": "10001_20000",
+     "passenger_rear": "10001_20000"
+    }
+   },
+   "additional_condition": "Clean car for its age. See the paint readings and the damages listed. Battery health 93%. One key. Tread (/32 in): Left front 7, Right front 7, Left rear 6, Right rear 5.",
+   "features": [
+    "navigation"
+   ],
+   "sunroof_condition": "no_sunroof",
+   "overall_condition": "pretty_great",
+   "has_modifications": "yes"
+  },
+  "keep_from_seller": [
+   "has_wrap (no wrap seen; the seller's answer also covers past wraps)",
+   "first_time_owner (from the Carfax owner count)"
+  ],
+  "has_smoked_in": false,
+  "vehicle_photos": {
+   "front_left": [
+    {
+     "source_file": "spin-01.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "left_side": [
+    {
+     "source_file": "spin-05.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "rear_left": [
+    {
+     "source_file": "spin-10.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "rear": [
+    {
+     "source_file": "spin-14.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "rear_right": [
+    {
+     "source_file": "spin-19.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "right_side": [
+    {
+     "source_file": "spin-23.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "front_right": [
+    {
+     "source_file": "spin-28.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "front": [
+    {
+     "source_file": "spin-32.jpg",
+     "description": "Frame of the walk-around video"
+    }
+   ],
+   "paint_meter": [
+    {
+     "source_file": "paint-left-front-fender.jpg",
+     "description": "Left front fender: 4.3 mils"
+    },
+    {
+     "source_file": "paint-left-front-door.jpg",
+     "description": "Left front door: 5 mils"
+    },
+    {
+     "source_file": "paint-left-rear-door.jpg",
+     "description": "Left rear door: 4.8 mils"
+    },
+    {
+     "source_file": "paint-left-quarter-panel.jpg",
+     "description": "Left quarter panel: 4.6 mils"
+    },
+    {
+     "source_file": "paint-trunk-or-liftgate.jpg",
+     "description": "Trunk or liftgate: 4.4 mils"
+    },
+    {
+     "source_file": "paint-right-quarter-panel.jpg",
+     "description": "Right quarter panel: 5.1 mils"
+    },
+    {
+     "source_file": "paint-right-rear-door.jpg",
+     "description": "Right rear door: 11.2 mils"
+    },
+    {
+     "source_file": "paint-right-front-door.jpg",
+     "description": "Right front door: 4.7 mils"
+    },
+    {
+     "source_file": "paint-right-front-fender.jpg",
+     "description": "Right front fender: 4.5 mils"
+    },
+    {
+     "source_file": "paint-hood-or-frunk-lid.jpg",
+     "description": "Hood or frunk lid: 4.3 mils"
+    },
+    {
+     "source_file": "paint-roof.jpg",
+     "description": "Roof: 5 mils"
+    }
+   ],
+   "roof": [
+    {
+     "source_file": "ph_ext_roof.jpg"
+    }
+   ],
+   "vin": [
+    {
+     "source_file": "ph_vin_dash.jpg"
+    },
+    {
+     "source_file": "ph_vin_door.jpg"
+    }
+   ],
+   "tire": [
+    {
+     "source_file": "tire_photo-lf.jpg",
+     "description": "Left front: Michelin, 245/50R19, tread 7/32 in"
+    },
+    {
+     "source_file": "tire_photo-rf.jpg",
+     "description": "Right front: Michelin, 245/50R19, tread 7/32 in"
+    },
+    {
+     "source_file": "tire_photo-rr.jpg",
+     "description": "Right rear: Michelin, 245/50R19, tread 5/32 in"
+    },
+    {
+     "source_file": "tire_photo-lr.jpg",
+     "description": "Left rear: Michelin, 245/50R19, tread 6/32 in"
+    }
+   ],
+   "tread_gauge": [
+    {
+     "source_file": "tread_photo-lf.jpg",
+     "description": "Left front"
+    },
+    {
+     "source_file": "tread_photo-lr.jpg",
+     "description": "Left rear"
+    },
+    {
+     "source_file": "tread_photo-rr.jpg",
+     "description": "Right rear"
+    },
+    {
+     "source_file": "tread_photo-rf.jpg",
+     "description": "Right front"
+    }
+   ],
+   "odometer": [
+    {
+     "source_file": "ph_odo.jpg"
+    }
+   ],
+   "keys": [
+    {
+     "source_file": "ph_keys.jpg"
+    }
+   ],
+   "dashboard": [
+    {
+     "source_file": "ph_int_dash.jpg"
+    }
+   ],
+   "infotainment": [
+    {
+     "source_file": "ph_int_screen.jpg"
+    }
+   ],
+   "driver_seat": [
+    {
+     "source_file": "ph_int_front.jpg"
+    }
+   ],
+   "rear_seat": [
+    {
+     "source_file": "ph_int_rear.jpg"
+    }
+   ],
+   "cargo": [
+    {
+     "source_file": "ph_int_cargo.jpg"
+    }
+   ],
+   "obdii": [
+    {
+     "source_file": "ph_ev_alerts-1.jpg"
+    },
+    {
+     "source_file": "ph_ev_alerts-2.jpg"
+    },
+    {
+     "source_file": "ph_ev_battery-1.jpg"
+    },
+    {
+     "source_file": "ph_ev_battery-2.jpg"
+    },
+    {
+     "source_file": "ph_ev_charging-1.jpg"
+    }
+   ],
+   "engine": [
+    {
+     "source_file": "ph_frunk.jpg"
+    }
+   ],
+   "mechanicals": [
+    {
+     "source_file": "ph_ev_port.jpg"
+    }
+   ],
+   "underbody": [
+    {
+     "source_file": "ph_under_lf.jpg"
+    },
+    {
+     "source_file": "ph_under_lr.jpg"
+    },
+    {
+     "source_file": "ph_under_rear.jpg"
+    },
+    {
+     "source_file": "ph_under_rr.jpg"
+    },
+    {
+     "source_file": "ph_under_rf.jpg"
+    },
+    {
+     "source_file": "ph_under_front.jpg"
+    }
+   ]
+  },
+  "damage_photos": {
+   "has_scratches": false,
+   "has_dents": true,
+   "dents": [
+    {
+     "source_file": "damage-1.jpg",
+     "description": "Left rear door: Dent, Moderate, 2 in"
+    }
+   ],
+   "has_paintwork": false,
+   "has_previous_paint_work": true,
+   "previous_paint_work": [
+    {
+     "source_file": "damage-4.jpg",
+     "description": "Right front door: Overspray or colour mismatch, Minor"
+    }
+   ],
+   "has_windshield_damage": true,
+   "windshield_damage": [
+    {
+     "source_file": "damage-3.jpg",
+     "description": "Windshield: Chip under 1 in, Minor, 1 in"
+    }
+   ],
+   "has_broken_or_missing_parts": false,
+   "has_warning_lights": false,
+   "has_wheel_damage": true,
+   "wheel_damage": [
+    {
+     "source_file": "damage-5.jpg",
+     "description": "Right front wheel: Curb rash, Minor, 3 in"
+    }
+   ],
+   "has_additional_damage": true,
+   "additional_damage": [
+    {
+     "source_file": "damage-2.jpg",
+     "description": "Trunk or liftgate: Structure, Severe"
+    },
+    {
+     "source_file": "damage-6.jpg",
+     "description": "Carpet: Structure, Moderate"
+    },
+    {
+     "source_file": "damage-7.jpg",
+     "description": "Front seats: Worn, Minor, 2 in"
+    },
+    {
+     "source_file": "damage-8.jpg",
+     "description": "Suspension: Struts or shocks leaking or worn, Moderate"
+    }
+   ]
+  },
+  "modification_photos": [
+   {
+    "source_file": "ph_mod_ext-1.jpg",
+    "description": "Exterior modification"
+   },
+   {
+    "source_file": "ph_mod_int-1.jpg",
+    "description": "Interior modification"
+   },
+   {
+    "source_file": "ph_mod_mech-1.jpg",
+    "description": "Mechanicals modification"
+   }
+  ]
+ },
+ "documents": {
+  "license": "seller upload",
+  "registration": "seller upload"
+ },
+ "checks_for_listing_team": {
+  "vin_read": "7SAYGDEE5NF000422",
+  "vin_listing": "7SAYGDEE5NF000422",
+  "vin_matches": true,
+  "mileage_read": 28495,
+  "mileage_listing": 28410,
+  "mileage_lower_than_listing": false,
+  "fuel": "Electric (EV)",
+  "ai_guesses_changed": [
+   "I1"
+  ]
+ },
+ "validation": {
+  "ok": true,
+  "errors": [],
+  "issues": 14,
+  "checks": 35,
+  "photos": 45
+ }
+}

@@ -1,0 +1,2182 @@
+{
+ "runs": [
+  {
+   "car": "BMW X3",
+   "fuel": "Gas or diesel",
+   "items": {
+    "fuel": {
+     "on": true,
+     "kind": "choice",
+     "where": "VIN decode: Gas or diesel"
+    },
+    "ph_license": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "ph_reg": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "id_owner": {
+     "on": true,
+     "kind": "choice",
+     "where": "Check ID: owner = Yes"
+    },
+    "ph_ext_front_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_left_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_right_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_roof": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_mod_ext": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_paint_base": {
+     "on": true,
+     "kind": "photo",
+     "where": "Paint meter photos, one per panel (11)"
+    },
+    "tire_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tread_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tire_brand": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tire_size": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tread": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker: 7/6/5/7"
+    },
+    "tires_match": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Tires: Match"
+    },
+    "ph_under_lf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_lr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_cats": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_int_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_screen": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_cargo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_mod_int": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "sunroof": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: Works"
+    },
+    "navigation": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: Works"
+    },
+    "ph_engine_bay": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_engine_oil": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_frunk": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_port": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_mod_mech": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_obd_current": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_past": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_emission": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_other": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_ev_alerts": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_battery": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_charging": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ev_soh": {
+     "on": false,
+     "kind": "entry",
+     "where": "OBDII entry"
+    },
+    "ph_vin_door": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_vin_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_odo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_keys": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "vin_scan": {
+     "on": true,
+     "kind": "entry",
+     "where": "Interior: read from door-jamb photo"
+    },
+    "damage.photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Damage shutter (2 taken)"
+    },
+    "video_360": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Exterior"
+    },
+    "video_engine": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Mechanicals"
+    },
+    "video_exhaust": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Mechanicals"
+    },
+    "ck_glass": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_lights": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_wipers": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_fuel_cap": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_paint": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Paint row"
+    },
+    "ck_tire": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_wheel": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_structure": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_rust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_pack": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_seats": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_odor": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_srs": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_features": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_pbrake": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_ac": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_engine": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_ev_power": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_trans": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_fluids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_leaks": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_bay": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_battery": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_exhaust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_susp": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_cv": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_brakes": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_hv": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_charging": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_hybrid": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_road": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_lights_dash": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_scan": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_ids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_keys": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_equip": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_account": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "seller_name": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "seller_sign": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "summary": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs: findings"
+    },
+    "overall_condition": {
+     "on": true,
+     "kind": "choice",
+     "where": "Summary: Pretty great"
+    },
+    "mileage_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    },
+    "vin_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    }
+   },
+   "options": 155,
+   "optFails": [],
+   "damage": 307,
+   "dmgFails": [],
+   "pages": {
+    "summary": "45/45 Photos 3/3 Videos 0 Problems 0 Damage photos What you found 0 No problems marked. Started 1:02 PM Recorded when you tapped Start inspection 37.5841, -122.3661 Your location at the start, 20 m fr"
+   },
+   "seller": [],
+   "sent": true,
+   "record": {
+    "car": "5UXTY5C00L9B00230",
+    "fuel": "Gas or diesel",
+    "owner": "Yes",
+    "shots": 29,
+    "tires": [
+     "7",
+     "6",
+     "5",
+     "7"
+    ],
+    "paint": 11,
+    "overall": "Pretty great",
+    "note": true,
+    "sign": true,
+    "start": {
+     "at": "1:02 PM",
+     "loc": "37.5841, -122.3661"
+    },
+    "end": {
+     "at": "1:21 PM",
+     "loc": "37.5841, -122.3661"
+    }
+   }
+  },
+  {
+   "car": "Tesla Model Y",
+   "fuel": "Electric (EV)",
+   "items": {
+    "fuel": {
+     "on": true,
+     "kind": "choice",
+     "where": "VIN decode: Electric (EV)"
+    },
+    "ph_license": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "ph_reg": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "id_owner": {
+     "on": true,
+     "kind": "choice",
+     "where": "Check ID: owner = Yes"
+    },
+    "ph_ext_front_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_left_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_right_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_roof": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_mod_ext": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_paint_base": {
+     "on": true,
+     "kind": "photo",
+     "where": "Paint meter photos, one per panel (11)"
+    },
+    "tire_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tread_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tire_brand": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tire_size": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tread": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker: 7/6/5/7"
+    },
+    "tires_match": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Tires: Match"
+    },
+    "ph_under_lf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_lr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_cats": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_int_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_screen": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_cargo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_mod_int": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "sunroof": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: No sunroof"
+    },
+    "navigation": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: Works"
+    },
+    "ph_engine_bay": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_engine_oil": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_frunk": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_ev_port": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_mod_mech": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_obd_current": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_obd_past": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_obd_emission": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_obd_other": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_alerts": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_ev_battery": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_ev_charging": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ev_soh": {
+     "on": true,
+     "kind": "entry",
+     "where": "OBDII entry"
+    },
+    "ph_vin_door": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_vin_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_odo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_keys": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "vin_scan": {
+     "on": true,
+     "kind": "entry",
+     "where": "Interior: read from door-jamb photo"
+    },
+    "damage.photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Damage shutter (2 taken)"
+    },
+    "video_360": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Exterior"
+    },
+    "video_engine": {
+     "on": false,
+     "kind": "video",
+     "where": ""
+    },
+    "video_exhaust": {
+     "on": false,
+     "kind": "video",
+     "where": ""
+    },
+    "ck_glass": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_lights": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_wipers": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_fuel_cap": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_paint": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Paint row"
+    },
+    "ck_tire": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_wheel": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_structure": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_rust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_pack": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_seats": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_odor": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_srs": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_features": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_pbrake": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_ac": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_engine": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_ev_power": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_trans": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_fluids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_leaks": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_bay": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_battery": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_exhaust": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_susp": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_cv": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_brakes": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_hv": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_charging": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_hybrid": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_road": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_lights_dash": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_scan": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_ids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_keys": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_equip": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_account": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "seller_name": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "seller_sign": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "summary": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs: findings"
+    },
+    "overall_condition": {
+     "on": true,
+     "kind": "choice",
+     "where": "Summary: Pretty great"
+    },
+    "mileage_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    },
+    "vin_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    }
+   },
+   "options": 134,
+   "optFails": [],
+   "damage": 295,
+   "dmgFails": [],
+   "pages": {
+    "summary": "43/43 Photos 1/1 Videos 0 Problems 0 Damage photos What you found 0 No problems marked. Started 3:01 PM Recorded when you tapped Start inspection 37.5630, -122.3255 Your location at the start, 20 m fr"
+   },
+   "seller": [],
+   "sent": true,
+   "record": {
+    "car": "7SAYGDEE5NF000422",
+    "fuel": "Electric (EV)",
+    "owner": "Yes",
+    "shots": 25,
+    "tires": [
+     "7",
+     "6",
+     "5",
+     "7"
+    ],
+    "paint": 11,
+    "overall": "Pretty great",
+    "note": true,
+    "sign": true,
+    "start": {
+     "at": "3:01 PM",
+     "loc": "37.5630, -122.3255"
+    },
+    "end": {
+     "at": "3:22 PM",
+     "loc": "37.5630, -122.3255"
+    }
+   }
+  },
+  {
+   "car": "Honda Accord",
+   "fuel": "Hybrid",
+   "items": {
+    "fuel": {
+     "on": true,
+     "kind": "choice",
+     "where": "VIN decode: Hybrid"
+    },
+    "ph_license": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "ph_reg": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "id_owner": {
+     "on": true,
+     "kind": "choice",
+     "where": "Check ID: owner = Yes"
+    },
+    "ph_ext_front_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_left_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_right_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_roof": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_mod_ext": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_paint_base": {
+     "on": true,
+     "kind": "photo",
+     "where": "Paint meter photos, one per panel (11)"
+    },
+    "tire_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tread_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tire_brand": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tire_size": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tread": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker: 7/6/5/7"
+    },
+    "tires_match": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Tires: Match"
+    },
+    "ph_under_lf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_lr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_cats": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_int_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_screen": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_cargo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_mod_int": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "sunroof": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: Works"
+    },
+    "navigation": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: No navigation"
+    },
+    "ph_engine_bay": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_engine_oil": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_frunk": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_port": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_mod_mech": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_obd_current": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_past": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_emission": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_other": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_ev_alerts": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_battery": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_charging": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ev_soh": {
+     "on": false,
+     "kind": "entry",
+     "where": "OBDII entry"
+    },
+    "ph_vin_door": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_vin_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_odo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_keys": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "vin_scan": {
+     "on": true,
+     "kind": "entry",
+     "where": "Interior: read from door-jamb photo"
+    },
+    "damage.photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Damage shutter (2 taken)"
+    },
+    "video_360": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Exterior"
+    },
+    "video_engine": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Mechanicals"
+    },
+    "video_exhaust": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Mechanicals"
+    },
+    "ck_glass": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_lights": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_wipers": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_fuel_cap": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_paint": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Paint row"
+    },
+    "ck_tire": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_wheel": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_structure": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_rust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_pack": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_seats": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_odor": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_srs": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_features": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_pbrake": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_ac": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_engine": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_ev_power": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_trans": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_fluids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_leaks": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_bay": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_battery": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_exhaust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_susp": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_cv": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_brakes": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_hv": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_charging": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_hybrid": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_road": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_lights_dash": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_scan": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_ids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_keys": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_equip": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_account": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "seller_name": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "seller_sign": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "summary": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs: findings"
+    },
+    "overall_condition": {
+     "on": true,
+     "kind": "choice",
+     "where": "Summary: Pretty great"
+    },
+    "mileage_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    },
+    "vin_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    }
+   },
+   "options": 157,
+   "optFails": [],
+   "damage": 307,
+   "dmgFails": [],
+   "pages": {
+    "summary": "45/45 Photos 3/3 Videos 0 Problems 0 Damage photos What you found 0 No problems marked. Started 4:10 PM Recorded when you tapped Start inspection 37.6688, -122.0808 Your location at the start, 20 m fr"
+   },
+   "seller": [],
+   "sent": true,
+   "record": {
+    "car": "1HGCR2F84HA000117",
+    "fuel": "Hybrid",
+    "owner": "Yes",
+    "shots": 29,
+    "tires": [
+     "7",
+     "6",
+     "5",
+     "7"
+    ],
+    "paint": 11,
+    "overall": "Pretty great",
+    "note": true,
+    "sign": true,
+    "start": {
+     "at": "4:10 PM",
+     "loc": "37.6688, -122.0808"
+    },
+    "end": {
+     "at": "4:31 PM",
+     "loc": "37.6688, -122.0808"
+    }
+   }
+  },
+  {
+   "car": "Toyota RAV4",
+   "fuel": "Plug-in hybrid",
+   "items": {
+    "fuel": {
+     "on": true,
+     "kind": "choice",
+     "where": "VIN decode: Plug-in hybrid"
+    },
+    "ph_license": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "ph_reg": {
+     "on": true,
+     "kind": "photo",
+     "where": "Check ID: seller upload"
+    },
+    "id_owner": {
+     "on": true,
+     "kind": "choice",
+     "where": "Check ID: owner = Yes"
+    },
+    "ph_ext_front_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_left_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_left_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_rear_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_right_side": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front_right_corner": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "360 frame"
+    },
+    "ph_ext_roof": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_mod_ext": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_paint_base": {
+     "on": true,
+     "kind": "photo",
+     "where": "Paint meter photos, one per panel (11)"
+    },
+    "tire_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tread_photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Tires"
+    },
+    "tire_brand": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tire_size": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker"
+    },
+    "tread": {
+     "on": true,
+     "kind": "entry",
+     "where": "Review Tires picker: 7/6/5/7"
+    },
+    "tires_match": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Tires: Match"
+    },
+    "ph_under_lf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_lr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rr": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_rf": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_under_cats": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_int_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_screen": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_front": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_rear": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_int_cargo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_mod_int": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "sunroof": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: Works"
+    },
+    "navigation": {
+     "on": true,
+     "kind": "choice",
+     "where": "Review Interior: No navigation"
+    },
+    "ph_engine_bay": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_engine_oil": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Mechanicals"
+    },
+    "ph_frunk": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_port": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_mod_mech": {
+     "on": true,
+     "kind": "photo",
+     "where": "Section media"
+    },
+    "ph_obd_current": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_past": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_emission": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_obd_other": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera OBDII"
+    },
+    "ph_ev_alerts": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_battery": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ph_ev_charging": {
+     "on": false,
+     "kind": "photo",
+     "where": ""
+    },
+    "ev_soh": {
+     "on": false,
+     "kind": "entry",
+     "where": "OBDII entry"
+    },
+    "ph_vin_door": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_vin_dash": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Exterior"
+    },
+    "ph_odo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "ph_keys": {
+     "on": true,
+     "kind": "photo",
+     "where": "Camera Interior"
+    },
+    "vin_scan": {
+     "on": true,
+     "kind": "entry",
+     "where": "Interior: read from door-jamb photo"
+    },
+    "damage.photo": {
+     "on": true,
+     "kind": "photo",
+     "where": "Damage shutter (2 taken)"
+    },
+    "video_360": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Exterior"
+    },
+    "video_engine": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Mechanicals"
+    },
+    "video_exhaust": {
+     "on": true,
+     "kind": "video",
+     "where": "Camera Mechanicals"
+    },
+    "ck_glass": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_lights": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_wipers": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_fuel_cap": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Exterior row"
+    },
+    "ck_paint": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Paint row"
+    },
+    "ck_tire": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_wheel": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Tires row"
+    },
+    "ck_structure": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_rust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_pack": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_seats": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_odor": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_srs": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_features": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_pbrake": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_ac": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_engine": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_ev_power": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_trans": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_fluids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_leaks": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_bay": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_battery": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_exhaust": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_susp": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_cv": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_brakes": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_hv": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_charging": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "ck_hybrid": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_road": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Mechanicals row"
+    },
+    "ck_lights_dash": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_scan": {
+     "on": true,
+     "kind": "check",
+     "where": "Review OBDII row"
+    },
+    "ck_ids": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_keys": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_equip": {
+     "on": true,
+     "kind": "check",
+     "where": "Review Interior row"
+    },
+    "ck_account": {
+     "on": false,
+     "kind": "check",
+     "where": ""
+    },
+    "seller_name": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "seller_sign": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs"
+    },
+    "summary": {
+     "on": true,
+     "kind": "sign",
+     "where": "Seller signs: findings"
+    },
+    "overall_condition": {
+     "on": true,
+     "kind": "choice",
+     "where": "Summary: Pretty great"
+    },
+    "mileage_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    },
+    "vin_confirm": {
+     "on": true,
+     "kind": "sign",
+     "where": "Summary VIN and mileage card"
+    }
+   },
+   "options": 157,
+   "optFails": [],
+   "damage": 307,
+   "dmgFails": [],
+   "pages": {
+    "summary": "45/45 Photos 3/3 Videos 0 Problems 0 Damage photos What you found 0 No problems marked. Started 1:02 PM Recorded when you tapped Start inspection 34.0259, -118.3645 Your location at the start, 20 m fr"
+   },
+   "seller": [],
+   "sent": true,
+   "record": {
+    "car": "2T3RFREV2JW000318",
+    "fuel": "Plug-in hybrid",
+    "owner": "Yes",
+    "shots": 29,
+    "tires": [
+     "7",
+     "6",
+     "5",
+     "7"
+    ],
+    "paint": 11,
+    "overall": "Pretty great",
+    "note": true,
+    "sign": true,
+    "start": {
+     "at": "1:02 PM",
+     "loc": "34.0259, -118.3645"
+    },
+    "end": {
+     "at": "9:21 AM",
+     "loc": "34.0259, -118.3645"
+    }
+   }
+  }
+ ],
+ "fails": [],
+ "errs": []
+}

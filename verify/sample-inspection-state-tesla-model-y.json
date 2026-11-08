@@ -1,0 +1,355 @@
+{
+ "status": "done",
+ "step": 9,
+ "phase": "sign",
+ "fuel": "Electric (EV)",
+ "owner": "Yes",
+ "shots": {
+  "video_360": true,
+  "ph_ext_roof": true,
+  "ph_vin_dash": true,
+  "ph_mod_ext": 1,
+  "ph_vin_door": true,
+  "ph_odo": true,
+  "ph_keys": true,
+  "ph_int_dash": true,
+  "ph_int_screen": true,
+  "ph_int_front": true,
+  "ph_int_rear": true,
+  "ph_int_cargo": true,
+  "ph_mod_int": 1,
+  "ph_ev_alerts": 2,
+  "ph_ev_battery": 2,
+  "ph_ev_charging": 1,
+  "ph_frunk": true,
+  "ph_ev_port": true,
+  "ph_under_lf": true,
+  "ph_under_lr": true,
+  "ph_under_rear": true,
+  "ph_under_rr": true,
+  "ph_under_rf": true,
+  "ph_under_front": true,
+  "ph_mod_mech": 1
+ },
+ "checks": {},
+ "probs": {
+  "ck_structure": [],
+  "ck_glass": [],
+  "ck_lights": [],
+  "ck_wipers": [],
+  "ck_paint": [],
+  "ck_seats": [],
+  "ck_srs": [],
+  "ck_features": [],
+  "ck_lights_dash": [],
+  "ck_fluids": [],
+  "ck_rust": [],
+  "ck_pack": [],
+  "ck_susp": [],
+  "ck_cv": [],
+  "ck_brakes": [],
+  "ck_battery": [],
+  "ck_hv": [],
+  "ck_charging": []
+ },
+ "extra": {
+  "ck_paint": [],
+  "ck_brakes": []
+ },
+ "codes": "",
+ "open": {},
+ "vals": {
+  "vin_read": "7SAYGDEE5NF000422",
+  "idconf": true,
+  "vin_scan": 1,
+  "odo_read": "28495",
+  "ev_soh": "93",
+  "ev_soh_auto": 1,
+  "tires_match": "Match",
+  "road_done": true
+ },
+ "tires": {
+  "lf": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "7",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  },
+  "lr": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "6",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  },
+  "rr": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "5",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  },
+  "rf": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "7",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  }
+ },
+ "paint": {
+  "Left front fender": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.3",
+   "auto": true
+  },
+  "Left front door": {
+   "shot": true,
+   "src": "camera",
+   "v": "5.0",
+   "auto": true
+  },
+  "Left rear door": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.8",
+   "auto": true
+  },
+  "Left quarter panel": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.6",
+   "auto": true
+  },
+  "Trunk or liftgate": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.4",
+   "auto": true
+  },
+  "Right quarter panel": {
+   "shot": true,
+   "src": "camera",
+   "v": "5.1",
+   "auto": true
+  },
+  "Right rear door": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.9",
+   "auto": true
+  },
+  "Right front door": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.7",
+   "auto": true
+  },
+  "Right front fender": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.5",
+   "auto": true
+  },
+  "Hood": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.3",
+   "auto": true
+  },
+  "Roof": {
+   "shot": true,
+   "src": "camera",
+   "v": "5.0",
+   "auto": true
+  }
+ },
+ "spin": 4,
+ "agree": true,
+ "wheel": "rf",
+ "manual": [],
+ "note": "Clean car for its age. See the paint readings and the damages listed.",
+ "signName": "Test Seller",
+ "signed": true,
+ "seen": {
+  "Tires": true,
+  "review": true
+ },
+ "src": {
+  "ph_frunk": "library",
+  "ph_ev_port": "library",
+  "ph_under_lf": "library",
+  "ph_under_lr": "library",
+  "ph_under_rear": "library",
+  "ph_under_rr": "library",
+  "ph_under_rf": "library",
+  "ph_under_front": "library"
+ },
+ "multi": {
+  "ph_mod_ext": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_mod_int": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_ev_alerts": [
+   {
+    "src": "library",
+    "panel": null
+   },
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_ev_battery": [
+   {
+    "src": "library",
+    "panel": null
+   },
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_ev_charging": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_mod_mech": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ]
+ },
+ "start": {
+  "at": "3:01 PM",
+  "loc": "37.5630, -122.3255"
+ },
+ "end": {
+  "at": "3:22 PM",
+  "loc": "37.5630, -122.3255"
+ },
+ "upload": 0,
+ "dprev": [],
+ "docs": {
+  "ph_license": "today 2:44 AM",
+  "ph_reg": "today 2:44 AM"
+ },
+ "docSrc": {
+  "ph_license": "site",
+  "ph_reg": "site"
+ },
+ "li": 0,
+ "sok": {
+  "start": true,
+  "Exterior": true,
+  "Tires": true,
+  "Paint": true,
+  "Interior": true,
+  "OBDII": true,
+  "Mechanicals": true
+ },
+ "sp": 0,
+ "feat": {
+  "sunroof": "No sunroof",
+  "navigation": "Works"
+ },
+ "overall": "Pretty great",
+ "paintAuto": false,
+ "sigPath": [
+  [
+   [
+    20,
+    40
+   ],
+   [
+    40,
+    44
+   ],
+   [
+    60,
+    48
+   ],
+   [
+    80,
+    52
+   ],
+   [
+    100,
+    56
+   ],
+   [
+    120,
+    60
+   ]
+  ]
+ ]
+}

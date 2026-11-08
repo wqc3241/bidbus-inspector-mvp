@@ -1,0 +1,953 @@
+{
+ "source": {
+  "system": "bidbus_field",
+  "listing_id": "x3",
+  "inspector": "inspector@bidbus.com",
+  "started": {
+   "at": "1:02 PM",
+   "loc": "37.5841, -122.3661"
+  },
+  "ended": {
+   "at": "1:21 PM",
+   "loc": "37.5841, -122.3661"
+  }
+ },
+ "vehicle": {
+  "vin_listing": "5UXTY5C00L9B00230",
+  "vin_read": "5UXTY5C00L9B00230",
+  "vin_door_jamb_read": true,
+  "mileage_listing": 61240,
+  "mileage_read": 61325,
+  "vin_mileage_confirmed": true,
+  "keys_count": 1,
+  "keys_count_read_from_photo": true,
+  "fuel": "Gas or diesel",
+  "ev_battery_health_pct": null
+ },
+ "owner_check": "Yes",
+ "documents": {
+  "license": "seller upload",
+  "registration": "seller upload",
+  "family_proof": null
+ },
+ "photos": [
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Left front fender",
+   "source": "camera",
+   "file": "paint-left-front-fender.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Left front door",
+   "source": "camera",
+   "file": "paint-left-front-door.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Left rear door",
+   "source": "camera",
+   "file": "paint-left-rear-door.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Left quarter panel",
+   "source": "camera",
+   "file": "paint-left-quarter-panel.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Trunk or liftgate",
+   "source": "camera",
+   "file": "paint-trunk-or-liftgate.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Right quarter panel",
+   "source": "camera",
+   "file": "paint-right-quarter-panel.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Right rear door",
+   "source": "camera",
+   "file": "paint-right-rear-door.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Right front door",
+   "source": "camera",
+   "file": "paint-right-front-door.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Right front fender",
+   "source": "camera",
+   "file": "paint-right-front-fender.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Hood or frunk lid",
+   "source": "camera",
+   "file": "paint-hood-or-frunk-lid.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Paint",
+   "question_id": "paint",
+   "panel": "Roof",
+   "source": "camera",
+   "file": "paint-roof.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Exterior",
+   "question_id": "ph_ext_roof",
+   "source": "camera",
+   "file": "ph_ext_roof.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Additionals",
+   "question_id": "ph_vin_dash",
+   "source": "camera",
+   "file": "ph_vin_dash.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tire_photo",
+   "wheel": "lf",
+   "source": "camera",
+   "file": "tire_photo-lf.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tread_photo",
+   "wheel": "lf",
+   "source": "camera",
+   "file": "tread_photo-lf.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tire_photo",
+   "wheel": "lr",
+   "source": "camera",
+   "file": "tire_photo-lr.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tread_photo",
+   "wheel": "lr",
+   "source": "camera",
+   "file": "tread_photo-lr.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tire_photo",
+   "wheel": "rr",
+   "source": "camera",
+   "file": "tire_photo-rr.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tread_photo",
+   "wheel": "rr",
+   "source": "camera",
+   "file": "tread_photo-rr.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tire_photo",
+   "wheel": "rf",
+   "source": "camera",
+   "file": "tire_photo-rf.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Tires",
+   "question_id": "tread_photo",
+   "wheel": "rf",
+   "source": "camera",
+   "file": "tread_photo-rf.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Additionals",
+   "question_id": "ph_vin_door",
+   "source": "camera",
+   "file": "ph_vin_door.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Additionals",
+   "question_id": "ph_odo",
+   "source": "camera",
+   "file": "ph_odo.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Additionals",
+   "question_id": "ph_keys",
+   "source": "camera",
+   "file": "ph_keys.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Interior",
+   "question_id": "ph_int_dash",
+   "source": "camera",
+   "file": "ph_int_dash.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Interior",
+   "question_id": "ph_int_screen",
+   "source": "camera",
+   "file": "ph_int_screen.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Interior",
+   "question_id": "ph_int_front",
+   "source": "camera",
+   "file": "ph_int_front.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Interior",
+   "question_id": "ph_int_rear",
+   "source": "camera",
+   "file": "ph_int_rear.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Interior",
+   "question_id": "ph_int_cargo",
+   "source": "camera",
+   "file": "ph_int_cargo.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "OBDII",
+   "question_id": "ph_obd_current",
+   "source": "upload",
+   "file": "ph_obd_current.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "OBDII",
+   "question_id": "ph_obd_past",
+   "source": "upload",
+   "file": "ph_obd_past.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "OBDII",
+   "question_id": "ph_obd_emission",
+   "source": "upload",
+   "file": "ph_obd_emission.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "OBDII",
+   "question_id": "ph_obd_other",
+   "n": 1,
+   "source": "upload",
+   "file": "ph_obd_other-1.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "OBDII",
+   "question_id": "ph_obd_other",
+   "n": 2,
+   "source": "upload",
+   "file": "ph_obd_other-2.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Mechanicals",
+   "question_id": "ph_engine_bay",
+   "source": "upload",
+   "file": "ph_engine_bay.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Mechanicals",
+   "question_id": "ph_engine_oil",
+   "source": "upload",
+   "file": "ph_engine_oil.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_lf",
+   "source": "upload",
+   "file": "ph_under_lf.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_lr",
+   "source": "upload",
+   "file": "ph_under_lr.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_rear",
+   "source": "upload",
+   "file": "ph_under_rear.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_rr",
+   "source": "upload",
+   "file": "ph_under_rr.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_rf",
+   "source": "upload",
+   "file": "ph_under_rf.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_front",
+   "source": "upload",
+   "file": "ph_under_front.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Underbody",
+   "question_id": "ph_under_cats",
+   "source": "upload",
+   "file": "ph_under_cats.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Exterior",
+   "question_id": "ph_mod_ext",
+   "n": 1,
+   "source": "camera",
+   "modification": true,
+   "file": "ph_mod_ext-1.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Interior",
+   "question_id": "ph_mod_int",
+   "n": 1,
+   "source": "upload",
+   "modification": true,
+   "file": "ph_mod_int-1.jpg",
+   "upright_turn_deg": 0
+  },
+  {
+   "section": "Mechanicals",
+   "question_id": "ph_mod_mech",
+   "n": 1,
+   "source": "upload",
+   "modification": true,
+   "file": "ph_mod_mech-1.jpg",
+   "upright_turn_deg": 0
+  }
+ ],
+ "videos": [
+  {
+   "question_id": "video_360",
+   "file": "video_360.mp4",
+   "max_seconds": 60
+  },
+  {
+   "question_id": "video_engine",
+   "file": "video_engine.mp4",
+   "max_seconds": 30
+  },
+  {
+   "question_id": "video_exhaust",
+   "file": "video_exhaust.mp4",
+   "max_seconds": 30
+  }
+ ],
+ "spin_frames": 36,
+ "checks": [
+  {
+   "id": "ck_glass",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Windshield chip under 1 in",
+     "level": "Disclosed",
+     "from_damage_photo": true
+    }
+   ]
+  },
+  {
+   "id": "ck_lights",
+   "result": "OK"
+  },
+  {
+   "id": "ck_wipers",
+   "result": "OK"
+  },
+  {
+   "id": "ck_fuel_cap",
+   "result": "OK"
+  },
+  {
+   "id": "ck_paint",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Panel repainted (the meter reads high)",
+     "level": "Disclosed",
+     "from_damage_photo": false
+    },
+    {
+     "option": "Overspray or colour mismatch",
+     "level": "Disclosed",
+     "from_damage_photo": true
+    }
+   ],
+   "where": [
+    "Left rear door",
+    "Left quarter panel",
+    "Right rear door",
+    "Right front door"
+   ]
+  },
+  {
+   "id": "ck_tire",
+   "result": "OK",
+   "wheel": "lf"
+  },
+  {
+   "id": "ck_tire",
+   "result": "OK",
+   "wheel": "lr"
+  },
+  {
+   "id": "ck_tire",
+   "result": "Problem",
+   "wheel": "rr",
+   "problems": [
+    {
+     "option": "Uneven wear",
+     "level": "Disclosed",
+     "from_damage_photo": false
+    }
+   ]
+  },
+  {
+   "id": "ck_tire",
+   "result": "OK",
+   "wheel": "rf"
+  },
+  {
+   "id": "ck_wheel",
+   "result": "OK",
+   "wheel": "lf"
+  },
+  {
+   "id": "ck_wheel",
+   "result": "OK",
+   "wheel": "lr"
+  },
+  {
+   "id": "ck_wheel",
+   "result": "OK",
+   "wheel": "rr"
+  },
+  {
+   "id": "ck_wheel",
+   "result": "Problem",
+   "wheel": "rf",
+   "problems": [
+    {
+     "option": "Curb rash",
+     "level": "Disclosed",
+     "from_damage_photo": true
+    }
+   ]
+  },
+  {
+   "id": "ck_structure",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Rear structure repaired or damaged",
+     "level": "Red",
+     "from_damage_photo": true
+    },
+    {
+     "option": "Frame rails, floor or subframe repaired or damaged",
+     "level": "Red",
+     "from_damage_photo": true
+    }
+   ]
+  },
+  {
+   "id": "ck_rust",
+   "result": "OK"
+  },
+  {
+   "id": "ck_seats",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Seats worn",
+     "level": "Disclosed",
+     "from_damage_photo": true
+    }
+   ]
+  },
+  {
+   "id": "ck_odor",
+   "result": "OK"
+  },
+  {
+   "id": "ck_srs",
+   "result": "OK"
+  },
+  {
+   "id": "ck_features",
+   "result": "OK"
+  },
+  {
+   "id": "ck_pbrake",
+   "result": "OK"
+  },
+  {
+   "id": "ck_ac",
+   "result": "OK"
+  },
+  {
+   "id": "ck_engine",
+   "result": "OK"
+  },
+  {
+   "id": "ck_trans",
+   "result": "OK"
+  },
+  {
+   "id": "ck_fluids",
+   "result": "OK"
+  },
+  {
+   "id": "ck_leaks",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Seep",
+     "level": "Disclosed",
+     "from_damage_photo": false
+    }
+   ],
+   "where": [
+    "Engine"
+   ]
+  },
+  {
+   "id": "ck_bay",
+   "result": "OK"
+  },
+  {
+   "id": "ck_battery",
+   "result": "OK"
+  },
+  {
+   "id": "ck_exhaust",
+   "result": "OK"
+  },
+  {
+   "id": "ck_susp",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Struts or shocks leaking or worn",
+     "level": "Disclosed",
+     "from_damage_photo": true
+    }
+   ]
+  },
+  {
+   "id": "ck_cv",
+   "result": "OK"
+  },
+  {
+   "id": "ck_brakes",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Brake pads under 3 mm",
+     "level": "Disclosed",
+     "from_damage_photo": false
+    }
+   ],
+   "where": [
+    "Left front"
+   ]
+  },
+  {
+   "id": "ck_road",
+   "result": "Not done"
+  },
+  {
+   "id": "ck_lights_dash",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Check engine",
+     "level": "Yellow",
+     "from_damage_photo": false
+    }
+   ]
+  },
+  {
+   "id": "ck_scan",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Engine codes stored (type the codes)",
+     "level": "Yellow",
+     "from_damage_photo": false
+    }
+   ],
+   "codes": "P0420"
+  },
+  {
+   "id": "ck_ids",
+   "result": "OK"
+  },
+  {
+   "id": "ck_keys",
+   "result": "Problem",
+   "problems": [
+    {
+     "option": "Only one key",
+     "level": "Disclosed",
+     "from_damage_photo": false
+    }
+   ]
+  },
+  {
+   "id": "ck_equip",
+   "result": "OK"
+  }
+ ],
+ "tires": [
+  {
+   "wheel": "lf",
+   "tread_32nds": 7,
+   "tread_read_from_photo": true,
+   "brand": "Michelin",
+   "size": "245/50R19",
+   "read_from_photo": true
+  },
+  {
+   "wheel": "lr",
+   "tread_32nds": 6,
+   "tread_read_from_photo": true,
+   "brand": "Michelin",
+   "size": "245/50R19",
+   "read_from_photo": true
+  },
+  {
+   "wheel": "rr",
+   "tread_32nds": 5,
+   "tread_read_from_photo": true,
+   "brand": "Michelin",
+   "size": "245/50R19",
+   "read_from_photo": true
+  },
+  {
+   "wheel": "rf",
+   "tread_32nds": 7,
+   "tread_read_from_photo": true,
+   "brand": "Michelin",
+   "size": "245/50R19",
+   "read_from_photo": true
+  }
+ ],
+ "tires_match": "Match",
+ "paint": [
+  {
+   "panel": "Left front fender",
+   "mils": 4.3,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Left front door",
+   "mils": 5,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Left rear door",
+   "mils": 11.8,
+   "not_on_car": false,
+   "high": true,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Left quarter panel",
+   "mils": 9.4,
+   "not_on_car": false,
+   "high": true,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Trunk or liftgate",
+   "mils": 4.4,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Right quarter panel",
+   "mils": 5.1,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Right rear door",
+   "mils": 11.2,
+   "not_on_car": false,
+   "high": true,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Right front door",
+   "mils": 4.7,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Right front fender",
+   "mils": 4.5,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Hood or frunk lid",
+   "mils": 4.3,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  },
+  {
+   "panel": "Roof",
+   "mils": 5,
+   "not_on_car": false,
+   "high": false,
+   "read_from_photo": true
+  }
+ ],
+ "features": {
+  "sunroof": "Works",
+  "navigation": "Works"
+ },
+ "damages": [
+  {
+   "n": 1,
+   "section": "Exterior",
+   "place": "Left rear door",
+   "type": "Dent",
+   "severity": "Moderate",
+   "size_in": 2,
+   "source": "camera",
+   "taken_in": "Exterior",
+   "file": "damage-1.jpg",
+   "upright_turn_deg": 0,
+   "ai_first_guess": {
+    "place": "Left rear door",
+    "type": "Scratch",
+    "severity": "Moderate"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 2,
+   "section": "Exterior",
+   "place": "Trunk or liftgate",
+   "type": "Structure",
+   "severity": "Severe",
+   "size_in": null,
+   "source": "camera",
+   "taken_in": "Exterior",
+   "file": "damage-2.jpg",
+   "upright_turn_deg": 0,
+   "check_id": "ck_structure",
+   "check_option": "Rear structure repaired or damaged",
+   "ai_first_guess": {
+    "place": "Trunk or liftgate",
+    "type": "Structure",
+    "severity": "Severe"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 3,
+   "section": "Exterior",
+   "place": "Windshield",
+   "type": "Windshield chip under 1 in",
+   "severity": "Minor",
+   "size_in": 1,
+   "source": "camera",
+   "taken_in": "Exterior",
+   "file": "damage-3.jpg",
+   "upright_turn_deg": 0,
+   "check_id": "ck_glass",
+   "check_option": "Windshield chip under 1 in",
+   "ai_first_guess": {
+    "place": "Windshield",
+    "type": "Windshield chip under 1 in",
+    "severity": "Minor"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 4,
+   "section": "Paint",
+   "place": "Right front door",
+   "type": "Overspray or colour mismatch",
+   "severity": "Minor",
+   "size_in": null,
+   "source": "camera",
+   "taken_in": "Exterior",
+   "file": "damage-4.jpg",
+   "upright_turn_deg": 0,
+   "where": "Right front door",
+   "check_id": "ck_paint",
+   "check_option": "Overspray or colour mismatch",
+   "ai_first_guess": {
+    "place": "Right front door",
+    "type": "Overspray or colour mismatch",
+    "severity": "Minor"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 5,
+   "section": "Tires",
+   "place": "Right front wheel",
+   "type": "Curb rash",
+   "severity": "Minor",
+   "size_in": 3,
+   "source": "camera",
+   "taken_in": "Tires",
+   "file": "damage-5.jpg",
+   "upright_turn_deg": 0,
+   "check_id": "ck_wheel",
+   "check_option": "Curb rash",
+   "ai_first_guess": {
+    "place": "Right front wheel",
+    "type": "Curb rash",
+    "severity": "Minor"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 6,
+   "section": "Interior",
+   "place": "Carpet",
+   "type": "Structure",
+   "severity": "Moderate",
+   "size_in": null,
+   "source": "camera",
+   "taken_in": "Interior",
+   "file": "damage-6.jpg",
+   "upright_turn_deg": 0,
+   "check_id": "ck_structure",
+   "check_option": "Frame rails, floor or subframe repaired or damaged",
+   "ai_first_guess": {
+    "place": "Carpet",
+    "type": "Structure",
+    "severity": "Moderate"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 7,
+   "section": "Interior",
+   "place": "Front seats",
+   "type": "Seats worn",
+   "severity": "Minor",
+   "size_in": 2,
+   "source": "camera",
+   "taken_in": "Interior",
+   "file": "damage-7.jpg",
+   "upright_turn_deg": 0,
+   "check_id": "ck_seats",
+   "check_option": "Seats worn",
+   "ai_first_guess": {
+    "place": "Front seats",
+    "type": "Seats worn",
+    "severity": "Minor"
+   },
+   "confirmed": true
+  },
+  {
+   "n": 8,
+   "section": "Underbody",
+   "place": "Suspension",
+   "type": "Struts or shocks leaking or worn",
+   "severity": "Moderate",
+   "size_in": null,
+   "source": "camera",
+   "taken_in": "Mechanicals",
+   "file": "damage-8.jpg",
+   "upright_turn_deg": 0,
+   "check_id": "ck_susp",
+   "check_option": "Struts or shocks leaking or worn",
+   "ai_first_guess": {
+    "place": "Suspension",
+    "type": "Struts or shocks leaking or worn",
+    "severity": "Moderate"
+   },
+   "confirmed": true
+  }
+ ],
+ "overall_condition": "Pretty great",
+ "inspector_note": "Clean car for its age. See the paint readings and the damages listed.",
+ "signature": {
+  "seller_name": "Daniel Kim",
+  "agreed": true,
+  "signed": true
+ }
+}

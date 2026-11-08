@@ -1,0 +1,346 @@
+{
+ "status": "done",
+ "step": 9,
+ "phase": "sign",
+ "fuel": "Gas or diesel",
+ "owner": "Yes",
+ "shots": {
+  "video_360": true,
+  "ph_ext_roof": true,
+  "ph_vin_dash": true,
+  "ph_mod_ext": 1,
+  "ph_vin_door": true,
+  "ph_odo": true,
+  "ph_keys": true,
+  "ph_int_dash": true,
+  "ph_int_screen": true,
+  "ph_int_front": true,
+  "ph_int_rear": true,
+  "ph_int_cargo": true,
+  "ph_mod_int": 1,
+  "ph_obd_current": true,
+  "ph_obd_past": true,
+  "ph_obd_emission": true,
+  "ph_obd_other": 2,
+  "ph_engine_bay": true,
+  "ph_engine_oil": true,
+  "video_engine": true,
+  "video_exhaust": true,
+  "ph_under_lf": true,
+  "ph_under_lr": true,
+  "ph_under_rear": true,
+  "ph_under_rr": true,
+  "ph_under_rf": true,
+  "ph_under_front": true,
+  "ph_under_cats": true,
+  "ph_mod_mech": 1
+ },
+ "checks": {},
+ "probs": {
+  "ck_structure": [],
+  "ck_glass": [],
+  "ck_lights": [],
+  "ck_wipers": [],
+  "ck_fuel_cap": [],
+  "ck_paint": [],
+  "ck_seats": [],
+  "ck_srs": [],
+  "ck_features": [],
+  "ck_lights_dash": [],
+  "ck_bay": [],
+  "ck_fluids": [],
+  "ck_leaks": [],
+  "ck_rust": [],
+  "ck_exhaust": [],
+  "ck_susp": [],
+  "ck_cv": [],
+  "ck_brakes": [],
+  "ck_battery": []
+ },
+ "extra": {
+  "ck_paint": [],
+  "ck_leaks": [],
+  "ck_brakes": []
+ },
+ "codes": "",
+ "open": {},
+ "vals": {
+  "vin_read": "5UXTY5C00L9B00230",
+  "idconf": true,
+  "vin_scan": 1,
+  "odo_read": "61325",
+  "tires_match": "Match",
+  "road_done": true
+ },
+ "tires": {
+  "lf": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "7",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  },
+  "lr": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "6",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  },
+  "rr": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "5",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  },
+  "rf": {
+   "shots": {
+    "tire_photo": true,
+    "tread_photo": true
+   },
+   "tread": "7",
+   "probs": {
+    "ck_tire": [],
+    "ck_wheel": []
+   },
+   "open": {},
+   "extra": {},
+   "vals": {},
+   "read": {
+    "brand": "Michelin",
+    "size": "245/50R19",
+    "dot": "",
+    "auto": true
+   },
+   "treadAuto": true
+  }
+ },
+ "paint": {
+  "Left front fender": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.3",
+   "auto": true
+  },
+  "Left front door": {
+   "shot": true,
+   "src": "camera",
+   "v": "5.0",
+   "auto": true
+  },
+  "Left rear door": {
+   "shot": true,
+   "src": "camera",
+   "v": "11.8",
+   "auto": true
+  },
+  "Left quarter panel": {
+   "shot": true,
+   "src": "camera",
+   "v": "9.4",
+   "auto": true
+  },
+  "Trunk or liftgate": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.4",
+   "auto": true
+  },
+  "Right quarter panel": {
+   "shot": true,
+   "src": "camera",
+   "v": "5.1",
+   "auto": true
+  },
+  "Right rear door": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.9",
+   "auto": true
+  },
+  "Right front door": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.7",
+   "auto": true
+  },
+  "Right front fender": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.5",
+   "auto": true
+  },
+  "Hood": {
+   "shot": true,
+   "src": "camera",
+   "v": "4.3",
+   "auto": true
+  },
+  "Roof": {
+   "shot": true,
+   "src": "camera",
+   "v": "5.0",
+   "auto": true
+  }
+ },
+ "spin": 4,
+ "agree": true,
+ "wheel": "rf",
+ "manual": [],
+ "note": "Clean car for its age. See the paint readings and the damages listed.",
+ "signName": "Test Seller",
+ "signed": true,
+ "seen": {
+  "Tires": true,
+  "review": true
+ },
+ "src": {
+  "ph_obd_current": "library",
+  "ph_obd_past": "library",
+  "ph_obd_emission": "library",
+  "ph_engine_bay": "library",
+  "ph_engine_oil": "library",
+  "ph_under_lf": "library",
+  "ph_under_lr": "library",
+  "ph_under_rear": "library",
+  "ph_under_rr": "library",
+  "ph_under_rf": "library",
+  "ph_under_front": "library",
+  "ph_under_cats": "library"
+ },
+ "multi": {
+  "ph_mod_ext": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_mod_int": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_obd_other": [
+   {
+    "src": "library",
+    "panel": null
+   },
+   {
+    "src": "library",
+    "panel": null
+   }
+  ],
+  "ph_mod_mech": [
+   {
+    "src": "library",
+    "panel": null
+   }
+  ]
+ },
+ "start": {
+  "at": "1:02 PM",
+  "loc": "37.5841, -122.3661"
+ },
+ "end": {
+  "at": "1:21 PM",
+  "loc": "37.5841, -122.3661"
+ },
+ "upload": 4,
+ "dprev": [],
+ "docs": {
+  "ph_license": "today 7:58 AM",
+  "ph_reg": "today 2:43 AM"
+ },
+ "docSrc": {
+  "ph_reg": "site"
+ },
+ "paintAuto": false,
+ "li": 0,
+ "sok": {
+  "start": true,
+  "Exterior": true,
+  "Tires": true,
+  "Paint": true,
+  "Interior": true,
+  "OBDII": true,
+  "Mechanicals": true
+ },
+ "sp": 0,
+ "feat": {
+  "sunroof": "Works",
+  "navigation": "Works"
+ },
+ "overall": "Pretty great",
+ "sigPath": [
+  [
+   [
+    20,
+    40
+   ],
+   [
+    40,
+    44
+   ],
+   [
+    60,
+    48
+   ],
+   [
+    80,
+    52
+   ],
+   [
+    100,
+    56
+   ],
+   [
+    120,
+    60
+   ]
+  ]
+ ]
+}
