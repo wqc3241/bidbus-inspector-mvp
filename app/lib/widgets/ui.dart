@@ -325,6 +325,50 @@ Future<String?> showTextSheet(BuildContext context, String title, String value, 
   );
 }
 
+// a paint reading on a slider from 3.0 to 10+ mils, with - and + for 0.1. "10+" is more than 10: it is kept as 10.1,
+// or as the meter's own reading when the photo gave one above 10
+const milsMin = 3.0, milsTop = 10.1;
+String milsText(dynamic v) => (double.tryParse('$v') ?? 0) > 10 ? '10+' : '$v';
+
+Future<String?> showMilsSheet(BuildContext context, String title, String value, {List<Widget> extraActions = const []}) {
+  final was = double.tryParse(value);
+  var x = was ?? 5.0;
+  return showModalBottomSheet<String>(
+    context: context,
+    isScrollControlled: true, // large text: the sheet grows and scrolls, so every button stays reachable
+    backgroundColor: Colors.white,
+    builder: (ctx) => StatefulBuilder(builder: (ctx, set) {
+      void to(double v) => set(() => x = (v * 10).roundToDouble() / 10);
+      final over = x > 10, shown = over ? '10+' : x.toStringAsFixed(1);
+      Widget step(IconData ic, VoidCallback? tap) => IconButton(
+          onPressed: tap, icon: Icon(ic), style: IconButton.styleFrom(fixedSize: const Size(52, 52), side: const BorderSide(color: Color(0xFFD4D7DB)), backgroundColor: Colors.white));
+      return SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 16),
+            Row(children: [
+              step(LucideIcons.minus, x > milsMin ? () => to(over ? 10 : x - .1) : null),
+              Expanded(child: Text('$shown mils', textAlign: TextAlign.center, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, fontFeatures: [FontFeature.tabularFigures()]))),
+              step(LucideIcons.plus, over ? null : () => to(x >= 10 ? milsTop : x + .1)),
+            ]),
+            const SizedBox(height: 16), // room for the value bubble while dragging
+            Slider(min: milsMin, max: milsTop, divisions: 71, value: x.clamp(milsMin, milsTop), label: shown, onChanged: to),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('3.0', style: TextStyle(color: muted)), Text('10+', style: TextStyle(color: muted))]),
+            ),
+            const SizedBox(height: 12),
+            PBtn('Done', () => Navigator.pop(ctx, over ? (was != null && was > 10 ? value : milsTop.toStringAsFixed(1)) : x.toStringAsFixed(1))),
+            ...extraActions,
+          ]),
+        ),
+      );
+    }),
+  );
+}
+
 // scroll pickers: brand, size, tread, damage size
 Future<List<String>?> showPicker(BuildContext context, String title, List<List<String>> cols, List<String> sel, {List<String> seps = const [], String? unit, String? sub, bool clear = false}) {
   final idx = [for (var i = 0; i < cols.length; i++) cols[i].indexOf(sel[i]).clamp(0, cols[i].length - 1)];

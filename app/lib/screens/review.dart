@@ -340,7 +340,7 @@ class ReviewScreen extends ConsumerWidget {
   List<Widget> _paint(BuildContext context, J st) {
     Future<void> edit(String panel) async {
       final r = (m(st, 'paint')[panel] as J?) ?? {};
-      final v = await showTextSheet(context, panel, r['na'] == true ? '' : '${r['v'] ?? ''}', unit: 'mils', kb: const TextInputType.numberWithOptions(decimal: true), max: 4, extraActions: [
+      final v = await showMilsSheet(context, panel, r['na'] == true ? '' : '${r['v'] ?? ''}', extraActions: [
         TextButton(
             onPressed: () {
               store.mut(id, (s) {
@@ -356,7 +356,7 @@ class ReviewScreen extends ConsumerWidget {
             },
             child: Text(r['na'] == true ? 'On this car' : 'Not on this car')),
       ]);
-      if (v == null) return;
+      if (v == null || r['na'] == true) return; // a panel not on this car keeps no reading: "On this car" first
       store.mut(id, (s) {
         final p = (m(s, 'paint')[panel] ??= <String, dynamic>{}) as J;
         final n = double.tryParse(v);
@@ -375,7 +375,7 @@ class ReviewScreen extends ConsumerWidget {
             final r = (m(st, 'paint')[panel] as J?) ?? {}, has = (r['v'] ?? '') != '';
             return PaintReadingCell(
                 panel: panel,
-                value: r['na'] == true ? 'N/A' : has ? '${r['v']}' : '–',
+                value: r['na'] == true ? 'N/A' : has ? milsText(r['v']) : '–',
                 label: paintReadPanels.firstWhere((x) => x.$1 == panel).$3,
                 state: r['na'] == true ? 'na' : paintHigh(r) ? 'hi' : !has ? 'ms' : '',
                 onTap: () => edit(panel));

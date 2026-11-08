@@ -134,30 +134,32 @@ class PaintPickCell extends StatelessWidget {
 }
 
 /// Review paint reading cell (mockup .pcl): big [value] over a small [label]. [state]: '' plain, 'hi' high reading (pink),
-/// 'na' not on this car (dashed grey, no fill), 'ms' missing reading (dashed amber). [panel] rounds the Hood and Trunk like the car's ends.
+/// 'na' not on this car (dashed grey, no fill), 'ms' missing reading (the red frame of a row still to answer). [panel] rounds the Hood and Trunk like the car's ends.
 class PaintReadingCell extends StatelessWidget {
   final String panel, value, label, state;
   final VoidCallback? onTap;
   const PaintReadingCell({super.key, required this.panel, required this.value, required this.label, this.state = '', this.onTap});
   @override
   Widget build(BuildContext context) {
-    final hi = state == 'hi', na = state == 'na', dashed = na || state == 'ms';
+    final hi = state == 'hi', na = state == 'na', ms = state == 'ms';
     final br = panel.startsWith('Hood')
         ? const BorderRadius.vertical(top: Radius.circular(22), bottom: Radius.circular(10))
         : panel.startsWith('Trunk')
             ? const BorderRadius.vertical(top: Radius.circular(10), bottom: Radius.circular(18))
             : BorderRadius.circular(10);
-    final edge = hi ? const Color(0xFFF19BB2) : na ? const Color(0xFFC4C9CE) : dashed ? const Color(0xFFE0A14A) : _edge;
+    final edge = hi ? const Color(0xFFF19BB2) : na ? const Color(0xFFC4C9CE) : _edge;
     final body = Container(
       padding: const EdgeInsets.all(2),
-      decoration: BoxDecoration(color: na ? null : hi ? const Color(0xFFFDE8EE) : Colors.white, borderRadius: br, border: dashed ? null : Border.all(color: edge)),
+      decoration: BoxDecoration(color: na ? null : hi ? const Color(0xFFFDE8EE) : Colors.white, borderRadius: br, border: na || ms ? null : Border.all(color: edge)),
+      // no reading yet: the red frame of a row still to answer
+      foregroundDecoration: ms ? BoxDecoration(borderRadius: br, border: Border.all(color: const Color(0xFFE1255D), width: 2)) : null,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        FitLabel(value, TextStyle(fontSize: na ? 13 : 17, fontWeight: FontWeight.w700, height: 1.15, color: hi ? red : na ? const Color(0xFF8A9096) : dashed ? const Color(0xFF9A4F05) : _ink, fontFeatures: const [FontFeature.tabularFigures()]), lines: 1),
+        FitLabel(value, TextStyle(fontSize: na ? 13 : 17, fontWeight: FontWeight.w700, height: 1.15, color: hi ? red : na ? const Color(0xFF8A9096) : ms ? const Color(0xFFE1255D) : _ink, fontFeatures: const [FontFeature.tabularFigures()]), lines: 1),
         const SizedBox(height: 1),
         FitLabel(label, TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, height: 1.2, color: hi ? red : _grey), lines: 1),
       ]),
     );
-    return Semantics(button: true, label: '$panel: $value', excludeSemantics: true, child: GestureDetector(onTap: onTap, child: dashed ? CustomPaint(foregroundPainter: _Dash(edge, br), child: body) : body));
+    return Semantics(button: true, label: '$panel: $value', excludeSemantics: true, child: GestureDetector(onTap: onTap, child: na ? CustomPaint(foregroundPainter: _Dash(edge, br), child: body) : body));
   }
 }
 

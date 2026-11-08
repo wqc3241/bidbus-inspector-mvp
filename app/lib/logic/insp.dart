@@ -568,33 +568,51 @@ List<J> problemsList(J st) {
       for (final w in wheels) {
         for (final id in ['ck_tire', 'ck_wheel']) {
           for (final p in lst(tire(st, w[0]), 'probs', id)) {
-            out.add({'text': '${id == 'ck_tire' ? 'Tire: ' : 'Wheel: '}$p', 'where': w[2], 'level': level(byId[id]!, p), 'ph': dmgVals(st, id, w[0]).contains(p)});
+            out.add({'sec': k, 'text': '${id == 'ck_tire' ? 'Tire: ' : 'Wheel: '}$p', 'where': w[2], 'level': level(byId[id]!, p), 'ph': dmgVals(st, id, w[0]).contains(p)});
           }
         }
       }
-      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'text': 'Tires do not match (brand, model or size)', 'where': stTitle('Tires'), 'level': level(byId['tires_match']!, 'Mismatch')});
+      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'sec': k, 'text': 'Tires do not match (brand, model or size)', 'where': stTitle('Tires'), 'level': level(byId['tires_match']!, 'Mismatch')});
       continue;
     }
     if (k == 'Paint') {
       for (final p in lst(st, 'probs', 'ck_paint')) {
         final ex = lst(st, 'extra', 'ck_paint').join(', ');
-        out.add({'text': '${byId['ck_paint']!['label']}: ${plain(p)}', 'where': 'Paint${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(byId['ck_paint']!, p), 'ph': dmgVals(st, 'ck_paint', null).contains(p)});
+        out.add({'sec': k, 'text': '${byId['ck_paint']!['label']}: ${plain(p)}', 'where': 'Paint${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(byId['ck_paint']!, p), 'ph': dmgVals(st, 'ck_paint', null).contains(p)});
       }
       continue;
     }
     if (k == 'Interior') {
       for (final q in featq) {
-        if (m(st, 'feat')[q[0]] == 'Not working') out.add({'text': '${q[1]}: Not working', 'where': k, 'level': level(byId[q[0]] ?? {}, 'Not working')});
+        if (m(st, 'feat')[q[0]] == 'Not working') out.add({'sec': k, 'text': '${q[1]}: Not working', 'where': k, 'level': level(byId[q[0]] ?? {}, 'Not working')});
       }
     }
     for (final it in stepItems(k, st).checks) {
       for (final p in lst(st, 'probs', it['id'])) {
         final ex = lst(st, 'extra', it['id']).join(', ');
-        out.add({'text': '${it['label']}: ${plain(p)}', 'where': '$k${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(it, p), 'ph': dmgVals(st, it['id'], null).contains(p)});
+        out.add({'sec': k, 'text': '${it['label']}: ${plain(p)}', 'where': '$k${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(it, p), 'ph': dmgVals(st, it['id'], null).contains(p)});
       }
     }
   }
   return out;
+}
+
+// what was found, section by section in Review order: its problems, then its damage photos that answer no check
+List<(String, List<J>, List<String>)> findingsBySec(J st) {
+  final pl = problemsList(st), fuel = fuelOf(st);
+  return [
+    for (final k in capseq.sublist(1))
+      (k, pl.where((p) => p['sec'] == k).toList(), [for (final d in manual(st)) if (dtab(d) == k && labelled(d, fuel) && dmgOwn(st, d)) dmgLine(d)]),
+  ].where((g) => g.$2.isNotEmpty || g.$3.isNotEmpty).toList();
+}
+
+// a problem's place under its section heading: the section name in front is dropped ("Exterior · Hood" -> "Hood")
+String whereIn(String k, String w) {
+  for (final p in [stTitle(k), k]) {
+    if (w == p) return '';
+    if (w.startsWith('$p · ')) return w.substring(p.length + 3);
+  }
+  return w;
 }
 
 // counts for the Summary
