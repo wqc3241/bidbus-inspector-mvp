@@ -4,9 +4,7 @@ One new Railway project with three parts: the app service (this repo), Postgres,
 
 ## Files to add to the repo
 
-- `Dockerfile` at the root, two stages:
-  1. `node:22-slim`: `cd app && npm ci && npm run build` → `app/dist`.
-  2. `python:3.12-slim`: `apt-get install -y ffmpeg`, `pip install -r server/requirements.txt`, copy `server/`, `tools/`, `data/`, and `app/dist` → `/srv/static`. Start: `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT` (working dir `server/`).
+- `Dockerfile` at the root: `python:3.12-slim`, `apt-get install -y ffmpeg`, `pip install -r server/requirements.txt`, copy `server/`, `tools/`, `data/`. Start: `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT` (working dir `server/`). The Flutter app is not part of the server image.
 - `railway.json`:
   ```json
   { "$schema": "https://railway.com/railway.schema.json",
@@ -32,7 +30,7 @@ CLI alternative: `npm i -g @railway/cli`, `railway login`, `railway init`, `rail
 | `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` |
 | `MEDIA_DIR` | `/data/media` |
 | `PUBLIC_BASE_URL` | `https://{your-app}.up.railway.app` (used in email links) |
-| `APP_PASSCODE` | any long random string; typed once in the app Settings |
+| `APP_PASSCODE` | any long random string; typed once in the app Settings together with the server URL |
 | `ANTHROPIC_API_KEY` | your Anthropic key |
 | `AI_MODEL` | `claude-sonnet-5-5` |
 | `RESEND_API_KEY` | your Resend key |

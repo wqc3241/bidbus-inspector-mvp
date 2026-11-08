@@ -4,14 +4,14 @@ Work in this order. Each milestone ends when its checks pass; commit after each.
 
 ## M1 Skeleton and deploy
 
-- `app/` (Vite + React + TS, PWA manifest and service worker via `vite-plugin-pwa`), `server/` (FastAPI), `Dockerfile`, `railway.json`, `docker-compose.yml`, `.env.example`.
-- Server serves `app/dist` at `/` with SPA fallback, `/api/health`.
-- Check: deployed on Railway; the iPhone opens it from the home screen.
+- `app/` (`flutter create --org com.yourname --platforms ios,android app`, packages from `docs/10-flutter-app.md`), `server/` (FastAPI), `Dockerfile`, `railway.json`, `docker-compose.yml`, `.env.example`.
+- Server `/api/health` on Railway. App Settings screen saves the server URL and passcode and shows the health result.
+- Check: the app runs on the iPhone and on an Android phone (or emulator) and reaches the Railway server.
 
 ## M2 Question list engine
 
-- Load `data/question-list.json` into the app at build time. Helpers: items per section and fuel (`cars`: all, gas, ev, plug-in, hybrid), checks with default OK, levels.
-- State model per inspection in IndexedDB (Dexie): answers, photos (blob + meta), damages, tires, paint, features, signature, times, GPS, phase.
+- Bundle `data/question-list.json` as an asset (synced by script). Helpers: items per section and fuel (`cars`: all, gas, ev, plug-in, hybrid), checks with default OK, levels.
+- State model per inspection in drift (SQLite) with media files in the documents folder: answers, photos (path + meta), damages, tires, paint, features, signature, times, GPS, phase.
 - Check: unit tests list the same items per fuel as the mockup (compare counts with `verify/allq-report.json`).
 
 ## M3 Inspections, New inspection, Check ID
@@ -22,8 +22,8 @@ Work in this order. Each milestone ends when its checks pass; commit after each.
 ## M4 Camera pass
 
 - Full-screen landscape camera, three shutters, zoom, guides, Back/retake/delete, skip optional, multi-photo slots, video recording with max length, end-of-Exterior dialog, closed-camera resume screen.
-- Saves each JPEG upright to IndexedDB at capture.
-- Check: on the iPhone, a full pass for gas and for EV in about 15 minutes, nothing lost after killing the app mid-pass.
+- Saves each JPEG upright to the documents folder and drift at capture; cuts the 36 spin frames after the walk-around.
+- Check: on the iPhone and on Android, a full pass for gas and for EV in about 15 minutes, nothing lost after killing the app mid-pass.
 
 ## M5 AI readings
 
@@ -44,4 +44,4 @@ Work in this order. Each milestone ends when its checks pass; commit after each.
 ## M8 Reports and email
 
 - Seller and dealer pages per `docs/05-reports.md`; Resend email; resend button.
-- Check: the five test runs in `docs/08-phone-testing.md` pass on the iPhone; pytest suite in `docs/06-backend.md` passes.
+- Check: the five test runs in `docs/08-phone-testing.md` pass on the iPhone and once on Android; `flutter test` and the pytest suite in `docs/06-backend.md` pass.

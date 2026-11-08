@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-You are building the **Bidbus Field inspector app (DEV-190, phase 1)** end to end, as a home build that Tom tests on his own iPhone. This file is the entry point. Read it fully, then `docs/` in number order, before writing code.
+You are building the **Bidbus Field inspector app (DEV-190, phase 1)** end to end, as a home build that Tom tests on his own phone. This file is the entry point. Read it fully, then `docs/` in number order (01 to 10), before writing code.
 
 ## Goal
 
-An inspector opens the app on an iPhone, starts an inspection by typing year, make, model and trim, does the whole inspection in one camera pass, labels damages, reviews every section, gets the seller's signature and sends it. The backend (Railway) checks the record, builds the condition report, and emails a **seller report link** and a **dealer report link** to the email address entered for that inspection.
+An inspector opens the mobile app (iOS and Android, one Flutter code base), starts an inspection by typing year, make, model and trim, does the whole inspection in one camera pass, labels damages, reviews every section, gets the seller's signature and sends it. The backend (Railway) checks the record, builds the condition report, and emails a **seller report link** and a **dealer report link** to the email address entered for that inspection.
 
 ## Differences from the company version
 
@@ -21,12 +21,16 @@ Everything else follows DEV-190 exactly: question list, one camera pass, Damage 
 
 ## Stack (decided)
 
-- **app/**: installable web app (PWA). Vite + React + TypeScript. Runs in iPhone Safari and from the home screen. Camera via `getUserMedia` (rear camera, full screen), video via `MediaRecorder`. All state and media saved in IndexedDB (use Dexie) as they are taken; an upload queue sends them when online.
-- **server/**: Python 3.12, FastAPI, SQLAlchemy, Postgres. Media files on a Railway Volume. `ffmpeg` cuts the 36 frames of the 360 view. Reuses `tools/cr_from_inspection.py` as a module. Serves the built app at `/`, the API at `/api`, reports at `/r/...`.
+- **app/**: native mobile app in **Flutter** (Dart 3, latest stable Flutter), iOS and Android from one code base. iPhone first. Details in `docs/10-flutter-app.md`.
+  - Camera: `camera` package with a custom full-screen preview and our own shutter buttons (`CameraPreview` in a `Stack`); landscape locked on camera screens, portrait on forms.
+  - Offline: SQLite via `drift` for state; photos and videos as files in the app documents folder; an upload queue that survives app restarts (`background_downloader` for uploads).
+  - State: `flutter_riverpod`. Routing: `go_router`.
+  - The 360 view frames are cut on the phone from the walk-around video.
+- **server/**: Python 3.12, FastAPI, SQLAlchemy, Postgres. Media files on a Railway Volume. Reuses `tools/cr_from_inspection.py` as a module. API at `/api`, reports at `/r/...`.
 - **AI**: Anthropic API vision (Claude) for readings and the damage first guess (`docs/04-ai-reading.md`).
 - **VIN decode**: NHTSA vPIC (free, no key).
 - **Email**: Resend.
-- **Deploy**: one Railway project, one service built from `Dockerfile` at the repo root, plus Postgres and a Volume (`docs/07-deploy-railway.md`).
+- **Deploy**: backend on one Railway project (service from `Dockerfile`, Postgres, Volume; `docs/07-deploy-railway.md`). The app is installed on Tom's phones from his computer (`docs/08-phone-testing.md`).
 
 ## Sources of truth
 
@@ -41,7 +45,8 @@ Everything else follows DEV-190 exactly: question list, one camera pass, Damage 
 | Record the app sends | `docs/03-data-contract.md`, `samples/inspection-*.json` |
 | CR generation | `tools/cr_from_inspection.py`, output `samples/cr-*.json` |
 | Seller and dealer reports | `docs/05-reports.md`, reference page `reference/condition-report/condition-report.html` |
-| Camera guide outlines | `guides/svg`, `guides/png` |
+| Camera guide outlines | `guides/svg`, `guides/png` (bundle the SVGs as assets, draw with `flutter_svg`) |
+| Flutter app structure and packages | `docs/10-flutter-app.md` |
 
 When the mockup and a doc differ, the doc wins. When `docs/` and `data/question-list.json` differ on a question or option, the question list wins.
 
@@ -63,6 +68,8 @@ Follow `docs/09-build-plan.md`. Each milestone ends with its checks passing. Com
 ## Commands
 
 ```
+# app
+cd app && flutter pub get && flutter test && flutter run   # phone plugged in
 # reference mockup (rebuild after a question list change)
 python3 reference/mockup/build.py
 # CR generator on a sample

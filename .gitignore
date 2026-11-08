@@ -1,8 +1,13 @@
 .env
 node_modules/
-app/dist/
 media/
 __pycache__/
 *.pyc
 .venv/
 .DS_Store
+app/build/
+app/.dart_tool/
+app/ios/Pods/
+app/android/.gradle/
+*.iml
+.idea/

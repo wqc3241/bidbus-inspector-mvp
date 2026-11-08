@@ -32,8 +32,8 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 
 ## Upright photos
 
-- Camera shots: the app knows the device orientation at capture (screen orientation and the video track settings) and rotates the canvas before saving the JPEG; record `upright_turn_deg` as the rotation applied.
-- Library uploads: apply EXIF orientation when present (`createImageBitmap(file, { imageOrientation: "from-image" })`); otherwise call `kind: upright` and rotate by the result.
+- Camera shots: bake the EXIF orientation written by the camera into the pixels before saving; record `upright_turn_deg` as the rotation applied (`docs/10-flutter-app.md`).
+- Library uploads: bake EXIF orientation when present; otherwise call `kind: upright` and rotate by the result.
 - Every stored photo is upright; the record keeps the turn.
 
 ## Cost

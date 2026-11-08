@@ -13,7 +13,7 @@ The inspection takes about 18 minutes.
 
 ## 1. UI requirements
 
-**1.1 Inspections (home screen)**
+**1.1 Inspections (first screen)**
 - List of inspections on this phone. Each row: year make model trim, VIN (if any), status: In progress, Saved on phone, Uploading, Report sent, Visit ended.
 - Button New inspection.
 - Settings: inspector name, app passcode, default report email.
@@ -58,7 +58,7 @@ The inspection takes about 18 minutes.
 
 ## 2. Logic requirements
 
-**2.1 App**: iPhone first; camera screens landscape, forms portrait. Works offline from the moment the app is loaded once.
+**2.1 App**: native Flutter app for iOS and Android, iPhone first; camera screens landscape, forms portrait. Works fully offline.
 
 **2.2 Questions**
 - `data/question-list.json` (101 items, 37 checks). Render from it.
@@ -77,7 +77,7 @@ The inspection takes about 18 minutes.
 
 **2.4 VIN**: read by AI from the windshield VIN photo and the door-jamb label, check digit checked, confirmed by the inspector on the Summary. If a VIN was typed at New inspection and differs, show a red chip on the Summary. No blocking.
 
-**2.5 360 view**: the server cuts 36 evenly spaced frames from the walk-around (ffmpeg). Review shows them with js-cloudimage-360-view (Cloudimage 360 View) once uploaded; offline it shows the video. Frames 1, 5, 10, 14, 19, 23, 28, 32 fill the 8 exterior photo slots; the roof photo fills its own slot. The dealer report uses the same frames.
+**2.5 360 view**: the phone cuts 36 evenly spaced frames from the walk-around and saves them with the inspection. Review shows them as a drag-to-turn viewer, offline too. Frames 1, 5, 10, 14, 19, 23, 28, 32 fill the 8 exterior photo slots; the roof photo fills its own slot. The dealer report uses the same frames.
 
 **2.6 Tracking**: per inspection: inspector, start and end time, time on site, photo count, time from signature to report sent.
 

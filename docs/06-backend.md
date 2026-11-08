@@ -1,18 +1,18 @@
 # 06 Backend
 
-Python 3.12, FastAPI, SQLAlchemy 2 + Alembic, Postgres, Uvicorn. Code in `server/`. One process serves the API, the reports and the built app.
+Python 3.12, FastAPI, SQLAlchemy 2 + Alembic, Postgres, Uvicorn. Code in `server/`. One process serves the API and the reports.
 
 ## Layout
 
 ```
 server/
-  app/main.py          FastAPI app, routes, static app at /
+  app/main.py          FastAPI app, routes
   app/db.py            engine, session, models
   app/storage.py       media on disk under MEDIA_DIR/{inspection_id}/
   app/ai.py            Anthropic readings (docs/04-ai-reading.md)
   app/vin.py           NHTSA vPIC proxy
   app/cr.py            wraps tools/cr_from_inspection.py
-  app/spin.py          ffmpeg: 36 frames from the walk-around
+  app/spin.py          ffmpeg fallback for spin frames
   app/reports.py       seller and dealer pages (Jinja2)
   app/email.py         Resend
   templates/           report templates
@@ -50,7 +50,7 @@ Uploads: allow up to 200 MB per file (walk-around video). Use chunked streaming 
 ## Build pipeline (on complete)
 
 1. `status = building`.
-2. Spin frames: `ffmpeg -i video_360.* -vf "fps=36/{duration},scale=1600:-2" -frames:v 36 spin-%02d.jpg` (duration from `ffprobe`); fall back to 36 evenly spaced `-ss` seeks if fewer than 36 frames come out.
+2. Spin frames come from the phone. Fallback only when `spin-01.jpg` to `spin-36.jpg` are missing: 36 evenly spaced `ffmpeg -ss {t} -i video_360.* -frames:v 1 -vf scale=1600:-2` seeks.
 3. CR: refactor `tools/cr_from_inspection.py` minimally to expose `build_cr(record: dict, carfax_owners=None) -> dict` and keep its CLI. The CLI output for both samples must stay byte-identical to `samples/cr-*.json` (test it). Call `build_cr(record)`.
 4. `validation.ok` false → `status = failed`, store the errors, send the failure email.
 5. Otherwise make `report_token`, store `cr`, send the email, `status = sent`, `report_sent_at = now`.
