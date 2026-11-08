@@ -169,4 +169,14 @@ void main() {
     v['idconf'] = true;
     expect(sumBlock(st), 'Pick the overall condition'); // past the VIN
   });
+
+  test('only an exterior damage sends its size', () {
+    final st = run('Gas or diesel', '5UXTY5C00L9B00230');
+    for (final d in manual(st)) {
+      d['size'] = '3';
+    }
+    final sent = {for (final d in inspectionPayload(st).record['damages'] as List) d['taken_in']: d['size_in']};
+    expect(sent['Exterior'], 3);
+    expect(sent.entries.where((e) => e.key != 'Exterior').every((e) => e.value == null), true, reason: '$sent');
+  });
 }

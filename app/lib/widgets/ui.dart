@@ -94,11 +94,15 @@ class RowBtn extends StatelessWidget {
   final Widget value;
   final Color? subColor;
   final VoidCallback? onTap;
-  const RowBtn(this.label, this.value, {super.key, this.sub, this.subColor, this.onTap});
+  final bool need; // still to answer: a red frame round the whole row
+  const RowBtn(this.label, this.value, {super.key, this.sub, this.subColor, this.onTap, this.need = false});
   @override
   Widget build(BuildContext context) => InkWell(
         onTap: onTap,
-        child: ConstrainedBox(
+        child: DecoratedBox(
+          position: DecorationPosition.foreground,
+          decoration: need ? BoxDecoration(border: Border.all(color: const Color(0xFFE1255D), width: 2), borderRadius: BorderRadius.circular(10)) : const BoxDecoration(),
+          child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 52),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -111,6 +115,7 @@ class RowBtn extends StatelessWidget {
               value,
               if (onTap != null) const Padding(padding: EdgeInsets.only(left: 6), child: Icon(LucideIcons.chevronRight, size: 16, color: Color(0xFFB0B5BA))),
             ]),
+          ),
           ),
         ),
       );
@@ -193,8 +198,11 @@ class ShotTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final f = file != null ? File(file!) : null, has = f != null && f.existsSync();
     final bg = dark ? Colors.black : damage ? const Color(0xFFF3D9DF) : missing ? const Color(0xFFFFF4E0) : const Color(0xFFDCE6E0);
+    // every tile the same size: two lines for the name and one for the sub line, used or not, at any text size
+    final lh = MediaQuery.textScalerOf(context).scale(11) * 1.3;
     return SizedBox(
       width: 80,
+      height: 56 + 3 * lh + 1,
       child: GestureDetector(
         onTap: onTap,
         child: Column(children: [
@@ -218,8 +226,8 @@ class ShotTile extends StatelessWidget {
             ]),
           ),
           const SizedBox(height: 4),
-          FitLabel(label, const TextStyle(fontSize: 11)),
-          if (sub != null) Text(sub!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: muted)),
+          Flexible(child: FitLabel(label, const TextStyle(fontSize: 11, height: 1.3))),
+          if (sub != null) Text(sub!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, height: 1.3, color: muted)),
         ]),
       ),
     );

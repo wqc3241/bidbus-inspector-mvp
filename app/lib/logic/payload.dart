@@ -75,7 +75,7 @@ Payload inspectionPayload(J st) {
     final d = man[j], pl0 = placeOf(d['zone'] ?? 'Exterior', d['panel']), tw = twinOf(pl0, d['type'], fuel), pl = tw ?? pl0;
     final e = <String, dynamic>{
       'n': j + 1, 'section': tw != null ? 'Paint' : dmgSec(d['zone'], d['panel']), 'place': tw != null ? tw['p'] : d['panel'] ?? '', 'type': d['type'] ?? '', 'severity': d['sev'] ?? '',
-      'size_in': _num(d['size']), 'source': src(d['src']), 'taken_in': d['sec'] ?? '', 'file': 'damage-${j + 1}.jpg', 'upright_turn_deg': turn[d['f']] ?? 0,
+      'size_in': (d['zone'] ?? 'Exterior') == 'Exterior' ? _num(d['size']) : null, 'source': src(d['src']), 'taken_in': d['sec'] ?? '', 'file': 'damage-${j + 1}.jpg', 'upright_turn_deg': turn[d['f']] ?? 0,
     };
     if (d['f'] != null) files[e['file']] = d['f'];
     if ((d['ex'] ?? '') != '') e['where'] = d['ex'];

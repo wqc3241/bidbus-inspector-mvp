@@ -1,4 +1,4 @@
-// Damages: one damage photo per screen, section by section. Place on a picture, then type and severity (size optional).
+// Damages: one damage photo per screen, section by section. Place on a picture, then type and severity (size optional, exterior only).
 // Places and types come from damage_places in the question list; a labelled photo ticks its check (syncDamages).
 import 'dart:io';
 
@@ -63,6 +63,18 @@ int groupOf(List<(String, String, List<String>)> gs, String? p) {
   return 0;
 }
 
+// one option button in the label drawer: white with a grey line, black when picked
+Widget _optBtn(Widget child, bool on, VoidCallback tap) => GestureDetector(
+      onTap: tap,
+      child: Container(
+        height: 48,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        decoration: BoxDecoration(color: on ? Colors.black : Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: on ? Colors.black : const Color(0xFFD4D7DB))),
+        child: child,
+      ),
+    );
+
 // the pills of a car seen from above: left side, middle, right side
 Widget _pillBtn(String label, bool on, VoidCallback? tap, {double w = 74}) => GestureDetector(
       onTap: tap,
@@ -121,25 +133,29 @@ class _WhereViewState extends State<WhereView> {
             _pillBtn('Cargo area', sel == 'Cargo area', () => widget.onPick('Cargo area'), w: 160),
           ]),
         ),
+      // four tiles a row, all the same size whatever the length of their name (the mockup's .wts grid)
       if (g.$3.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(top: 12),
-          child: Wrap(spacing: 8, runSpacing: 8, children: [
-            for (final p in g.$3)
-              GestureDetector(
-                onTap: () => widget.onPick(p),
-                child: Container(
-                  width: 84,
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-                  decoration: BoxDecoration(color: sel == p ? Colors.black : alt, borderRadius: BorderRadius.circular(12)),
-                  child: Column(children: [
-                    Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: sel == p ? Colors.white : Colors.black87),
-                    const SizedBox(height: 4),
-                    FitLabel(_wlbl[p] ?? p, TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: sel == p ? Colors.white : Colors.black), lines: 3),
-                  ]),
+          child: LayoutBuilder(
+            builder: (c, b) => Wrap(spacing: 8, runSpacing: 8, children: [
+              for (final p in g.$3)
+                GestureDetector(
+                  onTap: () => widget.onPick(p),
+                  child: Container(
+                    width: (b.maxWidth - 24) / 4,
+                    height: 43 + 3 * MediaQuery.textScalerOf(c).scale(11.5) * 1.3, // icon, padding and three lines of name at any text size
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    decoration: BoxDecoration(color: sel == p ? Colors.black : alt, borderRadius: BorderRadius.circular(12)),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: sel == p ? Colors.white : Colors.black87),
+                      const SizedBox(height: 4),
+                      Flexible(child: FitLabel(_wlbl[p] ?? p, TextStyle(fontSize: 11.5, height: 1.3, fontWeight: FontWeight.w600, color: sel == p ? Colors.white : Colors.black), lines: 3)),
+                    ]),
+                  ),
                 ),
-              ),
-          ]),
+            ]),
+          ),
         ),
       if (sel != null && sel.isNotEmpty && g.$2 != 'car' && g.$2 != 'tires') Padding(padding: const EdgeInsets.only(top: 8), child: Text(sel, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700))),
     ]);
@@ -182,20 +198,26 @@ Future<void> labelDrawer(BuildContext context, String id, String did) => showMod
               sub('Type'),
               for (final t in placeOpts(pl, fuel)) radio('type', t, dshort(d['panel'], t)),
               sub('Severity'),
+              // severity buttons, and for an exterior damage a Size button that looks the same (the mockup's .lsev / .lsz)
               Row(children: [
                 for (final v in dmgSev) ...[
-                  Expanded(child: _pillBtn(v, d['sev'] == v, () => set('sev', v))),
-                  const SizedBox(width: 6),
+                  if (v != dmgSev.first) const SizedBox(width: 6),
+                  Expanded(child: _optBtn(FitLabel(v, TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: d['sev'] == v ? Colors.white : Colors.black), lines: 1), d['sev'] == v, () => set('sev', v))),
                 ],
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () async {
+                if ((d['zone'] ?? 'Exterior') == 'Exterior') ...[
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: _optBtn(
+                        Column(mainAxisSize: MainAxisSize.min, children: [
+                          Text('Size', style: TextStyle(fontSize: 11, color: (d['size'] ?? '') != '' ? Colors.white70 : muted)),
+                          FitLabel((d['size'] ?? '') != '' ? '${d['size']} in' : 'Optional', TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: (d['size'] ?? '') != '' ? Colors.white : Colors.black), lines: 1),
+                        ]),
+                        (d['size'] ?? '') != '', () async {
                       final r = await showPicker(c, 'Size', [List.generate(36, (i) => '${i + 1}')], ['${d['size'] == '' || d['size'] == null ? 2 : d['size']}'], unit: 'in', clear: (d['size'] ?? '') != '');
                       if (r != null) store.mut(id, (s) => dmgById(s, did)!['size'] = r.isEmpty ? '' : r[0]);
-                    },
-                    child: Column(children: [const Text('Size', style: TextStyle(fontSize: 11, color: muted)), Text((d['size'] ?? '') != '' ? '${d['size']} in' : 'Optional', style: const TextStyle(fontWeight: FontWeight.w700))]),
+                    }),
                   ),
-                ),
+                ],
               ]),
               const SizedBox(height: 16),
               PBtn('Done', labelled(d, fuel)
@@ -280,9 +302,9 @@ class DamageEditor extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
           child: RowList([
-            if (pl['ex'] == true && pl['fix'] != true) RowBtn(pl['exl'] ?? 'Where', (d['ex'] ?? '') != '' ? setVal(d['ex']) : needVal(), onTap: () => _drawer(context)),
-            RowBtn('Type', (d['type'] ?? '') != '' ? setVal(dshort(d['panel'], d['type'])) : needVal(), onTap: () => _drawer(context)),
-            RowBtn('Severity', (d['sev'] ?? '') != '' ? setVal('${d['sev']}${(d['size'] ?? '') != '' ? ' · ${d['size']} in' : ''}') : needVal(), onTap: () => _drawer(context)),
+            if (pl['ex'] == true && pl['fix'] != true) RowBtn(pl['exl'] ?? 'Where', (d['ex'] ?? '') != '' ? setVal(d['ex']) : needVal(), need: (d['ex'] ?? '') == '', onTap: () => _drawer(context)),
+            RowBtn('Type', (d['type'] ?? '') != '' ? setVal(dshort(d['panel'], d['type'])) : needVal(), need: (d['type'] ?? '') == '', onTap: () => _drawer(context)),
+            RowBtn('Severity', (d['sev'] ?? '') != '' ? setVal('${d['sev']}${(d['size'] ?? '') != '' && (d['zone'] ?? 'Exterior') == 'Exterior' ? ' · ${d['size']} in' : ''}') : needVal(), need: (d['sev'] ?? '') == '', onTap: () => _drawer(context)),
           ]),
         ),
       ],
@@ -303,7 +325,28 @@ class DamagesScreen extends ConsumerStatefulWidget {
 }
 
 class _DamagesScreenState extends ConsumerState<DamagesScreen> {
+  PageController? pc;
+  bool sliding = false; // moving to a photo picked another way (a tab, the arrows, the next one after labelling)
+  bool dragging = false; // the inspector's finger is on the page: it wins over any slide
+
   void _go(int i) => store.mut(widget.id, (s) => s['li'] = i);
+
+  // every photo is one page: a swipe drags the whole page; a photo picked another way slides in
+  void _follow(int pos) {
+    final c = pc;
+    if (c == null || !c.hasClients || sliding || dragging || (c.page ?? pos).round() == pos) return;
+    sliding = true;
+    c.animateToPage(pos, duration: const Duration(milliseconds: 320), curve: Curves.easeOutCubic).whenComplete(() {
+      sliding = false;
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    pc?.dispose();
+    super.dispose();
+  }
   void _next(J st) {
     final nx = nextUnlabelled(st, st['li'] ?? 0);
     if (nx >= 0) _go(nx);
@@ -318,8 +361,10 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     }
     var li = st['li'] as int? ?? o.first;
     if (!o.contains(li)) li = unlabelledOrder(st).firstOrNull ?? o.first;
-    final d = manual(st)[li], z = d['zone'] ?? 'Exterior', zl = zoneDamages(st, z), n = zl.indexWhere((e) => e.$2 == li) + 1, pos = o.indexOf(li);
+    final d = manual(st)[li], z = d['zone'] ?? 'Exterior', pos = o.indexOf(li);
     final left = unlabelledOrder(st).length, ok = dmgDone(d, fuel), guess = labelled(d, fuel) && d['ai'] == true;
+    pc ??= PageController(initialPage: pos);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _follow(pos));
     Widget arrow(IconData ic, int? to) => to == null
         ? const SizedBox()
         : GestureDetector(onTap: () => _go(to), child: Container(width: 44, height: 44, decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle), child: Icon(ic, size: 20)));
@@ -344,16 +389,33 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
         ),
         const Divider(height: 1),
         Expanded(
-          child: GestureDetector(
-            onHorizontalDragEnd: (e) {
-              final v = e.primaryVelocity ?? 0;
-              if (v < -200 && pos < o.length - 1) _go(o[pos + 1]);
-              if (v > 200 && pos > 0) _go(o[pos - 1]);
+          // a finger on the page stops a slide; where the page comes to rest is the photo shown
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (n) {
+              if (n.depth != 0) return false; // the page's own vertical list
+              if (n is ScrollStartNotification && n.dragDetails != null) dragging = true;
+              if (n is ScrollEndNotification && dragging) {
+                dragging = sliding = false;
+                final oo = labelOrder(store.ins[widget.id]!), p = pc!.page?.round();
+                if (p != null && p < oo.length) _go(oo[p]);
+              }
+              return false;
             },
-            child: ListView(key: ValueKey(d['id']), padding: const EdgeInsets.all(16), children: [
-              DamageEditor(widget.id, d['id'], title: '$z · $n of ${zl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, pos < o.length - 1 ? o[pos + 1] : null)])), key: ValueKey(d['id'])),
-              if (pos > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[pos - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
-            ]),
+            child: PageView.builder(
+            controller: pc,
+            itemCount: o.length,
+            onPageChanged: (p) {
+              final oo = labelOrder(store.ins[widget.id]!);
+              if ((!sliding || dragging) && p < oo.length) _go(oo[p]);
+            },
+            itemBuilder: (c, p) {
+              final dd = manual(st)[o[p]], zz = dd['zone'] ?? 'Exterior', zzl = zoneDamages(st, zz), nn = zzl.indexWhere((e) => e.$2 == o[p]) + 1;
+              return ListView(key: ValueKey(dd['id']), padding: const EdgeInsets.all(16), children: [
+                DamageEditor(widget.id, dd['id'], title: '$zz · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < o.length - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
+                if (p > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[p - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
+              ]);
+            },
+          ),
           ),
         ),
       ]),
