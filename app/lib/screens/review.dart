@@ -234,7 +234,7 @@ class ReviewScreen extends ConsumerWidget {
           ShotTile(short[d]!, file: fl[d] != null ? store.abs(fl[d]) : null, missing: fl[d] == null, icon: fl[d] != null ? LucideIcons.camera : LucideIcons.plus, onTap: () => takeDoc(context, id, d)),
       ]),
       RowList([
-        RowBtn(ow['label'], (st['owner'] ?? '') == '' ? needVal() : st['owner'] == 'No' ? alertVal(red, 'No') : okVal(st['owner']),
+        RowBtn(ow['label'], (st['owner'] ?? '') == '' ? needVal() : st['owner'] == 'No' ? alertVal(red, 'No') : okVal(st['owner']), need: (st['owner'] ?? '') == '',
             onTap: () => pickOne(context, id, ow['label'], [for (final o in strs(ow['options'])) Opt(o, color: o == 'No' ? red : bid)], st['owner'], (s, v) {
                   s['owner'] = v;
                   if (v != 'Family, with proof') m(s, 'shots').remove('ph_family');
@@ -249,7 +249,7 @@ class ReviewScreen extends ConsumerWidget {
     final rows = <Widget>[];
     if (k == 'Interior') {
       final kn = vals['keys_n'] as String?;
-      rows.add(RowBtn('Number of keys', kn == null ? needVal() : kn == '2' ? setVal(kn) : alertVal(kn == '0' ? red : amber, kn),
+      rows.add(RowBtn('Number of keys', kn == null ? needVal() : kn == '2' ? setVal(kn) : alertVal(kn == '0' ? red : amber, kn), need: kn == null,
           sub: kn != null && vals['keys_auto'] == 1 ? 'Read from photo' : null,
           onTap: () => pickOne(context, id, 'Number of keys', [Opt('0', color: red), Opt('1', color: amber), Opt('2', label: '2 or more', color: bid)], kn, (s, v) {
                 m(s, 'vals')['keys_n'] = v;
@@ -258,7 +258,7 @@ class ReviewScreen extends ConsumerWidget {
               })));
       for (final q in featq) {
         final v = feat[q[0]] as String?, locked = dmgVals(st, q[0], null, 'f').isNotEmpty;
-        rows.add(RowBtn(q[1], (v ?? '') == '' ? needVal() : v == 'Not working' ? alertVal(amber, v!) : setVal(v!),
+        rows.add(RowBtn(q[1], (v ?? '') == '' ? needVal() : v == 'Not working' ? alertVal(amber, v!) : setVal(v!), need: (v ?? '') == '',
             onTap: () => pickOne(context, id, q[1], [for (final o in q[2] as List<String>) Opt(o, color: o == 'Not working' ? amber : bid, locked: locked && o != 'Not working')], v, (s, x) => m(s, 'feat')[q[0]] = x)));
       }
     }
@@ -338,12 +338,12 @@ class ReviewScreen extends ConsumerWidget {
       RowList([
         RowBtn('Brand', (r['brand'] ?? '') != '' ? setVal(r['brand']) : const Text('Optional', style: TextStyle(color: muted)), sub: r['auto'] == true && (r['brand'] ?? '') != '' ? 'Read from photo' : null, onTap: () => pick('brand')),
         RowBtn('Size', (r['size'] ?? '') != '' ? setVal((r['size'] as String).replaceFirst('R', ' R')) : const Text('Optional', style: TextStyle(color: muted)), onTap: () => pick('size')),
-        RowBtn('Tread depth', t['tread'] != '' ? setVal('${t['tread']}/32') : needVal(), sub: t['treadAuto'] == true ? 'Read from photo' : null, onTap: () => pick('tread')),
+        RowBtn('Tread depth', t['tread'] != '' ? setVal('${t['tread']}/32') : needVal(), need: t['tread'] == '', sub: t['treadAuto'] == true ? 'Read from photo' : null, onTap: () => pick('tread')),
         ...checkRowItems(context, id, st, [byId['ck_tire']!, byId['ck_wheel']!], w: w),
       ]),
       const SizedBox(height: 16),
       RowList([
-        RowBtn('All 4 tires match', (tm ?? '') == '' ? needVal() : tm == 'Mismatch' ? alertVal(amber, tm!) : setVal(tm!),
+        RowBtn('All 4 tires match', (tm ?? '') == '' ? needVal() : tm == 'Mismatch' ? alertVal(amber, tm!) : setVal(tm!), need: (tm ?? '') == '',
             onTap: () => pickOne(context, id, 'All 4 tires match', [for (final o in strs(byId['tires_match']!['options'])) Opt(o, color: o == 'Mismatch' ? amber : bid)], tm, (s, v) => m(s, 'vals')['tires_match'] = v)),
       ]),
     ];
