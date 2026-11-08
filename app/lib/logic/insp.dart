@@ -11,8 +11,23 @@ J newInspection({required String id, required J car, required String fuel, requi
     'manual': <dynamic>[], 'multi': <String, dynamic>{}, 'skip': <String, dynamic>{}, 'feat': <String, dynamic>{}, 'note': '', 'overall': '',
     'signName': car['owner_name'] ?? '', 'signed': false, 'agree': false, 'sok': <String, dynamic>{}, 'dprev': <dynamic>[],
     'files': <String, dynamic>{}, 'turn': <String, dynamic>{}, 'docs': <String, dynamic>{}, 'start': null, 'end': null, 'cap': null,
-    'aiq': <dynamic>[], 'up': null, 'nid': 0,
+    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true,
   };
+}
+
+// an inspection saved before Underbody had its own section: its shots were the end of Mechanicals
+J splitUnderbody(J st) {
+  if (st['ub'] == true) return st;
+  st['ub'] = true;
+  final n = capList('Mechanicals', st).length;
+  for (final e in [...manual(st), ...((m(st, 'multi')['ph_mod_mech'] ?? []) as List).cast<J>()]) {
+    if (e['sec'] == 'Mechanicals' && e['at'] is int && (e['at'] as int) >= n) {
+      e['sec'] = 'Underbody';
+      e['at'] = (e['at'] as int) - n;
+    }
+  }
+  if (m(st, 'sok')['Mechanicals'] == true) m(st, 'sok')['Underbody'] = true;
+  return st;
 }
 
 String fuelOf(J st) => st['fuel'] as String;
@@ -320,7 +335,15 @@ bool labelled(J? d, String fuel) {
 }
 
 bool dmgDone(J d, String fuel) => labelled(d, fuel) && d['ai'] != true;
-List<(J, int)> zoneDamages(J st, String z) => [for (var i = 0; i < manual(st).length; i++) if ((manual(st)[i]['zone'] ?? 'Exterior') == z) (manual(st)[i], i)];
+// the tab a damage shows on: its zone, but a Mechanicals damage at an underbody place (or taken or added there) is on Underbody
+String dtab(J d) {
+  final z = d['zone'] ?? 'Exterior';
+  if (z != 'Mechanicals') return z;
+  if (placeOf(z, d['panel']) != null) return dmgSec(z, d['panel']);
+  return d['sec'] == 'Underbody' || d['tab'] == 'Underbody' ? 'Underbody' : 'Mechanicals';
+}
+
+List<(J, int)> zoneDamages(J st, String z) => [for (var i = 0; i < manual(st).length; i++) if (dtab(manual(st)[i]) == z) (manual(st)[i], i)];
 List<int> labelOrder(J st) => [for (final z in dz) ...zoneDamages(st, z).map((e) => e.$2)];
 List<int> unlabelledOrder(J st) => labelOrder(st).where((i) => !dmgDone(manual(st)[i], fuelOf(st))).toList();
 int nextUnlabelled(J st, int from) {
@@ -487,7 +510,8 @@ SecInfo secInfo(J st, String k) {
     }
   }
   final isZone = zoneTitle.containsKey(k);
-  if (isZone) probs += dmgOwnProbs(st, k, ckIdsOf(k, st));
+  // Mechanicals and Underbody count a damage once: on the page with its check, or as its own problem
+  if (isZone) probs += dmgOwnProbs(st, k, k == 'Mechanicals' || k == 'Underbody' ? [...ckIdsOf('Mechanicals', st), ...ckIdsOf('Underbody', st)] : ckIdsOf(k, st));
   final unl = isZone ? zoneDamages(st, k).where((e) => !dmgDone(e.$1, fuel)).length : 0;
   final tdm = k == 'Tires' ? [for (final w in wheels) if (tire(st, w[0])['tread'] == '') w[1]] : <String>[];
   final fqm = k == 'Interior' ? keysMissing(st) + featMissing(st) : k == 'Tires' ? tmMissing(st) + tdm.length : 0;
@@ -541,7 +565,7 @@ List<J> problemsList(J st) {
           }
         }
       }
-      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'text': 'Tires do not match (brand, model or size)', 'where': 'Tires', 'level': level(byId['tires_match']!, 'Mismatch')});
+      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'text': 'Tires do not match (brand, model or size)', 'where': stTitle('Tires'), 'level': level(byId['tires_match']!, 'Mismatch')});
       continue;
     }
     if (k == 'Paint') {

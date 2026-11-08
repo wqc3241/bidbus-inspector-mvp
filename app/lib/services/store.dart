@@ -37,7 +37,9 @@ class Store extends ChangeNotifier {
     db = database ?? Db();
     docs = docsDir ?? (await getApplicationDocumentsDirectory()).path;
     for (final r in await db.all()) {
-      ins[r.id] = jsonDecode(r.json);
+      final st = jsonDecode(r.json) as J, old = st['ub'] != true;
+      ins[r.id] = splitUnderbody(st);
+      if (old) await db.put(r.id, jsonEncode(st)); // saved at once, so it is never split twice
     }
     final s = await db.settingsMap();
     inspector = s['inspector'] ?? '';

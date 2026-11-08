@@ -484,7 +484,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       if (t == 'dmg') {
         final zone = dzone[sec] ?? 'Exterior', hint = dmgHint(st, sec, at);
         final did = 'd${DateTime.now().microsecondsSinceEpoch}';
-        final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
+        // a damage shot under the car is read against the underbody places, so the guess keeps it on Underbody
+        final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': sec == 'Underbody' ? sec : zone, 'hint': ?hint});
         store.mut(widget.id, (s) {
           manual(s).add({'id': did, 'zone': zone, 'sec': sec, 'at': at, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': rel});
           syncDamages(s);
@@ -530,7 +531,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       final hint = aw != null ? '${wheelName(aw)} tire' : null;
       final rel = await keepPhoto(widget.id, from, 'damage', library: library, read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
       store.mut(widget.id, (s) {
-        final d = {'id': did, 'zone': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': library ? 'library' : 'camera', 'f': rel};
+        final d = {'id': did, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': library ? 'library' : 'camera', 'f': rel};
         if (hint != null) setLabel(d, 'panel', hint, fuelOf(s));
         manual(s).add(d);
         syncDamages(s);

@@ -7,7 +7,7 @@
 
 ## Flow
 
-New inspection (YMMT) → Check ID at the car → one camera pass: Exterior (360 video, paint readings, roof, windshield VIN), Tires, Interior, OBDII, Mechanicals; Damage and Mod shutters at any point → Damages: confirm or label every damage photo → Review: one page per section → Summary: VIN, mileage, overall condition, note → disclosure and seller signature → upload → backend makes the condition report and emails the seller and dealer report links.
+New inspection (YMMT) → Check ID at the car → one camera pass: Exterior (360 video, paint readings, roof, windshield VIN), Tires & Wheels, Interior, OBDII, Mechanicals, Underbody; Damage and Mod shutters at any point → Damages: confirm or label every damage photo → Review: one page per section → Summary: VIN, mileage, overall condition, note → disclosure and seller signature → upload → backend makes the condition report and emails the seller and dealer report links.
 
 The inspection takes about 18 minutes.
 
@@ -33,7 +33,7 @@ The inspection takes about 18 minutes.
 - Start inspection records the start time and GPS and opens the camera on Exterior.
 
 **1.4 One camera pass, landscape**
-- Five sections in order: Exterior (360 walk-around video; then one paint meter photo per panel starting at the left front fender, counter-clockwise, then hood and roof, 11 panels; roof photo; windshield VIN), Tires, Interior, OBDII, Mechanicals (with underbody).
+- Six sections in order: Exterior (360 walk-around video; then one paint meter photo per panel starting at the left front fender, counter-clockwise, then hood and roof, 11 panels; roof photo; windshield VIN), Tires & Wheels, Interior, OBDII, Mechanicals, Underbody. "Tires & Wheels" is the name shown; the section key in the data stays `Tires`.
 - After the windshield VIN, a dialog: "Please record any exterior damage/modification images before proceeding." with I'm done and Record damage now. I'm done goes to Tires. Record damage now reopens the Exterior camera with only the Damage and Mod shutters and Next (top right) to Tires. Only Exterior has this step.
 - Never stops otherwise: Damage (amber) and Mod (blue) shutters on the right take a tagged photo at any point without moving the flow. Off on videos and in OBDII.
 - Every shot can go Back and be retaken; optional shots can be skipped.
@@ -73,7 +73,7 @@ The inspection takes about 18 minutes.
 - After the signature the app sends one record (`docs/03-data-contract.md`): answers, photos, videos, readings, damage labels with the AI guess, signature, start and end time and location. Answers first, then media one file at a time.
 - Sending again updates the same inspection (client-generated inspection id).
 - Closing the app or losing signal loses nothing.
-- Photo category = the question's section in the question list (Start, Exterior, Paint, Tires, Underbody, Interior, Mechanicals, OBDII, Additionals), not the camera pass. Underbody photos are taken in the Mechanicals pass but stored as Underbody; damage photos at underbody places (Structure, Rust, Exhaust, Suspension, Driveshaft or CV, Brakes, Battery pack) are Underbody; scan tool and EV screen photos are OBDII; paint meter photos are taken in the Exterior pass but stored as Paint; a damage photo at a body panel with a paint problem is Paint; VIN, odometer and keys photos are Additionals.
+- Photo category = the question's section in the question list (Start, Exterior, Paint, Tires, Underbody, Interior, Mechanicals, OBDII, Additionals), not the camera pass. Underbody photos are taken in the Underbody pass and stored as Underbody; damage photos at underbody places (Structure, Rust, Exhaust, Suspension, Driveshaft or CV, Brakes, Battery pack) are Underbody; scan tool and EV screen photos are OBDII; paint meter photos are taken in the Exterior pass but stored as Paint; a damage photo at a body panel with a paint problem is Paint; VIN, odometer and keys photos are Additionals.
 
 **2.4 VIN**: read by AI from the windshield VIN photo and the door-jamb label, check digit checked, confirmed by the inspector on the Summary. If a VIN was typed at New inspection and differs, show a red chip on the Summary. No blocking.
 

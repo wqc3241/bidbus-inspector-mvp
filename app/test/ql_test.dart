@@ -28,7 +28,8 @@ void main() {
           continue;
         }
         expect(fuelOk(it['cars'], fuel), r['on'], reason: '${it['id']} on/off for $fuel');
-        if (where.startsWith('Camera ')) expect(capList(where.substring(7), st).any((x) => x['id'] == it['id']), true, reason: '${it['id']} in the camera pass');
+        // the mockup's Mechanicals pass holds the underbody shots; the app gives them their own section after it
+        if (where.startsWith('Camera ')) expect([where.substring(7), if (where == 'Camera Mechanicals') 'Underbody'].any((k) => capList(k, st).any((x) => x['id'] == it['id'])), true, reason: '${it['id']} in the camera pass');
       }
       for (final k in capseq.skip(1)) {
         for (final id in ckIdsOf(k, st)) {

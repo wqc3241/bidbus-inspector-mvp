@@ -1,4 +1,4 @@
-// Review: one page per section (Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals) with Next.
+// Review: one page per section (Start, Exterior, Tires & Wheels, Paint, Interior, OBDII, Mechanicals, Underbody) with Next.
 // One row per check, OK by default; a tap opens a drawer with its problems. Ported from the mockup's sumCard / viewSummary.
 import 'dart:io';
 
@@ -305,6 +305,8 @@ class ReviewScreen extends ConsumerWidget {
                 margin: const EdgeInsets.all(3),
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(color: x[0] == w ? Colors.black : alt, borderRadius: BorderRadius.circular(12)),
+                // a wheel whose tread depth is not in yet gets the red frame of a row still to answer
+                foregroundDecoration: tire(st, x[0])['tread'] == '' ? BoxDecoration(border: Border.all(color: const Color(0xFFE1255D), width: 2), borderRadius: BorderRadius.circular(12)) : null,
                 child: Column(children: [
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     if (lst(tire(st, x[0]), 'probs', 'ck_tire').length + lst(tire(st, x[0]), 'probs', 'ck_wheel').length > 0) const Icon(LucideIcons.triangleAlert, size: 13, color: amber),

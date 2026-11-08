@@ -32,17 +32,18 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 
 ## Camera
 
-- Landscape, full screen; form screens stay portrait. Top bar: section (1/5 to 5/5) and shot count.
+- Landscape, full screen; form screens stay portrait. Top bar: section (1/6 to 6/6) and shot count.
 - Three shutters on the right: Damage (amber, above), the shot (big, middle), Mod (blue, below). Damage and Mod take a tagged photo without moving the flow; off on videos and in OBDII. Zoom chips .5 / 1 / 2 and pinch where the device allows.
 - A guide outline (`guides/svg`) and the shot name over the camera; the camera moves on after each shot.
 - Skip only on optional shots; Not on this car for a missing paint panel.
 - Back goes one shot back. A taken shot can be retaken or deleted; the camera then returns to where the inspector was. Damage and Mod thumbnails can be picked and deleted.
 - Order:
   - **Exterior**: walk-around video (engine off, up to 60 s, from the left front corner, counter-clockwise); one paint meter photo per panel: left front fender, left front door, left rear door, left quarter panel, trunk or liftgate, right quarter panel, right rear door, right front door, right front fender, hood, roof; roof photo; windshield VIN; then the end-of-Exterior dialog.
-  - **Tires** LF, LR, RR, RF: whole tire, tread gauge.
+  - **Tires & Wheels** LF, LR, RR, RF: whole tire, tread gauge.
   - **Interior**: door-jamb VIN, odometer (car on, warning lights visible), all keys, dash, infotainment screen (on), front seats, rear seats, cargo.
   - **OBDII**: gas: current, past and emission code screens, other images (several, optional). EV: service-mode alerts, battery health and charging screens (optional).
-  - **Mechanicals**: engine bay (EV: frunk), engine oil on the dipstick, engine sound and exhaust videos (gas and hybrid, up to 30 s each, hidden when the engine will not start), underbody LF, LR, rear, RR, RF, front, catalytic converters (optional).
+  - **Mechanicals**: engine bay (EV: frunk), engine oil on the dipstick, engine sound and exhaust videos (gas and hybrid, up to 30 s each, hidden when the engine will not start).
+  - **Underbody**: underbody LF, LR, rear, RR, RF, front, catalytic converters (optional). A damage or mod shutter here makes a Mechanicals damage or mod.
 - A slot that takes several photos stays open: each shot adds one, Remove photo N drops the last, Done · N moves on.
 - If the camera is closed, a screen lists the sections with counts and reopens the camera where it stopped.
 - After the last shot: Damages (or Review when there are no damage photos).
@@ -50,22 +51,22 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 
 ## Damages
 
-- Every damage photo, one per screen, section by section (Exterior, Tires, Paint, Interior, Mechanicals).
+- Every damage photo, one per screen, section by section (Exterior, Tires & Wheels, Paint, Interior, Mechanicals, Underbody). Underbody holds the damages at underbody places, and unplaced ones taken or added there; placing one at an engine bay place moves it to Mechanicals, and the other way round.
 - AI first guess of place, type and severity from that section's list; confirm or change.
-- Place on a picture: Exterior is a top view of the car (each part named; side windows and rear glass are their own places) plus tiles for other lights, wipers, fuel door, other. Paint: top view of the 11 panels. Tires: the four wheels, each with Tire and Wheel. Interior: Cabin (seat plan, headliner, carpet, sunroof, other) and Features tabs. Mechanicals: Engine bay (Frunk on an EV) and Underbody tabs.
+- Place on a picture: Exterior is a top view of the car (each part named; side windows and rear glass are their own places) plus tiles for other lights, wipers, fuel door, other. Paint: top view of the 11 panels. Tires & Wheels: the four wheels, each with Tire and Wheel. Interior: Cabin (seat plan, headliner, carpet, sunroof, other) and Features tabs. Mechanicals: Engine bay (Frunk on an EV) and Underbody tabs.
 - Places and their types come from `damage_places` in the question list.
 - Type from that place's list; severity required; size 1-36 in optional. A labelled photo ticks its check (or answers sunroof or navigation); relabelling or removing takes that back.
 - Moves on when place, type and severity are picked. Swipe for next or previous. Retake and Remove on the photo. Review turns on when every photo is confirmed or labelled.
 
 ## Review
 
-- One page per section: Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals, with Next.
+- One page per section: Start, Exterior, Tires & Wheels, Paint, Interior, OBDII, Mechanicals, Underbody, with Next. Underbody has the underbody photos, damages and the Structure and frame, Rust and Battery pack (EV) checks.
 - One row per check, OK by default; tap opens a drawer with OK and its problems (one per check), plus panel, wheel or codes when needed. Problems show amber or red by level.
 - Photos, then damages, then mods, as tiles. Tap a photo to retake; tap a damage to relabel, retake or remove; Add a damage takes a photo or an upload, then the label form.
 - Section strip pinned at the top, the same look as the Damages strip (no numbers, no tick, no underline; the current section's whole cell grey): problem count, or needs something; tap to jump.
 - Exterior: the 360 view tile after Walk-around; tap opens it in a bottom sheet.
 - Paint: a top view of the car with each panel and its mils (High in red); tap a panel to correct it or mark N/A; then panel photos, paint damage tiles, the Paint and panels row. A High reading ticks Panel repainted with that panel.
-- Tires: four tabs (LF, LR, RR, RF), each with photos, damages and values in scroll pickers; the Match or Mismatch question.
+- Tires & Wheels: four wheel cards (LF, LR, RR, RF; a card has the red frame until that wheel's tread depth is in), each with photos, damages and values in scroll pickers; the Match or Mismatch question.
 - Interior: number of keys first (0 red, 1 amber), sunroof and navigation (Works, Not working, No sunroof / No navigation; required, no default).
 - OBDII: Engine codes stored asks for the codes in a second drawer step.
 - Mechanicals: road test starts as Not done.

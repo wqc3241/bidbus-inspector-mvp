@@ -105,14 +105,15 @@ const layout = {
   'Exterior': ['video_360', 'ph_ext_roof', 'ph_vin_dash', 'ph_mod_ext'],
   'Interior': ['ph_vin_door', 'ph_odo', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_int_front', 'ph_int_rear', 'ph_int_cargo', 'ph_mod_int'],
   'OBDII': ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'],
-  'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_engine', 'video_exhaust', 'ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack', 'ph_mod_mech'],
+  'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_engine', 'video_exhaust', 'ph_mod_mech'],
+  'Underbody': ['ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
 };
-const msec = {'vin_scan': 'Interior', 'ck_ids': 'Interior', 'ck_keys': 'Interior', 'ck_equip': 'Interior', 'ck_account': 'Interior', 'ck_structure': 'Mechanicals', 'ck_rust': 'Mechanicals', 'ck_pack': 'Mechanicals'};
+const msec = {'vin_scan': 'Interior', 'ck_ids': 'Interior', 'ck_keys': 'Interior', 'ck_equip': 'Interior', 'ck_account': 'Interior'};
 String secOf(J it) => msec[it['id']] ?? it['section'];
-// sections of the pass and of Review
-const capseq = ['start', 'Exterior', 'Tires', 'Paint', 'Interior', 'OBDII', 'Mechanicals'];
-const camseq = ['Exterior', 'Tires', 'Interior', 'OBDII', 'Mechanicals'];
-String stTitle(String k) => k == 'start' ? 'Start' : k;
+// sections of the pass and of Review (Underbody last, so saved page indexes and the record's photo order stay)
+const capseq = ['start', 'Exterior', 'Tires', 'Paint', 'Interior', 'OBDII', 'Mechanicals', 'Underbody'];
+const camseq = ['Exterior', 'Tires', 'Interior', 'OBDII', 'Mechanicals', 'Underbody'];
+String stTitle(String k) => const {'start': 'Start', 'Tires': 'Tires & Wheels'}[k] ?? k;
 const vmax = {'video_360': 60, 'video_engine': 30, 'video_exhaust': 30};
 const short = {
   'video_360': 'Walk-around', 'video_engine': 'Engine sound', 'video_exhaust': 'Exhaust', 'ph_under_front': 'Underbody, front', 'ph_under_rear': 'Underbody, rear', 'ph_under_cats': 'Catalytic converters',
@@ -127,10 +128,11 @@ bool isLib(String id) => id == 'paint' || byId[id]?['upload'] == true;
 const multiHint = {'ph_ev_battery': 'One photo per battery screen', 'ph_ev_charging': 'One photo per charging screen', 'ph_ev_alerts': 'One photo per alert screen'};
 
 // damage and mod shutters
-const dz = ['Exterior', 'Tires', 'Paint', 'Interior', 'Mechanicals'];
-const dzone = {'Exterior': 'Exterior', 'Tires': 'Tires', 'Interior': 'Interior', 'OBDII': 'Interior', 'Mechanicals': 'Mechanicals'};
-const modslot = {'Exterior': 'ph_mod_ext', 'Paint': 'ph_mod_ext', 'Tires': 'ph_mod_ext', 'Interior': 'ph_mod_int', 'OBDII': 'ph_mod_int', 'Mechanicals': 'ph_mod_mech'};
-const zoneTitle = {'Exterior': 'Exterior damages', 'Tires': 'Tire and wheel damages', 'Paint': 'Paint damages', 'Interior': 'Interior damages', 'Mechanicals': 'Mechanical damages'};
+// Underbody damages are Mechanicals damages (the zone that holds their places) shown on their own tab
+const dz = ['Exterior', 'Tires', 'Paint', 'Interior', 'Mechanicals', 'Underbody'];
+const dzone = {'Exterior': 'Exterior', 'Tires': 'Tires', 'Interior': 'Interior', 'OBDII': 'Interior', 'Mechanicals': 'Mechanicals', 'Underbody': 'Mechanicals'};
+const modslot = {'Exterior': 'ph_mod_ext', 'Paint': 'ph_mod_ext', 'Tires': 'ph_mod_ext', 'Interior': 'ph_mod_int', 'OBDII': 'ph_mod_int', 'Mechanicals': 'ph_mod_mech', 'Underbody': 'ph_mod_mech'};
+const zoneTitle = {'Exterior': 'Exterior damages', 'Tires': 'Tire and wheel damages', 'Paint': 'Paint damages', 'Interior': 'Interior damages', 'Mechanicals': 'Mechanical damages', 'Underbody': 'Underbody damages'};
 List<String> get dmgSev => strs(ql['damage_places']['severity']);
 const structT = 'Structure';
 const underTiles = ['Structure', 'Rust', 'Exhaust', 'Suspension', 'Driveshaft or CV', 'Brakes', 'Battery pack'];
