@@ -73,7 +73,8 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
     final dl = [for (final d in manual(st)) if (labelled(d, fuel) && dmgOwn(st, d)) dmgLine(d)];
     final vin = (vals['vin_read'] ?? '') as String, mi = (vals['odo_read'] ?? '') as String, why = sumBlock(st), ov = st['overall'] as String? ?? '';
     final typedVin = (car['vin'] ?? '') as String, typedMi = int.tryParse('${car['mileage'] ?? ''}');
-    Widget count(String n, String l) => Expanded(child: Column(children: [Text(n, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)), Text(l, style: const TextStyle(color: muted, fontSize: 12.5))]));
+    // the numbers stay on one line across, however many lines a label takes
+    Widget count(String n, String l) => Expanded(child: Column(children: [Text(n, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)), Text(l, textAlign: TextAlign.center, style: const TextStyle(color: muted, fontSize: 12.5))]));
     return Scaffold(
       appBar: PhaseHeader('Summary', 3, onBack: () => store.mut(id, (s) {
         s['phase'] = 'summary';
@@ -83,7 +84,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 18),
           decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: line))),
-          child: Row(children: [
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             count('${tot['photos']}/${tot['need']}', 'Photos'),
             count('${tot['videos']}/${tot['vneed']}', 'Videos'),
             count('${pl.length + dl.length}', 'Problems'),
@@ -273,8 +274,8 @@ class _SignScreenState extends ConsumerState<SignScreen> {
 
 // a section heading in the found-problems lists
 Widget _secHead(String k, {bool first = false}) => Padding(
-      padding: EdgeInsets.only(top: first ? 0 : 14, bottom: 6),
-      child: Text(stTitle(k).toUpperCase(), style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .7, color: muted)),
+      padding: EdgeInsets.only(top: first ? 0 : 18, bottom: 8),
+      child: Text(stTitle(k).toUpperCase(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: .6, color: Colors.black)),
     );
 
 // a problem's sub-line under its section: the place, and whether a damage photo shows it
