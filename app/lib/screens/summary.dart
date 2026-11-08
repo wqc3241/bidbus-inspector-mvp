@@ -151,7 +151,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
         ]),
         Section(children: [
           RowList([
-            RowBtn('Overall condition', ov.isEmpty ? needVal() : overallOpts.indexOf(ov) >= 3 ? alertVal(amber, ov) : setVal(ov), onTap: () async {
+            RowBtn('Overall condition', ov.isEmpty ? needVal() : overallOpts.indexOf(ov) >= 3 ? alertVal(amber, ov) : setVal(ov), need: ov.isEmpty, onTap: () async {
               final v = await showChoice(context, 'Overall condition', [for (var j = 0; j < overallOpts.length; j++) Opt(overallOpts[j], color: j == 4 ? red : j == 3 ? amber : bid)], [ov]);
               if (v != null) store.mut(id, (s) => s['overall'] = v);
             }),
