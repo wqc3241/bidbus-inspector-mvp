@@ -54,7 +54,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 - AI first guess of place, type and severity from that section's list; confirm or change.
 - Place on a picture: Exterior is a top view of the car (each part named; side windows and rear glass are their own places) plus tiles for other lights, wipers, fuel door, other. Paint: top view of the 11 panels. Tires: the four wheels, each with Tire and Wheel. Interior: Cabin (seat plan, headliner, carpet, sunroof, other) and Features tabs. Mechanicals: Engine bay (Frunk on an EV) and Underbody tabs.
 - Places and their types come from `damage_places` in the question list.
-- Type from that place's list; severity required; size 1-36 in optional. A labelled photo ticks its check (or answers sunroof or navigation); relabelling or removing takes that back.
+- Type from that place's list; severity required; size 1-36 in optional, Exterior damages only (other damages send no size). A labelled photo ticks its check (or answers sunroof or navigation); relabelling or removing takes that back.
 - Moves on when place, type and severity are picked. Swipe for next or previous. Retake and Remove on the photo. Review turns on when every photo is confirmed or labelled.
 
 ## Review
