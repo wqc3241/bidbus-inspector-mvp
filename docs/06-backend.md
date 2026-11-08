@@ -1,6 +1,6 @@
 # 06 Backend
 
-Python 3.12, FastAPI, SQLAlchemy 2 + Alembic, Postgres, Uvicorn. Code in `server/`. One process serves the API and the reports.
+Python 3.14, FastAPI, SQLAlchemy 2 + Alembic, Postgres, Uvicorn. Code in `server/`. One process serves the API and the reports.
 
 ## Layout
 

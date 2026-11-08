@@ -4,7 +4,7 @@ One new Railway project with three parts: the app service (this repo), Postgres,
 
 ## Files to add to the repo
 
-- `Dockerfile` at the root: `python:3.12-slim`, `apt-get install -y ffmpeg`, `pip install -r server/requirements.txt`, copy `server/`, `tools/`, `data/`. Start: `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT` (working dir `server/`). The Flutter app is not part of the server image.
+- `Dockerfile` at the root: `python:3.14-slim`, `apt-get install -y ffmpeg`, `pip install -r server/requirements.txt`, copy `server/`, `tools/`, `data/`. Start: `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT` (working dir `server/`). The Flutter app is not part of the server image.
 - `railway.json`:
   ```json
   { "$schema": "https://railway.com/railway.schema.json",
