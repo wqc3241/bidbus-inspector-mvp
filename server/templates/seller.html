@@ -14,7 +14,7 @@
    {%- if t.brand_size %}<small>{{ t.brand_size }}</small>{% endif %}{% for x in t.issues %}<p>{{ x }}</p>{% endfor %}</div>{% endfor %}
  </div></div>
  <div class="s-card pad"><div class="s-ch">{{ I("clip", 18) }}<b>Bidbus Inspection</b></div><dl class="insp s">{% for r in rows %}
-  <div class="ir"><dt>{{ I(r.icon, 16) }}{{ r.name }}</dt>{{ m.lines(r, False) }}{% if not r.lines %}<dd class="pos"><span>✓</span>No issues</dd>{% endif %}</div>{% endfor %}
+  <div class="ir"><dt>{{ I(r.icon, 16) }}{{ r.name }}</dt>{{ m.lines(r, False) }}{% if not r.lines %}<dd class="pos"><span>✓</span>No issues</dd>{% endif %}{{ m.reads(r) }}</div>{% endfor %}
  </dl></div>
  <div class="s-card pad why">
   <div class="s-row">{{ I("dollar", 20, "c-green") }}<b>More accurate price</b></div>

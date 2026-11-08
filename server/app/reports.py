@@ -11,7 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import config, spin, storage
-from .cr import CAT
+from .cr import CAT, PAINT_SHOWN
 from .email import car_line, inspected_when
 from .db import Inspection, get_session
 
@@ -79,6 +79,21 @@ CHECK_ROW = {c["id"]: c["cr_row"] for c in CAT["checks"]} | {"ck_engine": "Engin
 FUEL_WORD = {"Gas or diesel": "Gas", "Electric (EV)": "Electric"}
 
 
+def mils_text(m: float) -> str:
+    """a paint reading as the app shows it: above 10 is 10+ (the app's slider tops out there)"""
+    return "10+" if m > 10 else f"{m:.1f}"
+
+
+def paint_reads(rec: dict) -> list[dict]:
+    """the highest and the lowest panel reading, leaving out panels not on the car (first panel wins a tie)"""
+    got = [p for p in rec.get("paint", []) if not p.get("not_on_car") and p.get("mils") is not None]
+    if not got:
+        return []
+    hi, lo = max(got, key=lambda p: p["mils"]), min(got, key=lambda p: p["mils"])
+    return [{"icon": icon, "text": f"{word} reading {mils_text(p['mils'])} mils", "sub": PAINT_SHOWN.get(p["panel"], p["panel"])}
+            for icon, word, p in (("↑", "Highest", hi), ("↓", "Lowest", lo))]
+
+
 def view(insp: Inspection) -> dict:
     """everything both report templates show, from the stored CR (condition_report) and the record"""
     token, rec, car = insp.report_token, insp.record, insp.car or {}
@@ -120,7 +135,8 @@ def view(insp: Inspection) -> dict:
         checks = len({c["id"] for c in rec["checks"] if CHECK_ROW.get(c["id"]) == r["row"]})
         vids = [{"lbl": VIDEOS[x["question_id"]][1], "src": url(x["file"])} for x in rec["videos"]
                 if r["row"] == "Engine sound" and x["file"] in r["videos"]]
-        rows.append({"name": r["row"], "icon": ROW_ICON[r["row"]], "lines": lines, "checks": checks, "videos": vids})
+        rows.append({"name": r["row"], "icon": ROW_ICON[r["row"]], "lines": lines, "checks": checks, "videos": vids,
+                     "reads": paint_reads(rec) if r["row"] == "Paint" else []})
     engine = any(r["name"] == "Engine sound" for r in rows)
     other_videos = [{"lbl": VIDEOS.get(x["question_id"], ("", x["question_id"]))[1], "src": url(x["file"])} for x in rec["videos"]
                     if not (engine and x["question_id"] in ("video_engine", "video_exhaust"))]

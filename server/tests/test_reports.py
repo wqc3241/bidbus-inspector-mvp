@@ -139,3 +139,23 @@ def test_a_trim_that_starts_with_the_model_is_not_repeated():
     assert car_line({"year": 2020, "make": "Lexus", "model": "LC", "trim": "LC 500h"}) == "2020 Lexus LC 500h"
     assert car_line({"year": 2020, "make": "BMW", "model": "X3", "trim": "xDrive30i"}) == "2020 BMW X3 xDrive30i"
     assert car_line({"year": 2021, "make": "Toyota", "model": "RAV4", "trim": "RAV4 Prime XSE"}) == "2021 Toyota RAV4 Prime XSE"
+
+
+@pytest.mark.parametrize("name,hi,lo", [("bmw-x3", "Left rear door", "Left front fender"), ("tesla-model-y", "Right rear door", "Left front fender")])
+def test_paint_highest_and_lowest(client, name, hi, lo):
+    """the Paint block shows the highest and lowest panel reading; above 10 reads 10+ (both samples have one)"""
+    token, _ = make(name)
+    for page in ("seller", "dealer"):
+        html = client.get(f"/r/{token}/{page}").text
+        assert f"Highest reading 10+ mils<small>{hi}</small>" in html, page
+        assert f"Lowest reading 4.3 mils<small>{lo}</small>" in html, page
+
+
+def test_paint_reads_rules():
+    from app.reports import mils_text, paint_reads
+    assert [mils_text(m) for m in (3.0, 10.0, 10.1, 11.8)] == ["3.0", "10.0", "10+", "10+"]
+    rec = {"paint": [{"panel": "Hood or frunk lid", "mils": 3.9, "not_on_car": False}, {"panel": "Roof", "mils": None, "not_on_car": True},
+                     {"panel": "Left front door", "mils": 2.0, "not_on_car": True}, {"panel": "Trunk or liftgate", "mils": 6.2, "not_on_car": False}]}
+    assert paint_reads(rec) == [{"icon": "↑", "text": "Highest reading 6.2 mils", "sub": "Trunk or liftgate"},
+                                {"icon": "↓", "text": "Lowest reading 3.9 mils", "sub": "Hood"}]
+    assert paint_reads({"paint": [{"panel": "Roof", "mils": None, "not_on_car": True}]}) == []
