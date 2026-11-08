@@ -88,7 +88,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
             count('${tot['photos']}/${tot['need']}', 'Photos'),
             count('${tot['videos']}/${tot['vneed']}', 'Videos'),
             count('${pl.length + dl.length}', 'Problems'),
-            count('${manual(st).length}', 'Damage photos'),
+            count('${manual(st).length}', 'Damages'), // damage photos; one word like the others, so it stays on one line
           ]),
         ),
         if (un.isNotEmpty)

@@ -1,4 +1,4 @@
-// Summary: the four counts sit on one line even when a label wraps; section headings are black.
+// Summary: the four numbers sit on one line whatever the labels do; the last label is Damages; section headings are black.
 import 'dart:convert';
 import 'dart:io';
 
@@ -28,7 +28,7 @@ void main() {
   });
 
   testWidgets('counts line up; headings are black', (t) async {
-    // a narrow phone: "Damage photos" takes two lines
+    // a narrow phone
     t.view.physicalSize = const Size(1125, 2436);
     t.view.devicePixelRatio = 3;
     addTearDown(t.view.reset);
@@ -42,7 +42,8 @@ void main() {
     final nums = ['${tot['photos']}/${tot['need']}', '${tot['videos']}/${tot['vneed']}', '${pl.length + dl.length}', '${manual(s).length}'];
     final tops = nums.map((n) => t.getTopLeft(find.descendant(of: find.byType(ListView), matching: find.text(n)).first).dy).toSet();
     Finder body(String x) => find.descendant(of: find.byType(ListView), matching: find.text(x)).first; // not the tab bar's Photos
-    expect(t.getSize(body('Damage photos')).height > t.getSize(body('Photos')).height, true, reason: 'the label should wrap here');
+    expect(find.text('Damage photos'), findsNothing);
+    expect(body('Damages'), findsOneWidget); // one word, like Photos, Videos and Problems
     expect(tops.length, 1, reason: 'numbers at different heights: $tops');
     final head = t.widget<Text>(find.text(stTitle(findingsBySec(s).first.$1).toUpperCase()));
     expect(head.style?.color, Colors.black);

@@ -74,7 +74,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 
 ## Summary
 
-- Counts of photos, videos, problems and damage photos; every problem with its level and every damage, listed section by section (in Review order, each under its section heading).
+- Counts: Photos, Videos, Problems and Damages (damage photos); every problem with its level and every damage, listed section by section (in Review order, each under its section heading).
 - VIN and mileage read from the photos, editable. Chips: door-jamb match, typed VIN match, check digit, typed mileage. Confirm needs a 17-character VIN that passes the check digit and a mileage; any edit clears the confirm.
 - Overall condition (Like new, Pretty great, Just okay, Kind of rough, Major issues), required. Inspector note, required.
 - Show the seller: off, with the reason, until every section is reviewed, every shot is in, every damage photo is labelled and every required answer is in. Unreviewed sections show as buttons.
