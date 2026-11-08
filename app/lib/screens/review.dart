@@ -93,29 +93,15 @@ class ReviewScreen extends ConsumerWidget {
         }
       })),
       body: Column(children: [
-        SizedBox(
-          height: 52,
-          child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 8), children: [
-            for (var j = 0; j < capseq.length; j++)
-              () {
-                final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
-                final tab = InkWell(
-                  onTap: () => store.mut(id, (s) => s['sp'] = j),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: j == i ? Colors.black : Colors.transparent, width: 2))),
-                    child: Row(children: [
-                      Text('${j + 1} ', style: const TextStyle(color: muted)),
-                      Text(stTitle(kk), style: TextStyle(fontSize: 16, fontWeight: j == i ? FontWeight.w700 : FontWeight.w500, color: j == i ? Colors.black : muted)),
-                      if (done && b.isNotEmpty) const Padding(padding: EdgeInsets.only(left: 4), child: CircleAvatar(radius: 3, backgroundColor: amber)),
-                      if (done && b.isEmpty) Padding(padding: const EdgeInsets.only(left: 4), child: fi.probs > 0 ? Text('${fi.probs}', style: const TextStyle(color: red, fontWeight: FontWeight.w700)) : const Icon(LucideIcons.check, size: 13, color: bid)),
-                    ]),
-                  ),
-                );
-                return j == i ? ShowMe(tab) : tab;
-              }(),
-          ]),
-        ),
+        TabStrip([
+          for (var j = 0; j < capseq.length; j++)
+            () {
+              final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
+              return stripTab(stTitle(kk), j == i, () => store.mut(id, (s) => s['sp'] = j),
+                  pre: '${j + 1}',
+                  end: !done ? null : b.isNotEmpty ? const CircleAvatar(radius: 3, backgroundColor: amber) : fi.probs > 0 ? Text('${fi.probs}', style: const TextStyle(color: red, fontWeight: FontWeight.w700)) : null);
+            }(),
+        ]),
         const Divider(height: 1),
         // each page opens at its top
         Expanded(child: ListView(key: ValueKey(k), padding: const EdgeInsets.fromLTRB(16, 16, 16, 24), children: [_card(context, st, k, f)])),

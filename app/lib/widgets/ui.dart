@@ -404,6 +404,37 @@ class FitLabel extends StatelessWidget {
       });
 }
 
+// the section strip on Damages and Review: one look; the current tab sits on grey
+class TabStrip extends StatelessWidget {
+  final List<Widget> tabs;
+  const TabStrip(this.tabs, {super.key});
+  @override
+  Widget build(BuildContext context) => SizedBox(height: 52, child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.all(8), children: tabs));
+}
+
+Widget stripTab(String label, bool on, VoidCallback tap, {String? pre, Color? color, Widget? end}) {
+  final t = Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 2),
+    child: Material(
+      color: on ? line : Colors.transparent,
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: tap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            if (pre != null) Text('$pre ', style: const TextStyle(fontSize: 15, color: muted)),
+            Text(label, style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: color ?? (on ? Colors.black : muted))),
+            if (end != null) Padding(padding: const EdgeInsets.only(left: 4), child: end),
+          ]),
+        ),
+      ),
+    ),
+  );
+  return on ? ShowMe(t) : t;
+}
+
 // scrolls its child into view when it first shows: the current tab of a strip
 class ShowMe extends StatefulWidget {
   final Widget child;

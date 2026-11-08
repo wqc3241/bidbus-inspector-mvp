@@ -371,22 +371,14 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     return Scaffold(
       appBar: PhaseHeader('Damages', 1, onBack: () => store.mut(widget.id, (s) => s['phase'] = 'capture')),
       body: Column(children: [
-        SizedBox(
-          height: 48,
-          child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 8), children: [
-            for (final zz in dz)
-              if (zoneDamages(st, zz).isNotEmpty)
-                () {
-                  final l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length, on = zz == z;
-                  final b = TextButton.icon(
-                    onPressed: () => _go(l.first.$2),
-                    icon: done == l.length ? const Icon(LucideIcons.check, size: 14) : const SizedBox(),
-                    label: Text('$zz $done/${l.length}', style: TextStyle(fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: done == l.length ? bid : Colors.black, decoration: on ? TextDecoration.underline : null)),
-                  );
-                  return on ? ShowMe(b) : b;
-                }(),
-          ]),
-        ),
+        TabStrip([
+          for (final zz in dz)
+            if (zoneDamages(st, zz).isNotEmpty)
+              () {
+                final l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length;
+                return stripTab('$zz $done/${l.length}', zz == z, () => _go(l.first.$2), color: done == l.length ? bid : null);
+              }(),
+        ]),
         const Divider(height: 1),
         Expanded(
           // a finger on the page stops a slide; where the page comes to rest is the photo shown

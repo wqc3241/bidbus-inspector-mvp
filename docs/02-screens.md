@@ -26,7 +26,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 
 ## Check ID
 
-- License and registration cards: Take photo (or pick from library). Private.
+- License and registration cards: Take photo, camera only (no pick from library). Private.
 - Owner question (`id_owner`): Yes; Family, with proof (opens a photo for `ph_family`); No ends the visit (status Visit ended, end time and GPS recorded).
 - Start inspection: off, with the reason, until both photos are in and the answer is Yes or Family with proof. Records start time and GPS, opens the camera.
 
@@ -62,7 +62,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 - One page per section: Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals, with Next.
 - One row per check, OK by default; tap opens a drawer with OK and its problems (one per check), plus panel, wheel or codes when needed. Problems show amber or red by level.
 - Photos, then damages, then mods, as tiles. Tap a photo to retake; tap a damage to relabel, retake or remove; Add a damage takes a photo or an upload, then the label form.
-- Section strip pinned at the top: done, problem count, or needs something; tap to jump.
+- Section strip pinned at the top, the same look as the Damages strip (no tick, no underline; the current section on grey): problem count, or needs something; tap to jump.
 - Exterior: the 360 view tile after Walk-around; tap opens it in a bottom sheet.
 - Paint: a top view of the car with each panel and its mils (High in red); tap a panel to correct it or mark N/A; then panel photos, paint damage tiles, the Paint and panels row. A High reading ticks Panel repainted with that panel.
 - Tires: four tabs (LF, LR, RR, RF), each with photos, damages and values in scroll pickers; the Match or Mismatch question.
