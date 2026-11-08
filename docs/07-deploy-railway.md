@@ -4,7 +4,7 @@ One new Railway project with three parts: the app service (this repo), Postgres,
 
 ## Files to add to the repo
 
-- `Dockerfile` at the root: `python:3.12-slim`, `apt-get install -y ffmpeg`, `pip install -r server/requirements.txt`, copy `server/`, `tools/`, `data/`. Start: `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT` (working dir `server/`). The Flutter app is not part of the server image.
+- `Dockerfile` at the root: `python:3.14-slim`, `apt-get install -y ffmpeg`, `pip install -r server/requirements.txt`, copy `server/`, `tools/`, `data/`. Start: `alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT` (working dir `server/`). The Flutter app is not part of the server image.
 - `railway.json`:
   ```json
   { "$schema": "https://railway.com/railway.schema.json",
@@ -33,6 +33,8 @@ CLI alternative: `npm i -g @railway/cli`, `railway login`, `railway init`, `rail
 | `APP_PASSCODE` | any long random string; typed once in the app Settings together with the server URL |
 | `ANTHROPIC_API_KEY` | your Anthropic key |
 | `AI_MODEL` | `claude-sonnet-5-5` |
+| `OPENAI_API_KEY` | your OpenAI key (when set, AI readings use OpenAI) |
+| `OPENAI_MODEL` | `gpt-5.5` |
 | `RESEND_API_KEY` | your Resend key |
 | `EMAIL_FROM` | `Bidbus Field <onboarding@resend.dev>` until you verify a domain |
 
@@ -45,6 +47,6 @@ Resend's test sender `onboarding@resend.dev` only delivers to the email address 
 ## Local run
 
 ```
-docker compose up        # Postgres + the app on http://localhost:8000, reading .env
+docker compose up        # Postgres + the app on http://localhost:8000, reading .env (set POSTGRES_PASSWORD there)
 ```
 Add a `docker-compose.yml` with `postgres:16` and the app built from the Dockerfile, media in a named volume.

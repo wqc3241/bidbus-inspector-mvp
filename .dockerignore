@@ -1,0 +1,13 @@
+.git
+.venv
+.env
+app
+reference
+guides
+keys
+keys.html
+verify
+samples
+media
+**/__pycache__
+server/tests

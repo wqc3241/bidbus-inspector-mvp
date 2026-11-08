@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ title }} · Condition report{% endblock %}
+{% block page %}seller{% endblock %}
+{% block body %}
+<header class="sh2"><span class="s-logo">bidbus</span></header>
+<main class="s-page">
+ <span class="s-crumb">Dashboard <b>› Condition report</b></span>
+ <div class="s-card pad"><div class="s-car">{{ title }}</div><div class="s-meta">{{ I("gauge", 14) }}{{ miles }} mi&nbsp; {{ I("calendar", 14) }}{{ date }}</div></div>
+ <div class="s-card">{{ m.gallery("s") }}</div>
+ <div class="s-card pad">{{ m.highlights("s") }}</div>
+ <div class="s-card pad"><div class="s-ch">{{ I("tire", 18) }}</div><div class="tcells">{% for t in tires %}
+  <div class="tc {{ t.cls }}"><small>{{ t.name }}</small><b>{{ t.tread }}/32<span>{{ t.word }}</span></b><span class="bar"><i style="width:{{ t.bar }}%"></i></span>
+   {%- if t.brand_size %}<small>{{ t.brand_size }}</small>{% endif %}{% for x in t.issues %}<p>{{ x }}</p>{% endfor %}</div>{% endfor %}
+ </div></div>
+ <div class="s-card pad"><div class="s-ch">{{ I("clip", 18) }}<b>Bidbus Inspection</b></div><dl class="insp s">{% for r in rows %}
+  <div class="ir"><dt>{{ I(r.icon, 16) }}{{ r.name }}</dt>{{ m.lines(r, False) }}{% if not r.lines %}<dd class="pos"><span>✓</span>No issues</dd>{% endif %}</div>{% endfor %}
+ </dl></div>
+ <div class="s-card pad why">
+  <div class="s-row">{{ I("dollar", 20, "c-green") }}<b>More accurate price</b></div>
+  <div class="s-row">{{ I("clock", 20, "c-green") }}<b>Same-day payment</b></div>
+  <div class="s-row">{{ I("swap", 20, "c-green") }}<b>Less back-and-forth with dealers</b></div>
+ </div>
+</main>
+{% endblock %}

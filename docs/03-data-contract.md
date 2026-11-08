@@ -6,7 +6,7 @@ The app sends one **inspection record** per car. Its shape is exactly `samples/i
 
 | Part | Holds |
 |---|---|
-| `source` | `system: "bidbus_field"`, `listing_id` (= the inspection id in this build), `inspector`, `started {at, loc}`, `ended {at, loc}` |
+| `source` | `system: "bidbus_field"`, `listing_id` (= the inspection id in this build), `inspector`, `started {at, loc}`, `ended {at, loc}`; `at` is the phone's local time with its UTC offset, e.g. `2026-11-07T21:28:12-08:00`, `loc` is `lat, lng` |
 | `vehicle` | `vin_listing` (VIN typed at New inspection, or null), `vin_read`, `vin_door_jamb_read`, `mileage_listing` (typed mileage, or null), `mileage_read`, `vin_mileage_confirmed`, `keys_count`, `keys_count_read_from_photo`, `fuel`, `ev_battery_health_pct` |
 | `owner_check` | Yes, Family, with proof, or No |
 | `documents` | `license`, `registration`, `family_proof`: `"taken on site"` or null. Private |
@@ -19,7 +19,7 @@ The app sends one **inspection record** per car. Its shape is exactly `samples/i
 | `damages[]` | `n`, `section`, `place`, `type`, `severity`, `size_in`, `source`, `taken_in`, `file`, `upright_turn_deg`, `check_id?`, `check_option?`, `ai_first_guess {place, type, severity}`, `confirmed` |
 | `features` | `sunroof`, `navigation` |
 | `overall_condition`, `inspector_note` | Summary answers |
-| `signature` | `seller_name`, `agreed`, `signed` (the image is uploaded as file `signature.png`) |
+| `signature` | `seller_name`, `agreed`, `signed` (the image is uploaded as file `signature.png`; when and where the seller signed is `source.ended`, taken as the seller taps Sign, and the server keeps it as `signed_at`) |
 
 Home build additions, outside the record (sent in the create call, not inside the record, so the CR generator is unchanged): `inspection_id` (UUID made on the phone), `report_email`, `car {year, make, model, trim, owner_name}`.
 

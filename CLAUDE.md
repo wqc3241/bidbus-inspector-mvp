@@ -26,7 +26,7 @@ Everything else follows DEV-190 exactly: question list, one camera pass, Damage 
   - Offline: SQLite via `drift` for state; photos and videos as files in the app documents folder; an upload queue that survives app restarts (`background_downloader` for uploads).
   - State: `flutter_riverpod`. Routing: `go_router`.
   - The 360 view frames are cut on the phone from the walk-around video.
-- **server/**: Python 3.12, FastAPI, SQLAlchemy, Postgres. Media files on a Railway Volume. Reuses `tools/cr_from_inspection.py` as a module. API at `/api`, reports at `/r/...`.
+- **server/**: Python 3.14, FastAPI, SQLAlchemy, Postgres. Media files on a Railway Volume. Reuses `tools/cr_from_inspection.py` as a module. API at `/api`, reports at `/r/...`.
 - **AI**: Anthropic API vision (Claude) for readings and the damage first guess (`docs/04-ai-reading.md`).
 - **VIN decode**: NHTSA vPIC (free, no key).
 - **Email**: Resend.

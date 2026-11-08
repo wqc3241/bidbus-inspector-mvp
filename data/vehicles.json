@@ -1,0 +1,7724 @@
+{
+ "years": [
+  2013,
+  2027
+ ],
+ "source": "US-market models and trims by model year, researched from vPIC, manufacturer and public sources, checked by an independent pass (2026-11)",
+ "makes": [
+  {
+   "make": "Honda",
+   "models": [
+    {
+     "model": "Accord",
+     "trims": [
+      {
+       "trim": "LX Sedan",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Sport Sedan",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Sport SE Sedan",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "EX Sedan",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "EX-L Sedan",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "EX-L V6 Sedan",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Touring Sedan",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "LX-S Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "EX Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "EX-L Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "EX-L V6 Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Touring Coupe",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "LX",
+       "from": 2018,
+       "to": 2027
+      },
+      {
+       "trim": "Sport",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "Sport SE",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "EX",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "EX",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "EX-L",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "EX-L Navi",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "Touring",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "Sport 2.0T",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "EX-L 2.0T",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "EX-L Navi 2.0T",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "Touring 2.0T",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "SE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Sport Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "EX-L Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Sport-L Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Touring Hybrid",
+       "from": 2023,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Accord Hybrid",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "Base",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "EX",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "Sport",
+       "from": 2022,
+       "to": 2022
+      },
+      {
+       "trim": "EX-L",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "EX-L",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "EX-L Navi",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "Touring",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "Touring",
+       "from": 2017,
+       "to": 2022
+      }
+     ]
+    },
+    {
+     "model": "Accord Plug-In Hybrid",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2014,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "Civic",
+     "trims": [
+      {
+       "trim": "LX Sedan",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "HF Sedan",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SE Sedan",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "EX Sedan",
+       "from": 2013,
+       "to": 2024
+      },
+      {
+       "trim": "EX-T Sedan",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "EX-L Sedan",
+       "from": 2013,
+       "to": 2021
+      },
+      {
+       "trim": "Touring Sedan",
+       "from": 2016,
+       "to": 2024
+      },
+      {
+       "trim": "Sport Sedan",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "Sport-L Sedan",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "Sport Hybrid Sedan",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Sport Touring Hybrid Sedan",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Si Sedan",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Si Sedan",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "Si Sedan",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "Natural Gas Sedan",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "LX Coupe",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "LX-P Coupe",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "EX Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "EX Coupe",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "EX-T Coupe",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "EX-L Coupe",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Sport Coupe",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "Touring Coupe",
+       "from": 2016,
+       "to": 2020
+      },
+      {
+       "trim": "Si Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Si Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "LX Hatchback",
+       "from": 2017,
+       "to": 2024
+      },
+      {
+       "trim": "Sport Hatchback",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "EX Hatchback",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "EX-L Navi Hatchback",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "EX-L Hatchback",
+       "from": 2022,
+       "to": 2024
+      },
+      {
+       "trim": "Sport Touring Hatchback",
+       "from": 2017,
+       "to": 2024
+      },
+      {
+       "trim": "Sport-L Hatchback",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "Sport Hybrid Hatchback",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Sport Touring Hybrid Hatchback",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Civic Hybrid",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2015
+      }
+     ]
+    },
+    {
+     "model": "Civic Type R",
+     "trims": [
+      {
+       "trim": "Touring",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "Limited Edition",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "Base",
+       "from": 2023,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Clarity Electric",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2017,
+       "to": 2019
+      }
+     ]
+    },
+    {
+     "model": "Clarity Fuel Cell",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2017,
+       "to": 2021
+      }
+     ]
+    },
+    {
+     "model": "Clarity Plug-In Hybrid",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "Touring",
+       "from": 2018,
+       "to": 2021
+      }
+     ]
+    },
+    {
+     "model": "CR-V",
+     "trims": [
+      {
+       "trim": "LX",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SE",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "EX",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "EX-L",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Touring",
+       "from": 2015,
+       "to": 2022
+      },
+      {
+       "trim": "Special Edition",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "Sport Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Sport-L Hybrid",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Sport Touring Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "TrailSport Hybrid",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "CR-V e:FCEV",
+     "trims": [
+      {
+       "trim": "Touring",
+       "from": 2025,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "CR-V Hybrid",
+     "trims": [
+      {
+       "trim": "LX",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "EX",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "EX-L",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "Touring",
+       "from": 2020,
+       "to": 2022
+      }
+     ]
+    },
+    {
+     "model": "CR-Z",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "LX",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "EX",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "EX-L",
+       "from": 2016,
+       "to": 2016
+      }
+     ]
+    },
+    {
+     "model": "Crosstour",
+     "trims": [
+      {
+       "trim": "EX",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "EX V6",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "EX-L",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "EX-L V6",
+       "from": 2013,
+       "to": 2015
+      }
+     ]
+    },
+    {
+     "model": "FCX Clarity",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "Fit",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "Sport",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "LX",
+       "from": 2015,
+       "to": 2020
+      },
+      {
+       "trim": "Sport",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "EX",
+       "from": 2015,
+       "to": 2020
+      },
+      {
+       "trim": "EX-L",
+       "from": 2015,
+       "to": 2020
+      }
+     ]
+    },
+    {
+     "model": "Fit EV",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "HR-V",
+     "trims": [
+      {
+       "trim": "LX",
+       "from": 2016,
+       "to": 2027
+      },
+      {
+       "trim": "Sport",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "EX",
+       "from": 2016,
+       "to": 2022
+      },
+      {
+       "trim": "EX-L Navi",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "EX-L",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "Touring",
+       "from": 2019,
+       "to": 2021
+      }
+     ]
+    },
+    {
+     "model": "Insight",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "LX",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "EX",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "LX",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "EX",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "Touring",
+       "from": 2019,
+       "to": 2022
+      }
+     ]
+    },
+    {
+     "model": "Odyssey",
+     "trims": [
+      {
+       "trim": "LX",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "EX",
+       "from": 2013,
+       "to": 2024
+      },
+      {
+       "trim": "SE",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "EX-L",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Sport",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "Sport-L",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Touring",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Touring Elite",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Elite",
+       "from": 2018,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Passport",
+     "trims": [
+      {
+       "trim": "Sport",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "EX-L",
+       "from": 2019,
+       "to": 2025
+      },
+      {
+       "trim": "Touring",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "Elite",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "TrailSport",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "Black Edition",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "RTL",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "TrailSport Elite",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Pilot",
+     "trims": [
+      {
+       "trim": "LX",
+       "from": 2013,
+       "to": 2021
+      },
+      {
+       "trim": "LX",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "EX",
+       "from": 2013,
+       "to": 2021
+      },
+      {
+       "trim": "SE",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "EX-L",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Special Edition",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "Sport",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "TrailSport",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "Touring",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Touring S",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Elite",
+       "from": 2016,
+       "to": 2027
+      },
+      {
+       "trim": "Black Edition",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "Black Edition",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Prelude",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Prologue",
+     "trims": [
+      {
+       "trim": "EX",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Touring",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Elite",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Ridgeline",
+     "trims": [
+      {
+       "trim": "RT",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "RT",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Sport",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "Sport",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "Sport+",
+       "from": 2025,
+       "to": 2025
+      },
+      {
+       "trim": "RTS",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "RTS",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "RTL",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "RTL",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "RTL+",
+       "from": 2025,
+       "to": 2025
+      },
+      {
+       "trim": "SE",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "RTL-T",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "RTL-E",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "TrailSport",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "TrailSport+",
+       "from": 2025,
+       "to": 2025
+      },
+      {
+       "trim": "Black Edition",
+       "from": 2017,
+       "to": 2027
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "make": "Toyota",
+   "models": [
+    {
+     "model": "4Runner",
+     "trims": [
+      {
+       "trim": "SR5",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Trail",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SR5 Premium",
+       "from": 2014,
+       "to": 2024
+      },
+      {
+       "trim": "Trail Premium",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "TRD Pro",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Off-Road",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Off-Road Premium",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "Venture",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "Trail Special Edition",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "TRD Sport",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "40th Anniversary Special Edition",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "TRD Sport Premium",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Trailhunter",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "86",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "860 Special Edition",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "GT",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "GT Black",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "TRD Special Edition",
+       "from": 2019,
+       "to": 2019
+      },
+      {
+       "trim": "Hakone Edition",
+       "from": 2020,
+       "to": 2020
+      }
+     ]
+    },
+    {
+     "model": "Avalon",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "XLE Premium",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "XLE Touring",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "XLE Touring Sport Edition",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "XLE Plus",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "Touring",
+       "from": 2016,
+       "to": 2022
+      },
+      {
+       "trim": "XSE",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "TRD",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "XSE Nightshade",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "XLE Premium Hybrid",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "XLE Touring Hybrid",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Limited Hybrid",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "XLE Plus Hybrid",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "XLE Hybrid",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "XSE Hybrid",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "XSE Nightshade Hybrid",
+       "from": 2022,
+       "to": 2022
+      }
+     ]
+    },
+    {
+     "model": "bZ",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "XLE Plus",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "bZ Woodland",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Premium",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "bZ4X",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "Limited",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2025,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "C-HR",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "XLE Premium",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "LE",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "Limited",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "SE",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "XSE",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Camry",
+     "trims": [
+      {
+       "trim": "L",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "L",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "LE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "XLE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SE V6",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "XLE V6",
+       "from": 2013,
+       "to": 2024
+      },
+      {
+       "trim": "SE Sport",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "XSE",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "XSE V6",
+       "from": 2015,
+       "to": 2024
+      },
+      {
+       "trim": "SE Special Edition",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "SE Nightshade",
+       "from": 2019,
+       "to": 2024
+      },
+      {
+       "trim": "TRD",
+       "from": 2020,
+       "to": 2024
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "LE Hybrid",
+       "from": 2013,
+       "to": 2024
+      },
+      {
+       "trim": "XLE Hybrid",
+       "from": 2013,
+       "to": 2024
+      },
+      {
+       "trim": "SE Limited Edition Hybrid",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "SE Hybrid",
+       "from": 2015,
+       "to": 2024
+      },
+      {
+       "trim": "XSE Hybrid",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "SE Nightshade Hybrid",
+       "from": 2022,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Corolla",
+     "trims": [
+      {
+       "trim": "L",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "LE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "S",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "LE Special Edition",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S Special Edition",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S Special Edition",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "LE Plus",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "LE Premium",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "LE Eco",
+       "from": 2014,
+       "to": 2019
+      },
+      {
+       "trim": "LE Eco Plus",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "LE Eco Premium",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "S Plus",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "S Premium",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "SE",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "XLE",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "XSE",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "50th Anniversary Special Edition",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "SE Apex Edition",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "XSE Apex Edition",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "FX Edition",
+       "from": 2025,
+       "to": 2025
+      },
+      {
+       "trim": "LE Hybrid",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "SE Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "XLE Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "SE Infrared Hybrid",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "Nightshade Hybrid",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "60th Anniversary Special Edition Hybrid",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Corolla Cross",
+     "trims": [
+      {
+       "trim": "L",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "LE",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "XLE",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "S Hybrid",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "SE Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "XSE Hybrid",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade Hybrid",
+       "from": 2024,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "Corolla Hatchback",
+     "trims": [
+      {
+       "trim": "SE",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "XSE",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "Special Edition",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "FX Edition",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "Corolla iM",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2017,
+       "to": 2018
+      }
+     ]
+    },
+    {
+     "model": "Crown",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Crown Signia",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "FJ Cruiser",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "GR Corolla",
+     "trims": [
+      {
+       "trim": "Core",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "Circuit Edition",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "MORIZO Edition",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "Premium",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "Premium Plus",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "GRMN",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "GR Supra",
+     "trims": [
+      {
+       "trim": "Launch Edition",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "3.0",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "3.0 Premium",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "2.0",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "A91 Edition",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "A91-CF Edition",
+       "from": 2022,
+       "to": 2022
+      },
+      {
+       "trim": "A91-MT Edition",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "45th Anniversary Edition",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "MkV Final Edition",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "GR86",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "Premium",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "Special Edition",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "Trueno Edition",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "Hakone Edition",
+       "from": 2025,
+       "to": 2025
+      },
+      {
+       "trim": "Yuzu Edition",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "Grand Highlander",
+     "trims": [
+      {
+       "trim": "XLE",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "LE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "XLE Hybrid",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Limited Hybrid",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "LE Hybrid",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade Hybrid",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "Woodland Edition Hybrid",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "Limited Hybrid MAX",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "Platinum Hybrid MAX",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Highlander",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "Plus",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "SE",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "SE",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2019,
+       "to": 2019
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2026
+      },
+      {
+       "trim": "LE",
+       "from": 2014,
+       "to": 2025
+      },
+      {
+       "trim": "LE Plus",
+       "from": 2014,
+       "to": 2019
+      },
+      {
+       "trim": "XLE",
+       "from": 2014,
+       "to": 2026
+      },
+      {
+       "trim": "Limited Platinum",
+       "from": 2014,
+       "to": 2019
+      },
+      {
+       "trim": "L",
+       "from": 2020,
+       "to": 2023
+      },
+      {
+       "trim": "Platinum",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "XSE",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "Base Hybrid",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "Limited Hybrid",
+       "from": 2013,
+       "to": 2026
+      },
+      {
+       "trim": "Limited Platinum Hybrid",
+       "from": 2014,
+       "to": 2019
+      },
+      {
+       "trim": "LE Hybrid",
+       "from": 2017,
+       "to": 2024
+      },
+      {
+       "trim": "XLE Hybrid",
+       "from": 2017,
+       "to": 2026
+      },
+      {
+       "trim": "Platinum Hybrid",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "Bronze Edition Hybrid",
+       "from": 2022,
+       "to": 2023
+      },
+      {
+       "trim": "Nightshade Hybrid",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "25th Edition Hybrid",
+       "from": 2025,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "Land Cruiser",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2021
+      },
+      {
+       "trim": "Heritage Edition",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "1958",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Land Cruiser",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "First Edition",
+       "from": 2024,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Matrix",
+     "trims": [
+      {
+       "trim": "L",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S",
+       "from": 2013,
+       "to": 2013
+      }
+     ]
+    },
+    {
+     "model": "Mirai",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2016,
+       "to": 2020
+      },
+      {
+       "trim": "XLE",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2021,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Prius",
+     "trims": [
+      {
+       "trim": "One",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "One",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "Two",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Three",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Four",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Five",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Persona Series Special Edition",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "Two Eco",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "Three Touring",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "Four Touring",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "L Eco",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "LE",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "LE AWD-e",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "XLE",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "XLE AWD-e",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "Limited",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "2020 Edition",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2022,
+       "to": 2022
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Prius c",
+     "trims": [
+      {
+       "trim": "One",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Two",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Three",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Four",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "L",
+       "from": 2019,
+       "to": 2019
+      },
+      {
+       "trim": "LE",
+       "from": 2019,
+       "to": 2019
+      }
+     ]
+    },
+    {
+     "model": "Prius Plug-in Hybrid",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Advanced",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "XSE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "XSE Premium",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Prius Prime",
+     "trims": [
+      {
+       "trim": "Plus",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Premium",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Advanced",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "LE",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "XLE",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "Limited",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "SE",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "XSE",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "XSE Premium",
+       "from": 2023,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Prius v",
+     "trims": [
+      {
+       "trim": "Two",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Three",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Four",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "Five",
+       "from": 2013,
+       "to": 2017
+      }
+     ]
+    },
+    {
+     "model": "RAV4",
+     "trims": [
+      {
+       "trim": "LE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "XLE",
+       "from": 2013,
+       "to": 2025
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SE",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "SE",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "Adventure",
+       "from": 2018,
+       "to": 2024
+      },
+      {
+       "trim": "XLE Premium",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Off-Road",
+       "from": 2020,
+       "to": 2024
+      },
+      {
+       "trim": "XSE",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Woodland",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "XLE Hybrid",
+       "from": 2016,
+       "to": 2025
+      },
+      {
+       "trim": "Limited Hybrid",
+       "from": 2016,
+       "to": 2025
+      },
+      {
+       "trim": "SE Hybrid",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "SE Hybrid",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "LE Plus Hybrid",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "LE Hybrid",
+       "from": 2018,
+       "to": 2025
+      },
+      {
+       "trim": "XSE Hybrid",
+       "from": 2019,
+       "to": 2025
+      },
+      {
+       "trim": "XLE Premium Hybrid",
+       "from": 2021,
+       "to": 2025
+      },
+      {
+       "trim": "Woodland Edition Hybrid",
+       "from": 2023,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "RAV4 EV",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "RAV4 Plug-in Hybrid",
+     "trims": [
+      {
+       "trim": "SE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "XSE",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Woodland",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "GR SPORT",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "RAV4 Prime",
+     "trims": [
+      {
+       "trim": "SE",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "XSE",
+       "from": 2021,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Sequoia",
+     "trims": [
+      {
+       "trim": "SR5",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Sport",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "TRD Pro",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "Capstone",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "1794 Edition",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Sienna",
+     "trims": [
+      {
+       "trim": "L",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "LE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SE",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "XLE",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "XLE Premium",
+       "from": 2015,
+       "to": 2020
+      },
+      {
+       "trim": "SE Premium",
+       "from": 2015,
+       "to": 2020
+      },
+      {
+       "trim": "Limited Premium",
+       "from": 2015,
+       "to": 2020
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "XSE",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "Woodland Edition",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "25th Anniversary Edition",
+       "from": 2023,
+       "to": 2023
+      }
+     ]
+    },
+    {
+     "model": "Tacoma",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "PreRunner",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "X-Runner",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "SR",
+       "from": 2014,
+       "to": 2027
+      },
+      {
+       "trim": "SR5",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Sport",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Off-Road",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Pro",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "TRD Pro",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "Trail Edition",
+       "from": 2021,
+       "to": 2023
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "TRD PreRunner",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Trailhunter",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Tundra",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "SR5",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Platinum",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "SR",
+       "from": 2014,
+       "to": 2027
+      },
+      {
+       "trim": "1794 Edition",
+       "from": 2014,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Pro",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "TRD Pro",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "TRD Sport",
+       "from": 2018,
+       "to": 2019
+      },
+      {
+       "trim": "Trail Special Edition",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "Capstone",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "1794 Limited Edition",
+       "from": 2024,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Venza",
+     "trims": [
+      {
+       "trim": "LE",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "LE",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "XLE",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "XLE",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "Limited",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "Limited",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "Nightshade",
+       "from": 2023,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "Yaris",
+     "trims": [
+      {
+       "trim": "L",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "LE",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "SE",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "XLE",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "LE Hatchback",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "XLE Hatchback",
+       "from": 2020,
+       "to": 2020
+      }
+     ]
+    },
+    {
+     "model": "Yaris iA",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2017,
+       "to": 2018
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "make": "Lexus",
+   "models": [
+    {
+     "model": "CT",
+     "trims": [
+      {
+       "trim": "CT 200h",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "CT 200h F SPORT",
+       "from": 2013,
+       "to": 2017
+      }
+     ]
+    },
+    {
+     "model": "ES",
+     "trims": [
+      {
+       "trim": "ES 350",
+       "from": 2013,
+       "to": 2025
+      },
+      {
+       "trim": "ES 300h",
+       "from": 2013,
+       "to": 2025
+      },
+      {
+       "trim": "ES 350 F SPORT",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "ES 350 Luxury",
+       "from": 2019,
+       "to": 2025
+      },
+      {
+       "trim": "ES 350 Ultra Luxury",
+       "from": 2019,
+       "to": 2025
+      },
+      {
+       "trim": "ES 300h Luxury",
+       "from": 2019,
+       "to": 2025
+      },
+      {
+       "trim": "ES 300h Ultra Luxury",
+       "from": 2019,
+       "to": 2025
+      },
+      {
+       "trim": "ES 250",
+       "from": 2021,
+       "to": 2025
+      },
+      {
+       "trim": "ES 250 F SPORT",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "ES 250 Luxury",
+       "from": 2021,
+       "to": 2025
+      },
+      {
+       "trim": "ES 250 Ultra Luxury",
+       "from": 2021,
+       "to": 2025
+      },
+      {
+       "trim": "ES 300h F SPORT",
+       "from": 2022,
+       "to": 2022
+      },
+      {
+       "trim": "ES 250 F SPORT Design",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "ES 350 F SPORT Design",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "ES 350 F SPORT Handling",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "ES 300h F SPORT Design",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "ES 300h F SPORT Handling",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "ES 350e Premium",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "ES 350e Luxury",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "ES 500e Premium",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "ES 500e Luxury",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "ES 350h Premium",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "ES 350h Premium+",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "GS",
+     "trims": [
+      {
+       "trim": "GS 350",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "GS 350 F SPORT",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "GS 450h",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "GS 450h F SPORT",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "GS 200t",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "GS 200t F SPORT",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "GS 300",
+       "from": 2018,
+       "to": 2019
+      },
+      {
+       "trim": "GS 300 F SPORT",
+       "from": 2018,
+       "to": 2019
+      }
+     ]
+    },
+    {
+     "model": "GS F",
+     "trims": [
+      {
+       "trim": "GS F",
+       "from": 2016,
+       "to": 2020
+      }
+     ]
+    },
+    {
+     "model": "GX",
+     "trims": [
+      {
+       "trim": "GX 460",
+       "from": 2013,
+       "to": 2023
+      },
+      {
+       "trim": "GX 460 Premium",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "GX 460 Premium",
+       "from": 2016,
+       "to": 2023
+      },
+      {
+       "trim": "GX 460 Luxury",
+       "from": 2014,
+       "to": 2023
+      },
+      {
+       "trim": "GX 550 Premium",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "GX 550 Premium+",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "GX 550 Luxury",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "GX 550 Luxury+",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "GX 550 Overtrail",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "GX 550 Overtrail+",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "IS",
+     "trims": [
+      {
+       "trim": "IS 250",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "IS 250 F SPORT",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "IS 350",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "IS 350 F SPORT",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "IS 250C",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "IS 350C",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "IS 200t",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "IS 200t F SPORT",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "IS 300",
+       "from": 2016,
+       "to": 2025
+      },
+      {
+       "trim": "IS 300 F SPORT",
+       "from": 2016,
+       "to": 2020
+      },
+      {
+       "trim": "IS 300 F SPORT",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "IS 300 F SPORT Design",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "IS 350 F SPORT Design",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "IS 500 F SPORT Performance",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "IS 500 F SPORT Performance Premium",
+       "from": 2022,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "IS F",
+     "trims": [
+      {
+       "trim": "IS F",
+       "from": 2013,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "LC",
+     "trims": [
+      {
+       "trim": "LC 500",
+       "from": 2018,
+       "to": 2026
+      },
+      {
+       "trim": "LC 500h",
+       "from": 2018,
+       "to": 2025
+      },
+      {
+       "trim": "LC 500 Convertible",
+       "from": 2021,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "LS",
+     "trims": [
+      {
+       "trim": "LS 460",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "LS 460 L",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "LS 460 F SPORT",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "LS 600h L",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "LS 500",
+       "from": 2018,
+       "to": 2025
+      },
+      {
+       "trim": "LS 500 F SPORT",
+       "from": 2018,
+       "to": 2025
+      },
+      {
+       "trim": "LS 500h",
+       "from": 2018,
+       "to": 2025
+      },
+      {
+       "trim": "LS 500 Heritage Edition",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "LX",
+     "trims": [
+      {
+       "trim": "LX 570",
+       "from": 2013,
+       "to": 2021
+      },
+      {
+       "trim": "LX 570 Two-Row",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "LX 600",
+       "from": 2022,
+       "to": 2024
+      },
+      {
+       "trim": "LX 600 Premium",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "LX 600 Luxury",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "LX 600 F SPORT",
+       "from": 2022,
+       "to": 2024
+      },
+      {
+       "trim": "LX 600 Ultra Luxury",
+       "from": 2022,
+       "to": 2024
+      },
+      {
+       "trim": "LX 600 F SPORT Handling",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "LX 700h Overtrail",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "LX 700h F SPORT Handling",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "LX 700h Luxury",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "LX 700h Ultra Luxury",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "NX",
+     "trims": [
+      {
+       "trim": "NX 200t",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "NX 200t F SPORT",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "NX 300h",
+       "from": 2015,
+       "to": 2021
+      },
+      {
+       "trim": "NX 300h Luxury",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "NX 300",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "NX 300 F SPORT",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "NX 300 Luxury",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "NX 250",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "NX 250 Premium",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "NX 250 Luxury",
+       "from": 2022,
+       "to": 2023
+      },
+      {
+       "trim": "NX 350",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "NX 350 Premium",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "NX 350 Luxury",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "NX 350 F SPORT Handling",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "NX 350h",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "NX 350h Premium",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "NX 350h Luxury",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "NX 350h F SPORT Handling",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "NX 350h Premium+",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "NX 350h F SPORT",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "NX 450h+ Luxury",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "NX 450h+ F SPORT Handling",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "NX 450h+ Premium",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "NX 450h+ Premium+",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "NX 450h+ F SPORT",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "RC",
+     "trims": [
+      {
+       "trim": "RC 350",
+       "from": 2015,
+       "to": 2025
+      },
+      {
+       "trim": "RC 350 F SPORT",
+       "from": 2015,
+       "to": 2025
+      },
+      {
+       "trim": "RC 200t",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "RC 200t F SPORT",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "RC 300",
+       "from": 2016,
+       "to": 2025
+      },
+      {
+       "trim": "RC 300 F SPORT",
+       "from": 2016,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "RC F",
+     "trims": [
+      {
+       "trim": "RC F",
+       "from": 2015,
+       "to": 2024
+      },
+      {
+       "trim": "RC F Track Edition",
+       "from": 2020,
+       "to": 2024
+      },
+      {
+       "trim": "RC F Fuji Speedway Edition",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "RC F Final Edition",
+       "from": 2025,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "RX",
+     "trims": [
+      {
+       "trim": "RX 350",
+       "from": 2013,
+       "to": 2026
+      },
+      {
+       "trim": "RX 350 F SPORT",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "RX 350 F SPORT Appearance",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "RX 450h",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "RX 450h F SPORT",
+       "from": 2016,
+       "to": 2020
+      },
+      {
+       "trim": "RX 450h F SPORT Appearance",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "RX 350L",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "RX 450hL",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "RX 350 F SPORT Handling",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "RX 450h F SPORT Handling",
+       "from": 2021,
+       "to": 2022
+      },
+      {
+       "trim": "RX 350L Luxury",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "RX 450hL Luxury",
+       "from": 2018,
+       "to": 2022
+      },
+      {
+       "trim": "RX 350 Premium",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350 Premium+",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350 Luxury",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350 F SPORT Design",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350h",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "RX 350h Premium",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350h Premium+",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350h Luxury",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RX 350h F SPORT Design",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "RX 450h+ Luxury",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "RX 450h+ Premium",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "RX 500h F SPORT Performance",
+       "from": 2023,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "RZ",
+     "trims": [
+      {
+       "trim": "RZ 450e Premium",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RZ 450e Luxury",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "RZ 450e",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "RZ 300e Premium",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "RZ 300e Luxury",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "RZ 300e",
+       "from": 2025,
+       "to": 2025
+      },
+      {
+       "trim": "RZ 350e",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "RZ 350e Premium",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "RZ 550e F SPORT",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "TX",
+     "trims": [
+      {
+       "trim": "TX 350",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "TX 350 Premium",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "TX 350 Luxury",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "TX 350 F SPORT Handling",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "TX 500h F SPORT Performance Premium",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "TX 500h F SPORT Performance Luxury",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "TX 550h+ Luxury",
+       "from": 2024,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "TZ",
+     "trims": [
+      {
+       "trim": "TZ 450e Premium",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "TZ 450e Premium Touring",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "TZ 450e Luxury",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "UX",
+     "trims": [
+      {
+       "trim": "UX 200",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "UX 200 F SPORT",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "UX 200 Luxury",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "UX 250h",
+       "from": 2019,
+       "to": 2024
+      },
+      {
+       "trim": "UX 250h F SPORT",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "UX 250h Luxury",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "UX 250h Premium",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "UX 250h F SPORT Design",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "UX 250h F SPORT Handling",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "UX 300h",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "UX 300h Premium",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "UX 300h F SPORT Design",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "UX 300h F SPORT Handling",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "make": "Tesla",
+   "models": [
+    {
+     "model": "Cybertruck",
+     "trims": [
+      {
+       "trim": "Foundation Series AWD",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "Foundation Series Cyberbeast",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "AWD",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "Cyberbeast",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "Long Range RWD",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "Dual Motor AWD",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Premium AWD",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Model 3",
+     "trims": [
+      {
+       "trim": "Long Range RWD",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Mid Range",
+       "from": 2018,
+       "to": 2019
+      },
+      {
+       "trim": "Long Range AWD",
+       "from": 2018,
+       "to": 2025
+      },
+      {
+       "trim": "Performance",
+       "from": 2018,
+       "to": 2027
+      },
+      {
+       "trim": "Standard Range",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "Standard Range Plus",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "RWD",
+       "from": 2022,
+       "to": 2024
+      },
+      {
+       "trim": "Long Range RWD",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "Standard",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "RWD",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "Premium RWD",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Premium AWD",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Model S",
+     "trims": [
+      {
+       "trim": "60",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "85",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "P85",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "P85+",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "P85D",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "70",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "70D",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "85D",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "90",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "90D",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "P90D",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "60D",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "75",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "75D",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "P100D",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "100D",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Standard Range",
+       "from": 2019,
+       "to": 2019
+      },
+      {
+       "trim": "Standard Range",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "Long Range",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "Performance",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "Long Range Plus",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "Plaid",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "AWD",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "Signature Edition",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "Model X",
+     "trims": [
+      {
+       "trim": "P90D Signature Series",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "60D",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "75D",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "90D",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "P90D",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "P100D",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "100D",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Standard Range",
+       "from": 2019,
+       "to": 2019
+      },
+      {
+       "trim": "Standard Range",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "Long Range",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "Performance",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "Long Range Plus",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "Plaid",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "AWD",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "Signature Edition",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "Model Y",
+     "trims": [
+      {
+       "trim": "Long Range AWD",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "Performance",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "Standard Range RWD",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "AWD",
+       "from": 2022,
+       "to": 2023
+      },
+      {
+       "trim": "RWD",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "Long Range RWD",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "Long Range AWD Launch Series",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "Standard RWD",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "Standard AWD",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "Premium RWD",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "Premium AWD",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "RWD",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "AWD",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Model Y L",
+     "trims": [
+      {
+       "trim": "Premium AWD Launch Series",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "make": "VinFast",
+   "models": [
+    {
+     "model": "VF 8",
+     "trims": [
+      {
+       "trim": "City Edition Eco",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "City Edition Plus",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "Eco",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "Eco",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "Plus",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "Plus",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "VF 9",
+     "trims": [
+      {
+       "trim": "Eco",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "Plus",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "Plus",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "make": "BMW",
+   "models": [
+    {
+     "model": "1 Series",
+     "trims": [
+      {
+       "trim": "128i Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "128i Convertible",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "135i Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "135i Convertible",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "135is Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "135is Convertible",
+       "from": 2013,
+       "to": 2013
+      }
+     ]
+    },
+    {
+     "model": "2 Series",
+     "trims": [
+      {
+       "trim": "228i Coupe",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "M235i Coupe",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "228i xDrive Coupe",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "M235i xDrive Coupe",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "228i Convertible",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "228i xDrive Convertible",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "M235i Convertible",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "M235i xDrive Convertible",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "230i Coupe",
+       "from": 2017,
+       "to": 2026
+      },
+      {
+       "trim": "230i xDrive Coupe",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "230i xDrive Coupe",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "M240i Coupe",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "M240i Coupe",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "M240i xDrive Coupe",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "230i Convertible",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "230i xDrive Convertible",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "M240i Convertible",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "M240i xDrive Convertible",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "228i xDrive Gran Coupe",
+       "from": 2020,
+       "to": 2024
+      },
+      {
+       "trim": "M235i xDrive Gran Coupe",
+       "from": 2020,
+       "to": 2024
+      },
+      {
+       "trim": "228i Gran Coupe",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "228 xDrive Gran Coupe",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "M235 xDrive Gran Coupe",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "228 Gran Coupe",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "3 Series",
+     "trims": [
+      {
+       "trim": "320i",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "320i xDrive",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "328i",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "328i xDrive",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "335i",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "335i xDrive",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ActiveHybrid 3",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "328i Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "328i xDrive Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "335i Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "335i xDrive Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "335is Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "328i Convertible",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "335i Convertible",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "335is Convertible",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "328d",
+       "from": 2014,
+       "to": 2018
+      },
+      {
+       "trim": "328d xDrive",
+       "from": 2014,
+       "to": 2018
+      },
+      {
+       "trim": "328i xDrive Sports Wagon",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "328d xDrive Sports Wagon",
+       "from": 2014,
+       "to": 2018
+      },
+      {
+       "trim": "328i xDrive Gran Turismo",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "335i xDrive Gran Turismo",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "330e",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "330e",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "330e xDrive",
+       "from": 2021,
+       "to": 2024
+      },
+      {
+       "trim": "340i",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "340i xDrive",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "330i",
+       "from": 2017,
+       "to": 2026
+      },
+      {
+       "trim": "330i xDrive",
+       "from": 2017,
+       "to": 2026
+      },
+      {
+       "trim": "330i xDrive Sports Wagon",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "330i xDrive Gran Turismo",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "340i xDrive Gran Turismo",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "M340i",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "M340i xDrive",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "330",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "330 xDrive",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "M350 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "4 Series",
+     "trims": [
+      {
+       "trim": "428i Coupe",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "428i xDrive Coupe",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "435i Coupe",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "435i xDrive Coupe",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "428i Convertible",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "428i xDrive Convertible",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "435i Convertible",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "435i xDrive Convertible",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "428i Gran Coupe",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "428i xDrive Gran Coupe",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "435i Gran Coupe",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "435i xDrive Gran Coupe",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "430i Coupe",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "430i xDrive Coupe",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "440i Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "440i xDrive Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "430i Convertible",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "430i xDrive Convertible",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "430i xDrive Convertible",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "440i Convertible",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "440i xDrive Convertible",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "430i Gran Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "430i Gran Coupe",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "430i xDrive Gran Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "430i xDrive Gran Coupe",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "440i Gran Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "440i xDrive Gran Coupe",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "M440i xDrive Coupe",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "M440i xDrive Convertible",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "M440i Coupe",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "M440i Convertible",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "M440i xDrive Gran Coupe",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "M440i Gran Coupe",
+       "from": 2023,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "5 Series",
+     "trims": [
+      {
+       "trim": "528i",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "528i xDrive",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "535i",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "535i xDrive",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "550i",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "550i xDrive",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "ActiveHybrid 5",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "535d",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "535d xDrive",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "535i Gran Turismo",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "535i xDrive Gran Turismo",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "550i Gran Turismo",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "550i xDrive Gran Turismo",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "530i",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "530i xDrive",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "540i",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "540i xDrive",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "530e",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "530e xDrive",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "540d xDrive",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "M550i xDrive",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "550e xDrive",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "6 Series",
+     "trims": [
+      {
+       "trim": "640i Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "640i xDrive Coupe",
+       "from": 2014,
+       "to": 2017
+      },
+      {
+       "trim": "650i Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "650i xDrive Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "640i Convertible",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "640i xDrive Convertible",
+       "from": 2014,
+       "to": 2018
+      },
+      {
+       "trim": "650i Convertible",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "650i xDrive Convertible",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "640i Gran Coupe",
+       "from": 2013,
+       "to": 2019
+      },
+      {
+       "trim": "640i xDrive Gran Coupe",
+       "from": 2014,
+       "to": 2019
+      },
+      {
+       "trim": "650i Gran Coupe",
+       "from": 2013,
+       "to": 2019
+      },
+      {
+       "trim": "650i xDrive Gran Coupe",
+       "from": 2013,
+       "to": 2019
+      },
+      {
+       "trim": "ALPINA B6 xDrive Gran Coupe",
+       "from": 2015,
+       "to": 2019
+      },
+      {
+       "trim": "640i xDrive Gran Turismo",
+       "from": 2018,
+       "to": 2019
+      }
+     ]
+    },
+    {
+     "model": "7 Series",
+     "trims": [
+      {
+       "trim": "740i",
+       "from": 2013,
+       "to": 2026
+      },
+      {
+       "trim": "740Li",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "740Li xDrive",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "750i",
+       "from": 2013,
+       "to": 2019
+      },
+      {
+       "trim": "750i xDrive",
+       "from": 2013,
+       "to": 2022
+      },
+      {
+       "trim": "750Li",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "750Li xDrive",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "760Li",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ActiveHybrid 7",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ALPINA B7 SWB",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ALPINA B7 SWB xDrive",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ALPINA B7 LWB",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ALPINA B7 LWB xDrive",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "740Ld xDrive",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "740i xDrive",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "740i xDrive",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "740e xDrive",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "M760i xDrive",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "ALPINA B7 xDrive",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "745e xDrive",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "760i xDrive",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "750e xDrive",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "740",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "740 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "8 Series",
+     "trims": [
+      {
+       "trim": "M850i xDrive Coupe",
+       "from": 2019,
+       "to": 2026
+      },
+      {
+       "trim": "M850i xDrive Convertible",
+       "from": 2019,
+       "to": 2026
+      },
+      {
+       "trim": "M850i xDrive Gran Coupe",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "840i Coupe",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "840i xDrive Coupe",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "840i Convertible",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "840i xDrive Convertible",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "840i Gran Coupe",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "840i xDrive Gran Coupe",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "ALPINA B8 Gran Coupe",
+       "from": 2022,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "i3",
+     "trims": [
+      {
+       "trim": "i3",
+       "from": 2014,
+       "to": 2021
+      },
+      {
+       "trim": "i3 with Range Extender",
+       "from": 2014,
+       "to": 2021
+      },
+      {
+       "trim": "i3s",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "i3s with Range Extender",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "50 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "i4",
+     "trims": [
+      {
+       "trim": "eDrive40",
+       "from": 2022,
+       "to": 2026
+      },
+      {
+       "trim": "M50",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "eDrive35",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "xDrive40",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "M60 xDrive",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "i5",
+     "trims": [
+      {
+       "trim": "eDrive40",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "M60 xDrive",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "xDrive40",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "i7",
+     "trims": [
+      {
+       "trim": "xDrive60",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "eDrive50",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "M70 xDrive",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "50 xDrive",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "60 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "i8",
+     "trims": [
+      {
+       "trim": "Coupe",
+       "from": 2014,
+       "to": 2017
+      },
+      {
+       "trim": "Coupe",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "Roadster",
+       "from": 2019,
+       "to": 2020
+      }
+     ]
+    },
+    {
+     "model": "iX",
+     "trims": [
+      {
+       "trim": "xDrive50",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "M60",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "xDrive40",
+       "from": 2024,
+       "to": 2025
+      },
+      {
+       "trim": "xDrive45",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "xDrive60",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "M70 xDrive",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "iX3",
+     "trims": [
+      {
+       "trim": "50 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "iX4",
+     "trims": [
+      {
+       "trim": "50 xDrive",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "M60 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "iX5",
+     "trims": [
+      {
+       "trim": "60 xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "M2",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "Competition",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "CS",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "Base",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "CS",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "M xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "M3",
+     "trims": [
+      {
+       "trim": "Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "Convertible",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "Base",
+       "from": 2015,
+       "to": 2018
+      },
+      {
+       "trim": "CS",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "Base",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "Competition",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "Competition xDrive",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "CS",
+       "from": 2024,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "M4",
+     "trims": [
+      {
+       "trim": "Coupe",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "Convertible",
+       "from": 2015,
+       "to": 2020
+      },
+      {
+       "trim": "GTS",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "Competition Coupe",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "Competition Convertible",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "CS",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "Competition xDrive Coupe",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "Competition xDrive Convertible",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "CSL",
+       "from": 2023,
+       "to": 2023
+      },
+      {
+       "trim": "CS",
+       "from": 2025,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "M5",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "Base",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "Competition",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "CS",
+       "from": 2022,
+       "to": 2022
+      },
+      {
+       "trim": "Base",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "Touring",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "M6",
+     "trims": [
+      {
+       "trim": "Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "Convertible",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "Gran Coupe",
+       "from": 2014,
+       "to": 2019
+      }
+     ]
+    },
+    {
+     "model": "M8",
+     "trims": [
+      {
+       "trim": "Coupe",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "Convertible",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "Gran Coupe",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "Competition Coupe",
+       "from": 2020,
+       "to": 2025
+      },
+      {
+       "trim": "Competition Convertible",
+       "from": 2020,
+       "to": 2025
+      },
+      {
+       "trim": "Competition Gran Coupe",
+       "from": 2020,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "X1",
+     "trims": [
+      {
+       "trim": "sDrive28i",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "sDrive28i",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "xDrive28i",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "xDrive35i",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "M35i",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "X2",
+     "trims": [
+      {
+       "trim": "sDrive28i",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "xDrive28i",
+       "from": 2018,
+       "to": 2027
+      },
+      {
+       "trim": "M35i",
+       "from": 2019,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "X3",
+     "trims": [
+      {
+       "trim": "xDrive28i",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "xDrive35i",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "sDrive28i",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "xDrive28d",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "xDrive30i",
+       "from": 2018,
+       "to": 2024
+      },
+      {
+       "trim": "M40i",
+       "from": 2018,
+       "to": 2024
+      },
+      {
+       "trim": "sDrive30i",
+       "from": 2019,
+       "to": 2024
+      },
+      {
+       "trim": "xDrive30e",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "30 xDrive",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "M50 xDrive",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "X3 M",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2020,
+       "to": 2024
+      },
+      {
+       "trim": "Competition",
+       "from": 2020,
+       "to": 2024
+      }
+     ]
+    },
+    {
+     "model": "X4",
+     "trims": [
+      {
+       "trim": "xDrive28i",
+       "from": 2015,
+       "to": 2018
+      },
+      {
+       "trim": "xDrive35i",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "M40i",
+       "from": 2016,
+       "to": 2025
+      },
+      {
+       "trim": "xDrive30i",
+       "from": 2019,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "X4 M",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2020,
+       "to": 2025
+      },
+      {
+       "trim": "Competition",
+       "from": 2020,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "X5",
+     "trims": [
+      {
+       "trim": "xDrive35i",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "xDrive35d",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "xDrive50i",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "sDrive35i",
+       "from": 2014,
+       "to": 2018
+      },
+      {
+       "trim": "xDrive40e",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "xDrive40i",
+       "from": 2019,
+       "to": 2026
+      },
+      {
+       "trim": "sDrive40i",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "M50i",
+       "from": 2020,
+       "to": 2023
+      },
+      {
+       "trim": "xDrive45e",
+       "from": 2021,
+       "to": 2023
+      },
+      {
+       "trim": "M60i xDrive",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "xDrive50e",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "40",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "40 xDrive",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "50e xDrive",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "X5 M",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "Base",
+       "from": 2015,
+       "to": 2018
+      },
+      {
+       "trim": "Base",
+       "from": 2020,
+       "to": 2023
+      },
+      {
+       "trim": "Competition",
+       "from": 2020,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "X6",
+     "trims": [
+      {
+       "trim": "xDrive35i",
+       "from": 2013,
+       "to": 2019
+      },
+      {
+       "trim": "xDrive50i",
+       "from": 2013,
+       "to": 2019
+      },
+      {
+       "trim": "sDrive35i",
+       "from": 2015,
+       "to": 2019
+      },
+      {
+       "trim": "sDrive40i",
+       "from": 2020,
+       "to": 2021
+      },
+      {
+       "trim": "xDrive40i",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "M50i",
+       "from": 2020,
+       "to": 2023
+      },
+      {
+       "trim": "M60i xDrive",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "X6 M",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2013,
+       "to": 2023
+      },
+      {
+       "trim": "Competition",
+       "from": 2020,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "X7",
+     "trims": [
+      {
+       "trim": "xDrive40i",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "xDrive50i",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "M50i",
+       "from": 2020,
+       "to": 2022
+      },
+      {
+       "trim": "ALPINA XB7",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "M60i xDrive",
+       "from": 2023,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "XM",
+     "trims": [
+      {
+       "trim": "Base",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "Label Red",
+       "from": 2024,
+       "to": 2024
+      },
+      {
+       "trim": "Label",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "Z4",
+     "trims": [
+      {
+       "trim": "sDrive28i",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "sDrive35i",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "sDrive35is",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "sDrive30i",
+       "from": 2019,
+       "to": 2026
+      },
+      {
+       "trim": "M40i",
+       "from": 2020,
+       "to": 2026
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "make": "Mercedes-Benz",
+   "models": [
+    {
+     "model": "A-Class",
+     "trims": [
+      {
+       "trim": "A 220",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "A 220 4MATIC",
+       "from": 2019,
+       "to": 2022
+      },
+      {
+       "trim": "AMG A 35",
+       "from": 2020,
+       "to": 2022
+      }
+     ]
+    },
+    {
+     "model": "AMG GT",
+     "trims": [
+      {
+       "trim": "AMG GT S Coupe",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GT Coupe",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GT Roadster",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GT C Coupe",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GT C Roadster",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GT R Coupe",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GT R PRO Coupe",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "AMG GT R Roadster",
+       "from": 2020,
+       "to": 2020
+      },
+      {
+       "trim": "AMG GT Black Series Coupe",
+       "from": 2021,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GT 55 Coupe",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 63 Coupe",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 43 Coupe",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 63 PRO Coupe",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 63 S E PERFORMANCE Coupe",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 53 4-Door Coupe",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 63 4-Door Coupe",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GT 63 S 4-Door Coupe",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "AMG GT 43 4-Door Coupe",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GT 63 S E PERFORMANCE 4-Door Coupe",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GT 55 4-Door Coupe",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "B-Class",
+     "trims": [
+      {
+       "trim": "B-Class Electric Drive",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "B 250e",
+       "from": 2016,
+       "to": 2017
+      }
+     ]
+    },
+    {
+     "model": "C-Class",
+     "trims": [
+      {
+       "trim": "C 250 Sport",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "C 250 Luxury",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "C 300 4MATIC Sport",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "C 300 4MATIC Luxury",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "C 350 Sport",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "C 63 AMG",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "C 63 AMG Edition 507",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "C 250 Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "C 350 Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "C 350 4MATIC Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "C 63 AMG Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "C 63 AMG Black Series Coupe",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "C 63 AMG Edition 507 Coupe",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "C 300",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "C 300 4MATIC",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "C 400 4MATIC",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "C 350e",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "C 450 AMG 4MATIC",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "AMG C 43",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "AMG C 43",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "AMG C 63",
+       "from": 2015,
+       "to": 2021
+      },
+      {
+       "trim": "AMG C 63 S",
+       "from": 2015,
+       "to": 2021
+      },
+      {
+       "trim": "AMG C 63 S E PERFORMANCE",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "C 400 4MATIC Electric",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "C 300 Coupe",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "C 300 4MATIC Coupe",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "AMG C 43 Coupe",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "AMG C 63 Coupe",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "AMG C 63 S Coupe",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "C 300 Cabriolet",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "C 300 4MATIC Cabriolet",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "AMG C 43 Cabriolet",
+       "from": 2017,
+       "to": 2023
+      },
+      {
+       "trim": "AMG C 63 Cabriolet",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "AMG C 63 S Cabriolet",
+       "from": 2017,
+       "to": 2023
+      }
+     ]
+    },
+    {
+     "model": "CL-Class",
+     "trims": [
+      {
+       "trim": "CL 550 4MATIC",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "CL 600",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "CL 63 AMG",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "CL 65 AMG",
+       "from": 2013,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "CLA",
+     "trims": [
+      {
+       "trim": "CLA 250",
+       "from": 2014,
+       "to": 2026
+      },
+      {
+       "trim": "CLA 250 4MATIC",
+       "from": 2014,
+       "to": 2026
+      },
+      {
+       "trim": "CLA 45 AMG",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "AMG CLA 45",
+       "from": 2016,
+       "to": 2023
+      },
+      {
+       "trim": "AMG CLA 35",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "AMG CLA 45 S",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "CLA 250+ with EQ Technology",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "CLA 350 4MATIC with EQ Technology",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "CLA 250+ Electric",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "CLA 350 4MATIC Electric",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "CLA 220 Hybrid",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "CLE",
+     "trims": [
+      {
+       "trim": "CLE 300 4MATIC Coupe",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "CLE 450 4MATIC Coupe",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "AMG CLE 53 Coupe",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "CLE 300 4MATIC Cabriolet",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "CLE 450 4MATIC Cabriolet",
+       "from": 2024,
+       "to": 2027
+      },
+      {
+       "trim": "AMG CLE 53 Cabriolet",
+       "from": 2025,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "CLS",
+     "trims": [
+      {
+       "trim": "CLS 550",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "CLS 550 4MATIC",
+       "from": 2013,
+       "to": 2018
+      },
+      {
+       "trim": "CLS 63 AMG",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "CLS 63 AMG 4MATIC",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "CLS 63 AMG S",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "CLS 63 AMG S 4MATIC",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "CLS 400",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "CLS 400 4MATIC",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "AMG CLS 63 S",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "CLS 450",
+       "from": 2019,
+       "to": 2021
+      },
+      {
+       "trim": "CLS 450 4MATIC",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "AMG CLS 53",
+       "from": 2019,
+       "to": 2021
+      }
+     ]
+    },
+    {
+     "model": "E-Class",
+     "trims": [
+      {
+       "trim": "E 350",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "E 350",
+       "from": 2020,
+       "to": 2023
+      },
+      {
+       "trim": "E 350",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "E 350 4MATIC",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "E 350 4MATIC",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "E 350 BlueTEC",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "E 250 BlueTEC",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "E 250 BlueTEC 4MATIC",
+       "from": 2014,
+       "to": 2016
+      },
+      {
+       "trim": "E 400 Hybrid",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "E 400",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "E 400 4MATIC",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "E 400 4MATIC",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "E 550 4MATIC",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "E 63 AMG",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "E 63 AMG 4MATIC",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "E 63 AMG S",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "E 63 AMG S 4MATIC",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "AMG E 63",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "AMG E 63 S",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "AMG E 63 S",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "E 300",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "E 300 4MATIC",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "E 450 4MATIC",
+       "from": 2019,
+       "to": 2027
+      },
+      {
+       "trim": "AMG E 43",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "AMG E 53",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "AMG E 53 HYBRID",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "E 350 4MATIC Wagon",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "E 63 AMG Wagon",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "E 63 AMG 4MATIC Wagon",
+       "from": 2014,
+       "to": 2014
+      },
+      {
+       "trim": "E 63 AMG S 4MATIC Wagon",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "AMG E 63 S Wagon",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "AMG E 63 S Wagon",
+       "from": 2018,
+       "to": 2023
+      },
+      {
+       "trim": "E 400 4MATIC Wagon",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "E 450 4MATIC Wagon",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "E 450 4MATIC All-Terrain",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "AMG E 53 HYBRID Wagon",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "E 350 Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "E 350 4MATIC Coupe",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "E 550 Coupe",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "E 400 Coupe",
+       "from": 2015,
+       "to": 2018
+      },
+      {
+       "trim": "E 400 4MATIC Coupe",
+       "from": 2015,
+       "to": 2018
+      },
+      {
+       "trim": "E 450 Coupe",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "E 450 4MATIC Coupe",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "AMG E 53 Coupe",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "E 350 Cabriolet",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "E 550 Cabriolet",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "E 400 Cabriolet",
+       "from": 2015,
+       "to": 2018
+      },
+      {
+       "trim": "E 400 4MATIC Cabriolet",
+       "from": 2018,
+       "to": 2018
+      },
+      {
+       "trim": "E 450 Cabriolet",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "E 450 4MATIC Cabriolet",
+       "from": 2019,
+       "to": 2023
+      },
+      {
+       "trim": "AMG E 53 Cabriolet",
+       "from": 2019,
+       "to": 2023
+      }
+     ]
+    },
+    {
+     "model": "EQB",
+     "trims": [
+      {
+       "trim": "EQB 300 4MATIC",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "EQB 350 4MATIC",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "EQB 250+",
+       "from": 2024,
+       "to": 2025
+      }
+     ]
+    },
+    {
+     "model": "EQE",
+     "trims": [
+      {
+       "trim": "EQE 350+",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "EQE 350 4MATIC",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "EQE 500 4MATIC",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "AMG EQE",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "EQE 320+",
+       "from": 2026,
+       "to": 2026
+      },
+      {
+       "trim": "EQE 320 4MATIC",
+       "from": 2026,
+       "to": 2026
+      }
+     ]
+    },
+    {
+     "model": "EQE SUV",
+     "trims": [
+      {
+       "trim": "EQE 350+",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "EQE 350 4MATIC",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "EQE 500 4MATIC",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "AMG EQE",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "EQE 320+",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "EQE 320 4MATIC",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "EQS",
+     "trims": [
+      {
+       "trim": "EQS 450+",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "EQS 580 4MATIC",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "AMG EQS",
+       "from": 2022,
+       "to": 2025
+      },
+      {
+       "trim": "EQS 450 4MATIC",
+       "from": 2023,
+       "to": 2026
+      },
+      {
+       "trim": "EQS 500 4MATIC",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "EQS SUV",
+     "trims": [
+      {
+       "trim": "EQS 450+",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "EQS 450 4MATIC",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "EQS 580 4MATIC",
+       "from": 2023,
+       "to": 2025
+      },
+      {
+       "trim": "Maybach EQS 680",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "EQS 400 4MATIC",
+       "from": 2026,
+       "to": 2027
+      },
+      {
+       "trim": "EQS 550 4MATIC",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "eSprinter",
+     "trims": [
+      {
+       "trim": "Cargo Van",
+       "from": 2024,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "G-Class",
+     "trims": [
+      {
+       "trim": "G 550",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "G 63 AMG",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "AMG G 63",
+       "from": 2016,
+       "to": 2027
+      },
+      {
+       "trim": "AMG G 65",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "G 550 4x4 Squared",
+       "from": 2017,
+       "to": 2018
+      },
+      {
+       "trim": "AMG G 63 4x4 Squared",
+       "from": 2023,
+       "to": 2024
+      },
+      {
+       "trim": "G 580 with EQ Technology",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "G 580 Electric",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "GL-Class",
+     "trims": [
+      {
+       "trim": "GL 350 BlueTEC 4MATIC",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "GL 450 4MATIC",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "GL 550 4MATIC",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "GL 63 AMG",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "AMG GL 63",
+       "from": 2016,
+       "to": 2016
+      }
+     ]
+    },
+    {
+     "model": "GLA",
+     "trims": [
+      {
+       "trim": "GLA 250",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "GLA 250 4MATIC",
+       "from": 2015,
+       "to": 2027
+      },
+      {
+       "trim": "GLA 45 AMG",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "AMG GLA 45",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLA 45",
+       "from": 2021,
+       "to": 2023
+      },
+      {
+       "trim": "AMG GLA 35",
+       "from": 2021,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "GLB",
+     "trims": [
+      {
+       "trim": "GLB 250",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "GLB 250 4MATIC",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GLB 35",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "GLB 250+ Electric",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "GLB 350 4MATIC Electric",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "GLB 250 4MATIC Hybrid",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "GLC",
+     "trims": [
+      {
+       "trim": "GLC 300",
+       "from": 2016,
+       "to": 2027
+      },
+      {
+       "trim": "GLC 300 4MATIC",
+       "from": 2016,
+       "to": 2027
+      },
+      {
+       "trim": "GLC 350e 4MATIC",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "GLC 350e 4MATIC",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GLC 43",
+       "from": 2017,
+       "to": 2022
+      },
+      {
+       "trim": "AMG GLC 43",
+       "from": 2024,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GLC 63",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GLC 63 S E PERFORMANCE",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GLC 53",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "GLC 400 4MATIC Electric",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "GLC 300 4MATIC Coupe",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GLC 43 Coupe",
+       "from": 2017,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GLC 63 Coupe",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GLC 63 S Coupe",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG GLC 63 S E PERFORMANCE Coupe",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "AMG GLC 53 Coupe",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "GLE",
+     "trims": [
+      {
+       "trim": "GLE 300d 4MATIC",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "GLE 350",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "GLE 350",
+       "from": 2020,
+       "to": 2026
+      },
+      {
+       "trim": "GLE 350 4MATIC",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "GLE 350 4MATIC",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "GLE 400 4MATIC",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "GLE 400 4MATIC",
+       "from": 2019,
+       "to": 2019
+      },
+      {
+       "trim": "GLE 550e 4MATIC",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "AMG GLE 43",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLE 63",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLE 63 S",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLE 63 S",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "GLE 450 4MATIC",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "GLE 580 4MATIC",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GLE 53",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "GLE 450e 4MATIC",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "GLE 500e 4MATIC",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GLE 53 HYBRID",
+       "from": 2027,
+       "to": 2027
+      },
+      {
+       "trim": "GLE 450 AMG Coupe",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "AMG GLE 43 Coupe",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLE 63 S Coupe",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLE 63 S Coupe",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GLE 53 Coupe",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "GLE 450 4MATIC Coupe",
+       "from": 2025,
+       "to": 2027
+      },
+      {
+       "trim": "AMG GLE 53 HYBRID Coupe",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "GLK-Class",
+     "trims": [
+      {
+       "trim": "GLK 350",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "GLK 350 4MATIC",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "GLK 250 BlueTEC 4MATIC",
+       "from": 2013,
+       "to": 2015
+      }
+     ]
+    },
+    {
+     "model": "GLS",
+     "trims": [
+      {
+       "trim": "GLS 450 4MATIC",
+       "from": 2017,
+       "to": 2027
+      },
+      {
+       "trim": "GLS 550 4MATIC",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLS 63",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "AMG GLS 63",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "GLS 580 4MATIC",
+       "from": 2020,
+       "to": 2027
+      },
+      {
+       "trim": "Maybach GLS 600 4MATIC",
+       "from": 2021,
+       "to": 2026
+      },
+      {
+       "trim": "Maybach GLS 680",
+       "from": 2027,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "M-Class",
+     "trims": [
+      {
+       "trim": "ML 350",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ML 350 4MATIC",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "ML 350 BlueTEC 4MATIC",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "ML 250 BlueTEC 4MATIC",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "ML 400 4MATIC",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "ML 550 4MATIC",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "ML 63 AMG",
+       "from": 2013,
+       "to": 2015
+      }
+     ]
+    },
+    {
+     "model": "Metris",
+     "trims": [
+      {
+       "trim": "Cargo Van",
+       "from": 2016,
+       "to": 2023
+      },
+      {
+       "trim": "Passenger Van",
+       "from": 2016,
+       "to": 2023
+      }
+     ]
+    },
+    {
+     "model": "R-Class",
+     "trims": [
+      {
+       "trim": "R 350 4MATIC",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "R 350 BlueTEC 4MATIC",
+       "from": 2013,
+       "to": 2013
+      }
+     ]
+    },
+    {
+     "model": "S-Class",
+     "trims": [
+      {
+       "trim": "S 350 BlueTEC 4MATIC",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S 400 Hybrid",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S 550",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "S 550 4MATIC",
+       "from": 2013,
+       "to": 2017
+      },
+      {
+       "trim": "S 600",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S 600",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "S 63 AMG",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S 63 AMG 4MATIC",
+       "from": 2014,
+       "to": 2015
+      },
+      {
+       "trim": "S 65 AMG",
+       "from": 2013,
+       "to": 2013
+      },
+      {
+       "trim": "S 65 AMG",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "S 550e",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "AMG S 63",
+       "from": 2016,
+       "to": 2020
+      },
+      {
+       "trim": "AMG S 65",
+       "from": 2016,
+       "to": 2020
+      },
+      {
+       "trim": "S 450",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "S 450 4MATIC",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "S 560",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "S 560 4MATIC",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "S 560e",
+       "from": 2019,
+       "to": 2020
+      },
+      {
+       "trim": "S 500 4MATIC",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "S 580 4MATIC",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "S 580e 4MATIC",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "AMG S 63 E PERFORMANCE",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "S 550 4MATIC Coupe",
+       "from": 2015,
+       "to": 2017
+      },
+      {
+       "trim": "S 63 AMG 4MATIC Coupe",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "S 65 AMG Coupe",
+       "from": 2015,
+       "to": 2015
+      },
+      {
+       "trim": "AMG S 63 Coupe",
+       "from": 2016,
+       "to": 2021
+      },
+      {
+       "trim": "AMG S 65 Coupe",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "S 560 4MATIC Coupe",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "S 550 Cabriolet",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "S 560 Cabriolet",
+       "from": 2018,
+       "to": 2021
+      },
+      {
+       "trim": "AMG S 63 Cabriolet",
+       "from": 2017,
+       "to": 2021
+      },
+      {
+       "trim": "AMG S 65 Cabriolet",
+       "from": 2017,
+       "to": 2019
+      },
+      {
+       "trim": "Maybach S 600",
+       "from": 2016,
+       "to": 2017
+      },
+      {
+       "trim": "Maybach S 550 4MATIC",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "Maybach S 650 Cabriolet",
+       "from": 2017,
+       "to": 2017
+      },
+      {
+       "trim": "Maybach S 560 4MATIC",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "Maybach S 650",
+       "from": 2018,
+       "to": 2020
+      },
+      {
+       "trim": "Maybach S 580 4MATIC",
+       "from": 2021,
+       "to": 2027
+      },
+      {
+       "trim": "Maybach S 680 4MATIC",
+       "from": 2022,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "SL",
+     "trims": [
+      {
+       "trim": "SL 550",
+       "from": 2013,
+       "to": 2020
+      },
+      {
+       "trim": "SL 63 AMG",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SL 65 AMG",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SL 400",
+       "from": 2015,
+       "to": 2016
+      },
+      {
+       "trim": "AMG SL 63",
+       "from": 2016,
+       "to": 2019
+      },
+      {
+       "trim": "AMG SL 65",
+       "from": 2016,
+       "to": 2018
+      },
+      {
+       "trim": "SL 450",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "AMG SL 55",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "AMG SL 63",
+       "from": 2022,
+       "to": 2027
+      },
+      {
+       "trim": "AMG SL 43",
+       "from": 2023,
+       "to": 2027
+      },
+      {
+       "trim": "AMG SL 63 S E PERFORMANCE",
+       "from": 2025,
+       "to": 2026
+      },
+      {
+       "trim": "Maybach SL 680",
+       "from": 2026,
+       "to": 2027
+      }
+     ]
+    },
+    {
+     "model": "SLC",
+     "trims": [
+      {
+       "trim": "SLC 300",
+       "from": 2017,
+       "to": 2020
+      },
+      {
+       "trim": "AMG SLC 43",
+       "from": 2017,
+       "to": 2020
+      }
+     ]
+    },
+    {
+     "model": "SLK-Class",
+     "trims": [
+      {
+       "trim": "SLK 250",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SLK 300",
+       "from": 2016,
+       "to": 2016
+      },
+      {
+       "trim": "SLK 350",
+       "from": 2013,
+       "to": 2016
+      },
+      {
+       "trim": "SLK 55 AMG",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "AMG SLK 55",
+       "from": 2016,
+       "to": 2016
+      }
+     ]
+    },
+    {
+     "model": "SLS AMG",
+     "trims": [
+      {
+       "trim": "SLS AMG Coupe",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "SLS AMG Roadster",
+       "from": 2013,
+       "to": 2014
+      },
+      {
+       "trim": "SLS AMG GT Coupe",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SLS AMG GT Roadster",
+       "from": 2013,
+       "to": 2015
+      },
+      {
+       "trim": "SLS AMG Black Series Coupe",
+       "from": 2014,
+       "to": 2014
+      }
+     ]
+    },
+    {
+     "model": "Sprinter",
+     "trims": [
+      {
+       "trim": "Cargo Van",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Crew Van",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Passenger Van",
+       "from": 2013,
+       "to": 2027
+      },
+      {
+       "trim": "Cab Chassis",
+       "from": 2013,
+       "to": 2027
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

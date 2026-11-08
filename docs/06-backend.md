@@ -1,6 +1,6 @@
 # 06 Backend
 
-Python 3.12, FastAPI, SQLAlchemy 2 + Alembic, Postgres, Uvicorn. Code in `server/`. One process serves the API and the reports.
+Python 3.14, FastAPI, SQLAlchemy 2 + Alembic, Postgres, Uvicorn. Code in `server/`. One process serves the API and the reports.
 
 ## Layout
 
@@ -41,7 +41,7 @@ Every `/api` call carries `Authorization: Bearer {APP_PASSCODE}`; wrong or missi
 | `PUT /api/inspections/{id}/files/{name}` | raw bytes; idempotent (same name replaces); returns missing files |
 | `POST /api/inspections/{id}/complete` | called when nothing is missing; starts the build in a background task; 409 with the missing list otherwise |
 | `GET /api/inspections/{id}` | status, report links when sent, validation errors |
-| `POST /api/inspections/{id}/resend-email` | sends the email again |
+| `POST /api/inspections/{id}/resend-email` | sends the email again; 502 when it is not sent |
 | `GET /r/{token}/seller`, `GET /r/{token}/dealer` | report pages |
 | `GET /r/{token}/media/{name}` | photo, video or spin frame; never documents or the signature |
 
@@ -49,11 +49,11 @@ Uploads: allow up to 200 MB per file (walk-around video). Use chunked streaming 
 
 ## Build pipeline (on complete)
 
-1. `status = building`.
+1. `status = building`; `report_token` is made here (kept when the record is sent again), so a build that runs twice emails the same links. A build cut off by a restart is run again at startup.
 2. Spin frames come from the phone. Fallback only when `spin-01.jpg` to `spin-36.jpg` are missing: 36 evenly spaced `ffmpeg -ss {t} -i video_360.* -frames:v 1 -vf scale=1600:-2` seeks.
 3. CR: refactor `tools/cr_from_inspection.py` minimally to expose `build_cr(record: dict, carfax_owners=None) -> dict` and keep its CLI. The CLI output for both samples must stay byte-identical to `samples/cr-*.json` (test it). Call `build_cr(record)`.
 4. `validation.ok` false → `status = failed`, store the errors, send the failure email.
-5. Otherwise make `report_token`, store `cr`, send the email, `status = sent`, `report_sent_at = now`.
+5. Otherwise store `cr`, send the email, `status = sent`, `report_sent_at = now`. An email that is not sent → `status = failed` with the reason ("The report was built but the email was not sent" when there is no `RESEND_API_KEY`); the report pages still work.
 
 ## Media rules
 

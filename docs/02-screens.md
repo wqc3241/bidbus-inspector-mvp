@@ -20,7 +20,8 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 ## New inspection
 
 - Fields: VIN (optional), Year, Make, Model, Trim, Fuel type, Mileage (optional), Owner name (optional), Report email.
-- VIN of 17 characters: call `GET /api/vin/{vin}` (server proxies NHTSA vPIC `DecodeVinValues`) and prefill year, make, model, trim, fuel type. Fuel mapping: Electric → Electric (EV); Plug-in Hybrid Electric Vehicle (PHEV) → Plug-in hybrid; Hybrid (HEV) or Strong/Mild HEV → Hybrid; else Gas or diesel. Offline: skip the decode.
+- Home build: Year, Make, Model and Trim are lists from `data/vehicles.json` (Honda, Toyota, Lexus, Tesla, VinFast, BMW, Mercedes-Benz, model years 2013 to 2027; each trim with its first and last model year), each ending with Other to type the value. A decoded VIN picks the entry it matches, otherwise fills Other.
+- VIN of 17 characters: call `GET /api/vin/{vin}` (server proxies NHTSA vPIC `DecodeVinValues`) and prefill year, make, model, trim, fuel type. Fuel mapping: Electric → Electric (EV); Plug-in Hybrid Electric Vehicle (PHEV) → Plug-in hybrid; Hybrid (HEV) or Strong/Mild HEV → Hybrid; else Diesel when the primary fuel is Diesel, otherwise Gas. Offline: skip the decode.
 - Bottom button At the car: check ID, off until the required fields are in.
 
 ## Check ID
@@ -73,7 +74,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 ## Summary
 
 - Counts of photos, videos, problems and damage photos; every problem with its level and every damage.
-- VIN and mileage read from the photos, editable. Chips: door-jamb match, typed VIN match, check digit, typed mileage. Confirm needs a 17-character VIN and a mileage; any edit clears the confirm.
+- VIN and mileage read from the photos, editable. Chips: door-jamb match, typed VIN match, check digit, typed mileage. Confirm needs a 17-character VIN that passes the check digit and a mileage; any edit clears the confirm.
 - Overall condition (Like new, Pretty great, Just okay, Kind of rough, Major issues), required. Inspector note, required.
 - Show the seller: off, with the reason, until every section is reviewed, every shot is in, every damage photo is labelled and every required answer is in. Unreviewed sections show as buttons.
 

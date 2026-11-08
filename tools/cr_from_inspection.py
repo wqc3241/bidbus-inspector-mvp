@@ -22,6 +22,7 @@ import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CATALOG = os.path.join(HERE, "..", "data", "issue-catalog.json")
+CAT = json.load(open(CATALOG))
 
 CR_ROWS = ["Exterior", "Paint", "Tires", "Underbody", "Mechanicals", "Engine sound", "Interior", "OBD-II", "Additionals"]
 # photo and issue categories = the sections of the question list (question-list.csv); Start photos (seller documents) are private and go on no row
@@ -87,9 +88,9 @@ def tread_tier(t):
     return ("Good", "under_10000") if t >= 9 else ("Fair", "10001_20000") if t >= 5 else ("Replace", "over_20000")
 
 
-def main(src, out_path, carfax_owners=None):
-    rec = json.load(open(src))
-    cat = json.load(open(CATALOG))
+def build_cr(rec, carfax_owners=None):
+    """the CR output for one record (dict in, dict out, no file IO)"""
+    cat = CAT
     fuel = rec["vehicle"]["fuel"]
     ev = fuel == "Electric (EV)"
     errors = []
@@ -328,8 +329,15 @@ def main(src, out_path, carfax_owners=None):
                                     "fuel": fuel, "ai_guesses_changed": [i["id"] for i in issues if i.get("inspector_changed_ai")]},
         "validation": {"ok": not errors, "errors": errors, "issues": len(issues), "checks": len(rec["checks"]), "photos": len(photos)},
     }
+    return out
+
+
+def main(src, out_path, carfax_owners=None):
+    out = build_cr(json.load(open(src)), carfax_owners)
     json.dump(out, open(out_path, "w"), indent=1)
-    print(f"{os.path.basename(src)}: light {light}, issues {len(issues)} ({sum(1 for i in issues if i['from'] == 'damage photo')} from damage photos), "
+    cr, errors = out["condition_report"], out["validation"]["errors"]
+    issues, rows, vp = cr["issues"], cr["rows"], out["vehicle_patch"]["vehicle_photos"]
+    print(f"{os.path.basename(src)}: light {cr['light']}, issues {len(issues)} ({sum(1 for i in issues if i['from'] == 'damage photo')} from damage photos), "
           f"rows with problems {[r['row'] for r in rows if r['issues']]}, photo slots {len(vp)}, validation {'ok' if not errors else errors}")
     return not errors
 

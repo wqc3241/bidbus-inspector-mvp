@@ -5,6 +5,7 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 ## Server call
 
 - SDK: `anthropic` (Python). Key `ANTHROPIC_API_KEY`; model `AI_MODEL`, default `claude-sonnet-5-5`.
+- Home build: when `OPENAI_API_KEY` is set, the readings use OpenAI instead (Chat Completions with a strict JSON schema per kind, same fields and rules; model `OPENAI_MODEL`, default `gpt-5.5`).
 - One request per photo: the image (JPEG, long side resized to 1568 px) as a base64 image block, then a short instruction for its kind.
 - Force structured output with one tool per kind and `tool_choice: {"type": "tool", "name": ...}`. Parse the tool input; validate it against the rules below; anything out of range becomes null.
 - Timeout 20 s. On error return `{ "ok": false }`; the app leaves the field for the inspector to fill.

@@ -11,3 +11,5 @@ app/ios/Pods/
 app/android/.gradle/
 *.iml
 .idea/
+*.db
+server/tests/media/
