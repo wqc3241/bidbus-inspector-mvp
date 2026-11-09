@@ -77,6 +77,23 @@ def test_spin_view_when_frames_are_there(client, media_dir):
     assert 'class="cloudimage-360"' in html and "js-cloudimage-360-view@4.9.5" in html
 
 
+@pytest.mark.parametrize("page", ["seller", "dealer"])
+def test_eight_exterior_views_follow_the_360_view(client, media_dir, page):
+    token, iid = make("bmw-x3")
+    (media_dir / iid).mkdir()
+    assert 'alt="Left front"' not in client.get(f"/r/{token}/{page}").text  # no frames, no views
+    for k in range(1, 37):
+        (media_dir / iid / f"spin-{k:02d}.jpg").write_bytes(b"x")
+    html = client.get(f"/r/{token}/{page}").text
+    track = html[html.index('class="g-track"'):html.index('class="g-nav prev"')]
+    slides = re.findall(r'data-lbl="([^"]*)"', track)
+    views = ["Left front", "Left side", "Left rear", "Rear", "Right rear", "Right side", "Right front", "Front"]
+    # the 360 view, then the eight views in the walk-around order (spin frames 1, 5, 10, 14, 19, 23, 28, 32), then the rest of Exterior
+    assert slides[:9] == ["360 view"] + views
+    for k, v in zip((1, 5, 10, 14, 19, 23, 28, 32), views):
+        assert f'<img src="/r/{token}/media/spin-{k:02d}.jpg" alt="{v}" loading="lazy">' in track
+
+
 def test_media_serves_only_public_files_with_their_type(client, media_dir):
     import json
     from conftest import SAMPLES

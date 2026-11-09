@@ -11,7 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import config, spin, storage
-from .cr import CAT, PAINT_SHOWN
+from .cr import CAT, PAINT_SHOWN, SPIN_SLOTS
 from .email import car_line, inspected_when
 from .db import Inspection, get_session
 
@@ -71,6 +71,9 @@ LABEL = {"paint": "Paint meter", "ph_int_screen": "Infotainment screen", "ph_obd
 QL_LABEL = {it["id"]: re.sub(r" \(.*\)$|, with .*$", "", it["label"])
             for it in json.loads((config.DATA_DIR / "question-list.json").read_text())["items"]}
 WHEELS = ["lf", "rf", "rr", "lr"]
+# the eight exterior views the CR takes from the 360 frames (SPIN_SLOTS), in the walk-around order
+VIEW = {"front_left": "Left front", "left_side": "Left side", "rear_left": "Left rear", "rear": "Rear", "rear_right": "Right rear",
+        "right_side": "Right side", "front_right": "Right front", "front": "Front"}
 WHEEL_NAME = {w["wheel"]: w["name"] for w in CAT["wheels"]}
 LEVEL = {"Ends the visit": "stop", "Not listed until fixed": "stop", "Red": "sev", "Yellow": "yel"}
 LEVEL_TEXT = {"stop": "Not listed", "sev": "Red", "yel": "Yellow"}
@@ -105,13 +108,14 @@ def view(insp: Inspection) -> dict:
     def line(i):
         return {"text": i["text"], "sub": i.get("sub"), "lv": LEVEL.get(i["level"]), "photo": i["photo"] and url(i["photo"])}
 
-    # photo and video viewer: one list grouped by section; the 360 view first in Exterior, damage photos where they were recorded
+    # photo and video viewer: one list grouped by section; the 360 view first in Exterior with its eight exterior views, damage photos where they were recorded
     photos = [p for p in rec["photos"] if not p.get("skipped")]
     count = {q: sum(1 for p in photos if p["question_id"] == q) for q in {p["question_id"] for p in photos}}
     seen, media = {}, []
     for g, _ in GROUPS:
         if g == "Exterior" and spin.have_frames(storage.folder(insp.id)):
             media.append({"g": g, "kind": "spin", "src": url(spin.frame(1)), "folder": url(""), "lbl": "360 view"})
+            media += [{"g": g, "kind": "img", "src": url(spin.frame(k)), "lbl": VIEW[slot]} for k, slot in SPIN_SLOTS]
         media += [{"g": g, "kind": "video", "src": url(x["file"]), "lbl": VIDEOS[x["question_id"]][1]}
                   for x in rec["videos"] if VIDEOS.get(x["question_id"], ("",))[0] == g]
         for p in (p for p in photos if p["section"] == g):

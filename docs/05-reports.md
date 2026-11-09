@@ -13,6 +13,7 @@ Look and layout: `reference/condition-report/condition-report.html` (open it in 
 - **Header**: year make model trim, mileage, inspection date and the time it ended.
 - **Photo and video viewer**: one strip of every photo and video, grouped by inspection section: Exterior, Paint, Tires, Underbody, Mechanicals, Interior, OBD-II, Additionals. Group chips below the strip; All is the default. The walk-around sits in Exterior, engine sound and exhaust in Mechanicals. Each damage photo is in the section it was recorded in. Tap opens full screen with swipe.
 - **360 view**: the 36 spin frames in js-cloudimage-360-view (`https://cdn.jsdelivr.net/npm/js-cloudimage-360-view@3`, pin an exact version), first in the Exterior group.
+- **Exterior views**: right after the 360 view, eight of its frames as photos, in the walk-around order: Left front (frame 1), Left side (5), Left rear (10), Rear (14), Right rear (19), Right side (23), Right front (28), Front (32), the CR's `SPIN_SLOTS`.
 - **Highlight** (first block after the viewer): four items from `condition_report.highlight`:
   - Structural damage: Yes, Not checked, or No
   - Keys: 0, 1 or 2

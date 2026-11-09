@@ -475,14 +475,37 @@ int dmgOwnProbs(J st, String k, List<String> ids) {
   }).length;
 }
 
-// a damage taken at a paint panel or tire shot carries that place as the AI hint
-String? dmgHint(J st, String sec, int at) {
+// the Exterior places each shot of the walk sees: the paint panel (or photo) and the parts next to it
+const shotNear = {
+  'Left front fender': ['Left front fender', 'Front bumper', 'Headlight', 'Mirror', 'Other lights'],
+  'Left front door': ['Left front door', 'Left front window', 'Mirror'],
+  'Left rear door': ['Left rear door', 'Left rear window'],
+  'Left quarter panel': ['Left quarter panel', 'Left rear window', 'Fuel door', 'Tail light', 'Rear bumper', 'Other lights'], // the rear window: a coupe's quarter glass
+  'Trunk or liftgate': ['Trunk or liftgate', 'Rear glass', 'Tail light', 'Rear bumper', 'Wipers', 'Other lights'],
+  'Right quarter panel': ['Right quarter panel', 'Right rear window', 'Fuel door', 'Tail light', 'Rear bumper', 'Other lights'],
+  'Right rear door': ['Right rear door', 'Right rear window'],
+  'Right front door': ['Right front door', 'Right front window', 'Mirror'],
+  'Right front fender': ['Right front fender', 'Front bumper', 'Headlight', 'Mirror', 'Other lights'],
+  'Hood': ['Hood', 'Front bumper', 'Headlight', 'Windshield', 'Wipers', 'Other lights'],
+  'Roof': ['Roof', 'Windshield', 'Rear glass'],
+  'ph_ext_roof': ['Roof', 'Windshield', 'Rear glass'],
+  'ph_vin_dash': ['Windshield', 'Wipers', 'Hood'],
+};
+
+// a damage shot during the walk (Exterior panel by panel, Tires wheel by wheel) is somewhere between the shot taken before it
+// and the shot to take next, whichever of the two it was taken nearer: the AI picks its place from those places only
+List<String>? dmgNear(J st, String sec, int at) {
+  if (sec != 'Exterior' && sec != 'Tires') return null;
   final l = capList(sec, st);
   if (l.isEmpty) return null;
-  final shot = l[at.clamp(0, l.length - 1)];
-  if (shot['panel'] != null) return shot['panel'];
-  if (shot['wheel'] != null) return '${wheelName(shot['wheel'])} tire';
-  return null;
+  final a = at.clamp(0, l.length - 1), out = <String>{};
+  for (final x in [if (a > 0) l[a - 1], l[a]]) {
+    final w = x['wheel'] as String?;
+    out.addAll(w != null ? ['${wheelName(w)} tire', '${wheelName(w)} wheel'] : shotNear[x['panel'] ?? x['id']] ?? const <String>[]);
+  }
+  if (out.isEmpty) return null;
+  if (sec == 'Exterior') out.add('Other');
+  return out.toList();
 }
 
 // ---------- Review and Summary gates ----------

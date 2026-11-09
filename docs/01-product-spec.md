@@ -34,7 +34,7 @@ The inspection takes about 18 minutes.
 
 **1.4 One camera pass, landscape**
 - Six sections in order: Exterior (360 walk-around video; then one paint meter photo per panel starting at the left front fender, counter-clockwise, then hood and roof, 11 panels; roof photo; windshield VIN), Tires & Wheels, Interior, OBDII, Mechanicals, Underbody. "Tires & Wheels" is the name shown; the section key in the data stays `Tires`.
-- After the windshield VIN, a dialog: "Please record any exterior damage/modification images before proceeding." with I'm done and Record damage now. I'm done goes to Tires. Record damage now reopens the Exterior camera with only the Damage and Mod shutters and Next (top right) to Tires. Only Exterior has this step.
+- After the last shot of each section, a dialog: "Please record any exterior damage/modification images before proceeding." (tire and wheel, interior, mechanical, underbody for the other sections) with I'm done and Record damage now. I'm done goes to the next section. Record damage now reopens that section's camera with only the Damage and Mod shutters and Next (top right) to the next section. Every section has this step but OBDII, which has no Damage and Mod shutters.
 - Never stops otherwise: Damage (amber) and Mod (blue) shutters on the right take a tagged photo at any point without moving the flow. Off on videos and in OBDII.
 - Every shot can go Back and be retaken; optional shots can be skipped.
 - Each tire: a whole tire photo and a tread gauge photo.
@@ -104,7 +104,7 @@ The inspection takes about 18 minutes.
 - An inspection is started with YMMT only and finished typing only engine codes, corrections and the note.
 - A car with no problems needs no taps on checks.
 - Start stays off until both documents are photographed and the owner question is answered.
-- One camera pass covers every section; the only stop is the end-of-Exterior dialog.
+- One camera pass covers every section; the only stops are the end-of-section dialogs.
 - The walk-around becomes a 360 view; eight of its frames are exterior photos.
 - Every damage photo has a place, type and severity.
 - Show the seller stays off until every section is reviewed and every required answer is in.

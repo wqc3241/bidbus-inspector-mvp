@@ -38,13 +38,16 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 - Skip only on optional shots; Not on this car for a missing paint panel.
 - Back goes one shot back. A taken shot can be retaken or deleted; the camera then returns to where the inspector was. Damage and Mod thumbnails can be picked and deleted.
 - Order:
-  - **Exterior**: walk-around video (engine off, up to 60 s, from the left front corner, counter-clockwise); one paint meter photo per panel: left front fender, left front door, left rear door, left quarter panel, trunk or liftgate, right quarter panel, right rear door, right front door, right front fender, hood, roof; roof photo; windshield VIN; then the end-of-Exterior dialog.
+  - **Exterior**: walk-around video (engine off, up to 60 s, from the left front corner, counter-clockwise); one paint meter photo per panel: left front fender, left front door, left rear door, left quarter panel, trunk or liftgate, right quarter panel, right rear door, right front door, right front fender, hood, roof; roof photo; windshield VIN; then the end-of-section dialog.
   - **Tires & Wheels** LF, LR, RR, RF: whole tire, tread gauge.
   - **Interior**: door-jamb VIN, odometer (car on, warning lights visible), all keys, dash, infotainment screen (on), front seats, rear seats, cargo.
   - **OBDII**: gas: current, past and emission code screens, other images (several, optional). EV: service-mode alerts, battery health and charging screens (optional).
   - **Mechanicals**: engine bay (EV: frunk), engine oil on the dipstick, engine sound and exhaust videos (gas and hybrid, up to 30 s each, hidden when the engine will not start).
   - **Underbody**: underbody LF, LR, rear, RR, RF, front, catalytic converters (optional). A damage or mod shutter here makes a Mechanicals damage or mod.
 - A slot that takes several photos stays open: each shot adds one, Remove photo N drops the last, Done · N moves on.
+- Every section but OBDII ends with the end-of-section dialog ("Please record any … damage/modification images before proceeding.", I'm done or Record damage now; `docs/01-product-spec.md` 1.4).
+- Photos are taken 4:3 with the whole sensor, and the preview shows the whole frame, so .5, 1 and 2 frame what the iPhone camera's .5, 1 and 2 frame. Videos are 16:9 1080p.
+- Flash chip above the zoom chips (and in the damage camera's top bar): Auto (the default; fires when it is dark), On, Off, tap to go round; kept while the camera is open; hidden on video slots.
 - If the camera is closed, a screen lists the sections with counts and reopens the camera where it stopped.
 - After the last shot: Damages (or Review when there are no damage photos).
 - The exact shot list per fuel comes from the question list (`kind: photo` and `video` items with their `cars`). The mockup's `CAPSEQ`, `capList` and `MULTI` show the order logic.

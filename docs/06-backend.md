@@ -36,7 +36,7 @@ Every `/api` call carries `Authorization: Bearer {APP_PASSCODE}`; wrong or missi
 |---|---|
 | `GET /api/health` | `{ok: true}` |
 | `GET /api/vin/{vin}` | vPIC `DecodeVinValues/{vin}?format=json` → `{year, make, model, trim, fuel}` |
-| `POST /api/ai/read` | multipart `kind`, `image`, optional `section`, `fuel`, `hint` → reading JSON |
+| `POST /api/ai/read` | multipart `kind`, `image`, optional `section`, `fuel`, `hint`, `near` (JSON list of places) → reading JSON |
 | `PUT /api/inspections/{id}` | body `{report_email, inspector, car, record}`; creates or replaces; returns the list of file names still missing |
 | `PUT /api/inspections/{id}/files/{name}` | raw bytes; idempotent (same name replaces); returns missing files |
 | `POST /api/inspections/{id}/complete` | called when nothing is missing; starts the build in a background task; 409 with the missing list otherwise |

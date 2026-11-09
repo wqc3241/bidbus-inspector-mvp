@@ -4,4 +4,4 @@ import sys
 from . import config
 
 sys.path.insert(0, str(config.TOOLS_DIR))
-from cr_from_inspection import CAT, PAINT_SHOWN, build_cr, vin_ok  # noqa: E402,F401
+from cr_from_inspection import CAT, PAINT_SHOWN, SPIN_SLOTS, build_cr, vin_ok  # noqa: E402,F401

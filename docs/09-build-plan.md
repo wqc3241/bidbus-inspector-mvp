@@ -21,7 +21,7 @@ Work in this order. Each milestone ends when its checks pass; commit after each.
 
 ## M4 Camera pass
 
-- Full-screen landscape camera, three shutters, zoom, guides, Back/retake/delete, skip optional, multi-photo slots, video recording with max length, end-of-Exterior dialog, closed-camera resume screen.
+- Full-screen landscape camera, three shutters, zoom, guides, Back/retake/delete, skip optional, multi-photo slots, video recording with max length, end-of-section dialog (every section but OBDII), closed-camera resume screen.
 - Saves each JPEG upright to the documents folder and drift at capture; cuts the 36 spin frames after the walk-around.
 - Check: on the iPhone and on Android, a full pass for gas and for EV in about 15 minutes, nothing lost after killing the app mid-pass.
 
@@ -38,7 +38,7 @@ Work in this order. Each milestone ends when its checks pass; commit after each.
 
 ## M7 Upload and backend pipeline
 
-- Upload queue (record first, then files one at a time, resume), endpoints, Postgres models, media on the Volume, spin frames, `build_cr`, status polling on the Sent screen.
+- Upload queue (record first, then files three at a time, resume), endpoints, Postgres models, media on the Volume, spin frames, `build_cr`, status polling on the Sent screen.
 - Check: airplane-mode run uploads in full; a duplicate send updates the same inspection.
 
 ## M8 Reports and email

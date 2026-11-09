@@ -160,7 +160,7 @@ No new columns are needed on `vehicles`: new data goes into the Bidbus CR store,
 
 ## What the app sends
 
-When the seller signs, the app sends one record per car: answers first, then the media files one at a time. Two samples are attached to DEV-190: `inspection-bmw-x3.json` (gas, 46 photos, 37 checks, 8 damage photos) and `inspection-tesla-model-y.json` (EV).
+When the seller signs, the app sends one record per car: answers first, then the media files, three at a time. Two samples are attached to DEV-190: `inspection-bmw-x3.json` (gas, 46 photos, 37 checks, 8 damage photos) and `inspection-tesla-model-y.json` (EV).
 
 | Part | What it holds |
 |---|---|
