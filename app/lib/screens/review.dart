@@ -182,7 +182,7 @@ class ReviewScreen extends ConsumerWidget {
         for (var j = 0; j < list.length; j++)
           () {
             final d = list[j].$1, lb = labelled(d, fuel);
-            return ShotTile(lb ? d['panel'] : 'Not labelled',
+            return ShotTile(lb ? panelName(d) : 'Not labelled',
                 sub: lb ? dshort(d['panel'], d['type']) : null,
                 file: d['f'] != null ? store.abs(d['f']) : null,
                 damage: true,

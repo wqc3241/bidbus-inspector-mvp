@@ -120,7 +120,7 @@ class _WhereViewState extends State<WhereView> {
           padding: const EdgeInsets.only(bottom: 10),
           child: SegmentedButton<int>(segments: [for (var j = 0; j < gs.length; j++) ButtonSegment(value: j, label: Text(gs[j].$1))], selected: {t}, showSelectedIcon: false, onSelectionChanged: (v) => setState(() => tab = v.first)),
         ),
-      if (g.$2 == 'car') CarTopMap(sel: sel, have: have, onPick: widget.onPick),
+      if (g.$2 == 'car') CarTopMap(sel: panelName(d), have: have, onPick: widget.onPick),
       if (g.$2 == 'paint') PaintCar(make: widget.make, cell: (p) => PaintPickCell(_paintShort[p]!, on: sel == p, onTap: have.contains(p) ? () => widget.onPick(p) : null)),
       if (g.$2 == 'tires') TireMap(sel: sel, onPick: widget.onPick),
       if (g.$2 == 'cab')
@@ -170,7 +170,9 @@ class _WhereViewState extends State<WhereView> {
 }
 
 // type, severity and size in a drawer that opens when a place is tapped
-Future<void> labelDrawer(BuildContext context, String id, String did) => showModalBottomSheet(
+Future<void> labelDrawer(BuildContext context, String id, String did) {
+  final reasons = ScrollController(); // kept across the drawer's rebuilds, so a pick does not jump the list back to the top
+  return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.white,
@@ -196,14 +198,27 @@ Future<void> labelDrawer(BuildContext context, String id, String did) => showMod
               ),
             );
         Widget sub(String t) => Padding(padding: const EdgeInsets.fromLTRB(0, 14, 0, 6), child: Text(t.toUpperCase(), style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .7, color: muted)));
+        // at most half the screen: the place on top, the reasons scroll, severity and Done stay at the bottom
         return SafeArea(
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: MediaQuery.of(c).size.height * .85),
-            child: ListView(shrinkWrap: true, padding: const EdgeInsets.all(16), children: [
-              Text(d['panel'], style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
-              if (pl['ex'] == true && pl['fix'] != true) ...[sub(pl['exl'] ?? 'Where'), for (final o in strs(pl['exo'])) radio('ex', o, o)],
-              sub('Type'),
-              for (final t in placeOpts(pl, fuel)) radio('type', t, dshort(d['panel'], t)),
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(c).size.height * .5),
+            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Padding(padding: const EdgeInsets.fromLTRB(16, 16, 16, 0), child: Text(panelName(d), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700))),
+              Flexible(
+                // the scroll bar stays in view while the reasons are longer than the room: there are more below
+                child: Scrollbar(
+                  controller: reasons,
+                  thumbVisibility: true,
+                  child: ListView(controller: reasons, shrinkWrap: true, padding: const EdgeInsets.symmetric(horizontal: 16), children: [
+                    if (pl['ex'] == true && pl['fix'] != true) ...[sub(pl['exl'] ?? 'Where'), for (final o in strs(pl['exo'])) radio('ex', o, o)],
+                    sub('Type'),
+                    for (final t in placeOpts(pl, fuel)) radio('type', t, dshort(d['panel'], t)),
+                  ]),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               sub('Severity'),
               // severity buttons, and for an exterior damage a Size button that looks the same (the mockup's .lsev / .lsz)
               Row(children: [
@@ -233,11 +248,14 @@ Future<void> labelDrawer(BuildContext context, String id, String did) => showMod
                       Navigator.pop(c);
                     }
                   : null),
+                ]),
+              ),
             ]),
           ),
         );
       }),
-    );
+    ).whenComplete(reasons.dispose);
+}
 
 // the photo, the place picture and the label rows of one damage photo
 class DamageEditor extends ConsumerWidget {
@@ -306,7 +324,8 @@ class DamageEditor extends ConsumerWidget {
           setLabel(dmgById(s, did)!, 'panel', p, fuel);
           syncDamages(s);
         });
-        if (placeOf(dmgById(store.ins[id]!, did)!['zone'] ?? 'Exterior', p) != null) _drawer(context);
+        final now = dmgById(store.ins[id]!, did)!; // p may be a side's name ('Left mirror'): the damage holds the place
+        if (placeOf(now['zone'] ?? 'Exterior', now['panel']) != null) _drawer(context);
       }),
       if (pl != null) ...[
         const SizedBox(height: 16),

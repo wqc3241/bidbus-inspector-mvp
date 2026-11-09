@@ -33,7 +33,7 @@ FACE = {
     "Left front wheel": (3, 5), "Left front tire": (3, 5), "Left rear wheel": (8.5, 5), "Left rear tire": (8.5, 5),
     "Right rear wheel": (20.5, 5), "Right rear tire": (20.5, 5), "Right front wheel": (26, 5), "Right front tire": (26, 5),
 }
-# places that name no side: the side comes from the damage photo
+# places that name no side: the side the inspector picked on the car map (the record's where), else from the damage photo
 SIDED = {"Mirror": {"left": (3.5, 5), "right": (26, 5)}, "Headlight": {"left": (35, 6), "right": (30, 6)},
          "Tail light": {"left": (12, 5), "right": (17, 5)}, "Fuel door": {"left": (9, 5), "right": (20, 5)}}
 SAME = {"Hood or frunk lid": "Hood"}  # a Paint place that is an Exterior part
@@ -66,7 +66,8 @@ def marked(rec: dict) -> list[dict]:
         place = SAME.get(d.get("place"), d.get("place"))
         if (d.get("confirmed") and d.get("file") and isinstance(d.get("n"), int) and not isinstance(d.get("n"), bool)
                 and d.get("section") in SECTIONS and (place in FACE or place in SIDED)):
-            out.append({"n": d["n"], "place": place, "file": d["file"]})
+            side = d.get("where") if place in SIDED and d.get("where") in ("Left", "Right") else None  # the side the inspector picked
+            out.append({"n": d["n"], "place": place, "file": d["file"], **({"side": side.lower()} if side else {})})
     return out
 
 
@@ -127,7 +128,7 @@ def compute(folder: Path, rec: dict) -> list[dict] | None:
     parts: dict[str, dict] = {}  # name for the AI -> {frames, damages}
     for d in todo:
         if d["place"] in SIDED:
-            side = _side(folder, d)
+            side = d.get("side") or _side(folder, d)
             if side is None:
                 continue  # no side, no dot
             name, (face, half) = f"{side} {WORDS.get(d['place'], d['place'].lower())}", SIDED[d["place"]][side]

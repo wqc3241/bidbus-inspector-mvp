@@ -39,6 +39,9 @@ Path _svgPath(String d) {
 }
 
 final _sil = _svgPath(carSil), _paths = <String, Path>{};
+// what a part picks: its place, or for a place on both sides (mirror, headlight, tail light) its own side ('Left headlight')
+const _sided = {'Mirror', 'Headlight', 'Tail light'};
+String _key(CarPart q) => _sided.contains(q.$1) ? q.$2 : q.$1;
 Path _path(String d) => _paths.putIfAbsent(d, () => _svgPath(d));
 Rect _rect(List<double> r) => Rect.fromLTWH(r[0], r[1], r[2], r[3]);
 Paint _line(Color c, double w) => Paint()..style = PaintingStyle.stroke..color = c..strokeWidth = w;
@@ -47,13 +50,13 @@ Paint _line(Color c, double w) => Paint()..style = PaintingStyle.stroke..color =
 void _paintCar(Canvas c, Iterable<CarPart> parts, Iterable<CarPart> mirrors, String? sel) {
   c.drawPath(_sil.shift(const Offset(0, 7)), Paint()..color = const Color(0x29111827)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 7));
   for (final q in mirrors) {
-    c.drawPath(_path(q.$3), Paint()..color = sel == q.$1 ? _pick : Colors.white);
+    c.drawPath(_path(q.$3), Paint()..color = sel == _key(q) ? _pick : Colors.white);
     c.drawPath(_path(q.$3), _line(_grey, 1.5));
   }
   c.drawPath(_sil, Paint()..color = const Color(0xFFC5CBD3));
   for (final q in parts) {
-    final p = _path(q.$3), f = Paint()..color = sel == q.$1 ? _pick : q.$4 == 'rf' ? const Color(0xFFFCFCFD) : Colors.white;
-    if (sel != q.$1 && q.$4 == 'gl') f.shader = const LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF55616E), Color(0xFF2A323B)]).createShader(p.getBounds());
+    final p = _path(q.$3), f = Paint()..color = sel == _key(q) ? _pick : q.$4 == 'rf' ? const Color(0xFFFCFCFD) : Colors.white;
+    if (sel != _key(q) && q.$4 == 'gl') f.shader = const LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF55616E), Color(0xFF2A323B)]).createShader(p.getBounds());
     c.save();
     c.clipPath(_sil);
     c.drawPath(p, f);
@@ -161,7 +164,8 @@ Widget _frame(Rect vb, _Painter painter, List<(String, String, Rect, List<String
       ]),
     );
 
-/// Exterior Where picker: the car from above, front at the top. Only places in [have] are drawn and tappable ('Mirror' is both mirrors).
+/// Exterior Where picker: the car from above, front at the top. Only places in [have] are drawn and tappable. [sel] and the picked
+/// value are a place, or for a mirror, headlight or tail light its side's name ('Left mirror'), so only that one is picked.
 class CarTopMap extends StatelessWidget {
   final String? sel;
   final Set<String> have;
@@ -173,19 +177,21 @@ class CarTopMap extends StatelessWidget {
   bool _on(CarPart q, Offset o, bool clip) => _rect(q.$6).contains(o) || (q.$5 != null && _rect(q.$5!).contains(o)) || (_path(q.$3).contains(o) && (!clip || _sil.contains(o)));
   String? _hit(Offset o) {
     final part = carParts.reversed.where((q) => have.contains(q.$1) && _on(q, o, true)).firstOrNull;
-    if (part != null || _sil.contains(o)) return part?.$1; // the seams between parts pick nothing
-    return have.contains('Mirror') && carMirrors.any((q) => _on(q, o, false)) ? 'Mirror' : null;
+    if (part != null || _sil.contains(o)) return part == null ? null : _key(part); // the seams between parts pick nothing
+    final m = have.contains('Mirror') ? carMirrors.where((q) => _on(q, o, false)).firstOrNull : null;
+    return m == null ? null : _key(m);
   }
 
   @override
   Widget build(BuildContext context) => _frame(
         _vb,
         _Painter(_vb, sel, have),
-        [for (final q in [if (have.contains('Mirror')) ...carMirrors, ...carParts.where((q) => have.contains(q.$1))]) (q.$1, q.$2, _rect(q.$6), q.$7)],
+        [for (final q in [if (have.contains('Mirror')) ...carMirrors, ...carParts.where((q) => have.contains(q.$1))]) (_key(q), q.$2, _rect(q.$6), q.$7)],
         13,
         _hit,
         onPick,
-        sel != null && have.contains(sel) ? sel! : '',
+        // the picked part's name under the car (a sided place picked without its side shows nothing: pick a side)
+        sel != null && (have.contains(sel) && !_sided.contains(sel) || [...carMirrors, ...carParts].any((q) => _key(q) == sel && have.contains(q.$1))) ? sel! : '',
       );
 }
 

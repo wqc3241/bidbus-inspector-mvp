@@ -331,7 +331,7 @@ void pickExtra(J st, String id, String? w, String v) {
 bool labelled(J? d, String fuel) {
   if (d == null || (d['panel'] ?? '') == '' || (d['type'] ?? '') == '' || (d['sev'] ?? '') == '') return false;
   final pl = placeOf(d['zone'] ?? 'Exterior', d['panel']);
-  return pl != null && placeOpts(pl, fuel).contains(d['type']) && (pl['ex'] != true || (d['ex'] ?? '') != '');
+  return pl != null && placeOpts(pl, fuel).contains(d['type']) && (pl['ex'] != true || (d['ex'] ?? '') != '') && (!needsSide(d) || (d['side'] ?? '') != '');
 }
 
 bool dmgDone(J d, String fuel) => labelled(d, fuel) && d['ai'] != true;
@@ -362,15 +362,39 @@ int openTo(List<bool> done, int cur) {
   return f < 0 ? done.length - 1 : (f > cur ? f : cur);
 }
 
-String dmgLine(J d) => '${d['panel']}: ${dshort(d['panel'], d['type'])}${(d['ex'] ?? '') != '' && d['ex'] != d['panel'] ? ' (${(d['ex'] as String).toLowerCase()})' : ''}, ${d['sev']}${(d['size'] ?? '') != '' ? ', ${d['size']} in' : ''}';
+// as the condition report words it: the Which/Where answer, or the side of a sided place, in brackets ("Mirror: Damaged (left), Minor")
+String dmgLine(J d) {
+  final ex = (d['ex'] ?? '') != '' ? d['ex'] as String : needsSide(d) ? (d['side'] ?? '') as String : '';
+  return '${d['panel']}: ${dshort(d['panel'], d['type'])}${ex != '' && ex != d['panel'] ? ' (${ex.toLowerCase()})' : ''}, ${d['sev']}${(d['size'] ?? '') != '' ? ', ${d['size']} in' : ''}';
+}
 
 // picking a place: the type must belong to it; a single choice is picked for you
+// Exterior places that are on both sides of the car: the damage also keeps which one (side), picked on the car map
+const sidedPlaces = {'Mirror', 'Headlight', 'Tail light'};
+bool needsSide(J d) => (d['zone'] ?? 'Exterior') == 'Exterior' && sidedPlaces.contains(d['panel']);
+// 'Left mirror' -> ('Mirror', 'Left'); any other place name stays as it is, with no side
+(String, String?) placeSide(String key) {
+  final m = RegExp(r'^(Left|Right) (mirror|headlight|tail light)$').firstMatch(key);
+  return m == null ? (key, null) : ('${m[2]![0].toUpperCase()}${m[2]!.substring(1)}', m[1]);
+}
+
+// the place as the car map names it: 'Left mirror' for a sided place with its side, else the place
+String panelName(J d) => needsSide(d) && (d['side'] ?? '') != '' ? '${d['side']} ${(d['panel'] as String).toLowerCase()}' : (d['panel'] ?? '') as String;
+
 void setLabel(J d, String f, String v, String fuel) {
   d['ai'] = false;
   if (f != 'panel') {
     d[f] = v;
     return;
   }
+  // a car-map part on one side ('Left headlight'): the place and that side; another place drops the side
+  final ps = placeSide(v);
+  if (ps.$2 != null) {
+    d['side'] = ps.$2;
+  } else if (!(sidedPlaces.contains(ps.$1) && d['panel'] == ps.$1)) {
+    d.remove('side');
+  }
+  v = ps.$1;
   if (RegExp(r'^(Left|Right) (front|rear) wheel$').hasMatch(v)) d['zone'] = 'Tires';
   if (d['panel'] == v) return;
   d['panel'] = v;

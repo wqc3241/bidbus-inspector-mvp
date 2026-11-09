@@ -34,7 +34,8 @@ void main() {
     await tapVb(t, CarTopMap, car, 70, 190); // the left mirror
     await t.tap(find.text('Head\nlight').first);
     await tapVb(t, CarTopMap, car, 180, 270); // roof
-    expect(picks, ['Hood', 'Hood', 'Left front fender', 'Right front fender', 'Left front fender', 'Mirror', 'Mirror', 'Headlight', 'Roof']);
+    // a mirror, headlight or tail light picks its own side, never both
+    expect(picks, ['Hood', 'Hood', 'Left front fender', 'Right front fender', 'Left front fender', 'Right mirror', 'Left mirror', 'Left headlight', 'Roof']);
   });
 
   testWidgets('car: seams and the part outside the car outline pick nothing', (t) async {
