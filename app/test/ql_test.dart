@@ -28,7 +28,8 @@ void main() {
           continue;
         }
         expect(fuelOk(it['cars'], fuel), r['on'], reason: '${it['id']} on/off for $fuel');
-        if (where.startsWith('Camera ')) expect(capList(where.substring(7), st).any((x) => x['id'] == it['id']), true, reason: '${it['id']} in the camera pass');
+        // the mockup's Mechanicals pass holds the underbody shots; the app gives them their own section after it
+        if (where.startsWith('Camera ')) expect([where.substring(7), if (where == 'Camera Mechanicals') 'Underbody'].any((k) => capList(k, st).any((x) => x['id'] == it['id'])), true, reason: '${it['id']} in the camera pass');
       }
       for (final k in capseq.skip(1)) {
         for (final id in ckIdsOf(k, st)) {
@@ -59,12 +60,19 @@ void main() {
           for (final t in placeOpts(pl, fuel)) {
             final d = <String, dynamic>{'zone': z, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera'};
             manual(st).add(d);
+            final sided = z == 'Exterior' && sidedPlaces.contains(pl['p']);
             setLabel(d, 'panel', pl['p'], fuel);
             setLabel(d, 'type', t, fuel);
             if (pl['ex'] == true && d['ex'] == null) d['ex'] = strs(pl['exo'])[0];
             setLabel(d, 'sev', 'Moderate', fuel);
-            syncDamages(st);
             final tag = '$z/${pl['p']}/$t';
+            if (sided) {
+              // a mirror, headlight or tail light is labelled only with its side, picked on the car map as 'Left ...'
+              expect(labelled(d, fuel), false, reason: '$tag labelled without a side');
+              setLabel(d, 'panel', 'Left ${(pl['p'] as String).toLowerCase()}', fuel);
+              expect((d['panel'], d['side'], d['type']), (pl['p'], 'Left', t), reason: '$tag keeps its type with the side');
+            }
+            syncDamages(st);
             expect(labelled(d, fuel), true, reason: '$tag labelled');
             if (dmgOwn(st, d)) {
               expect((totals(st)['dlist'] as List).any((x) => x.contains(dmgLine(d))), true, reason: '$tag listed');

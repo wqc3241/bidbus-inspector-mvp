@@ -11,8 +11,23 @@ J newInspection({required String id, required J car, required String fuel, requi
     'manual': <dynamic>[], 'multi': <String, dynamic>{}, 'skip': <String, dynamic>{}, 'feat': <String, dynamic>{}, 'note': '', 'overall': '',
     'signName': car['owner_name'] ?? '', 'signed': false, 'agree': false, 'sok': <String, dynamic>{}, 'dprev': <dynamic>[],
     'files': <String, dynamic>{}, 'turn': <String, dynamic>{}, 'docs': <String, dynamic>{}, 'start': null, 'end': null, 'cap': null,
-    'aiq': <dynamic>[], 'up': null, 'nid': 0,
+    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true,
   };
+}
+
+// an inspection saved before Underbody had its own section: its shots were the end of Mechanicals
+J splitUnderbody(J st) {
+  if (st['ub'] == true) return st;
+  st['ub'] = true;
+  final n = capList('Mechanicals', st).length;
+  for (final e in [...manual(st), ...((m(st, 'multi')['ph_mod_mech'] ?? []) as List).cast<J>()]) {
+    if (e['sec'] == 'Mechanicals' && e['at'] is int && (e['at'] as int) >= n) {
+      e['sec'] = 'Underbody';
+      e['at'] = (e['at'] as int) - n;
+    }
+  }
+  if (m(st, 'sok')['Mechanicals'] == true) m(st, 'sok')['Underbody'] = true;
+  return st;
 }
 
 String fuelOf(J st) => st['fuel'] as String;
@@ -316,31 +331,70 @@ void pickExtra(J st, String id, String? w, String v) {
 bool labelled(J? d, String fuel) {
   if (d == null || (d['panel'] ?? '') == '' || (d['type'] ?? '') == '' || (d['sev'] ?? '') == '') return false;
   final pl = placeOf(d['zone'] ?? 'Exterior', d['panel']);
-  return pl != null && placeOpts(pl, fuel).contains(d['type']) && (pl['ex'] != true || (d['ex'] ?? '') != '');
+  return pl != null && placeOpts(pl, fuel).contains(d['type']) && (pl['ex'] != true || (d['ex'] ?? '') != '') && (!needsSide(d) || (d['side'] ?? '') != '');
 }
 
 bool dmgDone(J d, String fuel) => labelled(d, fuel) && d['ai'] != true;
-List<(J, int)> zoneDamages(J st, String z) => [for (var i = 0; i < manual(st).length; i++) if ((manual(st)[i]['zone'] ?? 'Exterior') == z) (manual(st)[i], i)];
-List<int> labelOrder(J st) => [for (final z in dz) ...zoneDamages(st, z).map((e) => e.$2)];
-List<int> unlabelledOrder(J st) => labelOrder(st).where((i) => !dmgDone(manual(st)[i], fuelOf(st))).toList();
-int nextUnlabelled(J st, int from) {
-  final o = labelOrder(st), p = o.indexOf(from);
-  for (var j = 1; j <= o.length; j++) {
-    final i = o[(p + j + o.length) % o.length];
-    if (!dmgDone(manual(st)[i], fuelOf(st))) return i;
-  }
-  return -1;
+// the tab a damage shows on: its zone, but a Mechanicals damage at an underbody place (or taken or added there) is on Underbody
+String dtab(J d) {
+  final z = d['zone'] ?? 'Exterior';
+  if (z != 'Mechanicals') return z;
+  if (placeOf(z, d['panel']) != null) return dmgSec(z, d['panel']);
+  return d['sec'] == 'Underbody' || d['tab'] == 'Underbody' ? 'Underbody' : 'Mechanicals';
 }
 
-String dmgLine(J d) => '${d['panel']}: ${dshort(d['panel'], d['type'])}${(d['ex'] ?? '') != '' && d['ex'] != d['panel'] ? ' (${(d['ex'] as String).toLowerCase()})' : ''}, ${d['sev']}${(d['size'] ?? '') != '' ? ', ${d['size']} in' : ''}';
+List<(J, int)> zoneDamages(J st, String z) => [for (var i = 0; i < manual(st).length; i++) if (dtab(manual(st)[i]) == z) (manual(st)[i], i)];
+List<int> labelOrder(J st) => [for (final z in dz) ...zoneDamages(st, z).map((e) => e.$2)];
+List<int> unlabelledOrder(J st) => labelOrder(st).where((i) => !dmgDone(manual(st)[i], fuelOf(st))).toList();
+// the next photo to label: this tab's first, then the first one still to label (a tab opens only when the ones before it are done)
+int nextUnlabelled(J st, int from) {
+  final o = labelOrder(st), p = o.indexOf(from), z = from >= 0 && from < manual(st).length ? dtab(manual(st)[from]) : null;
+  for (var j = 1; j <= o.length; j++) {
+    final i = o[(p + j + o.length) % o.length];
+    if (!dmgDone(manual(st)[i], fuelOf(st)) && dtab(manual(st)[i]) == z) return i;
+  }
+  return unlabelledOrder(st).firstOrNull ?? -1;
+}
+
+// how far a strip opens: up to the first unfinished tab, and never short of the current one
+int openTo(List<bool> done, int cur) {
+  final f = done.indexOf(false);
+  return f < 0 ? done.length - 1 : (f > cur ? f : cur);
+}
+
+// as the condition report words it: the Which/Where answer, or the side of a sided place, in brackets ("Mirror: Damaged (left), Minor")
+String dmgLine(J d) {
+  final ex = (d['ex'] ?? '') != '' ? d['ex'] as String : needsSide(d) ? (d['side'] ?? '') as String : '';
+  return '${d['panel']}: ${dshort(d['panel'], d['type'])}${ex != '' && ex != d['panel'] ? ' (${ex.toLowerCase()})' : ''}, ${d['sev']}${(d['size'] ?? '') != '' ? ', ${d['size']} in' : ''}';
+}
 
 // picking a place: the type must belong to it; a single choice is picked for you
+// Exterior places that are on both sides of the car: the damage also keeps which one (side), picked on the car map
+const sidedPlaces = {'Mirror', 'Headlight', 'Tail light'};
+bool needsSide(J d) => (d['zone'] ?? 'Exterior') == 'Exterior' && sidedPlaces.contains(d['panel']);
+// 'Left mirror' -> ('Mirror', 'Left'); any other place name stays as it is, with no side
+(String, String?) placeSide(String key) {
+  final m = RegExp(r'^(Left|Right) (mirror|headlight|tail light)$').firstMatch(key);
+  return m == null ? (key, null) : ('${m[2]![0].toUpperCase()}${m[2]!.substring(1)}', m[1]);
+}
+
+// the place as the car map names it: 'Left mirror' for a sided place with its side, else the place
+String panelName(J d) => needsSide(d) && (d['side'] ?? '') != '' ? '${d['side']} ${(d['panel'] as String).toLowerCase()}' : (d['panel'] ?? '') as String;
+
 void setLabel(J d, String f, String v, String fuel) {
   d['ai'] = false;
   if (f != 'panel') {
     d[f] = v;
     return;
   }
+  // a car-map part on one side ('Left headlight'): the place and that side; another place drops the side
+  final ps = placeSide(v);
+  if (ps.$2 != null) {
+    d['side'] = ps.$2;
+  } else if (!(sidedPlaces.contains(ps.$1) && d['panel'] == ps.$1)) {
+    d.remove('side');
+  }
+  v = ps.$1;
   if (RegExp(r'^(Left|Right) (front|rear) wheel$').hasMatch(v)) d['zone'] = 'Tires';
   if (d['panel'] == v) return;
   d['panel'] = v;
@@ -353,33 +407,42 @@ void setLabel(J d, String f, String v, String fuel) {
 // what the labelled photos say: a problem on a check (p), its second step (x), or a sunroof/navigation answer (f)
 List<J> dmgDerived(J st) {
   final out = <J>[], seen = <String>{}, fuel = fuelOf(st);
-  void add(J d) {
-    if (seen.add(dkey(d))) out.add(d);
-  }
-
   for (final d in manual(st)) {
-    final pl = placeOf(d['zone'] ?? 'Exterior', d['panel']);
-    if (pl == null || (d['type'] ?? '') == '' || !placeOpts(pl, fuel).contains(d['type'])) continue;
-    final tw = twinOf(pl, d['type'], fuel);
-    if (tw != null) {
-      add({'t': 'p', 'id': tw['ck'], 'w': null, 'v': d['type']});
-      add({'t': 'x', 'id': tw['ck'], 'w': null, 'v': strs(tw['exo'])[0]});
-      continue;
+    for (final e in dmgDerivedOf(d, fuel)) {
+      if (seen.add(dkey(e))) out.add(e);
     }
-    if (isStruct(pl, d['type'])) {
-      add({'t': 'p', 'id': 'ck_structure', 'w': null, 'v': pl['st']});
-      continue;
-    }
-    if (pl['ck'] != null && !fuelOk(byId[pl['ck']]?['cars'] ?? 'all', fuel)) continue;
-    if (pl['feat'] != null) {
-      add({'t': 'f', 'id': pl['feat'], 'v': 'Not working'});
-      continue;
-    }
-    if (pl['ck'] == null) continue;
-    add({'t': 'p', 'id': pl['ck'], 'w': pl['w'], 'v': d['type']});
-    if (pl['ex'] == true && (d['ex'] ?? '') != '') add({'t': 'x', 'id': pl['ck'], 'w': pl['w'], 'v': d['ex']});
   }
   return out;
+}
+
+// what one damage photo answers on the checks: a problem ('p'), its Which/Where ('x'), a feature not working ('f'); nothing for its own damage
+List<J> dmgDerivedOf(J d, String fuel) {
+  final pl = placeOf(d['zone'] ?? 'Exterior', d['panel']);
+  if (pl == null || (d['type'] ?? '') == '' || !placeOpts(pl, fuel).contains(d['type'])) return const [];
+  final tw = twinOf(pl, d['type'], fuel);
+  if (tw != null) {
+    return [
+      {'t': 'p', 'id': tw['ck'], 'w': null, 'v': d['type']},
+      {'t': 'x', 'id': tw['ck'], 'w': null, 'v': strs(tw['exo'])[0]},
+    ];
+  }
+  if (isStruct(pl, d['type'])) return [{'t': 'p', 'id': 'ck_structure', 'w': null, 'v': pl['st']}];
+  if (pl['ck'] != null && !fuelOk(byId[pl['ck']]?['cars'] ?? 'all', fuel)) return const [];
+  if (pl['feat'] != null) return [{'t': 'f', 'id': pl['feat'], 'v': 'Not working'}];
+  if (pl['ck'] == null) return const [];
+  return [
+    {'t': 'p', 'id': pl['ck'], 'w': pl['w'], 'v': d['type']},
+    if (pl['ex'] == true && (d['ex'] ?? '') != '') {'t': 'x', 'id': pl['ck'], 'w': pl['w'], 'v': d['ex']},
+  ];
+}
+
+// the damage photos behind a check problem (or a feature not working): the ones whose answer it is
+List<String> dmgPhotos(J st, String t, String id, String? w, String v) {
+  final fuel = fuelOf(st);
+  return [
+    for (final d in manual(st))
+      if ((d['f'] ?? '') != '' && dmgDerivedOf(d, fuel).any((e) => e['t'] == t && e['id'] == id && (e['w'] ?? '') == (w ?? '') && e['v'] == v)) d['f'] as String,
+  ];
 }
 
 String dkey(J d) => '${d['t']}|${d['w'] ?? ''}|${d['id']}|${d['v']}';
@@ -445,14 +508,37 @@ int dmgOwnProbs(J st, String k, List<String> ids) {
   }).length;
 }
 
-// a damage taken at a paint panel or tire shot carries that place as the AI hint
-String? dmgHint(J st, String sec, int at) {
+// the Exterior places each shot of the walk sees: the paint panel (or photo) and the parts next to it
+const shotNear = {
+  'Left front fender': ['Left front fender', 'Front bumper', 'Headlight', 'Mirror', 'Other lights'],
+  'Left front door': ['Left front door', 'Left front window', 'Mirror'],
+  'Left rear door': ['Left rear door', 'Left rear window'],
+  'Left quarter panel': ['Left quarter panel', 'Left rear window', 'Fuel door', 'Tail light', 'Rear bumper', 'Other lights'], // the rear window: a coupe's quarter glass
+  'Trunk or liftgate': ['Trunk or liftgate', 'Rear glass', 'Tail light', 'Rear bumper', 'Wipers', 'Other lights'],
+  'Right quarter panel': ['Right quarter panel', 'Right rear window', 'Fuel door', 'Tail light', 'Rear bumper', 'Other lights'],
+  'Right rear door': ['Right rear door', 'Right rear window'],
+  'Right front door': ['Right front door', 'Right front window', 'Mirror'],
+  'Right front fender': ['Right front fender', 'Front bumper', 'Headlight', 'Mirror', 'Other lights'],
+  'Hood': ['Hood', 'Front bumper', 'Headlight', 'Windshield', 'Wipers', 'Other lights'],
+  'Roof': ['Roof', 'Windshield', 'Rear glass'],
+  'ph_ext_roof': ['Roof', 'Windshield', 'Rear glass'],
+  'ph_vin_dash': ['Windshield', 'Wipers', 'Hood'],
+};
+
+// a damage shot during the walk (Exterior panel by panel, Tires wheel by wheel) is somewhere between the shot taken before it
+// and the shot to take next, whichever of the two it was taken nearer: the AI picks its place from those places only
+List<String>? dmgNear(J st, String sec, int at) {
+  if (sec != 'Exterior' && sec != 'Tires') return null;
   final l = capList(sec, st);
   if (l.isEmpty) return null;
-  final shot = l[at.clamp(0, l.length - 1)];
-  if (shot['panel'] != null) return shot['panel'];
-  if (shot['wheel'] != null) return '${wheelName(shot['wheel'])} tire';
-  return null;
+  final a = at.clamp(0, l.length - 1), out = <String>{};
+  for (final x in [if (a > 0) l[a - 1], l[a]]) {
+    final w = x['wheel'] as String?;
+    out.addAll(w != null ? ['${wheelName(w)} tire', '${wheelName(w)} wheel'] : shotNear[x['panel'] ?? x['id']] ?? const <String>[]);
+  }
+  if (out.isEmpty) return null;
+  if (sec == 'Exterior') out.add('Other');
+  return out.toList();
 }
 
 // ---------- Review and Summary gates ----------
@@ -487,7 +573,8 @@ SecInfo secInfo(J st, String k) {
     }
   }
   final isZone = zoneTitle.containsKey(k);
-  if (isZone) probs += dmgOwnProbs(st, k, ckIdsOf(k, st));
+  // Mechanicals and Underbody count a damage once: on the page with its check, or as its own problem
+  if (isZone) probs += dmgOwnProbs(st, k, k == 'Mechanicals' || k == 'Underbody' ? [...ckIdsOf('Mechanicals', st), ...ckIdsOf('Underbody', st)] : ckIdsOf(k, st));
   final unl = isZone ? zoneDamages(st, k).where((e) => !dmgDone(e.$1, fuel)).length : 0;
   final tdm = k == 'Tires' ? [for (final w in wheels) if (tire(st, w[0])['tread'] == '') w[1]] : <String>[];
   final fqm = k == 'Interior' ? keysMissing(st) + featMissing(st) : k == 'Tires' ? tmMissing(st) + tdm.length : 0;
@@ -537,33 +624,51 @@ List<J> problemsList(J st) {
       for (final w in wheels) {
         for (final id in ['ck_tire', 'ck_wheel']) {
           for (final p in lst(tire(st, w[0]), 'probs', id)) {
-            out.add({'text': '${id == 'ck_tire' ? 'Tire: ' : 'Wheel: '}$p', 'where': w[2], 'level': level(byId[id]!, p), 'ph': dmgVals(st, id, w[0]).contains(p)});
+            out.add({'sec': k, 'text': '${id == 'ck_tire' ? 'Tire: ' : 'Wheel: '}$p', 'where': w[2], 'level': level(byId[id]!, p), 'ph': dmgVals(st, id, w[0]).contains(p), 'photos': dmgPhotos(st, 'p', id, w[0], p)});
           }
         }
       }
-      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'text': 'Tires do not match (brand, model or size)', 'where': 'Tires', 'level': level(byId['tires_match']!, 'Mismatch')});
+      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'sec': k, 'text': 'Tires do not match (brand, model or size)', 'where': stTitle('Tires'), 'level': level(byId['tires_match']!, 'Mismatch')});
       continue;
     }
     if (k == 'Paint') {
       for (final p in lst(st, 'probs', 'ck_paint')) {
         final ex = lst(st, 'extra', 'ck_paint').join(', ');
-        out.add({'text': '${byId['ck_paint']!['label']}: ${plain(p)}', 'where': 'Paint${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(byId['ck_paint']!, p), 'ph': dmgVals(st, 'ck_paint', null).contains(p)});
+        out.add({'sec': k, 'text': '${byId['ck_paint']!['label']}: ${plain(p)}', 'where': 'Paint${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(byId['ck_paint']!, p), 'ph': dmgVals(st, 'ck_paint', null).contains(p), 'photos': dmgPhotos(st, 'p', 'ck_paint', null, p)});
       }
       continue;
     }
     if (k == 'Interior') {
       for (final q in featq) {
-        if (m(st, 'feat')[q[0]] == 'Not working') out.add({'text': '${q[1]}: Not working', 'where': k, 'level': level(byId[q[0]] ?? {}, 'Not working')});
+        if (m(st, 'feat')[q[0]] == 'Not working') out.add({'sec': k, 'text': '${q[1]}: Not working', 'where': k, 'level': level(byId[q[0]] ?? {}, 'Not working'), 'photos': dmgPhotos(st, 'f', q[0], null, 'Not working')});
       }
     }
     for (final it in stepItems(k, st).checks) {
       for (final p in lst(st, 'probs', it['id'])) {
         final ex = lst(st, 'extra', it['id']).join(', ');
-        out.add({'text': '${it['label']}: ${plain(p)}', 'where': '$k${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(it, p), 'ph': dmgVals(st, it['id'], null).contains(p)});
+        out.add({'sec': k, 'text': '${it['label']}: ${plain(p)}', 'where': '$k${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(it, p), 'ph': dmgVals(st, it['id'], null).contains(p), 'photos': dmgPhotos(st, 'p', it['id'], null, p)});
       }
     }
   }
   return out;
+}
+
+// what was found, section by section in Review order: its problems, then its damage photos that answer no check (each line is dmgLine)
+List<(String, List<J>, List<J>)> findingsBySec(J st) {
+  final pl = problemsList(st), fuel = fuelOf(st);
+  return [
+    for (final k in capseq.sublist(1))
+      (k, pl.where((p) => p['sec'] == k).toList(), [for (final d in manual(st)) if (dtab(d) == k && labelled(d, fuel) && dmgOwn(st, d)) d]),
+  ].where((g) => g.$2.isNotEmpty || g.$3.isNotEmpty).toList();
+}
+
+// a problem's place under its section heading: the section name in front is dropped ("Exterior · Hood" -> "Hood")
+String whereIn(String k, String w) {
+  for (final p in [stTitle(k), k]) {
+    if (w == p) return '';
+    if (w.startsWith('$p · ')) return w.substring(p.length + 3);
+  }
+  return w;
 }
 
 // counts for the Summary

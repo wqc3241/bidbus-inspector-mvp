@@ -2,7 +2,7 @@
 <div class="gal {{ app }}" data-gal>
  <div class="{{ app }}-hero g-hero">
   <div class="g-track">{% for x in media %}<div class="g-sl {{ x.kind }}" data-g="{{ x.g }}" data-lbl="{{ x.lbl }}">
-   {%- if x.kind == "spin" %}<div class="cloudimage-360" data-folder="{{ x.folder }}" data-filename-x="spin-{index}.jpg" data-amount-x="36" data-index-zero-base="2"></div>
+   {%- if x.kind == "spin" %}<div class="cloudimage-360" id="spin360"></div><script type="application/json" id="spin-cfg">{{ x.cfg|tojson }}</script>
    {%- elif x.kind == "video" %}<video src="{{ x.src }}" controls playsinline preload="metadata"></video>
    {%- else %}<img src="{{ x.src }}" alt="{{ x.lbl }}" loading="lazy">{% endif %}</div>{% endfor %}</div>
   <button type="button" class="g-nav prev" data-step="-1" aria-label="Previous">{{ I("left", 18) }}</button>
@@ -26,3 +26,9 @@
  {%- if x.photo %}<dd class="dmg"><a class="dth" href="{{ x.photo }}"><img src="{{ x.photo }}" alt="" loading="lazy"></a><div class="dtxt">{{ txt }}</div></dd>
  {%- else %}<dd class="neg"><span>×</span><div class="dtxt">{{ txt }}</div></dd>{% endif %}
 {%- endfor %}{% endmacro %}
+
+{# the Paint block: highest and lowest panel reading #}
+{# OBD-II with a problem: its scan screens, each opening the photo #}
+{% macro shots(row) %}{% if row.shots %}<dd class="shots">{% for x in row.shots %}<a class="dth scr" href="{{ x.src }}" title="{{ x.lbl }}"><img src="{{ x.src }}" alt="{{ x.lbl }}" loading="lazy"></a>{% endfor %}</dd>{% endif %}{% endmacro %}
+
+{% macro reads(row) %}{% for x in row.reads %}<dd class="neu"><span>{{ x.icon }}</span><div class="dtxt">{{ x.text }}<small>{{ x.sub }}</small></div></dd>{% endfor %}{% endmacro %}

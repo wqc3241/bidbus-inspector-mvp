@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,8 +31,14 @@ const _whereUi = {
 const _carPlaces = {'Front bumper', 'Left front fender', 'Hood', 'Right front fender', 'Left front door', 'Roof', 'Right front door', 'Left rear door', 'Right rear door', 'Left quarter panel', 'Trunk or liftgate', 'Right quarter panel', 'Rear bumper', 'Windshield', 'Left front window', 'Left rear window', 'Right front window', 'Right rear window', 'Rear glass', 'Mirror', 'Headlight', 'Tail light'};
 const _cabPlaces = {'Steering wheel', 'Dash', 'Front seats', 'Center console', 'Rear seats', 'Door panels', 'Cargo area'};
 const _wlbl = {'Screen, audio or cameras': 'Screen & audio', 'Power windows, locks, mirrors or seats': 'Power controls', 'Interior lights or defroster': 'Lights & defrost', 'Airbag covers': 'Airbags', 'High voltage or front trunk': 'High voltage', 'Driveshaft or CV': 'Driveshaft'};
+// Lucide has no wiper: the dashboard wiper sign (a windshield and its wiper arm), in the same line style as the icons
+const _wiperSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M2 20 4.6 6.6Q12 3.4 19.4 6.6L22 20Z"/><path d="M12 20 6.3 9.4"/><circle cx="12" cy="20" r="0.6" fill="#000"/></svg>';
+Widget _tileIcon(String p, Color color) => p == 'Wipers'
+    ? SvgPicture.string(_wiperSvg, width: 22, height: 22, colorFilter: ColorFilter.mode(color, BlendMode.srcIn))
+    : Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: color);
 const _wicon = {
-  'Other lights': LucideIcons.lightbulb, 'Wipers': LucideIcons.wind, 'Fuel door': LucideIcons.fuel, 'Other': LucideIcons.ellipsis, 'Headliner': LucideIcons.panelTop, 'Carpet': LucideIcons.grid3x3, 'Sunroof': LucideIcons.sun,
+  'Other lights': LucideIcons.lightbulb, 'Fuel door': LucideIcons.fuel, 'Other': LucideIcons.ellipsis, 'Headliner': LucideIcons.panelTop, 'Carpet': LucideIcons.grid3x3, 'Sunroof': LucideIcons.sun,
   'Screen, audio or cameras': LucideIcons.monitor, 'Power windows, locks, mirrors or seats': LucideIcons.power, 'Interior lights or defroster': LucideIcons.lightbulb, 'Horn': LucideIcons.megaphone, 'Navigation': LucideIcons.navigation,
   'Warning lights': LucideIcons.triangleAlert, 'Seat belts': LucideIcons.link, 'Airbag covers': LucideIcons.shield, 'Engine bay': LucideIcons.cog, 'Fluids': LucideIcons.droplets, 'Leak': LucideIcons.droplet, '12 V battery': LucideIcons.batteryFull,
   'High voltage or front trunk': LucideIcons.zap, 'Charge port': LucideIcons.plug, 'Structure': LucideIcons.frame, 'Rust': LucideIcons.biohazard, 'Exhaust': LucideIcons.cloud, 'Suspension': LucideIcons.activity, 'Driveshaft or CV': LucideIcons.cog,
@@ -105,7 +112,7 @@ class _WhereViewState extends State<WhereView> {
   @override
   Widget build(BuildContext context) {
     final d = widget.d, z = d['zone'] ?? 'Exterior', gs = whereGroups(z, widget.fuel), have = placesFor(z, widget.fuel).map((q) => q['p'] as String).toSet();
-    final under = (d['panel'] ?? '') == '' && (widget.shot ?? '').startsWith('ph_under') ? gs.indexWhere((g) => g.$1 == 'Underbody') : -1;
+    final under = (d['panel'] ?? '') == '' && ((widget.shot ?? '').startsWith('ph_under') || dtab(d) == 'Underbody') ? gs.indexWhere((g) => g.$1 == 'Underbody') : -1;
     final t = (tab ?? (under >= 0 ? under : groupOf(gs, d['panel']))).clamp(0, gs.length - 1), g = gs[t], sel = d['panel'] as String?;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       if (gs.length > 1)
@@ -113,7 +120,7 @@ class _WhereViewState extends State<WhereView> {
           padding: const EdgeInsets.only(bottom: 10),
           child: SegmentedButton<int>(segments: [for (var j = 0; j < gs.length; j++) ButtonSegment(value: j, label: Text(gs[j].$1))], selected: {t}, showSelectedIcon: false, onSelectionChanged: (v) => setState(() => tab = v.first)),
         ),
-      if (g.$2 == 'car') CarTopMap(sel: sel, have: have, onPick: widget.onPick),
+      if (g.$2 == 'car') CarTopMap(sel: panelName(d), have: have, onPick: widget.onPick),
       if (g.$2 == 'paint') PaintCar(make: widget.make, cell: (p) => PaintPickCell(_paintShort[p]!, on: sel == p, onTap: have.contains(p) ? () => widget.onPick(p) : null)),
       if (g.$2 == 'tires') TireMap(sel: sel, onPick: widget.onPick),
       if (g.$2 == 'cab')
@@ -148,7 +155,7 @@ class _WhereViewState extends State<WhereView> {
                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                     decoration: BoxDecoration(color: sel == p ? Colors.black : alt, borderRadius: BorderRadius.circular(12)),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: sel == p ? Colors.white : Colors.black87),
+                      _tileIcon(p, sel == p ? Colors.white : Colors.black87),
                       const SizedBox(height: 4),
                       Flexible(child: FitLabel(_wlbl[p] ?? p, TextStyle(fontSize: 11.5, height: 1.3, fontWeight: FontWeight.w600, color: sel == p ? Colors.white : Colors.black), lines: 3)),
                     ]),
@@ -163,7 +170,9 @@ class _WhereViewState extends State<WhereView> {
 }
 
 // type, severity and size in a drawer that opens when a place is tapped
-Future<void> labelDrawer(BuildContext context, String id, String did) => showModalBottomSheet(
+Future<void> labelDrawer(BuildContext context, String id, String did) {
+  final reasons = ScrollController(); // kept across the drawer's rebuilds, so a pick does not jump the list back to the top
+  return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.white,
@@ -189,14 +198,27 @@ Future<void> labelDrawer(BuildContext context, String id, String did) => showMod
               ),
             );
         Widget sub(String t) => Padding(padding: const EdgeInsets.fromLTRB(0, 14, 0, 6), child: Text(t.toUpperCase(), style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .7, color: muted)));
+        // at most half the screen: the place on top, the reasons scroll, severity and Done stay at the bottom
         return SafeArea(
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: MediaQuery.of(c).size.height * .85),
-            child: ListView(shrinkWrap: true, padding: const EdgeInsets.all(16), children: [
-              Text(d['panel'], style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
-              if (pl['ex'] == true && pl['fix'] != true) ...[sub(pl['exl'] ?? 'Where'), for (final o in strs(pl['exo'])) radio('ex', o, o)],
-              sub('Type'),
-              for (final t in placeOpts(pl, fuel)) radio('type', t, dshort(d['panel'], t)),
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(c).size.height * .5),
+            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Padding(padding: const EdgeInsets.fromLTRB(16, 16, 16, 0), child: Text(panelName(d), style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700))),
+              Flexible(
+                // the scroll bar stays in view while the reasons are longer than the room: there are more below
+                child: Scrollbar(
+                  controller: reasons,
+                  thumbVisibility: true,
+                  child: ListView(controller: reasons, shrinkWrap: true, padding: const EdgeInsets.symmetric(horizontal: 16), children: [
+                    if (pl['ex'] == true && pl['fix'] != true) ...[sub(pl['exl'] ?? 'Where'), for (final o in strs(pl['exo'])) radio('ex', o, o)],
+                    sub('Type'),
+                    for (final t in placeOpts(pl, fuel)) radio('type', t, dshort(d['panel'], t)),
+                  ]),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               sub('Severity'),
               // severity buttons, and for an exterior damage a Size button that looks the same (the mockup's .lsev / .lsz)
               Row(children: [
@@ -226,11 +248,14 @@ Future<void> labelDrawer(BuildContext context, String id, String did) => showMod
                       Navigator.pop(c);
                     }
                   : null),
+                ]),
+              ),
             ]),
           ),
         );
       }),
-    );
+    ).whenComplete(reasons.dispose);
+}
 
 // the photo, the place picture and the label rows of one damage photo
 class DamageEditor extends ConsumerWidget {
@@ -273,13 +298,17 @@ class DamageEditor extends ConsumerWidget {
             right: 10,
             top: 10,
             child: Row(children: [
-              _sq(LucideIcons.camera, () => context.push('/i/$id/cam', extra: CamArgs(dmg: d['zone'] ?? 'Exterior', redo: did))),
+              _sq(LucideIcons.camera, () => context.push('/i/$id/cam', extra: CamArgs(dmg: dtab(d), redo: did))),
               const SizedBox(width: 8),
               _sq(LucideIcons.trash2, () {
                 final file = d['f'] as String?;
                 store.mut(id, (s) {
+                  final z = dtab(dmgById(s, did)!);
                   manual(s).removeWhere((x) => x['id'] == did);
                   syncDamages(s);
+                  // stay on this tab: a photo still to label there, else its first; with none left, the first photo still to label
+                  final same = zoneDamages(s, z), todo = same.where((e) => !dmgDone(e.$1, fuelOf(s)));
+                  s['li'] = (todo.firstOrNull ?? same.firstOrNull)?.$2 ?? unlabelledOrder(s).firstOrNull ?? 0;
                 });
                 dropFile(file);
               }, color: red),
@@ -295,7 +324,8 @@ class DamageEditor extends ConsumerWidget {
           setLabel(dmgById(s, did)!, 'panel', p, fuel);
           syncDamages(s);
         });
-        if (placeOf(dmgById(store.ins[id]!, did)!['zone'] ?? 'Exterior', p) != null) _drawer(context);
+        final now = dmgById(store.ins[id]!, did)!; // p may be a side's name ('Left mirror'): the damage holds the place
+        if (placeOf(now['zone'] ?? 'Exterior', now['panel']) != null) _drawer(context);
       }),
       if (pl != null) ...[
         const SizedBox(height: 16),
@@ -361,8 +391,12 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     }
     var li = st['li'] as int? ?? o.first;
     if (!o.contains(li)) li = unlabelledOrder(st).firstOrNull ?? o.first;
-    final d = manual(st)[li], z = d['zone'] ?? 'Exterior', pos = o.indexOf(li);
+    final d = manual(st)[li], z = dtab(d), pos = o.indexOf(li);
     final left = unlabelledOrder(st).length, ok = dmgDone(d, fuel), guess = labelled(d, fuel) && d['ai'] == true;
+    // while this tab has photos to label the tabs after it are shut, and the pages stop at its last photo
+    final zs = [for (final zz in dz) if (zoneDamages(st, zz).isNotEmpty) zz];
+    final open = openTo([for (final zz in zs) zoneDamages(st, zz).every((e) => dmgDone(e.$1, fuel))], zs.indexOf(z));
+    final count = [for (var k = 0; k <= open; k++) zoneDamages(st, zs[k]).length].fold(0, (a, b) => a + b);
     pc ??= PageController(initialPage: pos);
     WidgetsBinding.instance.addPostFrameCallback((_) => _follow(pos));
     Widget arrow(IconData ic, int? to) => to == null
@@ -371,22 +405,13 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     return Scaffold(
       appBar: PhaseHeader('Damages', 1, onBack: () => store.mut(widget.id, (s) => s['phase'] = 'capture')),
       body: Column(children: [
-        SizedBox(
-          height: 48,
-          child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 8), children: [
-            for (final zz in dz)
-              if (zoneDamages(st, zz).isNotEmpty)
-                () {
-                  final l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length, on = zz == z;
-                  final b = TextButton.icon(
-                    onPressed: () => _go(l.first.$2),
-                    icon: done == l.length ? const Icon(LucideIcons.check, size: 14) : const SizedBox(),
-                    label: Text('$zz $done/${l.length}', style: TextStyle(fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: done == l.length ? bid : Colors.black, decoration: on ? TextDecoration.underline : null)),
-                  );
-                  return on ? ShowMe(b) : b;
-                }(),
-          ]),
-        ),
+        TabStrip([
+          for (var k = 0; k < zs.length; k++)
+            () {
+              final zz = zs[k], l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length;
+              return stripTab('${stTitle(zz)} $done/${l.length}', zz == z, k <= open ? () => _go(l.first.$2) : null, color: done == l.length ? bid : null);
+            }(),
+        ]),
         const Divider(height: 1),
         Expanded(
           // a finger on the page stops a slide; where the page comes to rest is the photo shown
@@ -403,15 +428,15 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
             },
             child: PageView.builder(
             controller: pc,
-            itemCount: o.length,
+            itemCount: count,
             onPageChanged: (p) {
               final oo = labelOrder(store.ins[widget.id]!);
               if ((!sliding || dragging) && p < oo.length) _go(oo[p]);
             },
             itemBuilder: (c, p) {
-              final dd = manual(st)[o[p]], zz = dd['zone'] ?? 'Exterior', zzl = zoneDamages(st, zz), nn = zzl.indexWhere((e) => e.$2 == o[p]) + 1;
+              final dd = manual(st)[o[p]], zz = dtab(dd), zzl = zoneDamages(st, zz), nn = zzl.indexWhere((e) => e.$2 == o[p]) + 1;
               return ListView(key: ValueKey(dd['id']), padding: const EdgeInsets.all(16), children: [
-                DamageEditor(widget.id, dd['id'], title: '$zz · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < o.length - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
+                DamageEditor(widget.id, dd['id'], title: '${stTitle(zz)} · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < count - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
                 if (p > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[p - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
               ]);
             },
@@ -444,10 +469,10 @@ class DamageFormPage extends ConsumerWidget {
     }
     final ok = labelled(d, fuelOf(st));
     return Scaffold(
-      appBar: TitleBar(zoneTitle[d['zone'] ?? 'Exterior']!.replaceAll('damages', 'damage')),
+      appBar: TitleBar(zoneTitle[dtab(d)]!.replaceAll('damages', 'damage')),
       body: ListView(padding: const EdgeInsets.all(16), children: [DamageEditor(id, did)]),
       bottomNavigationBar: BottomBar(Row(children: [
-        Expanded(child: OutlinedButton.icon(onPressed: ok ? () => addDamage(context, id, d['zone'] ?? 'Exterior', replace: true) : null, icon: const Icon(LucideIcons.plus, size: 16), label: const Text('Add another'))),
+        Expanded(child: OutlinedButton.icon(onPressed: ok ? () => addDamage(context, id, dtab(d), replace: true) : null, icon: const Icon(LucideIcons.plus, size: 16), label: const Text('Add another'))),
         const SizedBox(width: 12),
         Expanded(
             child: PBtn('Done', ok
@@ -476,7 +501,8 @@ Future<void> addDamage(BuildContext context, String id, String zone, {String? wh
     final rel = await keepPhoto(id, x.path, 'damage', library: true, read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
     final newId = did;
     store.mut(id, (s) {
-      final d = {'id': newId, 'zone': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'library', 'f': rel};
+      // typed open: labels add true/false and the AI guess a map (a literal of only strings would be Map<String, String> and throw)
+      final d = <String, dynamic>{'id': newId, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'library', 'f': rel};
       if (hint != null) setLabel(d, 'panel', hint, fuelOf(s));
       manual(s).add(d);
       syncDamages(s);

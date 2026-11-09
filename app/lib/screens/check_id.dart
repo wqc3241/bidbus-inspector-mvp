@@ -1,7 +1,10 @@
 // Check ID: driver's license and registration photos (private), the owner question; No ends the visit.
 import 'dart:io';
 
+import 'package:camera/camera.dart' show availableCameras;
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show PlatformException;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,11 +18,20 @@ import '../services/store.dart';
 import '../widgets/ui.dart';
 import 'home.dart';
 
-// a private document photo from the camera or the library
+// a private document photo: license and registration from the camera only; the family proof from the camera or the library.
+// A debug build on a device with no camera (the simulator) picks from the library, so the flow can still be tested.
 Future<void> takeDoc(BuildContext context, String id, String doc) async {
-  final src = await showChoice(context, short[doc] ?? 'Photo', const [Opt('camera', label: 'Take photo'), Opt('library', label: 'Pick from library')], const [], radio: false);
+  var src = doc == 'ph_family' ? await showChoice(context, short[doc] ?? 'Photo', const [Opt('camera', label: 'Take photo'), Opt('library', label: 'Pick from library')], const [], radio: false) : 'camera';
   if (src == null) return;
-  final x = await ImagePicker().pickImage(source: src == 'camera' ? ImageSource.camera : ImageSource.gallery);
+  if (src == 'camera' && kDebugMode && (await availableCameras()).isEmpty) src = 'library';
+  XFile? x;
+  try {
+    x = await ImagePicker().pickImage(source: src == 'camera' ? ImageSource.camera : ImageSource.gallery);
+  } on PlatformException {
+    // access turned off: say so, or the card just does nothing
+    if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${src == 'camera' ? 'Camera' : 'Photo'} access is off. Allow it in Settings.')));
+    return;
+  }
   if (x == null) return;
   final rel = await keepPhoto(id, x.path, doc, library: src == 'library');
   store.mut(id, (st) {

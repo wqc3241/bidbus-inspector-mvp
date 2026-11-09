@@ -1,5 +1,6 @@
 """FastAPI app: API at /api (passcode), reports at /r/... (no auth)."""
 import hmac
+import json
 import logging
 import mimetypes
 import secrets
@@ -14,7 +15,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import ai, config, email, reports, spin, storage
+from . import ai, config, email, hotspots, reports, spin, storage
 from .cr import build_cr
 from .db import File as FileRow
 from .db import Inspection, SessionLocal, get_session, now
@@ -69,8 +70,18 @@ def vin_decode(vin: str):
 
 @api.post("/ai/read")
 def ai_read(kind: Annotated[str, Form()], image: Annotated[UploadFile, File()], section: Annotated[str | None, Form()] = None,
-            fuel: Annotated[str | None, Form()] = None, hint: Annotated[str | None, Form()] = None):
-    return ai.read(kind, image.file.read(), section, fuel, hint)
+            fuel: Annotated[str | None, Form()] = None, hint: Annotated[str | None, Form()] = None,
+            near: Annotated[str | None, Form()] = None):
+    return ai.read(kind, image.file.read(), section, fuel, hint, _places(near))
+
+
+def _places(near: str | None) -> list[str] | None:
+    """the near field: a JSON list of place names; anything else is no list"""
+    try:
+        v = json.loads(near) if near else None
+    except ValueError:
+        return None
+    return [x for x in v if isinstance(x, str)] if isinstance(v, list) else None
 
 
 class InspectionIn(BaseModel):
@@ -187,6 +198,10 @@ def build(inspection_id: str) -> None:
             s.commit()
             _send_report(insp)
             s.commit()
+            try:  # the damage dots on the 360 view, after the email so it is not held up (a report opened meanwhile shows them later)
+                hotspots.ensure(inspection_id, storage.folder(inspection_id), insp.record, wait=True)
+            except Exception:
+                log.exception("damage dots for %s", inspection_id)
         except Exception as e:
             log.exception("build %s failed", inspection_id)
             s.rollback()

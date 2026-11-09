@@ -74,7 +74,47 @@ def test_spin_view_when_frames_are_there(client, media_dir):
     for k in range(1, 37):
         (media_dir / iid / f"spin-{k:02d}.jpg").write_bytes(b"x")
     html = client.get(f"/r/{token}/dealer").text
-    assert 'class="cloudimage-360"' in html and "js-cloudimage-360-view@4.9.5" in html
+    assert 'class="cloudimage-360"' in html and "@cloudimage/360-view@4.10.0" in html
+
+
+@pytest.mark.parametrize("page", ["seller", "dealer"])
+def test_obd_screens_under_obd_problems(client, page):
+    # gas car with Check engine and stored codes: the OBD-II block shows its five scan screens
+    token, _ = make("bmw-x3")
+    html = client.get(f"/r/{token}/{page}").text
+    block = html[html.index("OBD-II</dt>"):].split('<div class="ir">')[0]
+    shots = re.findall(r'<a class="dth scr" href="/r/' + token + r'/media/([^"]+)" title="([^"]+)">', block)
+    assert shots == [("ph_obd_current.jpg", "OBD-II current codes"), ("ph_obd_past.jpg", "OBD-II past codes"),
+                     ("ph_obd_emission.jpg", "OBD-II emission codes"), ("ph_obd_other-1.jpg", "OBD-II other"), ("ph_obd_other-2.jpg", "OBD-II other")]
+    assert block.index("Scan result") < block.index('class="shots"')  # under the problems
+    assert html.count('class="dth scr"') == 5  # nowhere else
+    # no OBD-II problem: no screens in the block (they stay in the photo viewer)
+    rec = sample("bmw-x3")
+    rec["checks"] = [{"id": c["id"], "result": "OK"} if c["id"] in ("ck_lights_dash", "ck_scan") else c for c in rec["checks"]]
+    iid, tok = str(uuid.uuid4()), secrets.token_urlsafe(24)
+    with SessionLocal() as s:
+        s.add(Inspection(id=iid, report_email="tom@example.com", inspector="Tom", car=CARS["bmw-x3"], record=rec, status="sent",
+                         report_token=tok, cr=build_cr(rec)))
+        s.commit()
+    html = client.get(f"/r/{tok}/{page}").text
+    assert 'class="dth scr"' not in html and "OBD-II</dt>" in html
+
+
+@pytest.mark.parametrize("page", ["seller", "dealer"])
+def test_eight_exterior_views_follow_the_360_view(client, media_dir, page):
+    token, iid = make("bmw-x3")
+    (media_dir / iid).mkdir()
+    assert 'alt="Left front"' not in client.get(f"/r/{token}/{page}").text  # no frames, no views
+    for k in range(1, 37):
+        (media_dir / iid / f"spin-{k:02d}.jpg").write_bytes(b"x")
+    html = client.get(f"/r/{token}/{page}").text
+    track = html[html.index('class="g-track"'):html.index('class="g-nav prev"')]
+    slides = re.findall(r'data-lbl="([^"]*)"', track)
+    views = ["Left front", "Left side", "Left rear", "Rear", "Right rear", "Right side", "Right front", "Front"]
+    # the 360 view, then the eight views in the walk-around order (spin frames 1, 5, 10, 14, 19, 23, 28, 32), then the rest of Exterior
+    assert slides[:9] == ["360 view"] + views
+    for k, v in zip((1, 5, 10, 14, 19, 23, 28, 32), views):
+        assert f'<img src="/r/{token}/media/spin-{k:02d}.jpg" alt="{v}" loading="lazy">' in track
 
 
 def test_media_serves_only_public_files_with_their_type(client, media_dir):
@@ -139,3 +179,23 @@ def test_a_trim_that_starts_with_the_model_is_not_repeated():
     assert car_line({"year": 2020, "make": "Lexus", "model": "LC", "trim": "LC 500h"}) == "2020 Lexus LC 500h"
     assert car_line({"year": 2020, "make": "BMW", "model": "X3", "trim": "xDrive30i"}) == "2020 BMW X3 xDrive30i"
     assert car_line({"year": 2021, "make": "Toyota", "model": "RAV4", "trim": "RAV4 Prime XSE"}) == "2021 Toyota RAV4 Prime XSE"
+
+
+@pytest.mark.parametrize("name,hi,lo", [("bmw-x3", "Left rear door", "Left front fender"), ("tesla-model-y", "Right rear door", "Left front fender")])
+def test_paint_highest_and_lowest(client, name, hi, lo):
+    """the Paint block shows the highest and lowest panel reading; above 10 reads 10+ (both samples have one)"""
+    token, _ = make(name)
+    for page in ("seller", "dealer"):
+        html = client.get(f"/r/{token}/{page}").text
+        assert f"Highest reading 10+ mils<small>{hi}</small>" in html, page
+        assert f"Lowest reading 4.3 mils<small>{lo}</small>" in html, page
+
+
+def test_paint_reads_rules():
+    from app.reports import mils_text, paint_reads
+    assert [mils_text(m) for m in (3.0, 10.0, 10.1, 11.8)] == ["3.0", "10.0", "10+", "10+"]
+    rec = {"paint": [{"panel": "Hood or frunk lid", "mils": 3.9, "not_on_car": False}, {"panel": "Roof", "mils": None, "not_on_car": True},
+                     {"panel": "Left front door", "mils": 2.0, "not_on_car": True}, {"panel": "Trunk or liftgate", "mils": 6.2, "not_on_car": False}]}
+    assert paint_reads(rec) == [{"icon": "↑", "text": "Highest reading 6.2 mils", "sub": "Trunk or liftgate"},
+                                {"icon": "↓", "text": "Lowest reading 3.9 mils", "sub": "Hood"}]
+    assert paint_reads({"paint": [{"panel": "Roof", "mils": None, "not_on_car": True}]}) == []

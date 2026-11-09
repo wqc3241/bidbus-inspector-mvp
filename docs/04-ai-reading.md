@@ -26,10 +26,16 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 
 ## Damage first guess
 
-- The app sends `section`, `fuel` and, when the Damage shutter was pressed during a paint panel shot or a tire shot, `hint` (the panel or wheel).
-- The server builds the allowed list from `data/issue-catalog.json` `places` for that section and fuel: each place with its allowed types. It sends this list in the instruction and requires the answer to be one of its pairs.
+- The app sends `section`, `fuel` and, when the Damage shutter was pressed during the Exterior walk (paint panels, roof, windshield VIN) or the Tires walk, `near`: a JSON list of the places between the shot taken before the damage photo and the shot to take next. The inspector may photograph a damage before or after that panel's or wheel's own shot, so both shots count: a paint panel brings the parts next to it (left front door: the door, its window and the mirror), a wheel its tire and its wheel; Exterior adds Other. After the last shot of a section (Record damage now), the app sends no `near`: the damage can be anywhere in the section.
+- A damage photo taken from Review for one wheel sends `hint` (that wheel's tire) instead.
+- The server builds the allowed list from `data/issue-catalog.json` `places` for that section and fuel: each place with its allowed types. With `near`, only those places stay (all of them when none of the `near` places is in the section). It sends this list in the instruction and requires the answer to be one of its pairs.
 - With a `hint`, the place defaults to the hint; the AI picks type and severity.
 - A pair not in the list is dropped to `{place: hint or null, type: null, severity: null}`.
+
+## Damage dots on the 360 view (server, `app/hotspots.py`)
+
+- `locate_parts`: one request per spin frame that can show a damaged part (a window of frames round the frame facing that part). The instruction says how the walk-around goes and where the camera is in that frame; for each damaged part the answer is `visible` and its middle as `x`, `y` from 0 to 1000. A frame seen alone is dropped when the part is seen in more than two frames; each point is the median of itself and its neighbours.
+- `damage_side`: for a place with no side (Mirror, Headlight, Tail light, Fuel door), the damage photo answers `left`, `right` or `unknown`; unknown gets no dot.
 
 ## Upright photos
 

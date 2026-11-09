@@ -18,6 +18,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await loadQl();
   await loadVehicles();
+  store.settle = settleLater;
   await store.init();
   runApp(const ProviderScope(child: App()));
 }

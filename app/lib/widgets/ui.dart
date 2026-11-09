@@ -325,6 +325,50 @@ Future<String?> showTextSheet(BuildContext context, String title, String value, 
   );
 }
 
+// a paint reading on a slider from 3.0 to 10+ mils, with - and + for 0.1. "10+" is more than 10: it is kept as 10.1,
+// or as the meter's own reading when the photo gave one above 10
+const milsMin = 3.0, milsTop = 10.1;
+String milsText(dynamic v) => (double.tryParse('$v') ?? 0) > 10 ? '10+' : '$v';
+
+Future<String?> showMilsSheet(BuildContext context, String title, String value, {List<Widget> extraActions = const []}) {
+  final was = double.tryParse(value);
+  var x = was ?? 5.0;
+  return showModalBottomSheet<String>(
+    context: context,
+    isScrollControlled: true, // large text: the sheet grows and scrolls, so every button stays reachable
+    backgroundColor: Colors.white,
+    builder: (ctx) => StatefulBuilder(builder: (ctx, set) {
+      void to(double v) => set(() => x = (v * 10).roundToDouble() / 10);
+      final over = x > 10, shown = over ? '10+' : x.toStringAsFixed(1);
+      Widget step(IconData ic, VoidCallback? tap) => IconButton(
+          onPressed: tap, icon: Icon(ic), style: IconButton.styleFrom(fixedSize: const Size(52, 52), side: const BorderSide(color: Color(0xFFD4D7DB)), backgroundColor: Colors.white));
+      return SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 16),
+            Row(children: [
+              step(LucideIcons.minus, x > milsMin ? () => to(over ? 10 : x - .1) : null),
+              Expanded(child: Text('$shown mils', textAlign: TextAlign.center, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, fontFeatures: [FontFeature.tabularFigures()]))),
+              step(LucideIcons.plus, over ? null : () => to(x >= 10 ? milsTop : x + .1)),
+            ]),
+            const SizedBox(height: 16), // room for the value bubble while dragging
+            Slider(min: milsMin, max: milsTop, divisions: 71, value: x.clamp(milsMin, milsTop), label: shown, onChanged: to),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('3.0', style: TextStyle(color: muted)), Text('10+', style: TextStyle(color: muted))]),
+            ),
+            const SizedBox(height: 12),
+            PBtn('Done', () => Navigator.pop(ctx, over ? (was != null && was > 10 ? value : milsTop.toStringAsFixed(1)) : x.toStringAsFixed(1))),
+            ...extraActions,
+          ]),
+        ),
+      );
+    }),
+  );
+}
+
 // scroll pickers: brand, size, tread, damage size
 Future<List<String>?> showPicker(BuildContext context, String title, List<List<String>> cols, List<String> sel, {List<String> seps = const [], String? unit, String? sub, bool clear = false}) {
   final idx = [for (var i = 0; i < cols.length; i++) cols[i].indexOf(sel[i]).clamp(0, cols[i].length - 1)];
@@ -404,6 +448,32 @@ class FitLabel extends StatelessWidget {
       });
 }
 
+// the section strip on Damages and Review: one look; the current tab's whole cell is grey
+class TabStrip extends StatelessWidget {
+  final List<Widget> tabs;
+  const TabStrip(this.tabs, {super.key});
+  @override
+  Widget build(BuildContext context) => SizedBox(height: 48, child: ListView(scrollDirection: Axis.horizontal, children: tabs));
+}
+
+// a tab with no tap is shut: it shows light and does nothing
+Widget stripTab(String label, bool on, VoidCallback? tap, {Color? color, Widget? end}) {
+  final t = Material(
+    color: on ? line : Colors.transparent,
+    child: InkWell(
+      onTap: tap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Text(label, style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: tap == null && !on ? const Color(0xFFC6CACF) : color ?? (on ? Colors.black : muted))),
+          if (end != null) Padding(padding: const EdgeInsets.only(left: 4), child: end),
+        ]),
+      ),
+    ),
+  );
+  return on ? ShowMe(t) : t;
+}
+
 // scrolls its child into view when it first shows: the current tab of a strip
 class ShowMe extends StatefulWidget {
   final Widget child;
@@ -421,4 +491,105 @@ class _ShowMeState extends State<ShowMe> {
 
   @override
   Widget build(BuildContext context) => widget.child;
+}
+
+// a small photo in a list row (the first when there are several, with their number); tapping it shows them full screen, to look at only
+class PhotoThumb extends StatelessWidget {
+  final List<String> paths; // absolute
+  final String caption;
+  const PhotoThumb(this.paths, this.caption, {super.key});
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: 'Photo: $caption',
+        child: GestureDetector(
+          onTap: () => showPhotos(context, paths, caption),
+          child: SizedBox(
+            width: 48,
+            height: 48,
+            child: Stack(fit: StackFit.expand, children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.file(File(paths.first), fit: BoxFit.cover, cacheWidth: 144, errorBuilder: (c, e, s) => const ColoredBox(color: Color(0xFFE9ECEF))),
+              ),
+              if (paths.length > 1)
+                Positioned(
+                  right: 3,
+                  bottom: 3,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    decoration: BoxDecoration(color: Colors.black.withValues(alpha: .7), borderRadius: BorderRadius.circular(8)),
+                    child: Text('${paths.length}', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
+                  ),
+                ),
+            ]),
+          ),
+        ),
+      );
+}
+
+// photos full screen on black, to look at only: swipe between them, pinch to zoom, X to close; nothing can be changed here
+Future<void> showPhotos(BuildContext context, List<String> paths, String caption) =>
+    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (c, a, b) => _PhotoViewer(paths, caption), transitionsBuilder: (c, a, b, child) => FadeTransition(opacity: a, child: child)));
+
+class _PhotoViewer extends StatefulWidget {
+  final List<String> paths;
+  final String caption;
+  const _PhotoViewer(this.paths, this.caption);
+  @override
+  State<_PhotoViewer> createState() => _PhotoViewerState();
+}
+
+class _PhotoViewerState extends State<_PhotoViewer> {
+  int at = 0;
+  bool zoomed = false; // a zoomed photo pans with a drag; the next photo comes only once it is back to full size
+  late final zoom = [for (final _ in widget.paths) TransformationController()];
+
+  @override
+  void dispose() {
+    for (final z in zoom) {
+      z.dispose();
+    }
+    super.dispose();
+  }
+
+  void _zoomed(int i) {
+    final z = zoom[i].value.getMaxScaleOnAxis() > 1.01;
+    if (z != zoomed) setState(() => zoomed = z);
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(children: [
+          PageView.builder(
+            itemCount: widget.paths.length,
+            physics: zoomed ? const NeverScrollableScrollPhysics() : null,
+            onPageChanged: (i) => setState(() {
+              at = i;
+              for (final z in zoom) {
+                z.value = Matrix4.identity();
+              }
+              zoomed = false;
+            }),
+            itemBuilder: (c, i) => InteractiveViewer(
+              maxScale: 4,
+              transformationController: zoom[i],
+              onInteractionUpdate: (_) => _zoomed(i),
+              onInteractionEnd: (_) => _zoomed(i),
+              child: Center(child: Image.file(File(widget.paths[i]), fit: BoxFit.contain)),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 4, 0),
+              child: Row(children: [
+                Expanded(child: Text(widget.caption, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                if (widget.paths.length > 1) Text('${at + 1} / ${widget.paths.length}', style: const TextStyle(color: Colors.white70)),
+                IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(LucideIcons.x, color: Colors.white), tooltip: 'Close'),
+              ]),
+            ),
+          ),
+        ]),
+      );
 }

@@ -30,6 +30,13 @@ Future<void> open(WidgetTester t, int n) async {
   final s = newInspection(id: id, fuel: 'Gas or diesel', email: 'a@b.co', inspector: 'T', car: {'year': 2020, 'make': 'X', 'model': 'Y', 'trim': 'Z'});
   s['phase'] = 'label';
   (s['manual'] as List).addAll([dm('e0', 'Exterior'), dm('e1', 'Exterior'), dm('t2', 'Tires'), dm('i3', 'Interior'), dm('m4', 'Mechanicals')]);
+  // every tab before Mechanicals is labelled, so all five pages are open (an unfinished tab shuts the ones after it)
+  for (final (i, place, type) in [(0, 'Left front door', 'Overspray or colour mismatch'), (1, 'Left front door', 'Overspray or colour mismatch'), (2, 'Right rear tire', 'Uneven wear'), (3, 'Front seats', 'Seats worn')]) {
+    final d = manual(s)[i];
+    setLabel(d, 'panel', place, 'Gas or diesel');
+    setLabel(d, 'type', type, 'Gas or diesel');
+    setLabel(d, 'sev', 'Minor', 'Gas or diesel');
+  }
   s['li'] = labelOrder(s).first;
   store.ins[id] = s;
   await t.pumpWidget(ProviderScope(child: MaterialApp(home: DamagesScreen(id, key: ValueKey(n)))));
@@ -44,12 +51,14 @@ void main() {
   });
 
   testWidgets('swipe, slide in, and a finger that stops a slide', (t) async {
-    t.view.physicalSize = const Size(1170, 2532);
+    // wide: the labelled photos show long values, and the test font draws every letter a full square
+    t.view.physicalSize = const Size(2400, 2532);
     t.view.devicePixelRatio = 3;
     addTearDown(t.view.reset);
 
     // a swipe moves one page and the photo follows
     await open(t, 1);
+    expect(t.widget<PageView>(find.byType(PageView)).childrenDelegate.estimatedChildCount, 5);
     await t.fling(find.byType(PageView), const Offset(-300, 0), 1500);
     await t.pumpAndSettle();
     expect(page(t), 1);

@@ -6,12 +6,12 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
-from markupsafe import Markup
+from markupsafe import Markup, escape
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import config, spin, storage
-from .cr import CAT
+from . import config, hotspots, spin, storage
+from .cr import CAT, PAINT_SHOWN, SPIN_SLOTS
 from .email import car_line, inspected_when
 from .db import Inspection, get_session
 
@@ -71,12 +71,57 @@ LABEL = {"paint": "Paint meter", "ph_int_screen": "Infotainment screen", "ph_obd
 QL_LABEL = {it["id"]: re.sub(r" \(.*\)$|, with .*$", "", it["label"])
             for it in json.loads((config.DATA_DIR / "question-list.json").read_text())["items"]}
 WHEELS = ["lf", "rf", "rr", "lr"]
+# the eight exterior views the CR takes from the 360 frames (SPIN_SLOTS), in the walk-around order
+VIEW = {"front_left": "Left front", "left_side": "Left side", "rear_left": "Left rear", "rear": "Rear", "rear_right": "Right rear",
+        "right_side": "Right side", "front_right": "Right front", "front": "Front"}
 WHEEL_NAME = {w["wheel"]: w["name"] for w in CAT["wheels"]}
 LEVEL = {"Ends the visit": "stop", "Not listed until fixed": "stop", "Red": "sev", "Yellow": "yel"}
 LEVEL_TEXT = {"stop": "Not listed", "sev": "Red", "yel": "Yellow"}
 templates.env.globals["level_text"] = LEVEL_TEXT
 CHECK_ROW = {c["id"]: c["cr_row"] for c in CAT["checks"]} | {"ck_engine": "Engine sound"}  # the Engine check result sits in Engine sound
 FUEL_WORD = {"Gas or diesel": "Gas", "Electric (EV)": "Electric"}
+
+
+def mils_text(m: float) -> str:
+    """a paint reading as the app shows it: above 10 is 10+ (the app's slider tops out there)"""
+    return "10+" if m > 10 else f"{m:.1f}"
+
+
+def paint_reads(rec: dict) -> list[dict]:
+    """the highest and the lowest panel reading, leaving out panels not on the car (first panel wins a tie)"""
+    got = [p for p in rec.get("paint", []) if not p.get("not_on_car") and p.get("mils") is not None]
+    if not got:
+        return []
+    hi, lo = max(got, key=lambda p: p["mils"]), min(got, key=lambda p: p["mils"])
+    return [{"icon": icon, "text": f"{word} reading {mils_text(p['mils'])} mils", "sub": PAINT_SHOWN.get(p["panel"], p["panel"])}
+            for icon, word, p in (("↑", "Highest", hi), ("↓", "Lowest", lo))]
+
+
+def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict]) -> dict:
+    """the 360 viewer's settings, with a dot for each damaged part on the frames that show it; tapping a dot opens a card with each
+    damage's photo and line, and tapping a damage there opens its photo in the viewer"""
+    dmg = {d["n"]: d for d in rec.get("damages", [])}
+    hs = []
+    for i, s in enumerate(spots):
+        ds = [dmg[n] for n in s["damages"] if n in dmg]
+        if not ds:
+            continue
+        lines = [by_photo[d["file"]] if d["file"] in by_photo else {"text": d["place"], "level": None} for d in ds]
+        worst = max((LEVEL.get(x.get("level")) for x in lines), key=lambda lv: ["yel", "sev", "stop"].index(lv) + 1 if lv else 0)
+        items = "".join(
+            f'<button type="button" class="hs-it" id="hsd-{escape(str(d["n"]))}"><img src="{escape(url(d["file"]))}" alt="">'
+            f'<span><b>{escape(x["text"].split(": ", 1)[0])}</b>{escape(x["text"].split(": ", 1)[1] if ": " in x["text"] else "")}</span></button>'
+            for d, x in zip(ds, lines))
+        # keepOpen: the card stays until a tap elsewhere in the view (with a mouse it would close as the pointer leaves it)
+        hs.append({"id": f"dmg-{i + 1}", "orientation": "x", "keepOpen": True, "label": s["part"] + (f" · {len(ds)} damages" if len(ds) > 1 else ""),
+                   # amber; red for a Red (or worse) damage; the number of damages when the part has several
+                   "className": " ".join(["hs-dmg"] + ({"yel": ["hs-yel"], "sev": ["hs-sev"], "stop": ["hs-sev"]}.get(worst, []))
+                                         + ([f"hs-n{min(len(ds), 9)}"] if len(ds) > 1 else [])),
+                   "positions": {k: {"x": x, "y": y} for k, (x, y) in s["positions"].items()},
+                   "content": f'<div class="hs-card">{items}</div>'})
+    return {"folder": url(""), "filenameX": "spin-{index}.jpg", "amountX": spin.FRAMES, "indexZeroBase": 2,
+            # no dots: no list at all (the library's hotspot code fails on an empty one)
+            "hotspots": hs or None, "hotspotTrigger": "click"}
 
 
 def view(insp: Inspection) -> dict:
@@ -90,13 +135,15 @@ def view(insp: Inspection) -> dict:
     def line(i):
         return {"text": i["text"], "sub": i.get("sub"), "lv": LEVEL.get(i["level"]), "photo": i["photo"] and url(i["photo"])}
 
-    # photo and video viewer: one list grouped by section; the 360 view first in Exterior, damage photos where they were recorded
+    # photo and video viewer: one list grouped by section; the 360 view first in Exterior with its eight exterior views, damage photos where they were recorded
     photos = [p for p in rec["photos"] if not p.get("skipped")]
     count = {q: sum(1 for p in photos if p["question_id"] == q) for q in {p["question_id"] for p in photos}}
     seen, media = {}, []
     for g, _ in GROUPS:
         if g == "Exterior" and spin.have_frames(storage.folder(insp.id)):
-            media.append({"g": g, "kind": "spin", "src": url(spin.frame(1)), "folder": url(""), "lbl": "360 view"})
+            spots = hotspots.ensure(insp.id, storage.folder(insp.id), rec) or []
+            media.append({"g": g, "kind": "spin", "src": url(spin.frame(1)), "lbl": "360 view", "cfg": spin_cfg(url, rec, by_photo, spots)})
+            media += [{"g": g, "kind": "img", "src": url(spin.frame(k)), "lbl": VIEW[slot]} for k, slot in SPIN_SLOTS]
         media += [{"g": g, "kind": "video", "src": url(x["file"]), "lbl": VIDEOS[x["question_id"]][1]}
                   for x in rec["videos"] if VIDEOS.get(x["question_id"], ("",))[0] == g]
         for p in (p for p in photos if p["section"] == g):
@@ -120,7 +167,11 @@ def view(insp: Inspection) -> dict:
         checks = len({c["id"] for c in rec["checks"] if CHECK_ROW.get(c["id"]) == r["row"]})
         vids = [{"lbl": VIDEOS[x["question_id"]][1], "src": url(x["file"])} for x in rec["videos"]
                 if r["row"] == "Engine sound" and x["file"] in r["videos"]]
-        rows.append({"name": r["row"], "icon": ROW_ICON[r["row"]], "lines": lines, "checks": checks, "videos": vids})
+        # OBD-II with a problem: its scan screens under it, so the codes can be seen
+        shots = [{"src": url(p["file"]), "lbl": LABEL.get(p["question_id"]) or QL_LABEL.get(p["question_id"], p["question_id"])}
+                 for p in photos if p["section"] == "OBDII"] if r["row"] == "OBD-II" and lines else []
+        rows.append({"name": r["row"], "icon": ROW_ICON[r["row"]], "lines": lines, "checks": checks, "videos": vids,
+                     "reads": paint_reads(rec) if r["row"] == "Paint" else [], "shots": shots})
     engine = any(r["name"] == "Engine sound" for r in rows)
     other_videos = [{"lbl": VIDEOS.get(x["question_id"], ("", x["question_id"]))[1], "src": url(x["file"])} for x in rec["videos"]
                     if not (engine and x["question_id"] in ("video_engine", "video_exhaust"))]

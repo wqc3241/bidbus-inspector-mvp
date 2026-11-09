@@ -1,4 +1,4 @@
-// Review: one page per section (Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals) with Next.
+// Review: one page per section (Start, Exterior, Tires & Wheels, Paint, Interior, OBDII, Mechanicals, Underbody) with Next.
 // One row per check, OK by default; a tap opens a drawer with its problems. Ported from the mockup's sumCard / viewSummary.
 import 'dart:io';
 
@@ -93,29 +93,15 @@ class ReviewScreen extends ConsumerWidget {
         }
       })),
       body: Column(children: [
-        SizedBox(
-          height: 52,
-          child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 8), children: [
-            for (var j = 0; j < capseq.length; j++)
-              () {
-                final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
-                final tab = InkWell(
-                  onTap: () => store.mut(id, (s) => s['sp'] = j),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: j == i ? Colors.black : Colors.transparent, width: 2))),
-                    child: Row(children: [
-                      Text('${j + 1} ', style: const TextStyle(color: muted)),
-                      Text(stTitle(kk), style: TextStyle(fontSize: 16, fontWeight: j == i ? FontWeight.w700 : FontWeight.w500, color: j == i ? Colors.black : muted)),
-                      if (done && b.isNotEmpty) const Padding(padding: EdgeInsets.only(left: 4), child: CircleAvatar(radius: 3, backgroundColor: amber)),
-                      if (done && b.isEmpty) Padding(padding: const EdgeInsets.only(left: 4), child: fi.probs > 0 ? Text('${fi.probs}', style: const TextStyle(color: red, fontWeight: FontWeight.w700)) : const Icon(LucideIcons.check, size: 13, color: bid)),
-                    ]),
-                  ),
-                );
-                return j == i ? ShowMe(tab) : tab;
-              }(),
-          ]),
-        ),
+        TabStrip([
+          // while this page is unfinished the pages after it are shut
+          for (var j = 0, open = openTo([for (final kk in capseq) pageBlock(st, kk).isEmpty], i); j < capseq.length; j++)
+            () {
+              final kk = capseq[j], fi = secInfo(st, kk), b = pageBlock(st, kk), done = sok[kk] == true;
+              return stripTab(stTitle(kk), j == i, j <= open ? () => store.mut(id, (s) => s['sp'] = j) : null,
+                  end: !done ? null : b.isNotEmpty ? const CircleAvatar(radius: 3, backgroundColor: amber) : fi.probs > 0 ? Text('${fi.probs}', style: const TextStyle(color: red, fontWeight: FontWeight.w700)) : null);
+            }(),
+        ]),
         const Divider(height: 1),
         // each page opens at its top
         Expanded(child: ListView(key: ValueKey(k), padding: const EdgeInsets.fromLTRB(16, 16, 16, 24), children: [_card(context, st, k, f)])),
@@ -196,7 +182,7 @@ class ReviewScreen extends ConsumerWidget {
         for (var j = 0; j < list.length; j++)
           () {
             final d = list[j].$1, lb = labelled(d, fuel);
-            return ShotTile(lb ? d['panel'] : 'Not labelled',
+            return ShotTile(lb ? panelName(d) : 'Not labelled',
                 sub: lb ? dshort(d['panel'], d['type']) : null,
                 file: d['f'] != null ? store.abs(d['f']) : null,
                 damage: true,
@@ -320,6 +306,8 @@ class ReviewScreen extends ConsumerWidget {
                 margin: const EdgeInsets.all(3),
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 decoration: BoxDecoration(color: x[0] == w ? Colors.black : alt, borderRadius: BorderRadius.circular(12)),
+                // a wheel whose tread depth is not in yet gets the red frame of a row still to answer
+                foregroundDecoration: tire(st, x[0])['tread'] == '' ? BoxDecoration(border: Border.all(color: const Color(0xFFE1255D), width: 2), borderRadius: BorderRadius.circular(12)) : null,
                 child: Column(children: [
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     if (lst(tire(st, x[0]), 'probs', 'ck_tire').length + lst(tire(st, x[0]), 'probs', 'ck_wheel').length > 0) const Icon(LucideIcons.triangleAlert, size: 13, color: amber),
@@ -352,7 +340,7 @@ class ReviewScreen extends ConsumerWidget {
   List<Widget> _paint(BuildContext context, J st) {
     Future<void> edit(String panel) async {
       final r = (m(st, 'paint')[panel] as J?) ?? {};
-      final v = await showTextSheet(context, panel, r['na'] == true ? '' : '${r['v'] ?? ''}', unit: 'mils', kb: const TextInputType.numberWithOptions(decimal: true), max: 4, extraActions: [
+      final v = await showMilsSheet(context, panel, r['na'] == true ? '' : '${r['v'] ?? ''}', extraActions: [
         TextButton(
             onPressed: () {
               store.mut(id, (s) {
@@ -368,7 +356,7 @@ class ReviewScreen extends ConsumerWidget {
             },
             child: Text(r['na'] == true ? 'On this car' : 'Not on this car')),
       ]);
-      if (v == null) return;
+      if (v == null || r['na'] == true) return; // a panel not on this car keeps no reading: "On this car" first
       store.mut(id, (s) {
         final p = (m(s, 'paint')[panel] ??= <String, dynamic>{}) as J;
         final n = double.tryParse(v);
@@ -387,7 +375,7 @@ class ReviewScreen extends ConsumerWidget {
             final r = (m(st, 'paint')[panel] as J?) ?? {}, has = (r['v'] ?? '') != '';
             return PaintReadingCell(
                 panel: panel,
-                value: r['na'] == true ? 'N/A' : has ? '${r['v']}' : '–',
+                value: r['na'] == true ? 'N/A' : has ? milsText(r['v']) : '–',
                 label: paintReadPanels.firstWhere((x) => x.$1 == panel).$3,
                 state: r['na'] == true ? 'na' : paintHigh(r) ? 'hi' : !has ? 'ms' : '',
                 onTap: () => edit(panel));
