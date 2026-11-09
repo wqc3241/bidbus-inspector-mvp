@@ -79,6 +79,7 @@ Payload inspectionPayload(J st) {
     };
     if (d['f'] != null) files[e['file']] = d['f'];
     if ((d['ex'] ?? '') != '') e['where'] = d['ex'];
+    if ((d['ex'] ?? '') == '' && tw == null && needsSide(d) && (d['side'] ?? '') != '') e['where'] = d['side']; // Left or Right: which mirror, headlight or tail light
     if (tw != null) e['where'] = strs(tw['exo'])[0];
     if (pl != null && (d['type'] ?? '') != '') {
       if (isStruct(pl, d['type'])) {

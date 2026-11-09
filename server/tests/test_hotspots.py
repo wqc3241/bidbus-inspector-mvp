@@ -115,6 +115,14 @@ def test_a_place_with_no_side_takes_its_side_from_the_photo(media_dir, monkeypat
     assert spots == [{"part": "Left mirror", "damages": [1], "positions": {"2": [40.0, 30.0], "3": [42.0, 30.0]}}]
     fake.side = "unknown"
     assert hotspots.compute(d, rec_with(["Mirror"])) == []  # no side, no dot
+    # the side picked in the app (where) wins, and the photo is not asked
+    asked = len(fake.asked)
+    fake.seen = {"right side mirror": {26: (500, 300)}}
+    spots = hotspots.compute(d, rec_with(["Mirror"], where="Right"))
+    assert spots == [{"part": "Right mirror", "damages": [1], "positions": {"25": [50.0, 30.0]}}]
+    assert ("side", None) not in fake.asked[asked:]
+    # a damage with no side keeps the key it had before sides were sent (reports already worked out are not worked out again)
+    assert "side" not in hotspots.marked(rec_with(["Hood"], where="Left"))[0]
 
 
 def test_nothing_to_work_out(media_dir, monkeypatch):
