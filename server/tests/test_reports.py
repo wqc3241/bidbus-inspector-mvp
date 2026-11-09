@@ -74,7 +74,7 @@ def test_spin_view_when_frames_are_there(client, media_dir):
     for k in range(1, 37):
         (media_dir / iid / f"spin-{k:02d}.jpg").write_bytes(b"x")
     html = client.get(f"/r/{token}/dealer").text
-    assert 'class="cloudimage-360"' in html and "js-cloudimage-360-view@4.9.5" in html
+    assert 'class="cloudimage-360"' in html and "@cloudimage/360-view@4.10.0" in html
 
 
 @pytest.mark.parametrize("page", ["seller", "dealer"])

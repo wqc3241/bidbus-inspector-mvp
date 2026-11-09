@@ -128,13 +128,31 @@ def openai_read(name: str, props: dict, text: str, image_b64: str) -> dict:
     return json.loads(r.json()["choices"][0]["message"]["content"])
 
 
+def configured() -> bool:
+    return bool(config.OPENAI_API_KEY or config.ANTHROPIC_API_KEY)
+
+
+def ask(name: str, props: dict, text: str, image: bytes) -> dict:
+    """one photo and an instruction; the answer has exactly the fields in props (OpenAI first, else Anthropic). Raises on failure."""
+    if config.OPENAI_API_KEY:
+        return openai_read(name, props, text, jpeg(image))
+    tool = {"name": name, "description": text, "strict": True,
+            "input_schema": {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}}
+    msg = client().messages.create(
+        model=config.AI_MODEL, max_tokens=2000, tools=[tool],
+        # forced tool_choice ({"type": "tool"}) is refused (400) by Claude Sonnet 5.5 and Opus 5.5, so the prompt names the tool
+        tool_choice={"type": "auto"}, output_config={"effort": "low"},
+        messages=[{"role": "user", "content": [
+            {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": jpeg(image)}},
+            {"type": "text", "text": f"{text}\nAnswer only by calling the {name} tool."}]}])
+    return next(b.input for b in msg.content if b.type == "tool_use" and b.name == name)
+
+
 def read(kind: str, image: bytes, section=None, fuel=None, hint=None, near=None) -> dict:
-    if kind not in KINDS or not (config.OPENAI_API_KEY or config.ANTHROPIC_API_KEY):
+    if kind not in KINDS or not configured():
         return {"ok": False}
     try:
         name, props, text = KINDS[kind]
-        tool = {"name": name, "description": text, "strict": True,
-                "input_schema": {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}}
         pairs = allowed_pairs(section, fuel) if kind == "damage" else None
         # near: the places between the shot taken before the damage photo and the shot taken after it; the AI picks one of them
         if pairs is not None and near and not hint:
@@ -143,18 +161,7 @@ def read(kind: str, image: bytes, section=None, fuel=None, hint=None, near=None)
             text += "\n" + "\n".join(f"{p}: {'; '.join(ts)}" for p, ts in pairs.items())
             if hint:
                 text += f"\nThe damage is at {hint}; use it as the place."
-        if config.OPENAI_API_KEY:
-            data = openai_read(name, props, text, jpeg(image))
-            return {"ok": True, **validate(kind, data, pairs, hint)}
-        msg = client().messages.create(
-            model=config.AI_MODEL, max_tokens=2000, tools=[tool],
-            # forced tool_choice ({"type": "tool"}) is refused (400) by Claude Sonnet 5.5 and Opus 5.5, so the prompt names the tool
-            tool_choice={"type": "auto"}, output_config={"effort": "low"},
-            messages=[{"role": "user", "content": [
-                {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": jpeg(image)}},
-                {"type": "text", "text": f"{text}\nAnswer only by calling the {name} tool."}]}])
-        data = next(b.input for b in msg.content if b.type == "tool_use" and b.name == name)
-        return {"ok": True, **validate(kind, data, pairs, hint)}
+        return {"ok": True, **validate(kind, ask(name, props, text, image), pairs, hint)}
     except Exception:
         log.exception("AI reading %s failed", kind)
         return {"ok": False}

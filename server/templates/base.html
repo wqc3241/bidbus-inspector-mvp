@@ -118,6 +118,26 @@ a { color: inherit; }
 .dth { width: 58px; height: 44px; border-radius: 6px; overflow: hidden; flex: none; border: 1.5px solid #f59e0b; background: #f1f2f3; }
 .dth img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ir dd.shots { flex-wrap: wrap; gap: 8px; margin-top: 8px; } .dth.scr { border-color: #d1d5db; }
+/* damage dots on the 360 view: amber, red for a Red damage; a number when the part has several; the card shows each damage */
+.cloudimage-360-hotspot.hs-dmg { --ci360-hotspot-marker-size: 14px; --ci360-hotspot-marker-bg: #f59e0b; --ci360-hotspot-marker-border: 2px solid #fff;
+  --ci360-hotspot-marker-shadow: 0 1px 3px rgba(0,0,0,.5); --ci360-hotspot-marker-color: transparent; }
+.cloudimage-360-hotspot.hs-sev { --ci360-hotspot-marker-bg: #d52946; }
+.cloudimage-360-hotspot.hs-dmg:before { content: ""; position: absolute; left: 50%; top: 50%; width: 32px; height: 32px; transform: translate(-50%, -50%);
+  background: none; border-radius: 50%; animation: none; opacity: 1; pointer-events: inherit; } /* the tap area, live only while the dot shows */
+.cloudimage-360-hotspot.hs-dmg.hs-dmg:after { color: #fff; font: 700 9px/1 Arial; opacity: 1; width: auto; height: auto; background: none; }
+.cloudimage-initial-icon { pointer-events: none; } /* the 360 icon on the first frame never takes a dot's tap */
+.hs-n2:after { content: "2" !important; } .hs-n3:after { content: "3" !important; } .hs-n4:after { content: "4" !important; }
+.hs-n5:after { content: "5" !important; } .hs-n6:after { content: "6" !important; } .hs-n7:after { content: "7" !important; }
+.hs-n8:after { content: "8" !important; } .hs-n9:after { content: "9+" !important; }
+/* the open card is never under the viewer's caption, counter or first "drag to rotate" hint */
+.g-hero:has(.cloudimage-360-popper[data-show]) .g-cap, .g-hero:has(.cloudimage-360-popper[data-show]) .pc,
+#spin360:has(.cloudimage-360-popper[data-show]) .cloudimage-360-hints-overlay { opacity: 0; visibility: hidden; }
+.cloudimage-360-popper { --ci360-popper-padding: 8px; --ci360-popper-max-width: 260px; }
+/* one damage shows in full and the edge of the next one says the card scrolls: short enough to fit above or below a dot in a phone's 360 view */
+.hs-card { display: grid; gap: 6px; max-height: 66px; overflow-y: auto; overscroll-behavior: contain; }
+.hs-it { display: flex; gap: 10px; align-items: center; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; font: inherit; color: #111827; }
+.hs-it img { width: 56px; height: 42px; object-fit: cover; border-radius: 6px; border: 1.5px solid #f59e0b; flex: none; }
+.hs-it span { font-size: 13px; line-height: 18px; } .hs-it b { display: block; font-weight: 600; }
 .lvt { font-style: normal; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 99px; margin-left: 4px; }
 .lvt.yel { background: #fff7e0; color: #8a5a00; } .lvt.sev, .lvt.stop { background: #fde8e8; color: #9b1c1c; }
 /* dealer */
@@ -155,7 +175,8 @@ a { color: inherit; }
 // viewer: swipe the photos, pick a thumbnail or a group, tap a photo for full screen
 document.querySelectorAll("[data-gal]").forEach(function (gal) {
   var tr = gal.querySelector(".g-track"), sl = [].slice.call(tr.children), th = [].slice.call(gal.querySelectorAll(".pt")),
-    strip = gal.querySelector(".g-strip"), cap = gal.querySelector(".g-cap span"), pc = gal.querySelector(".pc"), grp = "all", cur = 0;
+    strip = gal.querySelector(".g-strip"), cap = gal.querySelector(".g-cap span"), pc = gal.querySelector(".pc"), grp = "all", cur = 0,
+    back = null; // the slide a photo was opened from elsewhere (the 360 view): closing the photo goes back to it
   function list() { return sl.filter(function (s) { return !s.hidden; }); }
   function show() {
     var L = list(), on = sl.indexOf(L[cur]);
@@ -163,6 +184,9 @@ document.querySelectorAll("[data-gal]").forEach(function (gal) {
     th.forEach(function (t, k) { t.classList.toggle("on", k === on); });
     strip.scrollLeft = th[on].offsetLeft - (strip.clientWidth - th[on].offsetWidth) / 2;
     tr.querySelectorAll("video").forEach(function (v) { if (!L[cur].contains(v)) v.pause(); });
+    // away from the 360 view, a dot's card closes
+    var v = !L[cur].classList.contains("spin") && window.CI360 && window.CI360.getViewById && window.CI360.getViewById("spin360");
+    if (v) v.hideHotspotPopper();
   }
   function go(k, smooth) { var L = list(); cur = (k + L.length) % L.length; tr.scrollTo({ left: L[cur].offsetLeft, behavior: smooth ? "smooth" : "auto" }); show(); }
   tr.addEventListener("scroll", function () { var k = Math.round(tr.scrollLeft / tr.clientWidth); if (k !== cur && list()[k]) { cur = k; show(); } });
@@ -175,14 +199,38 @@ document.querySelectorAll("[data-gal]").forEach(function (gal) {
       gal.querySelectorAll(".g-grps button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
       sl.forEach(function (s, k) { s.hidden = th[k].hidden = grp !== "all" && s.dataset.g !== grp; });
       go(0);
-    } else if (b && b.classList.contains("g-x")) { gal.classList.remove("full"); go(cur); }
+    } else if (b && b.classList.contains("g-x")) { gal.classList.remove("full"); go(back !== null && list().indexOf(sl[back]) >= 0 ? list().indexOf(sl[back]) : cur); back = null; }
     else if (!b && e.target.closest(".g-sl.img")) { gal.classList.add("full"); go(cur); }
+  });
+  // a photo asked for from elsewhere (a damage dot on the 360 view): full screen, in All so it is never hidden by a group
+  gal.addEventListener("gal:open", function (e) {
+    // a photo slide's own image (the 360 slide holds the open card, with the same photo in it)
+    var k = sl.findIndex(function (s) { var i = s.querySelector(":scope > img"); return i && i.getAttribute("src") === e.detail; });
+    if (k < 0) return;
+    if (sl[k].hidden) gal.querySelector('.g-grps button[data-g="all"]').click();
+    back = sl.indexOf(list()[cur]);
+    gal.classList.add("full");
+    go(list().indexOf(sl[k]));
   });
   show();
 });
 </script>
-{% if media and media[0].kind == "spin" %}<script src="https://cdn.jsdelivr.net/npm/js-cloudimage-360-view@4.9.5/dist/js-cloudimage-360-view.min.js"></script>
-<script>window.CI360.initAll();</script>{% endif %}
+{% if media and media[0].kind == "spin" %}<script src="https://cdn.jsdelivr.net/npm/@cloudimage/360-view@4.10.0/dist/360-view.min.js"></script>
+<script>
+// the 360 view with a dot on each damaged part; a damage in a dot's card opens its photo full screen in the viewer
+(function () {
+  var el = document.getElementById("spin360");
+  window.CI360.init(el, JSON.parse(document.getElementById("spin-cfg").textContent));
+  // a touch inside a card is the card's: the viewer would close the card on it, and a longer press would then open nothing
+  el.addEventListener("touchstart", function (e) { if (e.target.closest(".cloudimage-360-popper")) e.stopPropagation(); }, { capture: true, passive: true });
+  document.addEventListener("click", function (e) {
+    var it = e.target.closest(".hs-it");
+    if (!it) return;
+    window.CI360.getViewById("spin360").hideHotspotPopper();
+    el.closest("[data-gal]").dispatchEvent(new CustomEvent("gal:open", { detail: it.querySelector("img").getAttribute("src") }));
+  });
+})();
+</script>{% endif %}
 {% block scripts %}{% endblock %}
 </body>
 </html>

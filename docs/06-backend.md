@@ -13,6 +13,7 @@ server/
   app/vin.py           NHTSA vPIC proxy
   app/cr.py            wraps tools/cr_from_inspection.py
   app/spin.py          ffmpeg fallback for spin frames
+  app/hotspots.py      damage dots on the 360 view (where each damaged part is in the spin frames; hotspots.json)
   app/reports.py       seller and dealer pages (Jinja2)
   app/email.py         Resend
   templates/           report templates
@@ -54,6 +55,7 @@ Uploads: allow up to 200 MB per file (walk-around video). Use chunked streaming 
 3. CR: refactor `tools/cr_from_inspection.py` minimally to expose `build_cr(record: dict, carfax_owners=None) -> dict` and keep its CLI. The CLI output for both samples must stay byte-identical to `samples/cr-*.json` (test it). Call `build_cr(record)`.
 4. `validation.ok` false → `status = failed`, store the errors, send the failure email.
 5. Otherwise store `cr`, send the email, `status = sent`, `report_sent_at = now`. An email that is not sent → `status = failed` with the reason ("The report was built but the email was not sent" when there is no `RESEND_API_KEY`); the report pages still work.
+6. Then the damage dots for the 360 view (`app/hotspots.py`): where each confirmed outside damage's part is in the spin frames, kept in `hotspots.json`; a failure is logged and leaves the report without dots. A report visit tries again after 10 minutes, at most until three runs have failed for that damage list (a result that cannot be saved counts too); then no more runs until the damages change.
 
 ## Media rules
 
