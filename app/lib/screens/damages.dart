@@ -475,7 +475,8 @@ Future<void> addDamage(BuildContext context, String id, String zone, {String? wh
     final rel = await keepPhoto(id, x.path, 'damage', library: true, read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
     final newId = did;
     store.mut(id, (s) {
-      final d = {'id': newId, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'library', 'f': rel};
+      // typed open: labels add true/false and the AI guess a map (a literal of only strings would be Map<String, String> and throw)
+      final d = <String, dynamic>{'id': newId, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'library', 'f': rel};
       if (hint != null) setLabel(d, 'panel', hint, fuelOf(s));
       manual(s).add(d);
       syncDamages(s);
