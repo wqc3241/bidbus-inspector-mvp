@@ -35,7 +35,7 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 ## Damage dots on the 360 view (server, `app/hotspots.py`)
 
 - `locate_parts`: one request per spin frame that can show a damaged part (a window of frames round the frame facing that part). The instruction says how the walk-around goes and where the camera is in that frame; for each damaged part the answer is `visible` and its middle as `x`, `y` from 0 to 1000. A frame seen alone is dropped when the part is seen in more than two frames; each point is the median of itself and its neighbours.
-- `damage_side`: for a place with no side (Mirror, Headlight, Tail light, Fuel door), the damage photo answers `left`, `right` or `unknown`; unknown gets no dot.
+- `damage_side`: for a place with no side (Mirror, Headlight, Tail light, Fuel door) and no Left or Right picked by the inspector (`where`), the damage photo answers `left`, `right` or `unknown`; unknown gets no dot.
 
 ## Upright photos
 
