@@ -56,6 +56,7 @@ def test_which_damages_get_a_dot():
     rec["damages"].append({**rec["damages"][0], "n": 6, "place": "Carpet", "section": "Interior"})
     rec["damages"].append({**rec["damages"][0], "n": 7, "confirmed": False})
     rec["damages"].append({**rec["damages"][0], "n": 8, "file": None})
+    rec["damages"].append({**rec["damages"][0], "n": '1"><img src=x onerror=alert(1)>'})  # a number that is not a number: never on the page
     # confirmed, with a photo, seen from outside, on a part the 360 can show; a Paint place of the hood is the hood
     assert [(d["n"], d["place"]) for d in hotspots.marked(rec)] == [(1, "Left front door"), (2, "Hood"), (3, "Mirror"), (5, "Right front wheel")]
 

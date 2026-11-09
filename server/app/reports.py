@@ -109,7 +109,7 @@ def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict]) -> dict:
         lines = [by_photo[d["file"]] if d["file"] in by_photo else {"text": d["place"], "level": None} for d in ds]
         worst = max((LEVEL.get(x.get("level")) for x in lines), key=lambda lv: ["yel", "sev", "stop"].index(lv) + 1 if lv else 0)
         items = "".join(
-            f'<button type="button" class="hs-it" id="hsd-{d["n"]}"><img src="{escape(url(d["file"]))}" alt="">'
+            f'<button type="button" class="hs-it" id="hsd-{escape(str(d["n"]))}"><img src="{escape(url(d["file"]))}" alt="">'
             f'<span><b>{escape(x["text"].split(": ", 1)[0])}</b>{escape(x["text"].split(": ", 1)[1] if ": " in x["text"] else "")}</span></button>'
             for d, x in zip(ds, lines))
         # keepOpen: the card stays until a tap elsewhere in the view (with a mouse it would close as the pointer leaves it)

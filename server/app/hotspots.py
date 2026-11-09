@@ -64,7 +64,8 @@ def marked(rec: dict) -> list[dict]:
     out = []
     for d in rec.get("damages", []):
         place = SAME.get(d.get("place"), d.get("place"))
-        if d.get("confirmed") and d.get("file") and d.get("section") in SECTIONS and (place in FACE or place in SIDED):
+        if (d.get("confirmed") and d.get("file") and isinstance(d.get("n"), int) and not isinstance(d.get("n"), bool)
+                and d.get("section") in SECTIONS and (place in FACE or place in SIDED)):
             out.append({"n": d["n"], "place": place, "file": d["file"]})
     return out
 
