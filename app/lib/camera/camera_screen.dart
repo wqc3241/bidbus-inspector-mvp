@@ -37,10 +37,55 @@ String? guideFor(J? x, String fuel, Set<String> have) {
   return have.contains(p) ? p : null;
 }
 
-// saves a captured or picked photo upright, then queues its AI reading
+// keeps a captured or picked photo: a camera shot at once as it came, so the pass moves on without waiting, then in the
+// background turned upright and shrunk in place (saveUpright) with its AI reading queued; a library pick is finished
+// before it is shown, since the AI may have to turn it
 Future<String> keepPhoto(String id, String from, String key, {bool library = false, J? read}) async {
-  final rel = '${store.dirOf(id)}/$key-${DateTime.now().millisecondsSinceEpoch}.jpg';
-  var turn = await saveUpright(from, store.abs(rel));
+  final rel = '${store.dirOf(id)}/$key-${DateTime.now().millisecondsSinceEpoch}.jpg', to = store.abs(rel);
+  if (library) {
+    await File(from).copy(to); // the picker's copy is left where it is
+  } else {
+    try {
+      await File(from).rename(to); // the camera's own file moves in, no copy
+    } on FileSystemException catch (_) {
+      await File(from).copy(to);
+      dropTemp(from);
+    }
+  }
+  if (library) {
+    await _settle(id, rel, true, read);
+  } else {
+    // marked until it is done: if the app is closed before, the next start does it (Store.init, resumeSettles)
+    store.mut(id, (st) => m(st, 'settle')[rel] = {'read': ?read});
+    settleLater(id, rel, read);
+  }
+  return rel;
+}
+
+// camera shots are finished one at a time, in the order taken (a fast walk never piles up work at once)
+Future<void> _later = Future.value();
+void settleLater(String id, String rel, J? read) => _later = _later.then((_) => _settle(id, rel, false, read)).catchError((Object e) => debugPrint('settle $rel: $e'));
+
+// the photo kept as it came becomes the upright, shrunk one; a photo deleted or retaken meanwhile is left gone
+Future<void> _settle(String id, String rel, bool library, J? read) async {
+  try {
+    await _settle1(id, rel, library, read);
+  } finally {
+    store.mut(id, (st) => (st['settle'] as Map?)?.remove(rel));
+  }
+}
+
+Future<void> _settle1(String id, String rel, bool library, J? read) async {
+  final path = store.abs(rel), part = '${Directory.systemTemp.path}/${rel.replaceAll('/', '_')}.part';
+  var turn = 0;
+  try {
+    turn = await saveUpright(path, part);
+    File(path).existsSync() ? await File(part).rename(path) : dropTemp(part);
+  } catch (e) {
+    debugPrint('photo $rel: $e');
+    dropTemp(part);
+  }
+  if (!File(path).existsSync()) return;
   if (turn < 0) {
     turn = 0;
     // a library photo with no orientation: the AI says how far to turn it; offline it waits in the queue, ahead of its own reading
@@ -60,7 +105,12 @@ Future<String> keepPhoto(String id, String from, String key, {bool library = fal
   }
   store.mut(id, (st) => m(st, 'turn')[rel] = turn);
   if (read != null) store.queueRead(id, {...read, 'f': rel});
-  return rel;
+}
+
+void dropTemp(String path) {
+  try {
+    File(path).deleteSync();
+  } catch (_) {}
 }
 
 void dropFile(String? rel) {
@@ -102,6 +152,11 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   List<CameraDescription> cams = [];
   CameraDescription? wide, ultra;
   double zoom = 1, minZ = 1, maxZ = 1, pinch0 = 1;
+  bool opening = false, camVideo = false; // camVideo: the camera is open for video (1080p) rather than photos (full sensor, 4:3)
+  bool starting = false; // a recording is being started
+  // photo flash: Auto (the camera's own default: it fires when it is dark), On, Off; tap to go round, kept for the whole camera screen
+  FlashMode flashMode = FlashMode.auto;
+  bool get capturing => busy || starting || stopping || rec || (cc?.value.isRecordingVideo ?? false); // never close the camera under a photo or a video
   Set<String> guides = {};
   late String k;
   late int i;
@@ -119,7 +174,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   DeviceOrientation? side; // the landscape side the pass is locked to
   final stripCtl = ScrollController();
   Object? stripAt; // what the strip last scrolled to
-  ScrollPosition? stripPos; // and in which list: the strip is rebuilt when the end-of-Exterior dialog opens or closes
+  ScrollPosition? stripPos; // and in which list: the strip is rebuilt when the end-of-section dialog opens or closes
 
   J get st => store.ins[widget.id]!;
   String get fuel => fuelOf(st);
@@ -175,30 +230,57 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       final back = cams.where((c) => c.lensDirection == CameraLensDirection.back).toList();
       wide = back.where((c) => c.lensType != CameraLensType.ultraWide && c.lensType != CameraLensType.telephoto).firstOrNull ?? back.firstOrNull;
       ultra = back.where((c) => c.lensType == CameraLensType.ultraWide).firstOrNull;
-      await _open(zoom == .5 && ultra != null ? ultra! : wide!);
+      await _open(lens);
     } catch (e) {
       debugPrint('camera: $e');
       if (mounted) setState(() => noCam = true);
     }
   }
 
+  CameraDescription get lens => zoom == .5 && ultra != null ? ultra! : wide!;
+  // a video slot on screen: the camera records 1080p; everything else is a photo
+  bool get wantVideo => !dmgMode && !free && !ask && sel == null && i < l.length && (l[i]['it'] as J)['kind'] == 'video';
+
+  // photos use the whole sensor, 4:3, as the iPhone camera does, so .5, 1 and 2 frame what they frame there;
+  // videos are 1080p at the system's own settings, then made smaller after recording (squeezeVideo)
   Future<void> _open(CameraDescription d) async {
-    final old = cc;
-    cc = null;
-    if (mounted) setState(() {});
-    await old?.dispose();
-    final c = CameraController(d, ResolutionPreset.veryHigh, enableAudio: true, imageFormatGroup: ImageFormatGroup.jpeg);
-    await c.initialize();
-    await _lockSide(c);
-    minZ = await c.getMinZoomLevel();
-    maxZ = await c.getMaxZoomLevel();
-    if (zoom == 2) await c.setZoomLevel(2.clamp(minZ, maxZ).toDouble());
-    if (!mounted) return c.dispose();
-    setState(() => cc = c);
+    opening = true;
+    try {
+      final old = cc;
+      cc = null;
+      if (mounted) setState(() {});
+      await old?.dispose();
+      final video = wantVideo;
+      final c = CameraController(d, video ? ResolutionPreset.veryHigh : ResolutionPreset.max, enableAudio: true, imageFormatGroup: ImageFormatGroup.jpeg);
+      await c.initialize();
+      await _lockSide(c);
+      minZ = await c.getMinZoomLevel();
+      maxZ = await c.getMaxZoomLevel();
+      if (zoom == 2) await c.setZoomLevel(2.clamp(minZ, maxZ).toDouble());
+      await _applyFlash(c);
+      if (!mounted) {
+        await c.dispose();
+        return;
+      }
+      camVideo = video;
+      setState(() => cc = c);
+    } finally {
+      opening = false;
+    }
+  }
+
+  // after a move between a photo and a video slot, open the camera again for the other kind; a shot still being taken
+  // finishes first (its end rebuilds the screen, which comes back here)
+  void _matchKind() {
+    if (cc == null || opening || capturing || noCam || camVideo == wantVideo) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || cc == null || opening || capturing || camVideo == wantVideo) return;
+      _open(lens).catchError((_) => mounted ? setState(() => noCam = true) : null);
+    });
   }
 
   // the box around CameraPreview has the same ratio the preview draws itself (landscape when capture is locked landscape),
-  // so cover-filling the screen crops a little and never stretches the picture
+  // so fitting it in the screen shows the whole frame the photo gets and never stretches the picture
   double _previewRatio(CameraController c) {
     final o = c.value.lockedCaptureOrientation ?? c.value.deviceOrientation;
     final land = o == DeviceOrientation.landscapeLeft || o == DeviceOrientation.landscapeRight;
@@ -223,8 +305,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       if (rec) _stopVideo();
       cc = null;
       c.dispose();
-    } else if (s == AppLifecycleState.resumed && cc == null && wide != null && !noCam) {
-      _open(zoom == .5 && ultra != null ? ultra! : wide!).catchError((_) => mounted ? setState(() => noCam = true) : null);
+    } else if (s == AppLifecycleState.resumed && cc == null && wide != null && !noCam && !opening) {
+      _open(lens).catchError((_) => mounted ? setState(() => noCam = true) : null);
     }
   }
 
@@ -255,7 +337,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 
   void capEnd() {
-    if (k == 'Exterior') {
+    if (k != 'OBDII') {
       i = l.length - 1;
       ask = true;
       free = false;
@@ -327,14 +409,17 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     final x = l[i], it = x['it'] as J;
     if (it['kind'] == 'video' && library) return _pickVideo();
     if (it['kind'] == 'video' && !library) {
+      if (starting) return; // the recording is still starting: a second tap waits for it
       rec ? await _stopVideo() : await _startVideo();
       return;
     }
     setState(() => busy = true);
+    if (!library) _blink();
     try {
       if (!library) await _lockSide();
       final from = library ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
+      if (!library) _blink(taken: true);
       tag = null;
       final mstay = isMulti(x['id']) && !widget.args.single, again = !mstay && capHas(st, x), id = x['id'] as String;
       final key = x['panel'] != null ? 'paint-${x['panel']}'.replaceAll(' ', '_') : x['wheel'] != null ? '$id-${x['wheel']}' : id;
@@ -350,7 +435,6 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         capMark(s, x, library ? 'library' : 'camera', rel);
       });
       liveFor = null;
-      flash = !library;
       note = '';
       if (widget.args.single) return await _close();
       if (again) {
@@ -364,19 +448,54 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       debugPrint('shot: $e');
     } finally {
       if (mounted) setState(() => busy = false);
-      Future.delayed(const Duration(milliseconds: 180), () => mounted ? setState(() => flash = false) : null);
     }
   }
 
+  // the white flash over the screen: the moment the shutter is tapped. When the flash fires (On, or Auto in the dark) the
+  // photo comes a moment after the tap, so the screen flashes again when it is in (the inspector holds still until then):
+  // always with On; with Auto when the photo took longer than a photo without the flash does
+  DateTime? tapAt;
+  void _blink({bool taken = false}) {
+    if (!taken) tapAt = DateTime.now();
+    final slow = tapAt != null && DateTime.now().difference(tapAt!) > const Duration(milliseconds: 350);
+    final on = flashMode == FlashMode.always;
+    if (taken ? !(on || (flashMode == FlashMode.auto && slow)) : on) return;
+    setState(() => flash = true);
+    Future.delayed(const Duration(milliseconds: 150), () => mounted ? setState(() => flash = false) : null);
+  }
+
+  // from the tap the screen is locked as for a recording (no moving to another slot, no lens switch), so the recording
+  // that starts is always the one on screen
   Future<void> _startVideo() async {
-    await _lockSide();
-    await cc!.startVideoRecording();
+    final c = cc!;
     recSlot = l[i];
-    final max = vmax[recSlot!['id']] ?? 30;
     setState(() {
+      starting = true;
       rec = true;
       recAt = DateTime.now();
     });
+    try {
+      await _lockSide();
+      await c.startVideoRecording();
+    } catch (e) {
+      debugPrint('video: $e');
+      recSlot = null;
+      if (mounted) setState(() => rec = false);
+      return;
+    } finally {
+      starting = false;
+    }
+    // closed, left (the app went inactive) or the camera changed while it started: that recording is stopped and dropped
+    if (!mounted || !rec || !identical(cc, c) || recSlot == null) {
+      try {
+        dropTemp((await c.stopVideoRecording()).path);
+      } catch (_) {}
+      recSlot = null;
+      return;
+    }
+    final max = vmax[recSlot!['id']] ?? 30;
+    recAt = DateTime.now();
+    recTimer?.cancel();
     recTimer = Timer.periodic(const Duration(milliseconds: 500), (t) {
       if (!mounted) return;
       if (DateTime.now().difference(recAt!).inSeconds >= max) _stopVideo();
@@ -405,7 +524,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       capMark(s, x, 'camera', rel);
       if (id == 'video_360') s['spin'] = null;
     });
-    if (id == 'video_360') _cutSpin(rel);
+    id == 'video_360' ? _cutSpin(rel) : squeezeVideo(store.abs(rel));
     recSlot = null;
     setState(() => rec = false);
     if (widget.args.single) return _close();
@@ -432,7 +551,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         capMark(s, x, 'library', rel);
         if (id == 'video_360') s['spin'] = null;
       });
-      if (id == 'video_360') _cutSpin(rel);
+      id == 'video_360' ? _cutSpin(rel) : squeezeVideo(store.abs(rel));
       if (widget.args.single) return await _close();
       again || capRet != null ? capResume() : capAdvance();
       _save();
@@ -441,22 +560,25 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     }
   }
 
+  // the frames are cut from the video as recorded, then the video is made smaller
   void _cutSpin(String rel) {
     final id = widget.id;
     cutSpinFrames(store.abs(rel), store.abs(store.dirOf(id))).then((frames) {
       store.mut(id, (s) {
         if (m(s, 'files')['video_360'] == rel) s['spin'] = frames.map((f) => f.substring(store.docs.length + 1)).toList();
       });
-    }).catchError((e) => debugPrint('spin: $e'));
+    }).catchError((e) => debugPrint('spin: $e')).whenComplete(() => squeezeVideo(store.abs(rel)));
   }
 
   // retake a picked damage or mod photo: the tag keeps its place and its label
   Future<void> _retakeSel({bool library = false}) async {
     final s = sel!;
     setState(() => busy = true);
+    if (!library) _blink();
     try {
       final from = library ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
+      if (!library) _blink(taken: true);
       final rel = await keepPhoto(widget.id, from, s.$1 == 'd' ? 'damage' : 'mod', library: library);
       store.mut(widget.id, (x) {
         final e = (s.$1 == 'd' ? manual(x) : (m(x, 'multi')[modslot[k]] ?? []) as List)[s.$2] as Map;
@@ -464,27 +586,29 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         e['f'] = rel;
         e['src'] = library ? 'library' : 'camera';
       });
-      flash = !library;
       liveFor = null;
       if (widget.args.single) return await _close();
     } finally {
       if (mounted) setState(() => busy = false);
-      Future.delayed(const Duration(milliseconds: 180), () => mounted ? setState(() => flash = false) : null);
     }
   }
 
   Future<void> _tag(String t) async {
-    if (busy || (cc == null && !noCam) || i >= l.length || k == 'OBDII' || (l[i]['it'] as J)['kind'] == 'video') return;
+    if (busy || (cc == null && !noCam) || i >= l.length || k == 'OBDII' || ((l[i]['it'] as J)['kind'] == 'video' && !free)) return;
     sel = null;
     if (showing && !noCam) return setState(() => liveFor = here); // a taken photo is on screen: show the camera first
     setState(() => busy = true);
+    if (!noCam) _blink();
     try {
-      final at = i, sec = k, from = noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
+      final at = i, sec = k, near = free ? null : dmgNear(st, k, i), from = noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
+      if (!noCam) _blink(taken: true);
       if (t == 'dmg') {
-        final zone = dzone[sec] ?? 'Exterior', hint = dmgHint(st, sec, at);
+        final zone = dzone[sec] ?? 'Exterior';
         final did = 'd${DateTime.now().microsecondsSinceEpoch}';
-        final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
+        // a damage shot under the car is read against the underbody places, so the guess keeps it on Underbody;
+        // during the walk the AI picks the place between the shot before and the shot after (none in free mode: it can be anywhere)
+        final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': sec == 'Underbody' ? sec : zone, 'near': ?near});
         store.mut(widget.id, (s) {
           manual(s).add({'id': did, 'zone': zone, 'sec': sec, 'at': at, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': rel});
           syncDamages(s);
@@ -500,10 +624,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         });
         tag = ('mod', ((m(st, 'multi')[slot] ?? []) as List).where((d) => d['sec'] == sec).length, at);
       }
-      flash = true;
     } finally {
       if (mounted) setState(() => busy = false);
-      Future.delayed(const Duration(milliseconds: 180), () => mounted ? setState(() => flash = false) : null);
     }
   }
 
@@ -511,9 +633,12 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   Future<void> _dmgShot({bool library = false}) async {
     if (busy) return;
     setState(() => busy = true);
+    final cam = !(library || noCam);
+    if (cam) _blink();
     try {
-      final from = library || noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
+      final from = cam ? (await cc!.takePicture()).path : (await ImagePicker().pickImage(source: ImageSource.gallery))?.path;
       if (from == null) return;
+      if (cam) _blink(taken: true);
       final zone = widget.args.dmg!, redo = widget.args.redo;
       if (redo != null) {
         final rel = await keepPhoto(widget.id, from, 'damage', library: library);
@@ -530,7 +655,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       final hint = aw != null ? '${wheelName(aw)} tire' : null;
       final rel = await keepPhoto(widget.id, from, 'damage', library: library, read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
       store.mut(widget.id, (s) {
-        final d = {'id': did, 'zone': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': library ? 'library' : 'camera', 'f': rel};
+        final d = {'id': did, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': library ? 'library' : 'camera', 'f': rel};
         if (hint != null) setLabel(d, 'panel', hint, fuelOf(s));
         manual(s).add(d);
         syncDamages(s);
@@ -541,13 +666,49 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     }
   }
 
+  Future<void> _cycleFlash() async {
+    setState(() => flashMode = {FlashMode.auto: FlashMode.always, FlashMode.always: FlashMode.off}[flashMode] ?? FlashMode.auto);
+    final c = cc;
+    if (c != null) await _applyFlash(c);
+  }
+
+  Future<void> _applyFlash(CameraController c) async {
+    try {
+      await c.setFlashMode(flashMode);
+    } on CameraException catch (e) {
+      debugPrint('flash: $e'); // a lens without a flash
+    }
+  }
+
+  // the flash chip, beside the zoom chips; hidden on a video slot (the photo flash does not light a video)
+  Widget _flashChip() {
+    final on = flashMode == FlashMode.always;
+    return Semantics(
+      label: 'Flash ${{FlashMode.auto: 'auto', FlashMode.always: 'on'}[flashMode] ?? 'off'}',
+      button: true,
+      child: GestureDetector(
+        onTap: cc == null || capturing ? null : _cycleFlash,
+        child: Container(
+          width: 40,
+          height: 40,
+          margin: const EdgeInsets.all(3),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: on ? Colors.black : Colors.black45),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Icon(flashMode == FlashMode.off ? LucideIcons.zapOff : LucideIcons.zap, size: 18, color: on ? const Color(0xFFFACC15) : Colors.white),
+            if (flashMode == FlashMode.auto) const Text('A', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
+          ]),
+        ),
+      ),
+    );
+  }
+
   Future<void> _setZoom(double z) async {
     final c = cc;
     if (c == null) return;
     final switchLens = (z == .5) != (zoom == .5) && ultra != null;
-    if (switchLens && rec) return;
+    if (switchLens && capturing) return;
     zoom = z;
-    if (switchLens) return _open(z == .5 ? ultra! : wide!);
+    if (switchLens) return _open(lens);
     await c.setZoomLevel((z == .5 ? 1.0 : z).clamp(minZ, maxZ));
     setState(() {});
   }
@@ -692,6 +853,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   @override
   Widget build(BuildContext context) {
     final c = cc;
+    _matchKind();
     return PopScope(
       canPop: !rec,
       onPopInvokedWithResult: (did, _) {
@@ -707,9 +869,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                 final z = (pinch0 * d.scale).clamp(minZ, maxZ);
                 if (zoom != .5) c.setZoomLevel(z);
               },
-              child: FittedBox(fit: BoxFit.cover, child: SizedBox(width: 100 * _previewRatio(c), height: 100, child: CameraPreview(c))),
+              child: FittedBox(fit: BoxFit.contain, child: SizedBox(width: 100 * _previewRatio(c), height: 100, child: CameraPreview(c))),
             ),
-          if (showing) Positioned.fill(child: Image.file(File(store.abs(shown!)), fit: BoxFit.cover, cacheWidth: 1600, gaplessPlayback: true, key: ValueKey(shown))),
+          // on black: a photo of another shape (a phone screenshot) does not show the live camera beside it
+          if (showing) Positioned.fill(child: ColoredBox(color: Colors.black, child: Image.file(File(store.abs(shown!)), fit: BoxFit.contain, cacheWidth: 1600, gaplessPlayback: true, key: ValueKey(shown)))),
           if (flash) Container(color: Colors.white54),
           SafeArea(child: dmgMode ? _dmgLayout() : _passLayout()),
         ]),
@@ -724,7 +887,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         child: Column(children: [
           Padding(
             padding: const EdgeInsets.all(8),
-            child: Row(children: [_btn(LucideIcons.chevronLeft, () => Navigator.of(context).pop()), const Spacer(), _pill(zoneTitle[zone]!.replaceAll('damages', 'damage')), const Spacer(), const SizedBox(width: 40)]),
+            child: Row(children: [_btn(LucideIcons.chevronLeft, () => Navigator.of(context).pop()), const Spacer(), _pill(zoneTitle[zone]!.replaceAll('damages', 'damage')), const Spacer(), SizedBox(width: 46, child: _flashChip())]),
           ),
           Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [if (!showing) SvgPicture.asset('assets/guides/damage.svg', height: MediaQuery.of(context).size.height * .45), const SizedBox(height: 8), _pill(showing ? 'Tap the green shutter to retake it' : 'One damage per photo', size: 13)]))),
         ]),
@@ -776,7 +939,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (rv) hint = vid ? 'Taken. Record again to replace it.' : showing ? 'Taken. Tap the green shutter to retake it.' : 'Take the new photo.';
     if (multiStay) hint = '${multiHint[id] ?? 'One photo each'}. ${arr.isNotEmpty ? '${arr.length} taken. Take another, or tap Done.' : 'Take as many as you need, then tap Done.'}';
     final selLbl = sel == null ? null : sel!.$1 == 'd' ? 'Damage' : 'Mod';
-    final tagOk = !widget.args.single, tagOff = k == 'OBDII' || vid || busy || (cc == null && !noCam) || rec;
+    final tagOk = !widget.args.single, tagOff = k == 'OBDII' || (vid && !free) || busy || (cc == null && !noCam) || rec;
     final recS = recAt == null ? 0 : DateTime.now().difference(recAt!).inSeconds;
     final g = guideFor(x, fuel, guides);
     final scale = zoom == .5 ? .6 : zoom == 2 ? 1.35 : 1.0;
@@ -825,6 +988,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                   bottom: 0,
                   child: Center(
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      if (!wantVideo) _flashChip(),
                       for (final z in [if (ultra != null) .5, 1.0, 2.0])
                         GestureDetector(
                           onTap: () => _setZoom(z),
@@ -861,7 +1025,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             const SizedBox(height: 40),
         ]),
       ),
-    ]).withAsk(ask, context, () => setState(() {
+    ]).withAsk(ask, askWord[k] ?? k.toLowerCase(), () => setState(() {
           ask = false;
           capGoNext();
         }), () => setState(() {
@@ -923,9 +1087,12 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 }
 
+// the end-of-section dialog names the section's damages
+const askWord = {'Exterior': 'exterior', 'Tires': 'tire and wheel', 'Interior': 'interior', 'Mechanicals': 'mechanical', 'Underbody': 'underbody'};
+
 extension on Widget {
-  // the end-of-Exterior dialog over the camera
-  Widget withAsk(bool ask, BuildContext context, VoidCallback done, VoidCallback record) => !ask
+  // the end-of-section dialog over the camera: every section of the pass but OBDII, which has no Damage and Mod shutters
+  Widget withAsk(bool ask, String word, VoidCallback done, VoidCallback record) => !ask
       ? this
       : Stack(children: [
           this,
@@ -938,7 +1105,7 @@ extension on Widget {
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    const Text('Please record any exterior damage/modification images before proceeding.', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                    Text('Please record any $word damage/modification images before proceeding.', textAlign: TextAlign.center, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 16),
                     Row(children: [
                       Expanded(child: OutlinedButton(onPressed: done, child: const FittedBox(fit: BoxFit.scaleDown, child: Text("I'm done", maxLines: 1)))),

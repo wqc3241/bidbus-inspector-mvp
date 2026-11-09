@@ -33,11 +33,26 @@ class Store extends ChangeNotifier {
   bool _aiBusy = false, _upBusy = false;
   Timer? _tick;
 
+  // camera shots keepPhoto finishes in the background (camera_screen.dart settleLater, set in main.dart);
+  // one the app was closed in the middle of is finished at the next start
+  void Function(String id, String rel, J? read)? settle;
+  void resumeSettles() {
+    final f = settle;
+    if (f == null) return;
+    for (final st in ins.values.toList()) {
+      for (final e in ((st['settle'] as Map?) ?? const {}).entries.toList()) {
+        f(st['id'] as String, e.key as String, ((e.value as Map)['read'] as Map?)?.cast<String, dynamic>());
+      }
+    }
+  }
+
   Future<void> init({Db? database, String? docsDir}) async {
     db = database ?? Db();
     docs = docsDir ?? (await getApplicationDocumentsDirectory()).path;
     for (final r in await db.all()) {
-      ins[r.id] = jsonDecode(r.json);
+      final st = jsonDecode(r.json) as J, old = st['ub'] != true;
+      ins[r.id] = splitUnderbody(st);
+      if (old) await db.put(r.id, jsonEncode(st)); // saved at once, so it is never split twice
     }
     final s = await db.settingsMap();
     inspector = s['inspector'] ?? '';
@@ -57,6 +72,7 @@ class Store extends ChangeNotifier {
       });
     } catch (_) {}
     _tick = Timer.periodic(const Duration(seconds: 20), (_) => kick());
+    resumeSettles();
     kick();
   }
 
@@ -113,7 +129,7 @@ class Store extends ChangeNotifier {
   }
 
   // ---------- AI readings (docs/04-ai-reading.md) ----------
-  // queue item: {kind, f, section?, hint?, w?, panel?, did?, vin?}
+  // queue item: {kind, f, section?, hint?, near?, w?, panel?, did?, vin?}
   void queueRead(String id, J item) {
     mut(id, (st) => (st['aiq'] as List).add(item));
     kick();
@@ -135,7 +151,7 @@ class Store extends ChangeNotifier {
           J res;
           try {
             final f = File(abs(item['f']));
-            res = f.existsSync() ? await api.read(item['kind'], f, section: item['section'], fuel: st['fuel'], hint: item['hint']) : {'ok': false};
+            res = f.existsSync() ? await api.read(item['kind'], f, section: item['section'], fuel: st['fuel'], hint: item['hint'], near: (item['near'] as List?)?.cast<String>()) : {'ok': false};
           } on DioException catch (e) {
             // no answer from the server (no signal, timeout, server down, passcode): keep the reading for the next round
             final code = e.response?.statusCode ?? 0;
@@ -197,9 +213,12 @@ class Store extends ChangeNotifier {
         final total = p.files.length;
         mut(id, (s) => s['up'] = {...m(s, 'up'), 'state': 'uploading', 'total': total, 'done': total - todo.length});
         st['status'] = 'uploading';
-        for (final name in todo) {
-          final local = p.files[name];
-          if (local == null || !File(abs(local)).existsSync()) continue;
+        // three files at a time: each upload has its own set-up time, so one at a time leaves the line idle between files
+        final send = <String>[for (final name in todo) if (p.files[name] != null && File(abs(p.files[name]!)).existsSync()) name];
+        Future<void> one(String name) async {
+          final local = p.files[name]!;
+          // a video not made smaller yet (the app was closed while it was being done): now, before it goes
+          if (!name.endsWith('.jpg') && !name.endsWith('.png')) await squeezeVideo(abs(local));
           final slash = local.lastIndexOf('/');
           final task = UploadTask(
             url: '${server.replaceAll(RegExp(r'/+$'), '')}/api/inspections/$id/files/$name', baseDirectory: BaseDirectory.applicationDocuments,
@@ -215,6 +234,20 @@ class Store extends ChangeNotifier {
             if (name.startsWith('spin-')) u['spin'] = [...(u['spin'] as List? ?? []), name];
           });
         }
+
+        // a failed file stops the round; the next round sends what the server still misses
+        Future<void> lane() async {
+          while (send.isNotEmpty) {
+            try {
+              await one(send.removeAt(0));
+            } catch (_) {
+              send.clear();
+              rethrow;
+            }
+          }
+        }
+
+        await Future.wait([for (var w = 0; w < 3; w++) lane()]);
         final c = await a.complete(id);
         if (c.statusCode == 409) return; // something still missing: the next round sends it
         mut(id, (s) => s['status'] = 'building');

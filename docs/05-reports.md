@@ -13,13 +13,14 @@ Look and layout: `reference/condition-report/condition-report.html` (open it in 
 - **Header**: year make model trim, mileage, inspection date and the time it ended.
 - **Photo and video viewer**: one strip of every photo and video, grouped by inspection section: Exterior, Paint, Tires, Underbody, Mechanicals, Interior, OBD-II, Additionals. Group chips below the strip; All is the default. The walk-around sits in Exterior, engine sound and exhaust in Mechanicals. Each damage photo is in the section it was recorded in. Tap opens full screen with swipe.
 - **360 view**: the 36 spin frames in js-cloudimage-360-view (`https://cdn.jsdelivr.net/npm/js-cloudimage-360-view@3`, pin an exact version), first in the Exterior group.
+- **Exterior views**: right after the 360 view, eight of its frames as photos, in the walk-around order: Left front (frame 1), Left side (5), Left rear (10), Rear (14), Right rear (19), Right side (23), Right front (28), Front (32), the CR's `SPIN_SLOTS`.
 - **Highlight** (first block after the viewer): four items from `condition_report.highlight`:
   - Structural damage: Yes, Not checked, or No
   - Keys: 0, 1 or 2
   - Odor: OK or the odor problems
   - Mechanical: Issue or No issue
 - **Tires**: per wheel LF, RF, RR, LR: tread /32 with tier (Replace 4 and below, Fair 5-8, Good 9 and up), brand and size, that wheel's tire, wheel and brake issues.
-- **Bidbus Inspection**: one block per CR row in this order: Exterior, Paint, Tires, Underbody, Mechanicals, Engine sound (not for EVs), Interior, OBD-II, Additionals. Each issue line is the issue's `text`, with `sub` below. Each damage shows in its row with its photo thumbnail and text. A row with no issues reads "No issues". There is no separate Damages section.
+- **Bidbus Inspection**: one block per CR row in this order: Exterior, Paint, Tires, Underbody, Mechanicals, Engine sound (not for EVs), Interior, OBD-II, Additionals. Each issue line is the issue's `text`, with `sub` below. Each damage shows in its row with its photo thumbnail and text. A row with no issues reads "No issues". The Paint block also shows the highest and the lowest panel reading with its panel (mils; a reading above 10 shows as 10+; panels not on the car are left out). The OBD-II block, when it has an issue, also shows its OBD-II photos (the scan screens; for an EV the alert, battery and charging screens) as thumbnails under the issues, each opening the photo; with no issue they stay only in the photo viewer. There is no separate Damages section.
 - **Never shown**: the light or any grade; driver's license, registration, family proof; GPS; the signature image.
 
 ## Seller report only

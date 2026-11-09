@@ -45,16 +45,20 @@ Copy `data/question-list.json`, `data/issue-catalog.json` and `guides/svg/*` int
 
 ## Camera screen
 
-- Landscape locked; full screen `CameraPreview` (cover fit) inside a `Stack`; the guide outline, shot name, top bar, shutters and thumbnails sit on top.
+- Landscape locked; full screen `CameraPreview` (contain fit: the whole frame the photo gets, as the iPhone camera shows it) inside a `Stack`; the guide outline, shot name, top bar, shutters and thumbnails sit on top.
 - Shutters: Damage (amber, above), main (big), Mod (blue, below). Damage and Mod call `takePicture()` and tag the file; the flow does not move. Disable all shutters until the current `takePicture()` returns (the plugin throws on overlapping captures).
 - Zoom chips .5 / 1 / 2 and pinch: `setZoomLevel` between `getMinZoomLevel` and `getMaxZoomLevel`. For .5, switch to the ultra-wide back camera from `availableCameras()` when the phone has one; hide .5 when it does not.
+- Flash chip: `setFlashMode` Auto (the plugin's default), Always, Off, applied again whenever the controller is opened again; not shown on video slots.
 - Videos: `startVideoRecording()` / `stopVideoRecording()` with audio on; a timer stops at the item's max seconds (60 walk-around, 30 engine and exhaust). Damage and Mod are off during video.
-- Use `ResolutionPreset.veryHigh` (1080p) for photos and video. Keep the controller alive through the whole pass; dispose when leaving the camera; handle `AppLifecycleState.inactive` / `resumed`.
+- Photos use `ResolutionPreset.max` (the whole sensor, 4:3, as the iPhone camera), so .5, 1 and 2 match the iPhone camera's. Videos use `ResolutionPreset.veryHigh` (1080p) at the system's own encoder settings; the camera opens again for the other kind when the pass moves between a photo and a video slot. After recording (for the walk-around, after the 360 frames are cut from it), each video is re-encoded in place to H.264 at 5 Mbit/s with a key frame every second, long side at most 1920 px, the sound copied (iOS: `squeezeVideo` in `AppDelegate.swift`); only a video with one picture and one sound track the system reads (as the camera records) is re-encoded, anything else is uploaded as it is; the upload does it first for any video not done yet. Keep the controller alive through the pass otherwise; dispose when leaving the camera; handle `AppLifecycleState.inactive` / `resumed`.
 - Every capture is written to the app documents folder and a drift row at once, before the UI moves on.
 
 ## Upright photos
 
 - Lock the capture orientation to the current landscape side at the start of the pass (`lockCaptureOrientation`). After each shot, bake the EXIF orientation into the pixels and save the turn applied as `upright_turn_deg` (0, 90, 180, 270).
+- Every photo is kept at most 2560 px on the long side, JPEG quality 82, without metadata (iOS: ImageIO in `AppDelegate.swift`; elsewhere the `image` package). The shot is kept at once as the camera wrote it, so the pass moves on without waiting; it is turned upright and shrunk in place right after, in the background, and its AI reading is queued then. The camera takes photos of at most 12 MP, the iPhone camera's default (`PhotoSize` in `AppDelegate.swift` holds the plugin's photo output to it; the 4:3 format would give 48 MP).
+- The screen flashes white the moment the shutter is tapped; when the flash fires (On, or Auto when the photo takes longer than 350 ms) it flashes again when the photo is in, so the inspector holds still until then. While a recording starts, the screen is locked as for a recording; a recording that starts after the screen was closed or the app left is stopped and dropped.
+- Camera shots still to finish are marked in the inspection (`settle`); a shot the app was closed in the middle of is finished at the next start (`Store.resumeSettles`).
 - Library picks: bake EXIF orientation; if the file has none, call the AI `upright` reading and rotate by its result.
 
 ## 360 view
@@ -67,7 +71,7 @@ Copy `data/question-list.json`, `data/issue-catalog.json` and `guides/svg/*` int
 
 - Every screen works with no signal. The question list and catalog are bundled assets.
 - AI readings queue while offline and run when the network returns; the inspector can fill any value by hand meanwhile.
-- After the signature: `PUT /api/inspections/{id}` with the record, then each file as a background upload task, then `POST /complete`. The queue is in drift; on app start it re-enqueues anything not confirmed by the server's missing list.
+- After the signature: `PUT /api/inspections/{id}` with the record, then each file as a background upload task (three at a time), then `POST /complete`. The queue is in drift; on app start it re-enqueues anything not confirmed by the server's missing list.
 - Status on the Inspections screen: Saved on phone, Uploading (n of m), Report sent, or the server's validation errors.
 
 ## Permissions

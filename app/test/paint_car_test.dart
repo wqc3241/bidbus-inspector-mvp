@@ -68,7 +68,11 @@ void main() {
     expect(_fill(t, '12.0'), const Color(0xFFFDE8EE));
     expect(t.widget<Text>(find.text('12.0')).style?.color, const Color(0xFFBE123C));
     expect(_fill(t, 'N/A'), isNull);
-    expect(t.widget<Text>(find.text('–')).style?.color, const Color(0xFF9A4F05));
+    // a panel with no reading has the red frame of a row still to answer
+    expect(t.widget<Text>(find.text('–')).style?.color, const Color(0xFFE1255D));
+    final miss = t.widget<Container>(find.ancestor(of: find.text('–'), matching: find.byType(Container)).first);
+    expect(((miss.foregroundDecoration as BoxDecoration).border as Border).top.color, const Color(0xFFE1255D));
+    expect(t.widget<Container>(find.ancestor(of: find.text('4.5'), matching: find.byType(Container)).first).foregroundDecoration, isNull);
     expect(_fill(t, '4.5'), Colors.white);
   });
 

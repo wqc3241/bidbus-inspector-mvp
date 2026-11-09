@@ -128,7 +128,7 @@ def openai_read(name: str, props: dict, text: str, image_b64: str) -> dict:
     return json.loads(r.json()["choices"][0]["message"]["content"])
 
 
-def read(kind: str, image: bytes, section=None, fuel=None, hint=None) -> dict:
+def read(kind: str, image: bytes, section=None, fuel=None, hint=None, near=None) -> dict:
     if kind not in KINDS or not (config.OPENAI_API_KEY or config.ANTHROPIC_API_KEY):
         return {"ok": False}
     try:
@@ -136,6 +136,9 @@ def read(kind: str, image: bytes, section=None, fuel=None, hint=None) -> dict:
         tool = {"name": name, "description": text, "strict": True,
                 "input_schema": {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}}
         pairs = allowed_pairs(section, fuel) if kind == "damage" else None
+        # near: the places between the shot taken before the damage photo and the shot taken after it; the AI picks one of them
+        if pairs is not None and near and not hint:
+            pairs = {p: ts for p, ts in pairs.items() if p in near} or pairs
         if pairs is not None:  # place: its types, one line per place
             text += "\n" + "\n".join(f"{p}: {'; '.join(ts)}" for p, ts in pairs.items())
             if hint:

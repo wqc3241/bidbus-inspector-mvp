@@ -50,7 +50,7 @@ class ResumeScreen extends ConsumerWidget {
           for (final k in camseq)
             () {
               final c = capCount(st, k), z = zoneDamages(st, k).length;
-              return RowBtn(k, c[0] >= c[1] ? okVal('${c[0]}/${c[1]}') : Text('${c[0]}/${c[1]}', style: const TextStyle(color: amber, fontWeight: FontWeight.w700)),
+              return RowBtn(stTitle(k), c[0] >= c[1] ? okVal('${c[0]}/${c[1]}') : Text('${c[0]}/${c[1]}', style: const TextStyle(color: amber, fontWeight: FontWeight.w700)),
                   sub: z > 0 ? '$z damage photo${z > 1 ? 's' : ''}' : null, onTap: () => context.push('/i/$id/cam', extra: CamArgs(run: true, k: k)));
             }(),
         ]),

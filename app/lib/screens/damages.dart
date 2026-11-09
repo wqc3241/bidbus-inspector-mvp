@@ -105,7 +105,7 @@ class _WhereViewState extends State<WhereView> {
   @override
   Widget build(BuildContext context) {
     final d = widget.d, z = d['zone'] ?? 'Exterior', gs = whereGroups(z, widget.fuel), have = placesFor(z, widget.fuel).map((q) => q['p'] as String).toSet();
-    final under = (d['panel'] ?? '') == '' && (widget.shot ?? '').startsWith('ph_under') ? gs.indexWhere((g) => g.$1 == 'Underbody') : -1;
+    final under = (d['panel'] ?? '') == '' && ((widget.shot ?? '').startsWith('ph_under') || dtab(d) == 'Underbody') ? gs.indexWhere((g) => g.$1 == 'Underbody') : -1;
     final t = (tab ?? (under >= 0 ? under : groupOf(gs, d['panel']))).clamp(0, gs.length - 1), g = gs[t], sel = d['panel'] as String?;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       if (gs.length > 1)
@@ -273,13 +273,17 @@ class DamageEditor extends ConsumerWidget {
             right: 10,
             top: 10,
             child: Row(children: [
-              _sq(LucideIcons.camera, () => context.push('/i/$id/cam', extra: CamArgs(dmg: d['zone'] ?? 'Exterior', redo: did))),
+              _sq(LucideIcons.camera, () => context.push('/i/$id/cam', extra: CamArgs(dmg: dtab(d), redo: did))),
               const SizedBox(width: 8),
               _sq(LucideIcons.trash2, () {
                 final file = d['f'] as String?;
                 store.mut(id, (s) {
+                  final z = dtab(dmgById(s, did)!);
                   manual(s).removeWhere((x) => x['id'] == did);
                   syncDamages(s);
+                  // stay on this tab: a photo still to label there, else its first; with none left, the first photo still to label
+                  final same = zoneDamages(s, z), todo = same.where((e) => !dmgDone(e.$1, fuelOf(s)));
+                  s['li'] = (todo.firstOrNull ?? same.firstOrNull)?.$2 ?? unlabelledOrder(s).firstOrNull ?? 0;
                 });
                 dropFile(file);
               }, color: red),
@@ -361,8 +365,12 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     }
     var li = st['li'] as int? ?? o.first;
     if (!o.contains(li)) li = unlabelledOrder(st).firstOrNull ?? o.first;
-    final d = manual(st)[li], z = d['zone'] ?? 'Exterior', pos = o.indexOf(li);
+    final d = manual(st)[li], z = dtab(d), pos = o.indexOf(li);
     final left = unlabelledOrder(st).length, ok = dmgDone(d, fuel), guess = labelled(d, fuel) && d['ai'] == true;
+    // while this tab has photos to label the tabs after it are shut, and the pages stop at its last photo
+    final zs = [for (final zz in dz) if (zoneDamages(st, zz).isNotEmpty) zz];
+    final open = openTo([for (final zz in zs) zoneDamages(st, zz).every((e) => dmgDone(e.$1, fuel))], zs.indexOf(z));
+    final count = [for (var k = 0; k <= open; k++) zoneDamages(st, zs[k]).length].fold(0, (a, b) => a + b);
     pc ??= PageController(initialPage: pos);
     WidgetsBinding.instance.addPostFrameCallback((_) => _follow(pos));
     Widget arrow(IconData ic, int? to) => to == null
@@ -371,22 +379,13 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
     return Scaffold(
       appBar: PhaseHeader('Damages', 1, onBack: () => store.mut(widget.id, (s) => s['phase'] = 'capture')),
       body: Column(children: [
-        SizedBox(
-          height: 48,
-          child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 8), children: [
-            for (final zz in dz)
-              if (zoneDamages(st, zz).isNotEmpty)
-                () {
-                  final l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length, on = zz == z;
-                  final b = TextButton.icon(
-                    onPressed: () => _go(l.first.$2),
-                    icon: done == l.length ? const Icon(LucideIcons.check, size: 14) : const SizedBox(),
-                    label: Text('$zz $done/${l.length}', style: TextStyle(fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: done == l.length ? bid : Colors.black, decoration: on ? TextDecoration.underline : null)),
-                  );
-                  return on ? ShowMe(b) : b;
-                }(),
-          ]),
-        ),
+        TabStrip([
+          for (var k = 0; k < zs.length; k++)
+            () {
+              final zz = zs[k], l = zoneDamages(st, zz), done = l.where((e) => dmgDone(e.$1, fuel)).length;
+              return stripTab('${stTitle(zz)} $done/${l.length}', zz == z, k <= open ? () => _go(l.first.$2) : null, color: done == l.length ? bid : null);
+            }(),
+        ]),
         const Divider(height: 1),
         Expanded(
           // a finger on the page stops a slide; where the page comes to rest is the photo shown
@@ -403,15 +402,15 @@ class _DamagesScreenState extends ConsumerState<DamagesScreen> {
             },
             child: PageView.builder(
             controller: pc,
-            itemCount: o.length,
+            itemCount: count,
             onPageChanged: (p) {
               final oo = labelOrder(store.ins[widget.id]!);
               if ((!sliding || dragging) && p < oo.length) _go(oo[p]);
             },
             itemBuilder: (c, p) {
-              final dd = manual(st)[o[p]], zz = dd['zone'] ?? 'Exterior', zzl = zoneDamages(st, zz), nn = zzl.indexWhere((e) => e.$2 == o[p]) + 1;
+              final dd = manual(st)[o[p]], zz = dtab(dd), zzl = zoneDamages(st, zz), nn = zzl.indexWhere((e) => e.$2 == o[p]) + 1;
               return ListView(key: ValueKey(dd['id']), padding: const EdgeInsets.all(16), children: [
-                DamageEditor(widget.id, dd['id'], title: '$zz · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < o.length - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
+                DamageEditor(widget.id, dd['id'], title: '${stTitle(zz)} · $nn of ${zzl.length}', onLabelled: () => _next(store.ins[widget.id]!), nav: Positioned(right: 10, top: 78, child: Column(children: [arrow(LucideIcons.chevronRight, p < count - 1 ? o[p + 1] : null)])), key: ValueKey(dd['id'])),
                 if (p > 0) Align(alignment: Alignment.centerLeft, child: TextButton.icon(onPressed: () => _go(o[p - 1]), icon: const Icon(LucideIcons.chevronLeft, size: 16), label: const Text('Previous photo'))),
               ]);
             },
@@ -444,10 +443,10 @@ class DamageFormPage extends ConsumerWidget {
     }
     final ok = labelled(d, fuelOf(st));
     return Scaffold(
-      appBar: TitleBar(zoneTitle[d['zone'] ?? 'Exterior']!.replaceAll('damages', 'damage')),
+      appBar: TitleBar(zoneTitle[dtab(d)]!.replaceAll('damages', 'damage')),
       body: ListView(padding: const EdgeInsets.all(16), children: [DamageEditor(id, did)]),
       bottomNavigationBar: BottomBar(Row(children: [
-        Expanded(child: OutlinedButton.icon(onPressed: ok ? () => addDamage(context, id, d['zone'] ?? 'Exterior', replace: true) : null, icon: const Icon(LucideIcons.plus, size: 16), label: const Text('Add another'))),
+        Expanded(child: OutlinedButton.icon(onPressed: ok ? () => addDamage(context, id, dtab(d), replace: true) : null, icon: const Icon(LucideIcons.plus, size: 16), label: const Text('Add another'))),
         const SizedBox(width: 12),
         Expanded(
             child: PBtn('Done', ok
@@ -476,7 +475,7 @@ Future<void> addDamage(BuildContext context, String id, String zone, {String? wh
     final rel = await keepPhoto(id, x.path, 'damage', library: true, read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
     final newId = did;
     store.mut(id, (s) {
-      final d = {'id': newId, 'zone': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'library', 'f': rel};
+      final d = {'id': newId, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'library', 'f': rel};
       if (hint != null) setLabel(d, 'panel', hint, fuelOf(s));
       manual(s).add(d);
       syncDamages(s);

@@ -26,8 +26,8 @@ J run(String fuel, String vin) {
       }
       capMark(st, x, 'camera', 'insp/x/f${n++}.${it['kind'] == 'video' ? 'mp4' : 'jpg'}');
     }
-    // a damage and a mod photo in each section where the shutters work
-    if (k != 'OBDII') {
+    // a damage and a mod photo in each section where the shutters work (Underbody's go to Mechanicals, as in the samples)
+    if (k != 'OBDII' && k != 'Underbody') {
       manual(st).add({'id': 'd$k', 'zone': dzone[k], 'sec': k, 'at': 0, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': 'insp/x/d$k.jpg'});
       final a = (m(st, 'multi')[modslot[k]!] ??= <dynamic>[]) as List;
       a.add({'src': 'camera', 'panel': null, 'sec': k, 'at': 0, 'f': 'insp/x/m$k.jpg'});

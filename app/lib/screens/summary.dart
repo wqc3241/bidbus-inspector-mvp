@@ -73,7 +73,8 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
     final dl = [for (final d in manual(st)) if (labelled(d, fuel) && dmgOwn(st, d)) dmgLine(d)];
     final vin = (vals['vin_read'] ?? '') as String, mi = (vals['odo_read'] ?? '') as String, why = sumBlock(st), ov = st['overall'] as String? ?? '';
     final typedVin = (car['vin'] ?? '') as String, typedMi = int.tryParse('${car['mileage'] ?? ''}');
-    Widget count(String n, String l) => Expanded(child: Column(children: [Text(n, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)), Text(l, style: const TextStyle(color: muted, fontSize: 12.5))]));
+    // the numbers stay on one line across, however many lines a label takes
+    Widget count(String n, String l) => Expanded(child: Column(children: [Text(n, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)), Text(l, textAlign: TextAlign.center, style: const TextStyle(color: muted, fontSize: 12.5))]));
     return Scaffold(
       appBar: PhaseHeader('Summary', 3, onBack: () => store.mut(id, (s) {
         s['phase'] = 'summary';
@@ -83,11 +84,11 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
         Container(
           padding: const EdgeInsets.symmetric(vertical: 18),
           decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: line))),
-          child: Row(children: [
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             count('${tot['photos']}/${tot['need']}', 'Photos'),
             count('${tot['videos']}/${tot['vneed']}', 'Videos'),
             count('${pl.length + dl.length}', 'Problems'),
-            count('${manual(st).length}', 'Damage photos'),
+            count('${manual(st).length}', 'Damages'), // damage photos; one word like the others, so it stays on one line
           ]),
         ),
         if (un.isNotEmpty)
@@ -104,24 +105,25 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
           ]),
         Section(title: 'What you found', trailing: Text('${pl.length + dl.length}', style: const TextStyle(color: muted)), children: [
           if (pl.isEmpty && dl.isEmpty) const Text('No problems marked.', style: TextStyle(color: muted)),
-          Transform.translate(
-            offset: Offset.zero,
-            child: RowList([
-              for (final p in pl)
+          // section by section, each under its own heading
+          for (final (j, g) in findingsBySec(st).indexed) ...[
+            _secHead(g.$1, first: j == 0),
+            RowList([
+              for (final p in g.$2)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(children: [
-                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(p['text']), Text('${p['where']}${p['ph'] == true ? ' · damage photo' : ''}', style: const TextStyle(color: muted, fontSize: 12.5))])),
+                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(p['text']), if (_sub(g.$1, p).isNotEmpty) Text(_sub(g.$1, p), style: const TextStyle(color: muted, fontSize: 12.5))])),
                     Text(p['level'], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: levelColor(p['level']))),
                   ]),
                 ),
-              for (final t in dl)
+              for (final t in g.$3)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(children: [Expanded(child: Text(t)), const Text('Damage', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: amber))]),
                 ),
             ]),
-          ),
+          ],
         ]),
         visitCard(st),
         Section(title: 'VIN and mileage', trailing: vals['idconf'] == true && idReady(st) ? okVal('Confirmed') : const Text('Required', style: TextStyle(color: amber, fontWeight: FontWeight.w700)), children: [
@@ -223,15 +225,18 @@ class _SignScreenState extends ConsumerState<SignScreen> {
           const Text('Inspection findings', style: TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
           if (pl.isEmpty && dl.isEmpty) const Text('Nothing found.', style: TextStyle(color: muted)),
-          for (final p in pl)
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Icon(LucideIcons.triangleAlert, size: 16, color: muted),
-                  const SizedBox(width: 8),
-                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(p['text']), Text(p['where'], style: const TextStyle(color: muted, fontSize: 12.5))])),
-                ])),
-          for (final d in dl) Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: Row(children: [const Icon(LucideIcons.triangleAlert, size: 16, color: muted), const SizedBox(width: 8), Expanded(child: Text(d))])),
+          for (final (j, g) in findingsBySec(st).indexed) ...[
+            _secHead(g.$1, first: j == 0),
+            for (final p in g.$2)
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    const Icon(LucideIcons.triangleAlert, size: 16, color: muted),
+                    const SizedBox(width: 8),
+                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(p['text']), if (whereIn(g.$1, p['where']).isNotEmpty) Text(whereIn(g.$1, p['where']), style: const TextStyle(color: muted, fontSize: 12.5))])),
+                  ])),
+            for (final d in g.$3) Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: Row(children: [const Icon(LucideIcons.triangleAlert, size: 16, color: muted), const SizedBox(width: 8), Expanded(child: Text(d))])),
+          ],
           const SizedBox(height: 8),
           Text('${tot['photos'] + tot['extra']} photos and ${tot['videos']} videos taken.', style: const TextStyle(color: muted, fontSize: 13)),
         ]),
@@ -266,3 +271,12 @@ class _SignScreenState extends ConsumerState<SignScreen> {
     );
   }
 }
+
+// a section heading in the found-problems lists
+Widget _secHead(String k, {bool first = false}) => Padding(
+      padding: EdgeInsets.only(top: first ? 0 : 18, bottom: 8),
+      child: Text(stTitle(k).toUpperCase(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: .6, color: Colors.black)),
+    );
+
+// a problem's sub-line under its section: the place, and whether a damage photo shows it
+String _sub(String k, J p) => [whereIn(k, p['where']), if (p['ph'] == true) 'damage photo'].where((x) => x.isNotEmpty).join(' · ');

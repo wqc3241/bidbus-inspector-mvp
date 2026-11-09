@@ -21,7 +21,7 @@ Rule for every field: the inspector answer replaces the seller answer for anythi
 
 ## Photos
 
-Twelve inspector shots fill the 12 required seller slots one to one, so `has_all_required_photos` is true and the seller never sees a Photos step. The other 30 or so shots have no slot today; they get new position keys so the dealer viewer can group them (Exterior, Interior, Tires, Underbody, Mechanicals, OBDII, Additionals). Every photo is stored under the section of its question in the question list (question-list.csv), not the camera pass it was taken in: underbody shots are taken in the Mechanicals pass but stored as Underbody, the scan tool and EV screen shots are OBDII, and the VIN, odometer and keys photos are Additionals. `transformed_vehicle_photos` already returns every key in `vehicle_photos`, so new keys need only labels and icons in the dealer UI.
+Twelve inspector shots fill the 12 required seller slots one to one, so `has_all_required_photos` is true and the seller never sees a Photos step. The other 30 or so shots have no slot today; they get new position keys so the dealer viewer can group them (Exterior, Interior, Tires, Underbody, Mechanicals, OBDII, Additionals). Every photo is stored under the section of its question in the question list (question-list.csv), not the camera pass it was taken in: underbody shots are taken in the Underbody pass and stored as Underbody, the scan tool and EV screen shots are OBDII, and the VIN, odometer and keys photos are Additionals. `transformed_vehicle_photos` already returns every key in `vehicle_photos`, so new keys need only labels and icons in the dealer UI.
 
 | Inspector photo (question id) | Seller slot today | Action | Note |
 |---|---|---|---|
@@ -160,7 +160,7 @@ No new columns are needed on `vehicles`: new data goes into the Bidbus CR store,
 
 ## What the app sends
 
-When the seller signs, the app sends one record per car: answers first, then the media files one at a time. Two samples are attached to DEV-190: `inspection-bmw-x3.json` (gas, 46 photos, 37 checks, 8 damage photos) and `inspection-tesla-model-y.json` (EV).
+When the seller signs, the app sends one record per car: answers first, then the media files, three at a time. Two samples are attached to DEV-190: `inspection-bmw-x3.json` (gas, 46 photos, 37 checks, 8 damage photos) and `inspection-tesla-model-y.json` (EV).
 
 | Part | What it holds |
 |---|---|

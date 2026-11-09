@@ -325,6 +325,50 @@ Future<String?> showTextSheet(BuildContext context, String title, String value, 
   );
 }
 
+// a paint reading on a slider from 3.0 to 10+ mils, with - and + for 0.1. "10+" is more than 10: it is kept as 10.1,
+// or as the meter's own reading when the photo gave one above 10
+const milsMin = 3.0, milsTop = 10.1;
+String milsText(dynamic v) => (double.tryParse('$v') ?? 0) > 10 ? '10+' : '$v';
+
+Future<String?> showMilsSheet(BuildContext context, String title, String value, {List<Widget> extraActions = const []}) {
+  final was = double.tryParse(value);
+  var x = was ?? 5.0;
+  return showModalBottomSheet<String>(
+    context: context,
+    isScrollControlled: true, // large text: the sheet grows and scrolls, so every button stays reachable
+    backgroundColor: Colors.white,
+    builder: (ctx) => StatefulBuilder(builder: (ctx, set) {
+      void to(double v) => set(() => x = (v * 10).roundToDouble() / 10);
+      final over = x > 10, shown = over ? '10+' : x.toStringAsFixed(1);
+      Widget step(IconData ic, VoidCallback? tap) => IconButton(
+          onPressed: tap, icon: Icon(ic), style: IconButton.styleFrom(fixedSize: const Size(52, 52), side: const BorderSide(color: Color(0xFFD4D7DB)), backgroundColor: Colors.white));
+      return SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 16),
+            Row(children: [
+              step(LucideIcons.minus, x > milsMin ? () => to(over ? 10 : x - .1) : null),
+              Expanded(child: Text('$shown mils', textAlign: TextAlign.center, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, fontFeatures: [FontFeature.tabularFigures()]))),
+              step(LucideIcons.plus, over ? null : () => to(x >= 10 ? milsTop : x + .1)),
+            ]),
+            const SizedBox(height: 16), // room for the value bubble while dragging
+            Slider(min: milsMin, max: milsTop, divisions: 71, value: x.clamp(milsMin, milsTop), label: shown, onChanged: to),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('3.0', style: TextStyle(color: muted)), Text('10+', style: TextStyle(color: muted))]),
+            ),
+            const SizedBox(height: 12),
+            PBtn('Done', () => Navigator.pop(ctx, over ? (was != null && was > 10 ? value : milsTop.toStringAsFixed(1)) : x.toStringAsFixed(1))),
+            ...extraActions,
+          ]),
+        ),
+      );
+    }),
+  );
+}
+
 // scroll pickers: brand, size, tread, damage size
 Future<List<String>?> showPicker(BuildContext context, String title, List<List<String>> cols, List<String> sel, {List<String> seps = const [], String? unit, String? sub, bool clear = false}) {
   final idx = [for (var i = 0; i < cols.length; i++) cols[i].indexOf(sel[i]).clamp(0, cols[i].length - 1)];
@@ -402,6 +446,32 @@ class FitLabel extends StatelessWidget {
         final k = b.maxWidth.isFinite && widest > b.maxWidth ? b.maxWidth / widest * .95 : 1.0;
         return Text(text, textAlign: TextAlign.center, maxLines: lines, overflow: TextOverflow.ellipsis, style: s.copyWith(fontSize: s.fontSize! * k, letterSpacing: (s.letterSpacing ?? 0) * k));
       });
+}
+
+// the section strip on Damages and Review: one look; the current tab's whole cell is grey
+class TabStrip extends StatelessWidget {
+  final List<Widget> tabs;
+  const TabStrip(this.tabs, {super.key});
+  @override
+  Widget build(BuildContext context) => SizedBox(height: 48, child: ListView(scrollDirection: Axis.horizontal, children: tabs));
+}
+
+// a tab with no tap is shut: it shows light and does nothing
+Widget stripTab(String label, bool on, VoidCallback? tap, {Color? color, Widget? end}) {
+  final t = Material(
+    color: on ? line : Colors.transparent,
+    child: InkWell(
+      onTap: tap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Text(label, style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: tap == null && !on ? const Color(0xFFC6CACF) : color ?? (on ? Colors.black : muted))),
+          if (end != null) Padding(padding: const EdgeInsets.only(left: 4), child: end),
+        ]),
+      ),
+    ),
+  );
+  return on ? ShowMe(t) : t;
 }
 
 // scrolls its child into view when it first shows: the current tab of a strip

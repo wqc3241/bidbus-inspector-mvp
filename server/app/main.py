@@ -1,5 +1,6 @@
 """FastAPI app: API at /api (passcode), reports at /r/... (no auth)."""
 import hmac
+import json
 import logging
 import mimetypes
 import secrets
@@ -69,8 +70,18 @@ def vin_decode(vin: str):
 
 @api.post("/ai/read")
 def ai_read(kind: Annotated[str, Form()], image: Annotated[UploadFile, File()], section: Annotated[str | None, Form()] = None,
-            fuel: Annotated[str | None, Form()] = None, hint: Annotated[str | None, Form()] = None):
-    return ai.read(kind, image.file.read(), section, fuel, hint)
+            fuel: Annotated[str | None, Form()] = None, hint: Annotated[str | None, Form()] = None,
+            near: Annotated[str | None, Form()] = None):
+    return ai.read(kind, image.file.read(), section, fuel, hint, _places(near))
+
+
+def _places(near: str | None) -> list[str] | None:
+    """the near field: a JSON list of place names; anything else is no list"""
+    try:
+        v = json.loads(near) if near else None
+    except ValueError:
+        return None
+    return [x for x in v if isinstance(x, str)] if isinstance(v, list) else None
 
 
 class InspectionIn(BaseModel):
