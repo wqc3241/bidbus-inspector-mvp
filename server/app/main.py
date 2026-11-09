@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import ai, config, email, reports, spin, storage
+from . import ai, config, email, hotspots, reports, spin, storage
 from .cr import build_cr
 from .db import File as FileRow
 from .db import Inspection, SessionLocal, get_session, now
@@ -198,6 +198,10 @@ def build(inspection_id: str) -> None:
             s.commit()
             _send_report(insp)
             s.commit()
+            try:  # the damage dots on the 360 view, after the email so it is not held up (a report opened meanwhile shows them later)
+                hotspots.ensure(inspection_id, storage.folder(inspection_id), insp.record, wait=True)
+            except Exception:
+                log.exception("damage dots for %s", inspection_id)
         except Exception as e:
             log.exception("build %s failed", inspection_id)
             s.rollback()
