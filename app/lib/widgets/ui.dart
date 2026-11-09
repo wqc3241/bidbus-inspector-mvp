@@ -492,3 +492,104 @@ class _ShowMeState extends State<ShowMe> {
   @override
   Widget build(BuildContext context) => widget.child;
 }
+
+// a small photo in a list row (the first when there are several, with their number); tapping it shows them full screen, to look at only
+class PhotoThumb extends StatelessWidget {
+  final List<String> paths; // absolute
+  final String caption;
+  const PhotoThumb(this.paths, this.caption, {super.key});
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: 'Photo: $caption',
+        child: GestureDetector(
+          onTap: () => showPhotos(context, paths, caption),
+          child: SizedBox(
+            width: 48,
+            height: 48,
+            child: Stack(fit: StackFit.expand, children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.file(File(paths.first), fit: BoxFit.cover, cacheWidth: 144, errorBuilder: (c, e, s) => const ColoredBox(color: Color(0xFFE9ECEF))),
+              ),
+              if (paths.length > 1)
+                Positioned(
+                  right: 3,
+                  bottom: 3,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    decoration: BoxDecoration(color: Colors.black.withValues(alpha: .7), borderRadius: BorderRadius.circular(8)),
+                    child: Text('${paths.length}', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700)),
+                  ),
+                ),
+            ]),
+          ),
+        ),
+      );
+}
+
+// photos full screen on black, to look at only: swipe between them, pinch to zoom, X to close; nothing can be changed here
+Future<void> showPhotos(BuildContext context, List<String> paths, String caption) =>
+    Navigator.of(context).push(PageRouteBuilder(pageBuilder: (c, a, b) => _PhotoViewer(paths, caption), transitionsBuilder: (c, a, b, child) => FadeTransition(opacity: a, child: child)));
+
+class _PhotoViewer extends StatefulWidget {
+  final List<String> paths;
+  final String caption;
+  const _PhotoViewer(this.paths, this.caption);
+  @override
+  State<_PhotoViewer> createState() => _PhotoViewerState();
+}
+
+class _PhotoViewerState extends State<_PhotoViewer> {
+  int at = 0;
+  bool zoomed = false; // a zoomed photo pans with a drag; the next photo comes only once it is back to full size
+  late final zoom = [for (final _ in widget.paths) TransformationController()];
+
+  @override
+  void dispose() {
+    for (final z in zoom) {
+      z.dispose();
+    }
+    super.dispose();
+  }
+
+  void _zoomed(int i) {
+    final z = zoom[i].value.getMaxScaleOnAxis() > 1.01;
+    if (z != zoomed) setState(() => zoomed = z);
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(children: [
+          PageView.builder(
+            itemCount: widget.paths.length,
+            physics: zoomed ? const NeverScrollableScrollPhysics() : null,
+            onPageChanged: (i) => setState(() {
+              at = i;
+              for (final z in zoom) {
+                z.value = Matrix4.identity();
+              }
+              zoomed = false;
+            }),
+            itemBuilder: (c, i) => InteractiveViewer(
+              maxScale: 4,
+              transformationController: zoom[i],
+              onInteractionUpdate: (_) => _zoomed(i),
+              onInteractionEnd: (_) => _zoomed(i),
+              child: Center(child: Image.file(File(widget.paths[i]), fit: BoxFit.contain)),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 4, 0),
+              child: Row(children: [
+                Expanded(child: Text(widget.caption, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+                if (widget.paths.length > 1) Text('${at + 1} / ${widget.paths.length}', style: const TextStyle(color: Colors.white70)),
+                IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(LucideIcons.x, color: Colors.white), tooltip: 'Close'),
+              ]),
+            ),
+          ),
+        ]),
+      );
+}
