@@ -28,4 +28,7 @@
 {%- endfor %}{% endmacro %}
 
 {# the Paint block: highest and lowest panel reading #}
+{# OBD-II with a problem: its scan screens, each opening the photo #}
+{% macro shots(row) %}{% if row.shots %}<dd class="shots">{% for x in row.shots %}<a class="dth scr" href="{{ x.src }}" title="{{ x.lbl }}"><img src="{{ x.src }}" alt="{{ x.lbl }}" loading="lazy"></a>{% endfor %}</dd>{% endif %}{% endmacro %}
+
 {% macro reads(row) %}{% for x in row.reads %}<dd class="neu"><span>{{ x.icon }}</span><div class="dtxt">{{ x.text }}<small>{{ x.sub }}</small></div></dd>{% endfor %}{% endmacro %}

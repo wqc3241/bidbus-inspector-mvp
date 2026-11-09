@@ -139,8 +139,11 @@ def view(insp: Inspection) -> dict:
         checks = len({c["id"] for c in rec["checks"] if CHECK_ROW.get(c["id"]) == r["row"]})
         vids = [{"lbl": VIDEOS[x["question_id"]][1], "src": url(x["file"])} for x in rec["videos"]
                 if r["row"] == "Engine sound" and x["file"] in r["videos"]]
+        # OBD-II with a problem: its scan screens under it, so the codes can be seen
+        shots = [{"src": url(p["file"]), "lbl": LABEL.get(p["question_id"]) or QL_LABEL.get(p["question_id"], p["question_id"])}
+                 for p in photos if p["section"] == "OBDII"] if r["row"] == "OBD-II" and lines else []
         rows.append({"name": r["row"], "icon": ROW_ICON[r["row"]], "lines": lines, "checks": checks, "videos": vids,
-                     "reads": paint_reads(rec) if r["row"] == "Paint" else []})
+                     "reads": paint_reads(rec) if r["row"] == "Paint" else [], "shots": shots})
     engine = any(r["name"] == "Engine sound" for r in rows)
     other_videos = [{"lbl": VIDEOS.get(x["question_id"], ("", x["question_id"]))[1], "src": url(x["file"])} for x in rec["videos"]
                     if not (engine and x["question_id"] in ("video_engine", "video_exhaust"))]

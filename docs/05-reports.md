@@ -20,7 +20,7 @@ Look and layout: `reference/condition-report/condition-report.html` (open it in 
   - Odor: OK or the odor problems
   - Mechanical: Issue or No issue
 - **Tires**: per wheel LF, RF, RR, LR: tread /32 with tier (Replace 4 and below, Fair 5-8, Good 9 and up), brand and size, that wheel's tire, wheel and brake issues.
-- **Bidbus Inspection**: one block per CR row in this order: Exterior, Paint, Tires, Underbody, Mechanicals, Engine sound (not for EVs), Interior, OBD-II, Additionals. Each issue line is the issue's `text`, with `sub` below. Each damage shows in its row with its photo thumbnail and text. A row with no issues reads "No issues". The Paint block also shows the highest and the lowest panel reading with its panel (mils; a reading above 10 shows as 10+; panels not on the car are left out). There is no separate Damages section.
+- **Bidbus Inspection**: one block per CR row in this order: Exterior, Paint, Tires, Underbody, Mechanicals, Engine sound (not for EVs), Interior, OBD-II, Additionals. Each issue line is the issue's `text`, with `sub` below. Each damage shows in its row with its photo thumbnail and text. A row with no issues reads "No issues". The Paint block also shows the highest and the lowest panel reading with its panel (mils; a reading above 10 shows as 10+; panels not on the car are left out). The OBD-II block, when it has an issue, also shows its OBD-II photos (the scan screens; for an EV the alert, battery and charging screens) as thumbnails under the issues, each opening the photo; with no issue they stay only in the photo viewer. There is no separate Damages section.
 - **Never shown**: the light or any grade; driver's license, registration, family proof; GPS; the signature image.
 
 ## Seller report only

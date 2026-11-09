@@ -78,6 +78,29 @@ def test_spin_view_when_frames_are_there(client, media_dir):
 
 
 @pytest.mark.parametrize("page", ["seller", "dealer"])
+def test_obd_screens_under_obd_problems(client, page):
+    # gas car with Check engine and stored codes: the OBD-II block shows its five scan screens
+    token, _ = make("bmw-x3")
+    html = client.get(f"/r/{token}/{page}").text
+    block = html[html.index("OBD-II</dt>"):].split('<div class="ir">')[0]
+    shots = re.findall(r'<a class="dth scr" href="/r/' + token + r'/media/([^"]+)" title="([^"]+)">', block)
+    assert shots == [("ph_obd_current.jpg", "OBD-II current codes"), ("ph_obd_past.jpg", "OBD-II past codes"),
+                     ("ph_obd_emission.jpg", "OBD-II emission codes"), ("ph_obd_other-1.jpg", "OBD-II other"), ("ph_obd_other-2.jpg", "OBD-II other")]
+    assert block.index("Scan result") < block.index('class="shots"')  # under the problems
+    assert html.count('class="dth scr"') == 5  # nowhere else
+    # no OBD-II problem: no screens in the block (they stay in the photo viewer)
+    rec = sample("bmw-x3")
+    rec["checks"] = [{"id": c["id"], "result": "OK"} if c["id"] in ("ck_lights_dash", "ck_scan") else c for c in rec["checks"]]
+    iid, tok = str(uuid.uuid4()), secrets.token_urlsafe(24)
+    with SessionLocal() as s:
+        s.add(Inspection(id=iid, report_email="tom@example.com", inspector="Tom", car=CARS["bmw-x3"], record=rec, status="sent",
+                         report_token=tok, cr=build_cr(rec)))
+        s.commit()
+    html = client.get(f"/r/{tok}/{page}").text
+    assert 'class="dth scr"' not in html and "OBD-II</dt>" in html
+
+
+@pytest.mark.parametrize("page", ["seller", "dealer"])
 def test_eight_exterior_views_follow_the_360_view(client, media_dir, page):
     token, iid = make("bmw-x3")
     (media_dir / iid).mkdir()

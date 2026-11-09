@@ -18,7 +18,7 @@
 </div></section>
 <section class="d-sec" id="d-inspection"><h2>Bidbus Inspection</h2><dl class="insp">{% for r in rows %}
  <div class="ir"><dt>{{ I(r.icon, 16) }}{{ r.name }}</dt>{% for v in r.videos %}<dd class="vid"><span>{{ I("play", 12) }}</span><a href="{{ v.src }}">{{ v.lbl }}</a></dd>{% endfor %}
-  {{- m.lines(r, True) }}{% if not r.lines %}<dd class="pos"><span>✓</span>No issues{% if r.checks %} · {{ r.checks }} check{{ "s" if r.checks > 1 }}{% endif %}</dd>{% endif %}{{ m.reads(r) }}</div>{% endfor %}
+  {{- m.lines(r, True) }}{{ m.shots(r) }}{% if not r.lines %}<dd class="pos"><span>✓</span>No issues{% if r.checks %} · {{ r.checks }} check{{ "s" if r.checks > 1 }}{% endif %}</dd>{% endif %}{{ m.reads(r) }}</div>{% endfor %}
  {%- if videos %}<div class="ir"><dt>{{ I("video", 16) }}Videos</dt>{% for v in videos %}<dd class="vid"><span>{{ I("play", 12) }}</span><a href="{{ v.src }}">{{ v.lbl }}</a></dd>{% endfor %}</div>{% endif %}
  {%- if note %}<div class="ir"><dt>{{ I("clip", 16) }}Inspector's note</dt><dd class="neu"><span>–</span><div class="dtxt">{{ note }}</div></dd></div>{% endif %}
 </dl></section>
