@@ -113,14 +113,19 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(children: [
+                    if (strs(p['photos']).isNotEmpty) ...[PhotoThumb([for (final f in strs(p['photos'])) store.abs(f)], p['text']), const SizedBox(width: 12)],
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(p['text']), if (_sub(g.$1, p).isNotEmpty) Text(_sub(g.$1, p), style: const TextStyle(color: muted, fontSize: 12.5))])),
                     Text(p['level'], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: levelColor(p['level']))),
                   ]),
                 ),
-              for (final t in g.$3)
+              for (final d in g.$3)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Row(children: [Expanded(child: Text(t)), const Text('Damage', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: amber))]),
+                  child: Row(children: [
+                    if ((d['f'] ?? '') != '') ...[PhotoThumb([store.abs(d['f'])], dmgLine(d)), const SizedBox(width: 12)],
+                    Expanded(child: Text(dmgLine(d))),
+                    const Text('Damage', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: amber)),
+                  ]),
                 ),
             ]),
           ],
@@ -235,7 +240,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
                     const SizedBox(width: 8),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(p['text']), if (whereIn(g.$1, p['where']).isNotEmpty) Text(whereIn(g.$1, p['where']), style: const TextStyle(color: muted, fontSize: 12.5))])),
                   ])),
-            for (final d in g.$3) Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: Row(children: [const Icon(LucideIcons.triangleAlert, size: 16, color: muted), const SizedBox(width: 8), Expanded(child: Text(d))])),
+            for (final d in g.$3) Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: Row(children: [const Icon(LucideIcons.triangleAlert, size: 16, color: muted), const SizedBox(width: 8), Expanded(child: Text(dmgLine(d)))])),
           ],
           const SizedBox(height: 8),
           Text('${tot['photos'] + tot['extra']} photos and ${tot['videos']} videos taken.', style: const TextStyle(color: muted, fontSize: 13)),

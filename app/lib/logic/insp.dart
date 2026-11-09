@@ -383,33 +383,42 @@ void setLabel(J d, String f, String v, String fuel) {
 // what the labelled photos say: a problem on a check (p), its second step (x), or a sunroof/navigation answer (f)
 List<J> dmgDerived(J st) {
   final out = <J>[], seen = <String>{}, fuel = fuelOf(st);
-  void add(J d) {
-    if (seen.add(dkey(d))) out.add(d);
-  }
-
   for (final d in manual(st)) {
-    final pl = placeOf(d['zone'] ?? 'Exterior', d['panel']);
-    if (pl == null || (d['type'] ?? '') == '' || !placeOpts(pl, fuel).contains(d['type'])) continue;
-    final tw = twinOf(pl, d['type'], fuel);
-    if (tw != null) {
-      add({'t': 'p', 'id': tw['ck'], 'w': null, 'v': d['type']});
-      add({'t': 'x', 'id': tw['ck'], 'w': null, 'v': strs(tw['exo'])[0]});
-      continue;
+    for (final e in dmgDerivedOf(d, fuel)) {
+      if (seen.add(dkey(e))) out.add(e);
     }
-    if (isStruct(pl, d['type'])) {
-      add({'t': 'p', 'id': 'ck_structure', 'w': null, 'v': pl['st']});
-      continue;
-    }
-    if (pl['ck'] != null && !fuelOk(byId[pl['ck']]?['cars'] ?? 'all', fuel)) continue;
-    if (pl['feat'] != null) {
-      add({'t': 'f', 'id': pl['feat'], 'v': 'Not working'});
-      continue;
-    }
-    if (pl['ck'] == null) continue;
-    add({'t': 'p', 'id': pl['ck'], 'w': pl['w'], 'v': d['type']});
-    if (pl['ex'] == true && (d['ex'] ?? '') != '') add({'t': 'x', 'id': pl['ck'], 'w': pl['w'], 'v': d['ex']});
   }
   return out;
+}
+
+// what one damage photo answers on the checks: a problem ('p'), its Which/Where ('x'), a feature not working ('f'); nothing for its own damage
+List<J> dmgDerivedOf(J d, String fuel) {
+  final pl = placeOf(d['zone'] ?? 'Exterior', d['panel']);
+  if (pl == null || (d['type'] ?? '') == '' || !placeOpts(pl, fuel).contains(d['type'])) return const [];
+  final tw = twinOf(pl, d['type'], fuel);
+  if (tw != null) {
+    return [
+      {'t': 'p', 'id': tw['ck'], 'w': null, 'v': d['type']},
+      {'t': 'x', 'id': tw['ck'], 'w': null, 'v': strs(tw['exo'])[0]},
+    ];
+  }
+  if (isStruct(pl, d['type'])) return [{'t': 'p', 'id': 'ck_structure', 'w': null, 'v': pl['st']}];
+  if (pl['ck'] != null && !fuelOk(byId[pl['ck']]?['cars'] ?? 'all', fuel)) return const [];
+  if (pl['feat'] != null) return [{'t': 'f', 'id': pl['feat'], 'v': 'Not working'}];
+  if (pl['ck'] == null) return const [];
+  return [
+    {'t': 'p', 'id': pl['ck'], 'w': pl['w'], 'v': d['type']},
+    if (pl['ex'] == true && (d['ex'] ?? '') != '') {'t': 'x', 'id': pl['ck'], 'w': pl['w'], 'v': d['ex']},
+  ];
+}
+
+// the damage photos behind a check problem (or a feature not working): the ones whose answer it is
+List<String> dmgPhotos(J st, String t, String id, String? w, String v) {
+  final fuel = fuelOf(st);
+  return [
+    for (final d in manual(st))
+      if ((d['f'] ?? '') != '' && dmgDerivedOf(d, fuel).any((e) => e['t'] == t && e['id'] == id && (e['w'] ?? '') == (w ?? '') && e['v'] == v)) d['f'] as String,
+  ];
 }
 
 String dkey(J d) => '${d['t']}|${d['w'] ?? ''}|${d['id']}|${d['v']}';
@@ -591,7 +600,7 @@ List<J> problemsList(J st) {
       for (final w in wheels) {
         for (final id in ['ck_tire', 'ck_wheel']) {
           for (final p in lst(tire(st, w[0]), 'probs', id)) {
-            out.add({'sec': k, 'text': '${id == 'ck_tire' ? 'Tire: ' : 'Wheel: '}$p', 'where': w[2], 'level': level(byId[id]!, p), 'ph': dmgVals(st, id, w[0]).contains(p)});
+            out.add({'sec': k, 'text': '${id == 'ck_tire' ? 'Tire: ' : 'Wheel: '}$p', 'where': w[2], 'level': level(byId[id]!, p), 'ph': dmgVals(st, id, w[0]).contains(p), 'photos': dmgPhotos(st, 'p', id, w[0], p)});
           }
         }
       }
@@ -601,31 +610,31 @@ List<J> problemsList(J st) {
     if (k == 'Paint') {
       for (final p in lst(st, 'probs', 'ck_paint')) {
         final ex = lst(st, 'extra', 'ck_paint').join(', ');
-        out.add({'sec': k, 'text': '${byId['ck_paint']!['label']}: ${plain(p)}', 'where': 'Paint${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(byId['ck_paint']!, p), 'ph': dmgVals(st, 'ck_paint', null).contains(p)});
+        out.add({'sec': k, 'text': '${byId['ck_paint']!['label']}: ${plain(p)}', 'where': 'Paint${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(byId['ck_paint']!, p), 'ph': dmgVals(st, 'ck_paint', null).contains(p), 'photos': dmgPhotos(st, 'p', 'ck_paint', null, p)});
       }
       continue;
     }
     if (k == 'Interior') {
       for (final q in featq) {
-        if (m(st, 'feat')[q[0]] == 'Not working') out.add({'sec': k, 'text': '${q[1]}: Not working', 'where': k, 'level': level(byId[q[0]] ?? {}, 'Not working')});
+        if (m(st, 'feat')[q[0]] == 'Not working') out.add({'sec': k, 'text': '${q[1]}: Not working', 'where': k, 'level': level(byId[q[0]] ?? {}, 'Not working'), 'photos': dmgPhotos(st, 'f', q[0], null, 'Not working')});
       }
     }
     for (final it in stepItems(k, st).checks) {
       for (final p in lst(st, 'probs', it['id'])) {
         final ex = lst(st, 'extra', it['id']).join(', ');
-        out.add({'sec': k, 'text': '${it['label']}: ${plain(p)}', 'where': '$k${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(it, p), 'ph': dmgVals(st, it['id'], null).contains(p)});
+        out.add({'sec': k, 'text': '${it['label']}: ${plain(p)}', 'where': '$k${ex.isNotEmpty ? ' · $ex' : ''}', 'level': level(it, p), 'ph': dmgVals(st, it['id'], null).contains(p), 'photos': dmgPhotos(st, 'p', it['id'], null, p)});
       }
     }
   }
   return out;
 }
 
-// what was found, section by section in Review order: its problems, then its damage photos that answer no check
-List<(String, List<J>, List<String>)> findingsBySec(J st) {
+// what was found, section by section in Review order: its problems, then its damage photos that answer no check (each line is dmgLine)
+List<(String, List<J>, List<J>)> findingsBySec(J st) {
   final pl = problemsList(st), fuel = fuelOf(st);
   return [
     for (final k in capseq.sublist(1))
-      (k, pl.where((p) => p['sec'] == k).toList(), [for (final d in manual(st)) if (dtab(d) == k && labelled(d, fuel) && dmgOwn(st, d)) dmgLine(d)]),
+      (k, pl.where((p) => p['sec'] == k).toList(), [for (final d in manual(st)) if (dtab(d) == k && labelled(d, fuel) && dmgOwn(st, d)) d]),
   ].where((g) => g.$2.isNotEmpty || g.$3.isNotEmpty).toList();
 }
 
