@@ -43,7 +43,7 @@ The inspection takes about 18 minutes.
 **1.5 360 view** on Review Exterior: made from the walk-around; drag to turn; shows the frame number.
 
 **1.6 Damages, Review, Summary**
-- Damages: after the camera, one damage photo per screen, section by section. Place (Exterior: a drawn top view of the car; Tires: pick a wheel's tire or wheel), type and severity (Minor, Moderate, Severe) required; size optional (1-36 in). Each photo first shows the AI guess of place, type and severity; the inspector confirms or changes it. Moves to the next photo when all three are picked.
+- Damages: after the camera, one damage photo per screen, section by section. Place (Exterior: a drawn top view of the car; Tires: pick a wheel's tire or wheel), type and severity (Minor, Moderate, Severe) required; size optional (1-36 in) on Exterior damages only. Each photo first shows the AI guess of place, type and severity; the inspector confirms or changes it. Moves to the next photo when all three are picked.
 - Structure is a type on Exterior body panels and on Interior carpet, headliner, dash, door panels and cargo; it answers Structure and frame with the option the place gives.
 - Paint problems: the 11 Exterior body panels also offer the five Paint and panels problems after Structure (Panel repainted, Overspray or colour mismatch, Uneven panel gaps, Hood or fender bolts show tool marks, Wrap or paint film). Picking one answers Paint and panels with that panel; stored as Paint.
 - Review: one page per section, Paint its own page (paint photos and readings; tap a photo to retake that panel in the Exterior camera). One row per check, OK by default; tap opens a bottom drawer with its problems; readings; damage photos; everything editable.

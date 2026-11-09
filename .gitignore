@@ -13,3 +13,7 @@ app/android/.gradle/
 .idea/
 *.db
 server/tests/media/
+
+# verify/keys.js test output
+/keys.html
+/keys/
