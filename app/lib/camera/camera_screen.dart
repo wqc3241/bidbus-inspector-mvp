@@ -610,7 +610,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         // during the walk the AI picks the place between the shot before and the shot after (none in free mode: it can be anywhere)
         final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': sec == 'Underbody' ? sec : zone, 'near': ?near});
         store.mut(widget.id, (s) {
-          manual(s).add({'id': did, 'zone': zone, 'sec': sec, 'at': at, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': rel});
+          manual(s).add(<String, dynamic>{'id': did, 'zone': zone, 'sec': sec, 'at': at, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': rel});
           syncDamages(s);
         });
         tag = ('dmg', manual(st).where((d) => d['sec'] == sec).length, at);
@@ -655,7 +655,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       final hint = aw != null ? '${wheelName(aw)} tire' : null;
       final rel = await keepPhoto(widget.id, from, 'damage', library: library, read: {'kind': 'damage', 'did': did, 'section': zone, 'hint': ?hint});
       store.mut(widget.id, (s) {
-        final d = {'id': did, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': library ? 'library' : 'camera', 'f': rel};
+        // typed open: labels add true/false and the AI guess a map (a literal of only strings would be Map<String, String> and throw)
+        final d = <String, dynamic>{'id': did, 'zone': dzone[zone] ?? zone, if (zone == 'Underbody') 'tab': zone, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': library ? 'library' : 'camera', 'f': rel};
         if (hint != null) setLabel(d, 'panel', hint, fuelOf(s));
         manual(s).add(d);
         syncDamages(s);
