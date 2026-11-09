@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,8 +31,14 @@ const _whereUi = {
 const _carPlaces = {'Front bumper', 'Left front fender', 'Hood', 'Right front fender', 'Left front door', 'Roof', 'Right front door', 'Left rear door', 'Right rear door', 'Left quarter panel', 'Trunk or liftgate', 'Right quarter panel', 'Rear bumper', 'Windshield', 'Left front window', 'Left rear window', 'Right front window', 'Right rear window', 'Rear glass', 'Mirror', 'Headlight', 'Tail light'};
 const _cabPlaces = {'Steering wheel', 'Dash', 'Front seats', 'Center console', 'Rear seats', 'Door panels', 'Cargo area'};
 const _wlbl = {'Screen, audio or cameras': 'Screen & audio', 'Power windows, locks, mirrors or seats': 'Power controls', 'Interior lights or defroster': 'Lights & defrost', 'Airbag covers': 'Airbags', 'High voltage or front trunk': 'High voltage', 'Driveshaft or CV': 'Driveshaft'};
+// Lucide has no wiper: the dashboard wiper sign (a windshield and its wiper arm), in the same line style as the icons
+const _wiperSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M2 20 4.6 6.6Q12 3.4 19.4 6.6L22 20Z"/><path d="M12 20 6.3 9.4"/><circle cx="12" cy="20" r="0.6" fill="#000"/></svg>';
+Widget _tileIcon(String p, Color color) => p == 'Wipers'
+    ? SvgPicture.string(_wiperSvg, width: 22, height: 22, colorFilter: ColorFilter.mode(color, BlendMode.srcIn))
+    : Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: color);
 const _wicon = {
-  'Other lights': LucideIcons.lightbulb, 'Wipers': LucideIcons.wind, 'Fuel door': LucideIcons.fuel, 'Other': LucideIcons.ellipsis, 'Headliner': LucideIcons.panelTop, 'Carpet': LucideIcons.grid3x3, 'Sunroof': LucideIcons.sun,
+  'Other lights': LucideIcons.lightbulb, 'Fuel door': LucideIcons.fuel, 'Other': LucideIcons.ellipsis, 'Headliner': LucideIcons.panelTop, 'Carpet': LucideIcons.grid3x3, 'Sunroof': LucideIcons.sun,
   'Screen, audio or cameras': LucideIcons.monitor, 'Power windows, locks, mirrors or seats': LucideIcons.power, 'Interior lights or defroster': LucideIcons.lightbulb, 'Horn': LucideIcons.megaphone, 'Navigation': LucideIcons.navigation,
   'Warning lights': LucideIcons.triangleAlert, 'Seat belts': LucideIcons.link, 'Airbag covers': LucideIcons.shield, 'Engine bay': LucideIcons.cog, 'Fluids': LucideIcons.droplets, 'Leak': LucideIcons.droplet, '12 V battery': LucideIcons.batteryFull,
   'High voltage or front trunk': LucideIcons.zap, 'Charge port': LucideIcons.plug, 'Structure': LucideIcons.frame, 'Rust': LucideIcons.biohazard, 'Exhaust': LucideIcons.cloud, 'Suspension': LucideIcons.activity, 'Driveshaft or CV': LucideIcons.cog,
@@ -148,7 +155,7 @@ class _WhereViewState extends State<WhereView> {
                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                     decoration: BoxDecoration(color: sel == p ? Colors.black : alt, borderRadius: BorderRadius.circular(12)),
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Icon(_wicon[p] ?? LucideIcons.ellipsis, size: 22, color: sel == p ? Colors.white : Colors.black87),
+                      _tileIcon(p, sel == p ? Colors.white : Colors.black87),
                       const SizedBox(height: 4),
                       Flexible(child: FitLabel(_wlbl[p] ?? p, TextStyle(fontSize: 11.5, height: 1.3, fontWeight: FontWeight.w600, color: sel == p ? Colors.white : Colors.black), lines: 3)),
                     ]),
