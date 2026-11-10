@@ -1,6 +1,6 @@
 # 03 Data contract
 
-The app sends one **inspection record** per car. Its shape is exactly `samples/inspection-bmw-x3.json` (gas) and `samples/inspection-tesla-model-y.json` (EV). The mockup builds it in `inspectionPayload()` (`reference/mockup/src/template.html`); port that function, do not redesign the shape. Full field-by-field notes: `docs/field-mapping.md` (sections "What the app sends", "AI photo reading", "Issue lists", "CR report generation").
+The app sends one **inspection record** per car. Its shape is exactly `samples/inspection-bmw-x3.json` (gas) and `samples/inspection-tesla-model-y.json` (EV). The mockup builds it in `inspectionPayload()` (`reference/mockup-1109/src/template.html`); port that function, do not redesign the shape. Full field-by-field notes: `docs/field-mapping.md` (sections "What the app sends", "AI photo reading", "Issue lists", "CR report generation").
 
 ## Top-level parts
 
@@ -14,9 +14,9 @@ The app sends one **inspection record** per car. Its shape is exactly `samples/i
 | `videos[]` | `question_id` (video_360, video_engine, video_exhaust), `file`, `max_seconds` |
 | `spin_frames` | 36 |
 | `checks[]` | `id`, `result` (OK, Problem, Not done), `problems[] {option, level, from_damage_photo}`, `wheel`, `where`, `codes` when the check has them |
-| `tires[]`, `tires_match` | Per wheel: `tread_32nds`, `tread_read_from_photo`, `brand`, `size`, `read_from_photo`; Match or Mismatch |
+| `tires[]`, `tires_match`, `tires_match_read_from_photo` | Per wheel: `tread_32nds`, `tread_read_from_photo`, `brand`, `size`, `read_from_photo`; Match or Mismatch; true when the sent answer is the AI's |
 | `paint[]` | `panel`, `mils` (the app's slider tops out at 10+, sent as 10.1 unless the meter photo gave a reading above 10), `not_on_car`, `high`, `read_from_photo` |
-| `damages[]` | `n`, `section`, `place`, `type`, `severity`, `size_in`, `source`, `taken_in`, `file`, `upright_turn_deg`, `where?` (the place's extra pick, or Left or Right for a mirror, headlight or tail light), `check_id?`, `check_option?`, `ai_first_guess {place, type, severity}`, `confirmed` |
+| `damages[]` | `n`, `section`, `place`, `type`, `severity`, `size_in` (Exterior only, else null), `source`, `taken_in`, `file`, `upright_turn_deg`, `where?` (the place's extra pick, or Left or Right for a mirror, headlight or tail light), `check_id?`, `check_option?`, `ai_first_guess {place, type, severity}`, `confirmed` |
 | `features` | `sunroof`, `navigation` |
 | `overall_condition`, `inspector_note` | Summary answers |
 | `signature` | `seller_name`, `agreed`, `signed` (the image is uploaded as file `signature.png`; when and where the seller signed is `source.ended`, taken as the seller taps Sign, and the server keeps it as `signed_at`) |

@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>body{margin:0;font:14px system-ui}[hidden]{display:none!important}</style></head><body><title>Internal MVP</title>
+<title>Internal MVP 1109</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -214,6 +214,12 @@ button.idc.none.shoot { font: inherit; width: 100%; cursor: pointer; gap: 8px; c
 .cap .vf.tkv { background: radial-gradient(circle at 50% 45%, #3a4046, #15181a 75%); }
 .cap .vf.tkv .gd { opacity: .5; }
 .cap .sh.rt { border-color: #4ade80; }
+.cap .vf.tkv .gd { display: none; }
+.cap .vf.tkv .lbl small, .cap .vf.sl .lbl small { display: inline-block; background: #0000008a; padding: 4px 10px; border-radius: 10px; }
+.cap .fls { display: flex; align-items: center; justify-content: center; color: #fff; }
+.cap .fls.on { color: #facc15; }
+.cap .fls b { font-size: 10px; font-weight: 800; margin-left: -1px; }
+.cap .zm button:disabled { opacity: .35; }
 .cap .strip button.skp { background: #ffffff14; color: #9ca3af; border-style: dashed; border-color: #ffffff40; }
 .cap .strip .skm { font-size: 22px; font-weight: 700; line-height: 1; }
 .cap .lbl .na { margin-top: 8px; display: inline-block; background: #ffffff2e; color: #fff; padding: 7px 14px; border-radius: 99px; font-size: 13px; font-weight: 600; }
@@ -228,6 +234,42 @@ button.idc.none.shoot { font: inherit; width: 100%; cursor: pointer; gap: 8px; c
 .cap .askc .row { display: flex; gap: 10px; }
 .cap .askc .row button { flex: 1; height: 50px; border-radius: 14px; background: #ffffff1f; color: #fff; font-size: 15px; font-weight: 600; }
 .cap .askc .row button.ok { background: var(--bid); }
+.cap .askc.askq { max-width: 460px; max-height: calc(100% - 8px); text-align: left; gap: 12px; padding: 14px 16px; }
+.cap .askq h4 { margin: 0; font-size: 17px; color: #fff; display: flex; align-items: center; gap: 8px; flex: none; }
+.cap .askq .aql { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+.cap .askq .aqh { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #ffffff8c; margin-top: 4px; }
+.cap .askq .rlist { display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; flex: none; margin: 0; border: 0; background: none; }
+.cap .askq .rw { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 6px 10px 6px 12px; margin: 0; border: 0; border-radius: 0; background: #ffffff0f; color: #fff; text-align: left; }
+.cap .askq .rw:nth-child(even) { background: #ffffff1c; }
+.cap .askq .rw .rt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cap .askq .rw .rt b { font-size: 14px; font-weight: 600; color: #fff; }
+.cap .askq .rw .rt small { font-size: 12px; color: #ffffff8c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap .askq .rw .rvl { flex: none; display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: #ffffff1f; color: #fff; }
+.cap .askq .rw.ok .rvl, .cap .askq .rw.set .rvl { background: #22c55e33; color: #4ade80; }
+.cap .askq .rw.a .rvl { background: #f59e0b33; color: #fbbf24; } .cap .askq .rw.a .rt small { color: #fbbf24; }
+.cap .askq .rw.r .rvl { background: #ef444433; color: #f87171; } .cap .askq .rw.r .rt small { color: #f87171; }
+.cap .askq .rw .rvl .need { color: #93c5fd; }
+.cap .askq .rw > svg.i { color: #ffffff59; flex: none; }
+.cap .askq .row { flex: none; }
+.cap .askq .row button { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.cap ~ .ch-bg { z-index: 95; justify-content: center; }
+.dev.land .cap ~ .ch-bg .sheet.ch { max-width: 480px; max-height: 94%; }
+.cap ~ .ch-bg .sheet.ch { background: #1f2326; color: #fff; border-radius: 18px; padding: 14px 16px; gap: 12px; } /* same look as the end-of-section questions (Tom 11-10 07:26) */
+.cap ~ .ch-bg .sheet.ch .chh b { color: #fff; font-size: 17px; } .cap ~ .ch-bg .ch .chh small { color: #ffffff8c; }
+.cap ~ .ch-bg .ch .chl { border: 0; border-radius: 12px; }
+.cap ~ .ch-bg .sheet.ch .cho { background: #ffffff0f; color: #fff; min-height: 46px; padding: 8px 12px; font-size: 14px; font-weight: 600; }
+.cap ~ .ch-bg .sheet.ch .cho:nth-child(even) { background: #ffffff1c; }
+.cap ~ .ch-bg .ch .cho + .cho { border-top: 0; }
+.cap ~ .ch-bg .sheet.ch .cho[aria-checked="true"] { background: #ffffff2e; font-weight: 700; }
+.cap ~ .ch-bg .ch .cho .rd { border-color: #ffffff59; }
+.cap ~ .ch-bg .ch .cho[aria-checked="true"] .rd { border-color: #fff; } .cap ~ .ch-bg .ch .cho.cg[aria-checked="true"] .rd { border-color: #4ade80; } .cap ~ .ch-bg .ch .cho.ca[aria-checked="true"] .rd { border-color: #fbbf24; } .cap ~ .ch-bg .ch .cho.cr[aria-checked="true"] .rd { border-color: #f87171; }
+.cap ~ .ch-bg .ch .cho em { color: #f87171; }
+.cap ~ .ch-bg .sheet button.chb, .cap ~ .ch-bg .sheet button.cn { background: #ffffff1f; color: #fff; }
+.cap ~ .ch-bg .ch .chin { background: #ffffff0f; border-color: #ffffff33; color: #fff; }
+.cap .vf .look { position: absolute; left: 56px; top: 60px; z-index: 3; background: #000000b3; border-radius: 14px; padding: 10px 14px 10px 12px; pointer-events: none; display: flex; flex-direction: column; }
+.cap .vf .look .hd { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #ffffffa6; margin-bottom: 2px; }
+.cap .vf .look .li { display: flex; align-items: center; gap: 10px; height: 26px; color: #fff; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.cap .vf .look .li i { width: 6px; height: 6px; border-radius: 50%; background: #fff; flex: none; }
 .cap .ct .sk.nxt { height: 40px; background: var(--bid); }
 .cap .fin { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; text-align: center; }
 .cap .fin .big { width: 72px; height: 72px; border-radius: 50%; background: #15803d; display: flex; align-items: center; justify-content: center; }
@@ -510,7 +552,11 @@ pre.js { margin: 0; overflow-x: auto; background: var(--pg-code); border-radius:
 .lab .lph .aib { position: absolute; left: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; background: #111; color: #fff; padding: 4px 8px; border-radius: 10px; }
 .ldsum { padding: 0; } .ldsum .rlist { margin: 0; }
 .sheet-bg.ld-bg { z-index: 75; }
-.sheet.ld { max-height: 86%; } .sheet.ld .ldb { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.sheet.ld { max-height: 50%; } .sheet.ld .ldb { overflow-y: scroll; display: flex; flex-direction: column; gap: 8px; min-height: 0; flex: 0 1 auto; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #c6cacf transparent; }
+.sheet.ld .ldb::-webkit-scrollbar { width: 4px; } .sheet.ld .ldb::-webkit-scrollbar-thumb { background: #c6cacf; border-radius: 2px; }
+.sheet.ld .ldf { flex: none; display: flex; flex-direction: column; gap: 8px; }
+.lsev.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sheet.ld .lsev .lsz[aria-pressed="true"] { background: #000; color: #fff; border-color: #000; } .sheet.ld .lsev .lsz[aria-pressed="true"] small { color: #ffffffb3; }
 .sheet.ld .sub2 { margin-top: 4px; } .sheet.ld .lsev button.lp { height: auto; min-height: 44px; font-size: 14px; background: #fff; border: 1px solid #d4d7db; } .sheet.ld .lsev button.lp[aria-pressed="true"] { background: #000; color: #fff; border-color: #000; }
 .sheet.ld .lsev .lsz { height: auto; min-height: 44px; flex-direction: column; gap: 0; background: #fff; border: 1px solid #d4d7db; }
 .lp { min-height: 40px; min-width: 0; border-radius: 10px; border: 1px solid #d4d7db; background: #fff; font-size: 13px; font-weight: 600; color: #111; padding: 4px 6px; text-align: center; line-height: 1.2; }
@@ -726,7 +772,12 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
 .pcl.p-lrk b, .pcl.p-rrk b { font-size: 13px; } .pcl.p-lrk small, .pcl.p-rrk small { writing-mode: vertical-rl; transform: rotate(180deg); margin-top: 4px; }
 .pcl.hi { background: #fde8ee; border-color: #f19bb2; } .pcl.hi b { color: #be123c; } .pcl.hi small { color: #be123c; }
 .pcl.na { background: transparent; border-style: dashed; border-color: #c4c9ce; } .pcl.na b { color: #8a9096; font-size: 13px; }
-.pcl.ms { border-style: dashed; border-color: #e0a14a; } .pcl.ms b { color: #9a4f05; }
+.pcl.ms { border: 2px solid #e1255d; }
+.ch .mils { display: flex; align-items: center; gap: 8px; } .ch .mils b { flex: 1; margin: 0; font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sheet.ch .mils .mst { flex: none; width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 1px solid #d4d7db; } .sheet.ch .mils .mst:disabled { opacity: .35; }
+.ch .mrange { width: 100%; margin: 14px 0 0; accent-color: var(--bid); height: 28px; }
+.ch .mends { display: flex; justify-content: space-between; padding: 0 4px; font-size: 13px; color: #7a8087; margin-bottom: 6px; }
+.twrap .wheels.wt button.nf, .wheels button.nf { box-shadow: inset 0 0 0 2px #e1255d; }
 .vmc h3 small.okc { color: var(--bid); font-weight: 700; }
 .vmc .idr { display: flex; align-items: center; gap: 10px; }
 .vmc .idl { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -742,8 +793,8 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
 .vmc .idok { height: 48px; border-radius: 99px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15.5px; font-weight: 600; background: var(--bid); color: #fff; }
 .vmc .idok.on { background: #def0e5; color: var(--bid); }
 .vmc .idok:disabled { opacity: .4; cursor: default; }
-.lab .lph[data-swipe] { touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
-.lab .lph.in-r { animation: lin-r .2s ease-out; } .lab .lph.in-l { animation: lin-l .2s ease-out; }
+.lab .lpg[data-swipe] { touch-action: pan-y; }
+.lab .lpg.in-r { animation: lin-r .2s ease-out; } .lab .lpg.in-l { animation: lin-l .2s ease-out; }
 @keyframes lin-r { from { transform: translateX(55%); opacity: .3; } to { transform: none; opacity: 1; } }
 @keyframes lin-l { from { transform: translateX(-55%); opacity: .3; } to { transform: none; opacity: 1; } }
 .wheels.wt button { height: 54px; flex-direction: column; gap: 1px; }
@@ -802,6 +853,13 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
 .sstrip button.todo em.dot { width: 8px; height: 8px; border-radius: 50%; background: #d97706; }
 .sask { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: #374151; } .sask span { flex: 1; min-width: 0; } .sask em { font-style: normal; font-size: 12.5px; font-weight: 600; color: #687076; flex: none; }
 .flist .lv.dm { background: #fde8ee; color: #9f1239; }
+.fsh { font-size: 13px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: #000; margin: 18px 0 8px; } .card h3 + .fsh, .stmt + .fsh { margin-top: 4px; }
+.pth { flex: none; position: relative; width: 48px; height: 48px; border-radius: 8px; background: #e9ecef; color: #8a9096; display: grid; place-items: center; }
+.pth em { position: absolute; right: 3px; bottom: 3px; font-style: normal; font-size: 11px; font-weight: 700; color: #fff; background: #000000b3; border-radius: 8px; padding: 1px 5px; line-height: 1.3; }
+.pvw { position: absolute; inset: 0; z-index: 90; background: #000; color: #fff; display: flex; flex-direction: column; }
+.pvw .pvh { display: flex; align-items: center; justify-content: space-between; padding: 50px 12px 8px 20px; font-size: 14px; font-weight: 600; } .pvw .pvh button { width: 44px; height: 44px; color: #fff; display: grid; place-items: center; background: none; }
+.pvw .pvimg { flex: 1; display: grid; place-items: center; touch-action: pan-y; } .pvw .pvimg .ph { color: #ffffff40; display: flex; }
+.pvw .pvc { padding: 12px 20px 40px; text-align: center; font-size: 14px; color: #e5e7eb; }
 .spage { display: flex; align-items: baseline; gap: 8px; } .spage b { font-size: 20px; } .spage span { order: 2; margin-left: auto; font-size: 12.5px; color: #687076; font-weight: 600; }
 .flist { display: flex; flex-direction: column; } .flist div { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid #f0f0f0; font-size: 14px; }
 .flist div:first-child { border-top: 0; } .flist span { flex: 1; min-width: 0; } .flist small { display: block; font-size: 12px; color: #687076; }
@@ -812,11 +870,16 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
 /* ==== Page style: white page; cards only for photos, document images, the tire frame, the paint diagram, the bottom sheet and the bottom button. Sections are separated by thin lines; lists of the same kind of item use full-width rows in white and light grey (#f5f5f5) in turn. ==== */
 .body { background: #fff; }
 .pad { padding: 0 16px 20px; gap: 0; }
-.sstrip { margin: 0 -16px; padding: 0 16px; gap: 22px; background: #fff; border-bottom: 1px solid #ebedef; }
-.sstrip button { padding: 13px 0 11px; border: 0; border-radius: 0; background: none; box-shadow: none; font-size: 14px; font-weight: 600; color: #7a8087; border-bottom: 2.5px solid transparent; margin-bottom: -1px; gap: 5px; }
-.sstrip button.cur { color: #111; border-bottom-color: #111; box-shadow: none; }
-.sstrip .sn { font-size: 12px; color: #a3a8ae; }
-.sstrip button.cur .sn { color: #111; }
+.sstrip { margin: 0 -16px; padding: 0; gap: 0; background: #fff; border-bottom: 1px solid #ebedef; }
+.sstrip button { height: 48px; padding: 0 16px; border: 0; border-radius: 0; background: none; box-shadow: none; font-size: 15px; font-weight: 500; color: #7a8087; gap: 4px; }
+.sstrip button.cur { background: #ebedef; color: #000; font-weight: 700; box-shadow: none; }
+.sstrip button.ok { color: var(--bid); }
+.sstrip button:disabled { color: #c6cacf; cursor: default; }
+.sstrip button.pb em { background: none; color: #be123c; min-width: 0; height: auto; padding: 0; font-size: 15px; font-weight: 700; }
+.sstrip button.todo em.dot { width: 6px; height: 6px; }
+/* a row still to answer: a red frame round the whole row */
+.rw.nf { box-shadow: inset 0 0 0 2px #e1255d; border-radius: 10px; }
+.rw .rvl .need { color: #e1255d; font-weight: 700; }
 .card.sc { background: none; border: 0; border-radius: 0; padding: 16px 0 0; gap: 0; }
 .sc h3 { font-size: 21px; font-weight: 700; letter-spacing: -.01em; gap: 8px; margin-bottom: 14px; }
 .sc h3 > svg { display: none; }
@@ -881,8 +944,10 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
 /* Damages screen */
 .pad.lab { gap: 12px; }
 .pad.lab > .sstrip { margin-bottom: 4px; }
-.pad.lab > .sub2 { margin: 8px 0 -4px; }
-.pad.lab > .card.ldsum { margin-top: 4px; }
+.lab .lpg { display: flex; flex-direction: column; gap: 12px; }
+.lab .lpg > .sub2 { margin: 8px 0 -4px; }
+.lab .lpg > .card.ldsum { margin-top: 4px; }
+.lab .lprev { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; height: 40px; font-size: 14px; font-weight: 600; color: var(--bid); background: none; }
 /* lists of the same kind of item: full-width rows, white and light grey in turn, no divider lines */
 .rlist { margin-left: -16px; margin-right: -16px; border-top: 0; }
 .rlist > * + * { border-top: 0; }
@@ -907,7 +972,7 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
 </style>
 
 <header class="pg-h">
-  <div class="lg"><h1 class="brand"><svg class="logo-svg" role="img" aria-label="Bidbus" viewBox="0 0 58 18" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M18.9654 5.6796L16.7034 7.87185L14.4414 5.6796L16.7034 3.52295L18.9654 5.6796Z" fill="#4DAD4B"/> <path d="M17.861 17.2183H15.3711V8.70005L17.861 7.72943V17.2183Z" fill="currentColor"/> <path d="M28.3932 17.2169L26.6824 16.5876C26.2644 16.6825 25.8811 16.7753 25.5324 16.8662C25.1449 16.9606 24.7458 17.0061 24.3457 17.0014C23.6936 17.0073 23.047 16.888 22.4451 16.6507C21.2872 16.1935 20.3679 15.3213 19.8885 14.2249C19.6383 13.6523 19.5123 13.038 19.518 12.4184C19.5093 11.7794 19.6315 11.1449 19.8779 10.5498C20.1048 10.0066 20.4441 9.51172 20.8759 9.09413C21.3085 8.68164 21.826 8.35744 22.3964 8.14155C23.0098 7.90981 23.6651 7.79388 24.3256 7.80029C24.9591 7.80029 25.485 7.87212 25.9033 8.01578V4.20594L28.3932 3.52295V17.2169ZM25.9018 10.2983C25.6649 10.1586 25.4045 10.0583 25.1318 10.0016C24.8842 9.95857 24.633 9.93743 24.3813 9.93849C24.0583 9.9353 23.7383 9.9966 23.4421 10.1184C23.161 10.2358 22.9087 10.4071 22.7011 10.6215C22.488 10.8436 22.3232 11.1033 22.2162 11.3856C22.0986 11.6999 22.0408 12.0314 22.0455 12.3648C22.0424 12.7076 22.1034 13.0483 22.2258 13.371C22.3397 13.6723 22.514 13.95 22.7393 14.1888C22.9568 14.4194 23.2218 14.6057 23.5179 14.7365C23.8309 14.8714 24.1718 14.9389 24.5158 14.934C24.7642 14.9399 25.0109 14.8939 25.2382 14.7992C25.439 14.7096 25.6607 14.5989 25.9033 14.4669L25.9018 10.2983Z" fill="currentColor"/> <path d="M30.0488 4.20594L32.5196 3.52295V8.37648C32.8062 8.25832 33.106 8.17091 33.4132 8.11591C33.79 8.05673 34.1717 8.02973 34.5537 8.03522C35.1631 8.02844 35.7676 8.13855 36.3308 8.35892C36.8539 8.56471 37.3263 8.87061 37.7183 9.25739C38.1142 9.65569 38.424 10.1232 38.6304 10.6338C38.857 11.1929 38.9699 11.7874 38.9632 12.3861C38.9632 13.117 38.8364 13.779 38.5827 14.372C38.3432 14.945 37.9809 15.4651 37.5185 15.8993C37.0449 16.3349 36.4777 16.669 35.8554 16.8789C35.2028 17.1064 34.4774 17.2202 33.6792 17.2202C33.0877 17.2229 32.4979 17.1592 31.9223 17.0303C31.2804 16.875 30.654 16.6676 30.0498 16.4105L30.0488 4.20594ZM32.5196 14.9325C32.735 14.9907 32.9539 15.0362 33.1752 15.0687C33.3797 15.0986 33.5863 15.1137 33.7932 15.1138C34.1562 15.1171 34.5157 15.0467 34.8474 14.9073C35.162 14.7756 35.4437 14.5826 35.6742 14.3411C35.9094 14.0907 36.0932 13.801 36.2158 13.4868C36.3518 13.1451 36.4199 12.7825 36.4166 12.4174C36.4166 11.7213 36.2297 11.1583 35.8559 10.7283C35.4821 10.2982 35.0097 10.0829 34.4388 10.0823C34.1132 10.0782 33.7891 10.1237 33.4789 10.2171C33.1938 10.3073 32.8739 10.484 32.5191 10.7472L32.5196 14.9325Z" fill="currentColor"/> <path d="M47.1555 16.1203C46.7571 16.254 46.3469 16.3532 45.9296 16.417C45.4747 16.4931 45.0137 16.5322 44.5516 16.5337C44.0885 16.529 43.6282 16.4651 43.1832 16.3439C42.6985 16.2163 42.2439 16.0029 41.8434 15.715C41.4195 15.4086 41.0695 15.0203 40.8168 14.5759C40.5441 14.1089 40.4079 13.5338 40.4082 12.8506V7.56665H42.8981V12.8317C42.8919 13.0702 42.9434 13.3069 43.0487 13.5237C43.1417 13.7115 43.2781 13.8773 43.4478 14.0087C43.6147 14.1359 43.8047 14.2333 44.0085 14.2964C44.2078 14.3607 44.4168 14.3941 44.6274 14.3951C44.9645 14.3998 45.3014 14.3789 45.6349 14.3324C45.8977 14.292 46.1495 14.2035 46.3764 14.0719V7.56665H48.8863V17.2167L47.1555 16.1203Z" fill="currentColor"/> <path d="M56.6125 10.8374C56.1818 10.5377 55.7605 10.34 55.3485 10.2441C54.9475 10.1499 54.5359 10.1021 54.1227 10.1017C53.809 10.0979 53.499 10.1658 53.2191 10.2996C52.9463 10.4316 52.8101 10.5933 52.8105 10.7847C52.8105 10.9644 52.9371 11.1022 53.1905 11.1981C53.5022 11.31 53.8232 11.3972 54.1503 11.4587C54.5368 11.5365 54.9551 11.6233 55.4053 11.7192C55.8429 11.8108 56.2652 11.9589 56.6602 12.1592C57.0391 12.351 57.3672 12.6213 57.62 12.9499C57.8734 13.2799 58.0001 13.7142 58.0001 14.2528C58.0001 14.7445 57.8861 15.1729 57.6582 15.538C57.4295 15.9034 57.1215 16.2188 56.7546 16.4636C56.3626 16.723 55.9249 16.9146 55.462 17.0293C54.9632 17.1569 54.4486 17.2207 53.9319 17.2192C52.6649 17.2192 51.3979 16.8597 50.1308 16.1408L51.062 14.3078C51.5796 14.5479 52.1138 14.7545 52.6609 14.9263C53.1091 15.0632 53.5773 15.133 54.0484 15.1332C54.3936 15.1385 54.7343 15.058 55.0363 14.8997C55.3278 14.744 55.4735 14.5225 55.4735 14.2352C55.4735 14.0795 55.3469 13.9566 55.0935 13.8664C54.7803 13.761 54.4596 13.6769 54.1337 13.6149C53.7472 13.537 53.3289 13.4473 52.8787 13.3458C52.4415 13.2482 52.0196 13.0971 51.6238 12.8963C51.2466 12.706 50.9188 12.439 50.6639 12.1146C50.4103 11.7909 50.2836 11.3656 50.2839 10.8388C50.2853 10.4622 50.3936 10.0929 50.5977 9.76946C50.8151 9.41862 51.1054 9.113 51.4511 8.871C51.8315 8.60409 52.2554 8.39761 52.7061 8.25969C53.1874 8.10915 53.6914 8.03334 54.1985 8.03519C54.8016 8.03934 55.4017 8.11476 55.9851 8.25969C56.5989 8.40673 57.1787 8.65967 57.6953 9.00579L56.6125 10.8374Z" fill="currentColor"/> <path d="M10.7547 8.19253C10.7547 8.19253 10.7512 8.19253 10.7497 8.18874C10.7453 8.18559 10.7404 8.18333 10.7351 8.18209C10.701 8.16311 10.6663 8.14602 10.6302 8.12893C11.1066 7.61539 11.4309 6.98319 11.597 6.2366C11.6945 5.7981 11.742 5.35097 11.7386 4.9029C11.7372 1.96938 9.99967 0.347585 6.52589 0.0374955C6.30685 0.0142539 6.08668 0.00173871 5.86628 0C5.65153 0.00154007 5.43704 0.0140568 5.22373 0.0374955C1.74927 0.349167 0.0122151 1.97097 0.0125498 4.9029V11.823C0.00351394 11.9805 0 12.1395 0 12.3038H0.0125498V17.2171H6.52589C10.8671 17.2171 13.0381 15.5793 13.0387 12.3038C13.0387 10.3537 12.2774 8.98326 10.7547 8.19253ZM2.61738 4.9029C2.61738 3.40782 3.70286 2.59431 5.87381 2.46236C8.04542 2.59431 9.1309 3.40782 9.13023 4.9029C9.13072 5.09644 9.1168 5.28977 9.08856 5.48147C8.91621 6.57722 8.22497 7.22224 7.01483 7.41652C6.81658 7.44814 6.61637 7.46764 6.41545 7.4749C5.95864 7.49388 5.53663 7.52015 5.14943 7.55369H5.1419C3.99736 7.65462 3.15585 7.82122 2.61738 8.05347V4.9029ZM6.52589 14.7543H2.61738V12.0313C2.75627 10.579 4.0591 9.84424 6.52589 9.82715C9.13023 9.82715 10.4324 10.6525 10.4324 12.3033C10.4324 13.9373 9.13023 14.7543 6.52589 14.7543Z" fill="currentColor"/> </svg><span class="sr">Bidbus</span></h1><b>Internal MVP</b><span id="hsub"></span></div>
+  <div class="lg"><h1 class="brand"><svg class="logo-svg" role="img" aria-label="Bidbus" viewBox="0 0 58 18" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M18.9654 5.6796L16.7034 7.87185L14.4414 5.6796L16.7034 3.52295L18.9654 5.6796Z" fill="#4DAD4B"/> <path d="M17.861 17.2183H15.3711V8.70005L17.861 7.72943V17.2183Z" fill="currentColor"/> <path d="M28.3932 17.2169L26.6824 16.5876C26.2644 16.6825 25.8811 16.7753 25.5324 16.8662C25.1449 16.9606 24.7458 17.0061 24.3457 17.0014C23.6936 17.0073 23.047 16.888 22.4451 16.6507C21.2872 16.1935 20.3679 15.3213 19.8885 14.2249C19.6383 13.6523 19.5123 13.038 19.518 12.4184C19.5093 11.7794 19.6315 11.1449 19.8779 10.5498C20.1048 10.0066 20.4441 9.51172 20.8759 9.09413C21.3085 8.68164 21.826 8.35744 22.3964 8.14155C23.0098 7.90981 23.6651 7.79388 24.3256 7.80029C24.9591 7.80029 25.485 7.87212 25.9033 8.01578V4.20594L28.3932 3.52295V17.2169ZM25.9018 10.2983C25.6649 10.1586 25.4045 10.0583 25.1318 10.0016C24.8842 9.95857 24.633 9.93743 24.3813 9.93849C24.0583 9.9353 23.7383 9.9966 23.4421 10.1184C23.161 10.2358 22.9087 10.4071 22.7011 10.6215C22.488 10.8436 22.3232 11.1033 22.2162 11.3856C22.0986 11.6999 22.0408 12.0314 22.0455 12.3648C22.0424 12.7076 22.1034 13.0483 22.2258 13.371C22.3397 13.6723 22.514 13.95 22.7393 14.1888C22.9568 14.4194 23.2218 14.6057 23.5179 14.7365C23.8309 14.8714 24.1718 14.9389 24.5158 14.934C24.7642 14.9399 25.0109 14.8939 25.2382 14.7992C25.439 14.7096 25.6607 14.5989 25.9033 14.4669L25.9018 10.2983Z" fill="currentColor"/> <path d="M30.0488 4.20594L32.5196 3.52295V8.37648C32.8062 8.25832 33.106 8.17091 33.4132 8.11591C33.79 8.05673 34.1717 8.02973 34.5537 8.03522C35.1631 8.02844 35.7676 8.13855 36.3308 8.35892C36.8539 8.56471 37.3263 8.87061 37.7183 9.25739C38.1142 9.65569 38.424 10.1232 38.6304 10.6338C38.857 11.1929 38.9699 11.7874 38.9632 12.3861C38.9632 13.117 38.8364 13.779 38.5827 14.372C38.3432 14.945 37.9809 15.4651 37.5185 15.8993C37.0449 16.3349 36.4777 16.669 35.8554 16.8789C35.2028 17.1064 34.4774 17.2202 33.6792 17.2202C33.0877 17.2229 32.4979 17.1592 31.9223 17.0303C31.2804 16.875 30.654 16.6676 30.0498 16.4105L30.0488 4.20594ZM32.5196 14.9325C32.735 14.9907 32.9539 15.0362 33.1752 15.0687C33.3797 15.0986 33.5863 15.1137 33.7932 15.1138C34.1562 15.1171 34.5157 15.0467 34.8474 14.9073C35.162 14.7756 35.4437 14.5826 35.6742 14.3411C35.9094 14.0907 36.0932 13.801 36.2158 13.4868C36.3518 13.1451 36.4199 12.7825 36.4166 12.4174C36.4166 11.7213 36.2297 11.1583 35.8559 10.7283C35.4821 10.2982 35.0097 10.0829 34.4388 10.0823C34.1132 10.0782 33.7891 10.1237 33.4789 10.2171C33.1938 10.3073 32.8739 10.484 32.5191 10.7472L32.5196 14.9325Z" fill="currentColor"/> <path d="M47.1555 16.1203C46.7571 16.254 46.3469 16.3532 45.9296 16.417C45.4747 16.4931 45.0137 16.5322 44.5516 16.5337C44.0885 16.529 43.6282 16.4651 43.1832 16.3439C42.6985 16.2163 42.2439 16.0029 41.8434 15.715C41.4195 15.4086 41.0695 15.0203 40.8168 14.5759C40.5441 14.1089 40.4079 13.5338 40.4082 12.8506V7.56665H42.8981V12.8317C42.8919 13.0702 42.9434 13.3069 43.0487 13.5237C43.1417 13.7115 43.2781 13.8773 43.4478 14.0087C43.6147 14.1359 43.8047 14.2333 44.0085 14.2964C44.2078 14.3607 44.4168 14.3941 44.6274 14.3951C44.9645 14.3998 45.3014 14.3789 45.6349 14.3324C45.8977 14.292 46.1495 14.2035 46.3764 14.0719V7.56665H48.8863V17.2167L47.1555 16.1203Z" fill="currentColor"/> <path d="M56.6125 10.8374C56.1818 10.5377 55.7605 10.34 55.3485 10.2441C54.9475 10.1499 54.5359 10.1021 54.1227 10.1017C53.809 10.0979 53.499 10.1658 53.2191 10.2996C52.9463 10.4316 52.8101 10.5933 52.8105 10.7847C52.8105 10.9644 52.9371 11.1022 53.1905 11.1981C53.5022 11.31 53.8232 11.3972 54.1503 11.4587C54.5368 11.5365 54.9551 11.6233 55.4053 11.7192C55.8429 11.8108 56.2652 11.9589 56.6602 12.1592C57.0391 12.351 57.3672 12.6213 57.62 12.9499C57.8734 13.2799 58.0001 13.7142 58.0001 14.2528C58.0001 14.7445 57.8861 15.1729 57.6582 15.538C57.4295 15.9034 57.1215 16.2188 56.7546 16.4636C56.3626 16.723 55.9249 16.9146 55.462 17.0293C54.9632 17.1569 54.4486 17.2207 53.9319 17.2192C52.6649 17.2192 51.3979 16.8597 50.1308 16.1408L51.062 14.3078C51.5796 14.5479 52.1138 14.7545 52.6609 14.9263C53.1091 15.0632 53.5773 15.133 54.0484 15.1332C54.3936 15.1385 54.7343 15.058 55.0363 14.8997C55.3278 14.744 55.4735 14.5225 55.4735 14.2352C55.4735 14.0795 55.3469 13.9566 55.0935 13.8664C54.7803 13.761 54.4596 13.6769 54.1337 13.6149C53.7472 13.537 53.3289 13.4473 52.8787 13.3458C52.4415 13.2482 52.0196 13.0971 51.6238 12.8963C51.2466 12.706 50.9188 12.439 50.6639 12.1146C50.4103 11.7909 50.2836 11.3656 50.2839 10.8388C50.2853 10.4622 50.3936 10.0929 50.5977 9.76946C50.8151 9.41862 51.1054 9.113 51.4511 8.871C51.8315 8.60409 52.2554 8.39761 52.7061 8.25969C53.1874 8.10915 53.6914 8.03334 54.1985 8.03519C54.8016 8.03934 55.4017 8.11476 55.9851 8.25969C56.5989 8.40673 57.1787 8.65967 57.6953 9.00579L56.6125 10.8374Z" fill="currentColor"/> <path d="M10.7547 8.19253C10.7547 8.19253 10.7512 8.19253 10.7497 8.18874C10.7453 8.18559 10.7404 8.18333 10.7351 8.18209C10.701 8.16311 10.6663 8.14602 10.6302 8.12893C11.1066 7.61539 11.4309 6.98319 11.597 6.2366C11.6945 5.7981 11.742 5.35097 11.7386 4.9029C11.7372 1.96938 9.99967 0.347585 6.52589 0.0374955C6.30685 0.0142539 6.08668 0.00173871 5.86628 0C5.65153 0.00154007 5.43704 0.0140568 5.22373 0.0374955C1.74927 0.349167 0.0122151 1.97097 0.0125498 4.9029V11.823C0.00351394 11.9805 0 12.1395 0 12.3038H0.0125498V17.2171H6.52589C10.8671 17.2171 13.0381 15.5793 13.0387 12.3038C13.0387 10.3537 12.2774 8.98326 10.7547 8.19253ZM2.61738 4.9029C2.61738 3.40782 3.70286 2.59431 5.87381 2.46236C8.04542 2.59431 9.1309 3.40782 9.13023 4.9029C9.13072 5.09644 9.1168 5.28977 9.08856 5.48147C8.91621 6.57722 8.22497 7.22224 7.01483 7.41652C6.81658 7.44814 6.61637 7.46764 6.41545 7.4749C5.95864 7.49388 5.53663 7.52015 5.14943 7.55369H5.1419C3.99736 7.65462 3.15585 7.82122 2.61738 8.05347V4.9029ZM6.52589 14.7543H2.61738V12.0313C2.75627 10.579 4.0591 9.84424 6.52589 9.82715C9.13023 9.82715 10.4324 10.6525 10.4324 12.3033C10.4324 13.9373 9.13023 14.7543 6.52589 14.7543Z" fill="currentColor"/> </svg><span class="sr">Bidbus</span></h1><b>Internal MVP 1109</b><span id="hsub"></span></div>
   <div class="sp"></div>
   <div class="tabs" role="group" aria-label="View">
     <button type="button" id="t-app" aria-pressed="true"></button>
@@ -933,7 +998,7 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
     <section>
       <h3><span class="n">01</span> The flow</h3>
       <div class="flow">
-        <span>Search the listing leads</span><em>→</em><span>Car brief: the seller's documents as they upload</span><em>→</em><span>Check ID at the car: the person against the documents, owner question</span><em>→</em><span>One camera pass: Exterior (360 video, paint readings, roof, windshield VIN), Tires, Interior, OBDII, Mechanicals; Damage and Mod shutters at any point</span><em>→</em><span>Damages: confirm or label every damage photo</span><em>→</em><span>Review: one page per section</span><em>→</em><span>Summary: VIN, mileage, overall condition, note</span><em>→</em><span>Disclosure and seller signature</span><em>→</em><span>Upload; Bidbus makes the condition report</span>
+        <span>Search the listing leads</span><em>→</em><span>Car brief: the seller's documents as they upload</span><em>→</em><span>Check ID at the car: the person against the documents, owner question</span><em>→</em><span>One camera pass: Exterior (windshield VIN, 360 video), Interior (engine first start), Walk-around (paint, tires, trunk, hood, roof), OBDII, Mechanicals, Underbody; Look for on every shot; questions at the end of each section</span><em>→</em><span>Damages: confirm or label every damage photo</span><em>→</em><span>Review: one page per section</span><em>→</em><span>Summary: VIN, mileage, overall condition, note</span><em>→</em><span>Disclosure and seller signature</span><em>→</em><span>Upload; Bidbus makes the condition report</span>
       </div>
       <p>The inspection takes about 18 minutes.</p>
     </section>
@@ -946,9 +1011,9 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
           <tr><td>Cars</td><td>Searches the listing leads: owner, phone, VIN, ZIP or the car.</td><td>Synced from Bidbus; no booking order. Status: In progress, Saved on phone, Uploading, Inspected, Visit ended.</td></tr>
           <tr><td>Car brief</td><td>Reads the seller's documents, the owner, the seller's answers and Carfax.</td><td>Driver's license and registration from the seller portal, live, with the upload time; Text the seller an upload link when one is missing; points to check (04); bottom button At the car: check ID.</td></tr>
           <tr><td>Check ID</td><td>Compares the person with the documents, answers the owner question, taps Start inspection.</td><td>A missing document can be photographed here into the same private slot (Taken on site). Owner: Yes; Family, with a proof photo; No ends the visit. Start stays off until both documents are in and the answer is Yes or Family with proof. Records the start time and location.</td></tr>
-          <tr><td>Camera</td><td>Takes every shot in one pass, phone sideways.</td><td>Exterior: 360 video from the left front, counter-clockwise; one paint meter photo per panel (11) on the same walk; roof; windshield VIN; then "Please record any exterior damage/modification images before proceeding." (I'm done, or Record damage now with only the Damage and Mod shutters and Next). Tires LF, LR, RR, RF: whole tire, tread gauge. Interior: door-jamb VIN, odometer, all keys, dash, infotainment, front seats, rear seats, cargo. OBDII: gas code screens and other images; EV alerts, battery health, charging. Mechanicals: engine bay, engine oil, engine sound and exhaust videos (gas and hybrid), underbody LF, LR, rear, RR, RF, front, catalytic converters (optional). Damage and Mod shutters at any point, except on videos and in OBDII. Back, retake, delete; Skip only on optional shots.</td></tr>
+          <tr><td>Camera</td><td>Takes every shot in one pass, phone sideways.</td><td>Exterior: windshield VIN, 360 video from the left front, counter-clockwise. Interior: door-jamb VIN, front seats, rear seats, odometer at key-on, engine sound at the first start, all keys, dash, infotainment, then OBDII (gas code screens and other images; EV alerts, battery health, charging). Walk-around from the left front, counter-clockwise: one paint meter photo per panel (11), each tire (whole tire, tread gauge) as it is reached, the trunk photo at the rear, hood, roof photo. Mechanicals: engine bay, engine oil, exhaust video (idle, revving, reverse gear). Underbody: LF, LR, rear, RR, RF, front, catalytic converters (optional). Look for at the top left of every shot. The end of Interior, Walk-around, Mechanicals and Underbody asks that section's questions (Interior also asks the OBDII questions and Transmission and clutch; Walk-around also asks Brakes; Underbody also asks Leaks, Exhaust and emissions, Suspension and steering, Driveshaft and CV joints; Mechanicals asks the rest of its questions), then Record damage or Next. Damage and Mod shutters at any point, except on videos and OBDII shots. Back, retake, delete; Skip only on optional shots.</td></tr>
           <tr><td>Damages</td><td>Confirms or labels each damage photo.</td><td>AI first guess of place, type and severity; place picked on a picture; type from that place's list; severity required; size 1-36 in optional. A label ticks its check.</td></tr>
-          <tr><td>Review</td><td>Goes through Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals with Next.</td><td>One row per check, OK by default; a drawer with one problem per check. Photos, damages and mods as tiles. Paint on a car top view with mils. Tires in four tabs. Required: tires match, number of keys, sunroof, navigation.</td></tr>
+          <tr><td>Review</td><td>Goes through Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals, Underbody with Next.</td><td>One row per check, OK by default; a drawer with one problem per check. Photos, damages and mods as tiles. Paint on a car top view with mils. Tires in four tabs. Required: tires match, number of keys, sunroof, navigation.</td></tr>
           <tr><td>Summary</td><td>Confirms VIN and mileage, picks the overall condition, writes the note.</td><td>VIN and mileage read from the photos, checked against the door jamb, listing, check digit and Carfax; any edit clears the confirm. Show the seller stays off, with the reason, until everything is complete.</td></tr>
           <tr><td>Seller signs</td><td>Hands the phone to the seller.</td><td>Findings in plain words, the disclosure with an agree tick, name and signature. Records the end time and location.</td></tr>
           <tr><td>Upload</td><td>Leaves; it carries on by itself.</td><td>Saved on phone without signal; resumes; condition report link when ready.</td></tr>
@@ -1029,6 +1094,8 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
         <li>One record per car when the seller signs: answers, photos, videos and 360 frames, readings, damages with the AI first guess, signature, start and end time and place. Built by <code>inspectionPayload</code>; examples in <code>samples/inspection-*.json</code>.</li>
         <li>Media upload one file at a time and resume after a lost signal.</li>
         <li>Bidbus checks the record against <code>data/issue-catalog.json</code> and makes the condition report (<code>tools/cr_from_inspection.py</code>, examples in <code>samples/cr-*.json</code>): issues in the app's words, the highlight (structural damage, keys, odor, mechanical), CR rows with their photos and damages, tires, paint, videos, 360 view and the seller signature. It also fills the seller self-inspect fields the listing uses.</li>
+        <li>Seller and dealer reports: the 360 view leads the Exterior photos, then eight exterior views from its frames (left front 1, left side 5, left rear 10, rear 14, right rear 19, right side 23, right front 28, front 32).</li>
+        <li>Damage dots on the 360 view: each confirmed Exterior, Paint or Tires damage with a photo gets a dot on its part, on the frames that show that part; the dot turns with the car and hides on the far side. Amber, red for a Red or worse damage. One dot per part (a wheel and its tire are one part), with the number of damages when there are several. Tapping a dot opens a card with each damage's photo and line (it scrolls); tapping a damage opens its photo full screen; closing goes back to the 360 view. The timeline under the view has a mark per dot that turns the car to it. Mirror, headlight, tail light and fuel door use the side the inspector picked, else the side the AI reads from the damage photo, else no dot; Other and Other lights get none. The part positions are worked out on the server after upload; until then the view has no dots.</li>
       </ul>
     </section>
 
@@ -1058,7 +1125,7 @@ button.wt[aria-pressed="true"] { background: #000; color: #fff; border-color: #0
         <li>An inspector finds a car by search, reads its brief and finishes an inspection typing only engine codes, corrections and the note.</li>
         <li>A car with no problems needs no taps on checks.</li>
         <li>Start stays off until both documents are in and the owner question is answered.</li>
-        <li>One camera pass covers every section; the only stop is the end-of-Exterior damage dialog.</li>
+        <li>One camera pass covers every section; the only stops are the end-of-section questions.</li>
         <li>The walk-around becomes a 360 view; eight of its frames are the exterior photos.</li>
         <li>Every damage photo has a place, type and severity, from the AI guess or the inspector.</li>
         <li>Show the seller stays off until every section is reviewed and every required answer is in.</li>
@@ -1142,6 +1209,7 @@ Object.assign(LU, {
   ext: '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
   info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
   plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
+  minus: '<path d="M5 12h14"/>',
   hist: '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',
   loader: '<path d="M21 12a9 9 0 1 1-6.219-8.56"/>',
   list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
@@ -1166,7 +1234,8 @@ Object.assign(LU, {
   spring: '<path d="M7 3h10M7 21h10"/><path d="M8 6l8 2.5-8 2.5 8 2.5-8 2.5 8 2.5"/>',
   shaft: '<path d="M3 12h18"/><circle cx="4.5" cy="12" r="2"/><circle cx="19.5" cy="12" r="2"/><path d="M9 8.5v7M15 8.5v7"/>',
   disc: '<circle cx="11" cy="13" r="8"/><circle cx="11" cy="13" r="2.5"/><path d="M15 3.5a10 10 0 0 1 5.5 5.5l-3.6 1.6a6 6 0 0 0-3.4-3.4z"/>',
-  wiper: '<path d="M3 18a13 13 0 0 1 18 0"/><path d="M12 18 6.5 6.5"/><circle cx="12" cy="18" r="1.5"/>',
+  wiper: '<path d="M2 20 4.6 6.6Q12 3.4 19.4 6.6L22 20Z"/><path d="M12 20 6.3 9.4"/><circle cx="12" cy="20" r="0.6" fill="currentColor"/>',
+  zapoff: '<path d="M10.513 4.856 13.12 2.17a.5.5 0 0 1 .86.46l-1.377 4.317"/><path d="M15.656 10H20a1 1 0 0 1 .78 1.63l-1.72 1.773"/><path d="M16.273 16.273 10.88 21.83a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14H4a1 1 0 0 1-.78-1.63l4.507-4.643"/><path d="m2 2 20 20"/>',
   headliner: '<path d="M3 10.5 6 5h12l3 5.5"/><path d="M3 10.5h18"/><circle cx="12" cy="15.5" r="1.8"/>',
   carpet: '<rect x="4" y="6" width="16" height="12" rx="1.5"/><path d="M4 10h16M4 14h16"/>',
   sunroof: '<rect x="4" y="2.5" width="16" height="19" rx="3"/><rect x="7.5" y="6" width="9" height="7" rx="1"/>',
@@ -1218,9 +1287,27 @@ var LAYOUT = {
   Exterior: ['video_360', 'ph_ext_roof', 'ph_vin_dash', 'ph_mod_ext'],
   Interior: ['ph_vin_door', 'ph_odo', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_int_front', 'ph_int_rear', 'ph_int_cargo', 'ph_mod_int'], /* door-jamb VIN, odometer, keys first (Tom 11-06 18:35) */
   OBDII: ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'],
-  Mechanicals: ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_engine', 'video_exhaust', 'ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack', 'ph_mod_mech']
+  Mechanicals: ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_engine', 'video_exhaust', 'ph_mod_mech'],
+  Underbody: ['ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack']
 };
-var MSEC = { vin_scan: 'Interior', ck_ids: 'Interior', ck_keys: 'Interior', ck_equip: 'Interior', ck_account: 'Interior', ck_structure: 'Mechanicals', ck_rust: 'Mechanicals', ck_pack: 'Mechanicals' };
+/* camera order (Tom 11-10): windshield VIN and 360 video, Interior (engine first start, odometer at key-on, OBDII after infotainment), one walk-around from the left front counter-clockwise (paint meter per panel, each tire as it is reached, trunk photo at the rear, hood, roof), Mechanicals, Underbody.
+   Review keeps its own sections (LAYOUT); a shot taken in another camera pass shows on its home section's Review page. */
+var CAMLAYOUT = {
+  Exterior: ['ph_vin_dash', 'video_360'],
+  Interior: ['ph_vin_door', 'ph_int_front', 'ph_int_rear', 'ph_odo', 'video_engine', 'ph_keys', 'ph_int_dash', 'ph_int_screen'].concat(LAYOUT.OBDII), /* seats right after the door-jamb VIN (Tom 11-10 02:17); OBDII shots after infotainment (Tom 11-10 07:14) */
+  OBDII: LAYOUT.OBDII,
+  Mechanicals: ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_exhaust'],
+  Underbody: LAYOUT.Underbody
+};
+var WALK = [['p', 'Left front fender'], ['w', 'lf'], ['p', 'Left front door'], ['p', 'Left rear door'], ['w', 'lr'], ['p', 'Left quarter panel'], ['p', 'Trunk or liftgate'], ['i', 'ph_int_cargo'],
+  ['p', 'Right quarter panel'], ['w', 'rr'], ['p', 'Right rear door'], ['p', 'Right front door'], ['w', 'rf'], ['p', 'Right front fender'], ['p', 'Hood'], ['p', 'Roof'], ['i', 'ph_ext_roof']];
+var CAMRUN = ['start', 'Exterior', 'Interior', 'Tires', 'Mechanicals', 'Underbody'], CAMSEQ = CAMRUN.slice(1);
+function camTitle(k) { return k === 'Tires' ? 'Walk-around' : stTitle(k); }
+var HOMESEC = {}; Object.keys(LAYOUT).forEach(function (k) { LAYOUT[k].forEach(function (id) { HOMESEC[id] = k; }); });
+function homeOf(x, ck) { return x.panel ? 'Paint' : x.wheel ? 'Tires' : HOMESEC[x.id] || ck; }
+/* damage and mod photos taken on a shot belong to the shot's home section (paint panels count as Exterior) */
+function shotZone(x, ck) { var h = x ? homeOf(x, ck) : ck; return h === 'Paint' ? 'Exterior' : h; }
+var MSEC = { vin_scan: 'Interior', ck_ids: 'Interior', ck_keys: 'Interior', ck_equip: 'Interior', ck_account: 'Interior', ck_structure: 'Underbody', ck_rust: 'Underbody', ck_pack: 'Underbody' };
 function secOf(it) { return MSEC[it.id] || it.section; }
 /* photo category the backend stores (Tom 11-07 06:07, 06:10, 06:14) = the section of the question in the question list (question-list.csv), not the camera pass it was taken in:
    Underbody, OBDII and Additionals are their own categories; underbody shots and Underbody-tab damage photos are taken in the Mechanicals pass, VIN, odometer and keys in the Exterior and Interior passes */
@@ -1229,23 +1316,22 @@ var QSEC = {}; QL.items.forEach(function (it) { QSEC[it.id] = it.section; });
 function photoSec(k, id) { return k === 'start' ? 'Start' : id === 'paint' ? 'Paint' : QSEC[id] || k; }
 function dmgSec(z, p) { z = z || 'Exterior'; return z === 'Mechanicals' && underPlace(p) ? 'Underbody' : z; }
 var STEPS = [
-  { k: 'start', t: 'Start', ic: 'idcard' }, { k: 'Exterior', t: 'Exterior', ic: 'car' }, { k: 'Tires', t: 'Tires', ic: 'tire' },
+  { k: 'start', t: 'Start', ic: 'idcard' }, { k: 'Exterior', t: 'Exterior', ic: 'car' }, { k: 'Tires', t: 'Tires & Wheels', ic: 'tire' },
   { k: 'Paint', t: 'Paint', ic: 'brush' }, { k: 'Interior', t: 'Interior', ic: 'seat' }, { k: 'OBDII', t: 'OBDII', ic: 'scan' },
-  { k: 'Mechanicals', t: 'Mechanicals', ic: 'wrench' }, { k: 'Damages', t: 'Damages', ic: 'alert' }, { k: 'review', t: 'Review', ic: 'checks' }, { k: 'sign', t: 'Seller signs', ic: 'pen' }
+  { k: 'Mechanicals', t: 'Mechanicals', ic: 'wrench' }, { k: 'Underbody', t: 'Underbody', ic: 'layers' }, { k: 'Damages', t: 'Damages', ic: 'alert' }, { k: 'review', t: 'Review', ic: 'checks' }, { k: 'sign', t: 'Seller signs', ic: 'pen' }
 ];
 function stepIdx(k) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].k === k) return i; return 0; }
 /* one camera pass: Start tapped -> every section in this order without stopping -> summary */
-var CAPSEQ = ['start', 'Exterior', 'Tires', 'Paint', 'Interior', 'OBDII', 'Mechanicals'];
+var CAPSEQ = ['start', 'Exterior', 'Tires', 'Paint', 'Interior', 'OBDII', 'Mechanicals', 'Underbody'];
 var PHASES = [['capture', 'Photos'], ['label', 'Damages'], ['summary', 'Review'], ['final', 'Summary'], ['sign', 'Seller signs']];
 function stTitle(k) { return STEPS[stepIdx(k)].t; }
 function secDone(st, k) { var l = capList(k, st); return capNext(st, l, 0) >= l.length && (k !== 'start' || (!!st.owner && st.owner !== 'No')); }
-function firstOpenSection(st) { for (var j = 0; j < CAPSEQ.length; j++) if (!secDone(st, CAPSEQ[j])) return CAPSEQ[j]; return null; }
-function nextSection(st, k) { var i = CAPSEQ.indexOf(k); for (var j = i + 1; j < CAPSEQ.length; j++) if (capList(CAPSEQ[j], st).length) return CAPSEQ[j]; return null; }
-function capLeft(st) { var n = 0; CAPSEQ.forEach(function (k) { var c = capCount(st, k); n += c[1] - c[0]; }); return n; }
-function openCap(st, k, run) { S.capRet = null; var pf = k === 'Paint'; if (pf) k = 'Exterior'; var l = capList(k, st), i = capNext(st, l, 0);
+function firstOpenSection(st) { for (var j = 0; j < CAMRUN.length; j++) if (!secDone(st, CAMRUN[j])) return CAMRUN[j]; return null; }
+function nextSection(st, k) { var i = CAMRUN.indexOf(k); for (var j = i + 1; j < CAMRUN.length; j++) if (capList(CAMRUN[j], st).length) return CAMRUN[j]; return null; }
+function capLeft(st) { var n = 0; CAMRUN.forEach(function (k) { var c = capCount(st, k); n += c[1] - c[0]; }); return n; }
+function openCap(st, k, run) { S.capRet = null; var pf = k === 'Paint'; if (pf) k = 'Tires'; var l = capList(k, st), i = capNext(st, l, 0);
   if (pf) { for (var pj = 0; pj < l.length; pj++) if (l[pj].panel && !capOk(st, l[pj])) { i = pj; break; } } S.cap = { k: k, i: run || i < l.length ? i : 0, rec: false, run: !!run }; S.sheet = null; }
-function prevSection(st, k) { var i = CAPSEQ.indexOf(k); for (var j = i - 1; j >= 0; j--) if (CAPSEQ[j] !== 'start' && capList(CAPSEQ[j], st).length) return CAPSEQ[j]; return null; }
-var CAMRUN = CAPSEQ.filter(function (k) { return k !== 'Paint'; }), CAMSEQ = CAMRUN.slice(1);
+function prevSection(st, k) { var i = CAMRUN.indexOf(k); for (var j = i - 1; j >= 0; j--) if (CAMRUN[j] !== 'start' && capList(CAMRUN[j], st).length) return CAMRUN[j]; return null; }
 /* Back: one shot back; on a section's first shot, back to the previous section's last shot (or the owner question). The spot the inspector left is kept, and Keep or a retake returns there. */
 function capCanBack(st, cp) { return !cp.mode && (cp.i > 0 || (cp.run && !!prevSection(st, cp.k))); }
 function capBack(st) {
@@ -1275,6 +1361,9 @@ var PAINT_PANELS = []; PAINT_GROUPS.forEach(function (g) { g[1].forEach(function
 var PAINT_HIGH = 8; /* mils; factory paint reads about 4 to 7 */
 var PAINT_DEMO = { x3: { 'Left rear door': '11.8', 'Left quarter panel': '9.4' } };
 function paintDemo(panel) { var i = PAINT_PANELS.map(function (x) { return x.panel; }).indexOf(panel), v = (S.car && PAINT_DEMO[S.car] || {})[panel]; return v || (4.3 + ((i * 7) % 9) / 10).toFixed(1); }
+/* a reading on the 3.0 to 10+ scale: 10+ is stored as 10.1 */
+function milsTxt(v) { return parseFloat(v) > 10 ? '10+' : String(v); }
+function paintMissing(st) { return PAINT_PANELS.filter(function (x) { var r = st.paint[x.panel] || {}; return !r.na && (r.v === '' || r.v == null); }).map(function (x) { return x.panel; }); }
 function paintHigh(r) { return r && !r.na && r.v !== '' && r.v != null && parseFloat(r.v) >= PAINT_HIGH; }
 function paintWhere(highs) { return highs.map(function (h) { return h === 'Hood' ? 'Hood or frunk lid' : h; }).filter(function (h) { return EXTRA.ck_paint.opts.indexOf(h) >= 0; }); }
 function paintHighs(st) { return PAINT_PANELS.filter(function (x) { return paintHigh(st.paint[x.panel]); }).map(function (x) { return x.panel; }); }
@@ -1293,6 +1382,7 @@ var ZONES = {
   Interior: { t: 'Interior damages', panels: ['Dash', 'Infotainment screen', 'Steering wheel', 'Front seats', 'Rear seats', 'Carpet', 'Headliner', 'Door panels', 'Center console', 'Cargo area', 'Sunroof', 'Navigation', 'Power windows, locks or mirrors', 'Audio or cameras', 'Other'], types: ['Stain', 'Tear', 'Burn', 'Crack', 'Wear', 'Missing part', 'Not working', 'Other'] },
   Mechanicals: { t: 'Mechanical damages', panels: ['Engine bay', 'Underbody', 'Exhaust', 'Suspension', 'Brakes', '12 V battery', 'Other'], types: ['Leak', 'Rust', 'Damage', 'Missing part', 'Noise', 'Other'] }
 };
+ZONES.Underbody = { t: 'Underbody damages', panels: null, types: null, of: 'Mechanicals' };
 /* every order starts at the left front and goes round counter-clockwise (Tom 11-05 21:25) */
 var WHEELS = [['lf', 'LF', 'Left front'], ['lr', 'LR', 'Left rear'], ['rr', 'RR', 'Right rear'], ['rf', 'RF', 'Right front']];
 /* one whole tire photo per tire: brand and size are read from it; tread depth is picked */
@@ -1344,7 +1434,7 @@ var SHORT = {
   ph_obd_current: 'Current codes', ph_obd_past: 'Past codes', ph_obd_emission: 'Emission codes', ph_obd_other: 'Other images', ph_mod_ext: 'Modification', ph_mod_int: 'Modification', ph_mod_mech: 'Modification'
 };
 /* tool readings (upload in the list): camera, or a photo or screenshot from the library */
-var LIB = { paint: 1 }; ITEMS.forEach(function (it) { if (it.upload) LIB[it.id] = 1; });
+var LIB = { paint: 1, ph_family: 1 }; ITEMS.forEach(function (it) { if (it.upload) LIB[it.id] = 1; });
 /* slots that take several photos (multi in the list) */
 var MULTI = {}; ITEMS.forEach(function (it) { if (it.multi) MULTI[it.id] = 1; });
 /* paint meter photos are tagged with their panel */
@@ -1485,13 +1575,20 @@ function stepStatus(i, st) {
 /* a damage photo is one problem: when its place and problem already set a check row on the same page, that row counts it (walkthrough 11-06) */
 /* true when a labelled damage photo sets no check or feature: it is listed on its own; otherwise the check it set lists it */
 function dmgOwn(st, m) { var pl = placeOf(m.zone || 'Exterior', m.panel); if (!pl || !m.type || placeOpts(pl).indexOf(m.type) < 0) return true; pl = effPlace(pl, m.type); if (isStruct(pl, m.type)) return false; if (pl.feat) return false; return !pl.ck || !fuelOk((BYID[pl.ck] || {}).cars || 'all', st.fuel); }
-function dmgOwnProbs(st, k, ids) { return zoneDamages(st, k).filter(function (e) { var m = e[0], pl = placeOf(m.zone || 'Exterior', m.panel); if (!pl || !m.type || placeOpts(pl).indexOf(m.type) < 0) return true; pl = effPlace(pl, m.type); if (isStruct(pl, m.type)) return ids.indexOf('ck_structure') < 0; if (pl.ck && !fuelOk((BYID[pl.ck] || {}).cars || 'all', st.fuel)) return true; if (pl.feat) return k !== 'Interior'; return !pl.ck || ids.indexOf(pl.ck) < 0; }).length; }
-function zoneDamages(st, z) { var out = []; st.manual.forEach(function (m, i) { if ((m.zone || 'Exterior') === z) out.push([m, i]); }); return out; }
+function dmgOwnProbs(st, k, ids) { return pageDamages(st, k).filter(function (e) { var m = e[0], pl = placeOf(m.zone || 'Exterior', m.panel); if (!pl || !m.type || placeOpts(pl).indexOf(m.type) < 0) return true; pl = effPlace(pl, m.type); if (isStruct(pl, m.type)) return ids.indexOf('ck_structure') < 0; if (pl.ck && !fuelOk((BYID[pl.ck] || {}).cars || 'all', st.fuel)) return true; if (pl.feat) return k !== 'Interior'; return !pl.ck || ids.indexOf(pl.ck) < 0; }).length; }
+function zoneDamages(st, z) { var out = []; st.manual.forEach(function (m, i) { if (dtab(m) === z) out.push([m, i]); }); return out; }
+/* the tab a damage shows on: its zone, but a Mechanicals damage at an underbody place (or taken or added on Underbody) is on Underbody */
+function dtab(m) { var z = m.zone || 'Exterior'; if (z !== 'Mechanicals') return z; if (placeOf(z, m.panel)) return dmgSec(z, m.panel); return m.sec === 'Underbody' || m.tab === 'Underbody' ? 'Underbody' : 'Mechanicals'; }
 function labelled(m) {
   if (!(m && m.panel && m.type && m.sev)) return false;
   var pl = placeOf(m.zone || 'Exterior', m.panel);
-  return !!pl && placeOpts(pl).indexOf(m.type) >= 0 && (!pl.ex || !!m.ex);
+  return !!pl && placeOpts(pl).indexOf(m.type) >= 0 && (!pl.ex || !!m.ex) && (!needsSide(m) || !!m.side);
 }
+/* Exterior places on both sides of the car: the damage also keeps which one (side), picked on the car map */
+var SIDED = { Mirror: 1, Headlight: 1, 'Tail light': 1 };
+function needsSide(m) { return (m.zone || 'Exterior') === 'Exterior' && !!SIDED[m.panel]; }
+function placeSide(k) { var r = /^(Left|Right) (mirror|headlight|tail light)$/.exec(k); return r ? [r[2].charAt(0).toUpperCase() + r[2].slice(1), r[1]] : [k, null]; }
+function panelName(m) { return needsSide(m) && m.side ? m.side + ' ' + m.panel.toLowerCase() : m.panel || ''; }
 /* overall condition (S4): the inspector picks one on the Summary; same five options as the seller app */
 var OVERALL = (BYID.overall_condition && BYID.overall_condition.options) || ['Like new', 'Pretty great', 'Just okay', 'Kind of rough', 'Major issues'];
 /* features (Tom 11-05): a damage photo labelled Not working on a feature ticks that feature's problem on C14 Features */
@@ -1543,7 +1640,7 @@ function tmMissing(st) { return TMQ && !st.vals.tires_match ? 1 : 0; }
 function tmHTML(st) {
   if (!TMQ) return '';
   var v = st.vals.tires_match || '';
-  return rowBtn('data-chopen="tm"', 'All 4 tires match', v ? (v === 'Mismatch' ? I('alert', 15) : '') + esc(v) : '<span class="need">Pick</span>', v === 'Mismatch' ? 'a' : v ? 'set' : '');
+  return rowBtn('data-chopen="tm"', 'All 4 tires match', v ? (v === 'Mismatch' ? I('alert', 15) : '') + esc(v) : '<span class="need">Pick</span>', v === 'Mismatch' ? 'a' : v ? 'set' : '', v && st.vals.tm_auto ? 'Read from photo' : '');
 }
 
 
@@ -1578,6 +1675,7 @@ function toast(ic, a, b) { toastHTML = '<div class="toast" role="status">' + I(i
 /* ---------- render ---------- */
 var scr = document.getElementById('scr');
 function render() {
+  if (!S.cap) S.flashMode = null;
   if (S.car && S.cars[S.car]) { var dsc = syncDamages(S.cars[S.car]); if (dsc && dsc.n) save(); }
   document.getElementById('v-app').hidden = S.view !== 'app';
   document.getElementById('v-notes').hidden = S.view !== 'notes';
@@ -1588,13 +1686,14 @@ function render() {
   var keep = scr.querySelector('.body'), top = keep && keep.dataset.k === bodyKey() ? keep.scrollTop : 0;
   if (!S.online) body = body.replace('<div class="pad">', '<div class="pad"><div class="offl">' + I('upload', 16) + 'No signal. Everything is saved on this phone.</div>');
   var sb = S.online ? '<span class="sb-r"><i></i><i></i><i></i><em></em></span>' : '<span class="sb-r"><span class="sb-off">No service</span><em></em></span>';
-  scr.innerHTML = '<div class="sbar"><span>9:41</span>' + sb + '</div>' + body + toastHTML + sheetHTML() + choiceHTML() + capHTML() + ldrwHTML() + '<div class="home"></div>';
+  scr.innerHTML = '<div class="sbar"><span>9:41</span>' + sb + '</div>' + body + toastHTML + sheetHTML() + (S.cap ? '' : choiceHTML()) + capHTML() + (S.cap ? choiceHTML() : '') + ldrwHTML() + pviewHTML() + '<div class="home"></div>';
   var nb = scr.querySelector('.body'); if (nb) { nb.dataset.k = bodyKey(); nb.scrollTop = top; }
   scr.querySelectorAll('.sstrip').forEach(function (sx) { var cc = sx.querySelector('.cur'); sx.scrollLeft = cc ? Math.max(0, cc.offsetLeft - (sx.clientWidth - cc.offsetWidth) / 2) : (S.sxLeft || 0); });
   var dv = document.querySelector('.dev'); if (dv) dv.classList.toggle('land', !!S.cap && S.cap.mode !== 'dmgform');
   var capEl = scr.querySelector('.cap');
   if (capEl && !capEl.classList.contains('dform') && window.matchMedia('(max-width: 520px)').matches) { /* phone-width view: draw the camera sideways inside the upright screen */
-    var sw = scr.clientWidth, shh = scr.clientHeight; capEl.style.width = shh + 'px'; capEl.style.height = sw + 'px'; capEl.style.transform = 'translateX(' + sw + 'px) rotate(90deg)'; }
+    var sw = scr.clientWidth, shh = scr.clientHeight; capEl.style.width = shh + 'px'; capEl.style.height = sw + 'px'; capEl.style.transform = 'translateX(' + sw + 'px) rotate(90deg)';
+    var chEl = scr.querySelector('.cap ~ .ch-bg'); if (chEl) { chEl.style.inset = 'auto'; chEl.style.top = '0'; chEl.style.left = '0'; chEl.style.transformOrigin = '0 0'; chEl.style.width = shh + 'px'; chEl.style.height = sw + 'px'; chEl.style.transform = 'translateX(' + sw + 'px) rotate(90deg)'; } }
   renderSpec(); wireSig(); save(); capScroll(); if (S.cap) S.cap.flash = false;
 }
 function sheetHTML() {
@@ -1887,7 +1986,8 @@ function g2chassis(ev) {
   return h;
 }
 function g2under(zone) {
-  var Z = { lf: [[66, 116, 90, 48], 40, 214], lr: [[250, 116, 90, 48], 360, 214], rf: [[66, 62, 90, 48], 40, 12], rr: [[250, 62, 90, 48], 360, 12], front: [[50, 82, 52, 62], 12, 113], rear: [[300, 82, 50, 62], 388, 113] }[zone];
+  /* corner shots: one camera from that side of the car, in the gap beside the wheel (Tom 11-10 07:40) */
+  var Z = { lf: [[66, 116, 90, 48], 150, 214], lr: [[250, 116, 90, 48], 256, 214], rf: [[66, 62, 90, 48], 150, 12], rr: [[250, 62, 90, 48], 256, 12], front: [[50, 82, 52, 62], 12, 113], rear: [[300, 82, 50, 62], 388, 113] }[zone];
   var r = Z[0];
   return g2chassis(curFuel() === 'Electric (EV)') + '<rect class="hl" x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '" rx="10" stroke-dasharray="6 5"/>' + g2cam(Z[1], Z[2], r[0] + r[2] / 2, r[1] + r[3] / 2);
 }
@@ -2032,19 +2132,18 @@ function guideSVG(id, x, mini) {
 /* ---------- guided camera: every photo and video of a section in one pass ---------- */
 function capList(k, st) {
   if (k === 'start') { var sl = startPhotos().map(function (it) { return { id: it.id, it: it }; }); if (st.owner === 'Family, with proof') sl.push({ id: 'ph_family', it: { id: 'ph_family', kind: 'photo', label: 'Proof of family relationship' } }); return sl; }
-  if (k === 'Tires') {
-    var out = [];
-    /* tire by tire, one sidewall photo each */
-    WHEELS.forEach(function (w) { TIRE_SHOTS.forEach(function (p) {
-      out.push({ id: p, wheel: w[0], it: { id: p, kind: 'photo', label: w[2] + (p === 'tread_photo' ? ' tire: tread gauge' : ' tire: whole tire photo') } }); }); });
+  if (k === 'Tires') { var out = [];
+    /* the walk-around: paint panel by panel, each tire (whole tire, tread gauge) as it is reached, the trunk photo at the rear, hood, roof */
+    WALK.forEach(function (w) {
+      if (w[0] === 'p') { if ((st.paint[w[1]] || {}).na) return; var pp = PAINT_PANELS.filter(function (x) { return x.panel === w[1]; })[0]; out.push({ id: 'paint', panel: w[1], it: { id: 'paint', kind: 'photo', label: pp.side + ': ' + w[1] } }); }
+      else if (w[0] === 'w') { var wh = WHEELS.filter(function (x) { return x[0] === w[1]; })[0]; TIRE_SHOTS.forEach(function (p) { out.push({ id: p, wheel: wh[0], it: { id: p, kind: 'photo', label: wh[2] + (p === 'tread_photo' ? ' tire: tread gauge' : ' tire: whole tire photo') } }); }); }
+      else { var wi = BYID[w[1]]; if (wi && fuelOk(wi.cars, st.fuel)) out.push({ id: wi.id, it: wi }); }
+    });
     return out;
   }
-  /* Paint folded into the Exterior pass (Tom 11-07 06:34): 360 video, then one paint meter photo per panel on one walk round the car, then roof and windshield VIN; Paint has no pass of its own */
   if (k === 'Paint') return [];
   if (['review', 'sign'].indexOf(k) >= 0) return [];
-  var ml = stepItems(k, st).media.filter(function (it) { return it.id.indexOf('ph_mod_') !== 0; }).map(function (it) { return { id: it.id, it: it }; });
-  if (k === 'Exterior') { var vi = ml.map(function (x) { return x.id; }).indexOf('video_360') + 1; ml = ml.slice(0, vi).concat(paintSlots(st), ml.slice(vi)); }
-  return ml;
+  return (CAMLAYOUT[k] || []).map(function (id) { return BYID[id]; }).filter(function (it) { return it && fuelOk(it.cars, st.fuel); }).map(function (it) { return { id: it.id, it: it }; });
 }
 function paintSlots(st) { return PAINT_PANELS.filter(function (x) { return !(st.paint[x.panel] || {}).na; }).map(function (x) { return { id: 'paint', panel: x.panel, it: { id: 'paint', kind: 'photo', label: x.side + ': ' + x.panel } }; }); }
 /* the damage or mod photo picked in the strip (Tom 11-06 08:42: Delete removes it) */
@@ -2063,8 +2162,8 @@ function capHas(st, x) { if (x.panel) return !!(st.paint[x.panel] || {}).shot; v
 function capSkipped(st, x) { return !!(x.it.optional && st.skip && st.skip[x.id]) && !capHas(st, x); }
 function capOk(st, x) { return capHas(st, x) || capSkipped(st, x); }
 function capCount(st, k) { var l = capList(k, st); return [l.filter(function (x) { return capOk(st, x); }).length, l.length]; }
-/* Review pages keep their own sections: the paint meter photos are taken in the Exterior pass but shown on the Paint page; each entry keeps its camera section and index for a retake */
-function revList(k, st) { var ck = k === 'Paint' ? 'Exterior' : k, out = []; capList(ck, st).forEach(function (x, j) { if (ck === 'Exterior' && (x.id === 'paint') !== (k === 'Paint')) return; out.push({ x: x, ck: ck, ci: j }); }); return out; }
+/* Review pages keep their own sections: the paint meter photos are taken in the Walk-around but shown on the Paint page; each entry keeps its camera section and index for a retake */
+function revList(k, st) { var out = []; CAMRUN.forEach(function (ck) { capList(ck, st).forEach(function (x, j) { if (homeOf(x, ck) === k) out.push({ x: x, ck: ck, ci: j }); }); }); return out; }
 function revCount(st, k) { var l = revList(k, st); return [l.filter(function (e) { return capOk(st, e.x); }).length, l.length]; }
 function capNext(st, l, from) { for (var j = from; j < l.length; j++) if (!capOk(st, l[j])) return j; for (j = 0; j < from; j++) if (!capOk(st, l[j])) return j; return l.length; }
 function capButton(st, k) {
@@ -2073,9 +2172,12 @@ function capButton(st, k) {
   var sub = done ? 'Tap a tile below to retake one' : (vids ? vids + (vids > 1 ? ' videos, ' : ' video, ') : '') + (c[1] - vids) + ' photos, one after another';
   return '<button type="button" class="capgo' + (done ? ' done' : '') + '" data-cap="1"><span class="ci">' + I(done ? 'check' : 'camera', 24) + '</span><span><b>' + (done ? 'All taken' : c[0] ? 'Continue' : 'Start camera') + '</b><small>' + sub + '</small></span><span class="cn">' + c[0] + '/' + c[1] + '</span></button>';
 }
-var DZONE = { Exterior: 'Exterior', Paint: 'Paint', Tires: 'Tires', Interior: 'Interior', OBDII: 'Interior', Mechanicals: 'Mechanicals' };
-var MODSLOT = { Exterior: 'ph_mod_ext', Paint: 'ph_mod_ext', Tires: 'ph_mod_ext', Interior: 'ph_mod_int', OBDII: 'ph_mod_int', Mechanicals: 'ph_mod_mech' };
+var DZONE = { Exterior: 'Exterior', Paint: 'Paint', Tires: 'Tires', Interior: 'Interior', OBDII: 'Interior', Mechanicals: 'Mechanicals', Underbody: 'Mechanicals' };
+var MODSLOT = { Exterior: 'ph_mod_ext', Paint: 'ph_mod_ext', Tires: 'ph_mod_ext', Interior: 'ph_mod_int', OBDII: 'ph_mod_int', Mechanicals: 'ph_mod_mech', Underbody: 'ph_mod_mech' };
 var ZOOMS = [[0.5, '.5', 0.6], [1, '1', 1], [2, '2', 1.35]];
+/* flash: Auto when the camera opens; a tap goes Auto, On, Off */
+var FLASHES = ['auto', 'on', 'off'];
+function flashChip() { var f = S.flashMode || 'auto'; return '<button type="button" class="fls' + (f === 'on' ? ' on' : '') + '" data-cflash="1" aria-label="Flash ' + f + '">' + I(f === 'off' ? 'zapoff' : 'zap', 18) + (f === 'auto' ? '<b>A</b>' : '') + '</button>'; }
 function tagTiles(st, k, j) {
   var t = [], sl = S.cap && S.cap.sel;
   st.manual.forEach(function (m, i) { if (m.sec === k && m.at === j) t.push([m.n, '<button type="button" class="tgd' + (sl && sl.t === 'd' && sl.i === i ? ' cur' : '') + '" data-csel="d' + i + '" aria-label="Damage photo">' + I('alert', 18) + '</button>']); });
@@ -2086,8 +2188,34 @@ function modN(st, k) { return (st.multi[MODSLOT[k]] || []).filter(function (m) {
 function modWheel(st, m) { var x = capList('Tires', st)[m.at || 0]; return x ? x.wheel : null; }
 /* Review (Tom 11-06 18:22): Mod photos get their own Mods group under Damages, shown only when the section has some */
 function modRowsHTML(st, k, w) { var t = modTiles(st, k, w); return t ? '<div class="sub3">' + I('wrench', 15) + 'Mods</div><div class="shots mshots">' + t + '</div>' : ''; }
-function modTiles(st, k, w) { return (st.multi[MODSLOT[k]] || []).filter(function (m) { return m.sec === k && (!w || !modWheel(st, m) || modWheel(st, m) === w); }).map(function (m, q) { return '<span class="sh1 md"><span class="th">' + I('wrench', 18) + '</span><small>Mod ' + (q + 1) + '</small></span>'; }).join(''); }
-var GHOST = { Exterior: 'car', Paint: 'brush', Tires: 'tire', Mechanicals: 'wrench', Interior: 'seat', OBDII: 'scan', start: 'idcard' };
+function modTiles(st, k, w) { return (st.multi[MODSLOT[k]] || []).filter(function (m) { return (m.rs || m.sec) === k && (!w || !modWheel(st, m) || modWheel(st, m) === w); }).map(function (m, q) { return '<span class="sh1 md"><span class="th">' + I('wrench', 18) + '</span><small>Mod ' + (q + 1) + '</small></span>'; }).join(''); }
+/* Look for (Tom 11-10 00:23): a few words per shot at the top left of the camera; information only, nothing to tap or tick, nothing saved */
+var LOOK = {
+  ph_vin_dash: ['Clear photo', 'Full VIN visible'],
+  video_360: ['Move smoothly'],
+  ph_vin_door: ['VIN label', 'Jamb repaint', 'Spot welds'],
+  ph_odo: ['Warning lights', 'Total miles', 'Dash cracks'],
+  video_engine: ['Hard start', 'Knock', 'Rough idle', 'Smoke'],
+  ph_keys: ['All keys', 'Key works'],
+  ph_int_dash: ['Dash cracks', 'A/C cold', 'Heat', 'Warning lights'],
+  ph_int_screen: ['Screen', 'Audio', 'Cameras', 'Navigation'],
+  ph_int_front: ['Seats', 'Windows', 'Seat belts', 'Airbag covers'],
+  ph_int_rear: ['Seats', 'Windows', 'Odor', 'Flood signs'],
+  'Left front fender': ['Repaint', 'Fender bolts', 'Panel gaps', 'Dents'], 'Right front fender': ['Repaint', 'Fender bolts', 'Panel gaps', 'Dents'],
+  'Left front door': ['Frame damage', 'Repaint', 'A-pillar', 'Window'], 'Right front door': ['Frame damage', 'Repaint', 'A-pillar', 'Window'],
+  'Left rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'], 'Right rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'],
+  'Left quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'], 'Right quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'],
+  'Trunk or liftgate': ['Repaint', 'Tail lights', 'Panel gaps', 'Rear window'], 'Hood': ['Repaint', 'Hood bolts', 'Chips'], 'Roof': ['Repaint', 'Dents', 'Hail'],
+  tire_photo: ['Sidewall cracks', 'Bulge', 'Curb rash', 'Plug or patch'], tread_photo: ['Lowest groove', 'Uneven wear'],
+  ph_int_cargo: ['Trunk floor', 'Rails', 'Water', 'Spare tire'], ph_ext_roof: ['Dents', 'Hail', 'Sunroof'],
+  ph_obd_current: ['Engine codes'], ph_obd_past: ['Cleared codes'], ph_obd_emission: ['Not ready'], ph_obd_other: ['Airbag faults', 'ABS faults'],
+  ph_engine_bay: ['Aprons', 'Strut towers', 'Core support', 'Leaks'], ph_engine_oil: ['Sludge', 'Milky oil', 'Oil level'], ph_frunk: ['Coolant', 'Water', 'Damage'], ph_ev_port: ['Scorched pins', 'Latch'],
+  video_exhaust: ['Rev noise', 'Smoke', 'Reverse gear'],
+  ph_under_lf: ['Leaks', 'Rust', 'Frame rails', 'Kinks'], ph_under_lr: ['Leaks', 'Rust', 'Frame rails', 'Kinks'], ph_under_rr: ['Leaks', 'Rust', 'Frame rails', 'Kinks'], ph_under_rf: ['Leaks', 'Rust', 'Frame rails', 'Kinks'],
+  ph_under_rear: ['Rear rails', 'Exhaust', 'Leaks'], ph_under_front: ['Core support', 'Subframe', 'Leaks'], ph_under_cats: ['Missing converter', 'Cut pipe'], ph_under_pack: ['Scrapes', 'Dents', 'Bolts']
+};
+function lookHTML(x) { var l = x && (LOOK[x.panel] || LOOK[x.id]); return l ? '<div class="look" aria-label="Look for"><div class="hd">Look for</div>' + l.map(function (t) { return '<div class="li"><i></i>' + esc(t) + '</div>'; }).join('') + '</div>' : ''; }
+var GHOST = { Exterior: 'car', Paint: 'brush', Tires: 'tire', Mechanicals: 'wrench', Underbody: 'layers', Interior: 'seat', OBDII: 'scan', start: 'idcard' };
 function capHTML() {
   var cp = S.cap; if (!cp || !S.car) return '';
   var st = cur(), l = capList(cp.k, st), n = l.length;
@@ -2101,15 +2229,15 @@ function capHTML() {
       if (open) t += '<button type="button" class="cur" data-cjump="' + j + '" aria-label="' + esc(x.it.label) + ', photo ' + (m + 1) + '">' + guideSVG(x.id, null, true) + '</button>';
       return t;
     }
-    return '<button type="button" class="' + (has ? 'on' : sk ? 'skp' : '') + (j === cp.i && !cp.sel && !cp.free && !cp.ask ? ' cur' : '') + '"' + (has || sk || j === nextOpen || j === cp.i ? '' : ' disabled') + ' data-cjump="' + j + '" aria-label="' + esc(x.it.label) + (has ? ', taken' : sk ? ', skipped' : '') + '">' + (has ? I('check', 18) : sk ? '<span class="skm">–</span>' : guideSVG(x.id, x.panel ? { panel: x.panel } : null, true)) + '</button>'; }
-  var top = '<div class="ct">' + (capCanBack(st, cp) && !cp.single ? '<button type="button" data-cback="1" aria-label="Back to the last shot">' + I('left', 22) + '</button>' : cp.sum ? '<button type="button" data-csum="1" aria-label="Back to the summary">' + I('left', 22) + '</button>' : '<span style="width:40px"></span>') + '<div class="tt' + (cp.banner && cp.i < n ? ' nw' : '') + '">' + (cp.run && cp.k !== 'start' ? '<em>' + (CAMSEQ.indexOf(cp.k) + 1) + '/' + CAMSEQ.length + '</em>' : '') + esc(stTitle(cp.k)) + (cp.i < n && !cp.free && !cp.ask ? ' · ' + (cp.i + 1) + ' of ' + n : '') + '</div>' +
+    return '<button type="button" class="' + (has ? 'on' : sk ? 'skp' : '') + (j === cp.i && !cp.sel && !cp.free && !cp.ask ? ' cur' : '') + '"' + ((has || sk || j === nextOpen) && !cp.rec || j === cp.i ? '' : ' disabled') + ' data-cjump="' + j + '" aria-label="' + esc(x.it.label) + (has ? ', taken' : sk ? ', skipped' : '') + '">' + (has ? I('check', 18) : sk ? '<span class="skm">–</span>' : guideSVG(x.id, x.panel ? { panel: x.panel } : null, true)) + '</button>'; }
+  var top = '<div class="ct">' + (capCanBack(st, cp) && !cp.single && !cp.rec ? '<button type="button" data-cback="1" aria-label="Back to the last shot">' + I('left', 22) + '</button>' : cp.sum ? '<button type="button" data-csum="1" aria-label="Back to the summary">' + I('left', 22) + '</button>' : '<span style="width:40px"></span>') + '<div class="tt' + (cp.banner && cp.i < n ? ' nw' : '') + '">' + (cp.run && cp.k !== 'start' ? '<em>' + (CAMSEQ.indexOf(cp.k) + 1) + '/' + CAMSEQ.length + '</em>' : '') + esc(camTitle(cp.k)) + (cp.i < n && !cp.free && !cp.ask ? ' · ' + (cp.i + 1) + ' of ' + n : '') + '</div>' +
     (cp.free ? '<button type="button" class="sk nxt" data-cextnext="1">Next</button>' : '') + '<button type="button" data-cclose="1" aria-label="Close camera">' + I('x', 22) + '</button></div>';
   if (cp.mode === 'dmgform') return dmgForm(st, cp);
   if (cp.mode === 'dmg') {
     var nd = zoneDamages(st, cp.k).length, dn = nd + 1, ri = cp.redo != null ? zoneDamages(st, cp.k).map(function (e) { return e[1]; }).indexOf(cp.redo) : -1; if (ri >= 0) dn = ri + 1;
-    return '<div class="cap" role="dialog" aria-label="Camera"><div class="cm"><div class="ct"><button type="button" data-cdback="1" aria-label="Back">' + I('left', 22) + '</button><div class="tt">' + esc(ZONES[cp.k].t) + (nd ? ' · ' + nd + ' taken' : '') + '</div><span style="width:40px"></span></div>' +
+    return '<div class="cap" role="dialog" aria-label="Camera"><div class="cm"><div class="ct"><button type="button" data-cdback="1" aria-label="Back">' + I('left', 22) + '</button><div class="tt">' + esc(ZONES[cp.k].t) + (nd ? ' · ' + nd + ' taken' : '') + '</div>' + flashChip() + '</div>' +
       '<div class="vf"><i class="br a"></i><i class="br b"></i><i class="br c"></i><i class="br d"></i>' + (cp.k === 'Exterior' ? guideSVG('damage') : guideSVG('damage').replace(/<g class="coin">.*?<\/g>/, '')) + (cp.flash ? '<span class="flash"></span>' : '') +
-      '<div class="lbl"><b>Damage ' + dn + '</b><small>' + (cp.k === 'Exterior' ? 'One damage per photo, a coin next to it for size' : 'One damage per photo, fill the frame') + '</small></div></div>' +
+      '<div class="lbl"><b>Damage ' + dn + '</b><small>' + (ri >= 0 ? 'Tap the green shutter to retake it' : cp.k === 'Exterior' ? 'One damage per photo, a coin next to it for size' : 'One damage per photo, fill the frame') + '</small></div></div>' +
       '<div class="strip">' + zoneDamages(st, cp.k).map(function (e, j) { return '<button type="button" class="tgd' + (j === ri ? ' cur' : '') + '" tabindex="-1">' + I('alert', 18) + '</button>'; }).join('') + '</div></div>' +
       '<div class="cb"><div class="side">' + (cp.nolib ? '' : '<button type="button" data-cdup="1">' + I('upload', 20) + 'Upload</button>') + '</div><button type="button" class="sh" data-cdshot="1" aria-label="Take a damage photo"><i></i></button><div class="side">' + (nd && !cp.sum ? '<button type="button" class="nx" data-cdsave="1">' + I('check', 20) + (cp.run ? 'Next' : 'Done') + '</button>' : '') + '</div></div></div>';
   }
@@ -2129,7 +2257,7 @@ function capHTML() {
     if (ZONES[cp.k]) {
       var zd = zoneDamages(st, cp.k).length;
       return '<div class="cap" role="dialog" aria-label="Camera"><div class="cm">' + top + '<div class="fin">' +
-        '<div class="fin2"><span class="big' + (miss ? ' a' : '') + '">' + I(miss ? 'alert' : 'check', 30) + '</span><span><b>' + (miss ? miss + ' still to take' : (skc ? 'All done' : 'All ' + n + ' taken')) + '</b><small>' + got + ' of ' + n + ' done in ' + esc(stTitle(cp.k)) + skt + (zd ? ' · ' + zd + (zd > 1 ? ' damage photos' : ' damage photo') : '') + (modN(st, cp.k) ? ' · ' + modN(st, cp.k) + ' mod' : '') + '</small></span></div>' +
+        '<div class="fin2"><span class="big' + (miss ? ' a' : '') + '">' + I(miss ? 'alert' : 'check', 30) + '</span><span><b>' + (miss ? miss + ' still to take' : (skc ? 'All done' : 'All ' + n + ' taken')) + '</b><small>' + got + ' of ' + n + ' done in ' + esc(camTitle(cp.k)) + skt + (zd ? ' · ' + zd + (zd > 1 ? ' damage photos' : ' damage photo') : '') + (modN(st, cp.k) ? ' · ' + modN(st, cp.k) + ' mod' : '') + '</small></span></div>' +
         '<div class="row">' + (cp.run ? '<button type="button" class="ok" data-cnextsec="1">' + nextLabel(st, cp.k) + '</button>' : '<button type="button" class="ok" data-cclose="1">Done</button>') + '</div>' +
         (miss ? '<button type="button" class="tk" data-cjump="' + capNext(st, l, 0) + '">Take the rest</button>' : '') + '</div>' + strip + '</div></div>';
     }
@@ -2139,7 +2267,7 @@ function capHTML() {
         '<div class="q">Another ' + esc((MULTI_PLUS[cp.prev] || 'photo').toLowerCase()) + '?</div>' +
         '<div class="row"><button type="button" class="dm" data-cplus="1">' + I('plus', 18) + 'One more</button>' + (cp.run ? '<button type="button" class="ok" data-cnextsec="1">' + nextLabel(st, cp.k) + '</button>' : '<button type="button" class="ok" data-cclose="1">Done</button>') + '</div></div>' + strip + '</div></div>';
     }
-    return '<div class="cap" role="dialog" aria-label="Camera"><div class="cm">' + top + '<div class="fin"><span class="big' + (miss ? ' a' : '') + '">' + I(miss ? 'alert' : 'check', 40) + '</span><b>' + (miss ? miss + ' still to take' : (skc ? 'All done' : 'All ' + n + ' taken')) + '</b><small>' + got + ' of ' + n + ' done in ' + esc(stTitle(cp.k)) + skt + '</small>' +
+    return '<div class="cap" role="dialog" aria-label="Camera"><div class="cm">' + top + '<div class="fin"><span class="big' + (miss ? ' a' : '') + '">' + I(miss ? 'alert' : 'check', 40) + '</span><b>' + (miss ? miss + ' still to take' : (skc ? 'All done' : 'All ' + n + ' taken')) + '</b><small>' + got + ' of ' + n + ' done in ' + esc(camTitle(cp.k)) + skt + '</small>' +
       '<div class="row">' + (miss ? '<button type="button" data-cjump="' + capNext(st, l, 0) + '">Take the rest</button>' : '') + (cp.run ? '<button type="button" class="ok" data-cnextsec="1">' + nextLabel(st, cp.k) + '</button>' : '<button type="button" class="ok" data-cclose="1">Done</button>') + '</div></div>' + strip + '</div></div>';
   }
   var x = l[cp.i], it = x.it, vid = it.kind === 'video', multi = MULTI[x.id], lib = LIB[x.id], arr = multi ? (st.multi[x.id] || []) : [], rv = capHas(st, x);
@@ -2152,12 +2280,12 @@ function capHTML() {
   var hint = x.panel ? x.it.label.split(':')[0] + ' · meter on the panel, reading in view' : multi ? (PANEL_TAG[x.id] ? 'Next: ' + nextPanel(st, x.id) + (arr.length ? ' · ' + arr.length + ' taken' : '') : (MULTI_HINT[x.id] || 'Several photos') + (arr.length ? ' · ' + arr.length + ' taken' : '') + '. More than one? Tap +1 after the shot.') : vid ? (x.id === 'video_360' ? 'Start at the left front corner, walk down the left side and all the way round, engine off' : 'Up to ' + VMAX[x.id] + ' seconds') : '';
   if (!hint && x.id === 'ph_engine_oil') hint = 'No dipstick? Take the oil level screen.';
   if (it.optional && !rv) hint = 'Optional. ' + (hint || 'Skip it if you cannot get to it.');
-  if (rv) hint = multi ? arr.length + ' taken. The shutter retakes photo ' + arr.length + '.' : vid ? 'Taken. Record again to replace it.' : 'Taken. The shutter retakes it.';
+  if (rv) hint = multi ? arr.length + ' taken. Tap the green shutter to retake photo ' + arr.length + '.' : vid ? 'Taken. Record again to replace it.' : 'Taken. Tap the green shutter to retake it.';
   if (!hint && x.id === 'ph_ext_roof') hint = 'Hold the phone up high, the whole roof in view.';
   if (ms) hint = (MULTI_HINT[x.id] || 'One photo each') + '. ' + (arr.length ? arr.length + ' taken. Take another, or tap Done.' : 'Take as many as you need, then tap Done.') + (it.optional && !arr.length ? ' Optional.' : '');
-  var tagOk = cp.k !== 'start' && !cp.single && !!DZONE[cp.k], tagOff = cp.k === 'OBDII' || vid ? ' disabled' : '', zf = S.zoom || 1, zs = ZOOMS.filter(function (z) { return z[0] === zf; })[0][2];
-  var zoomHTML = cp.k !== 'start' ? '<div class="zm">' + ZOOMS.map(function (z) { return '<button type="button" class="' + (z[0] === zf ? 'on' : '') + '" data-czoom="' + z[0] + '" aria-label="Zoom ' + z[1] + 'x" aria-pressed="' + (z[0] === zf) + '">' + z[1] + (z[0] === zf ? '×' : '') + '</button>'; }).join('') + '</div>' : '';
-  if (sel) { lbl = sel.lbl; hint = ''; }
+  var tagOk = cp.k !== 'start' && !cp.single && !!DZONE[cp.k], tagOff = !cp.free && ((x && homeOf(x, cp.k) === 'OBDII') || vid) ? ' disabled' : '', zf = S.zoom || 1, zs = ZOOMS.filter(function (z) { return z[0] === zf; })[0][2];
+  var zoomHTML = cp.k !== 'start' ? '<div class="zm">' + (vid ? '' : flashChip()) + ZOOMS.map(function (z) { return '<button type="button" class="' + (z[0] === zf ? 'on' : '') + '" data-czoom="' + z[0] + '" aria-label="Zoom ' + z[1] + 'x" aria-pressed="' + (z[0] === zf) + '"' + (cp.rec && (z[0] === 0.5) !== (zf === 0.5) ? ' disabled' : '') + '>' + z[1] + (z[0] === zf ? '×' : '') + '</button>'; }).join('') + '</div>' : '';
+  if (sel) { lbl = sel.lbl; hint = 'Delete it, or tap the green shutter to retake it.'; }
   var tagPill = sel ? '<span class="tkn ' + (sel.t === 'd' ? 'dm' : 'md') + '">' + I(sel.t === 'd' ? 'alert' : 'wrench', 14) + sel.lbl + '</span>' : cp.tag && cp.tag[2] === cp.i ? '<span class="tkn ' + (cp.tag[0] === 'dmg' ? 'dm' : 'md') + '">' + I(cp.tag[0] === 'dmg' ? 'alert' : 'wrench', 14) + (cp.tag[0] === 'dmg' ? 'Damage ' : 'Mod ') + cp.tag[1] + '</span>' : '';
   var rec = tagPill ? tagPill : vid && cp.rec ? '<span class="rec" id="caprec">● ' + recTime() + '</span>' : rv ? '<span class="tkn">' + I('check', 14) + 'Taken</span>' : ms && arr.length ? '<span class="tkn">' + I('check', 14) + arr.length + ' taken</span>' : '';
   var left = lib ? '<button type="button" data-cup="1">' + I('upload', 20) + 'Upload</button>' : '';
@@ -2165,15 +2293,15 @@ function capHTML() {
   var fr = cp.free || cp.ask; if (fr) { rv = false; ms = false; left = ''; if (!sel) { rec = cp.tag && cp.tag[2] === cp.i ? tagPill : ''; } }
   var right = sel ? delBtn : fr ? '' : ms ? (arr.length ? '<button type="button" class="nx" data-cmdone="1" aria-label="Done, ' + arr.length + ' photos">' + I('check', 20) + 'Done · ' + arr.length + '</button>' : '') : rv && !cp.rec ? delBtn : '';
   return '<div class="cap" role="dialog" aria-label="Camera"><div class="cm">' + top +
-    '<div class="vf' + (rv || sel ? ' tkv' : '') + (sel ? ' sl' : '') + '"><i class="br a"></i><i class="br b"></i><i class="br c"></i><i class="br d"></i>' + (fr && !sel ? '' : '<div class="gcol"><div class="gwr">' + (sel ? '<span class="phx">' + I('camera', 56) + '</span>' : '') + guideSVG(x.id, x).replace('<svg class="gd"', '<svg class="gd" style="transform:scale(' + zs + ')"') + '</div>' +
+    '<div class="vf' + (rv || sel ? ' tkv' : '') + (sel ? ' sl' : '') + '"><i class="br a"></i><i class="br b"></i><i class="br c"></i><i class="br d"></i>' + (fr || sel || cp.k === 'start' ? '' : lookHTML(x)) + (fr && !sel ? '' : '<div class="gcol"><div class="gwr">' + (sel || rv && !vid ? '<span class="phx">' + I('camera', 56) + '</span>' : '') + guideSVG(x.id, x).replace('<svg class="gd"', '<svg class="gd" style="transform:scale(' + zs + ')"') + '</div>' +
     '<div class="lbl"><b>' + esc(lbl) + '</b>' + (cp.note ? '<small class="okn">' + I('check', 13) + esc(cp.note) + '</small>' : hint ? '<small>' + esc(hint) + '</small>' : '') +
     (sel ? '' : x.panel && !rv ? '<button type="button" class="na" data-cna="1">Not on this car</button>' : ms && arr.length ? '<button type="button" class="na" data-cmundo="1">' + I('trash', 13) + 'Remove photo ' + arr.length + '</button>' : it.optional && !rv && !cp.rec ? '<button type="button" class="na" data-cskip="1">Skip, optional</button>' : '') + '</div></div>') + rec + zoomHTML + (cp.flash ? '<span class="flash"></span>' : '') + '</div>' + strip + '</div>' +
-    '<div class="cb' + (tagOk ? ' tg' : '') + '"><div class="side">' + left + '</div>' + (tagOk ? '<button type="button" class="ts tdm" data-ctag="dmg" aria-label="Damage photo"' + tagOff + '><i>' + I('alert', 24) + '</i>Damage</button>' : '') + (fr ? '' : '<button type="button" class="sh' + (vid ? ' v' + (cp.rec ? ' on' : '') : '') + (rv && !cp.rec ? ' rt' : '') + '" data-cshot="1" aria-label="' + (vid ? (cp.rec ? 'Stop recording' : rv ? 'Record again' : 'Record') : rv ? 'Retake photo' : 'Take photo') + '"><i></i></button>') + (tagOk ? '<button type="button" class="ts tmd" data-ctag="mod" aria-label="Modification photo"' + tagOff + '><i>' + I('wrench', 24) + '</i>Mod</button>' : '') + '<div class="side">' + right + '</div></div>' +
-    (cp.ask ? '<div class="ask" role="alertdialog" aria-label="Exterior damage"><div class="askc"><p>Please record any exterior damage/modification images before proceeding.</p><div class="row"><button type="button" data-cextno="1">I\'m done</button><button type="button" class="ok" data-cextrec="1">Record damage now</button></div></div></div>' : '') + '</div>';
+    '<div class="cb' + (tagOk ? ' tg' : '') + '"><div class="side">' + left + '</div>' + (tagOk ? '<button type="button" class="ts tdm" data-ctag="dmg" aria-label="Damage photo"' + tagOff + '><i>' + I('alert', 24) + '</i>Damage</button>' : '') + (fr && !sel ? '' : '<button type="button" class="sh' + (vid && !sel ? ' v' + (cp.rec ? ' on' : '') : '') + ((rv || sel) && !cp.rec ? ' rt' : '') + '" data-cshot="1" aria-label="' + (sel ? 'Retake photo' : vid ? (cp.rec ? 'Stop recording' : rv ? 'Record again' : 'Record') : rv ? 'Retake photo' : 'Take photo') + '"><i></i></button>') + (tagOk ? '<button type="button" class="ts tmd" data-ctag="mod" aria-label="Modification photo"' + tagOff + '><i>' + I('wrench', 24) + '</i>Mod</button>' : '') + '<div class="side">' + right + '</div></div>' +
+    (cp.ask ? askHTML(st, cp.k) : '') + '</div>';
 }
 /* Damages step (Tom 11-05 08:43): after the camera, every damage photo is labelled section by section: where, type, severity; then Review, then Summary */
 var DMG_SEV = (QL.damage_places && QL.damage_places.severity) || ['Minor', 'Moderate', 'Severe'];
-var DZ = ['Exterior', 'Tires', 'Paint', 'Interior', 'Mechanicals'];
+var DZ = ['Exterior', 'Tires', 'Paint', 'Interior', 'Mechanicals', 'Underbody'];
 /* Where picker (Tom 11-06 09:27): pictures first, then icon tiles; long sections split into two tabs */
 var PAINT_MAP = [['Left front fender', 'LF fender', 'lff'], ['Hood or frunk lid', 'Hood', 'hd'], ['Right front fender', 'RF fender', 'rff'], ['Left front door', 'LF door', 'lfd'], ['Roof', 'Roof', 'rf'], ['Right front door', 'RF door', 'rfd'], ['Left rear door', 'LR door', 'lrd'], ['Right rear door', 'RR door', 'rrd'], ['Left quarter panel', 'L quarter', 'lq'], ['Trunk or liftgate', 'Trunk', 'tr'], ['Right quarter panel', 'R quarter', 'rq']];
 var CAB_MAP = [['Steering wheel', 'Steering wheel', 'sw', 'steer'], ['Dash', 'Dash', 'dash'], ['Front seats', 'Front seat', 'fs1', 'seat'], ['Center console', 'Console', 'cc'], ['Front seats', 'Front seat', 'fs2', 'seat'], ['Rear seats', 'Rear seats', 'rs', 'seat'], ['Door panels', 'Door panel', 'dl'], ['Door panels', 'Door panel', 'dr'], ['Cargo area', 'Cargo area', 'cg']];
@@ -2226,12 +2354,12 @@ function carDefs(cp) {
 function carShape(c, cp) { return '<path class="pf ' + c[3] + '" d="' + c[2] + '" clip-path="url(#' + cp + ')"/>' + (c[6] ? '<path class="' + (c[3] === 'lz' ? 'lamp' + (c[0] === 'Tail light' ? ' tl' : '') : 'crease') + '" d="' + c[6] + '"/>' : ''); }
 function carTop() { return '<path d="' + CAR_SIL + '" class="shade"/><path d="' + CAR_SIL + '" class="sil"/>'; }
 function carSvg(i, m, have) {
-  var cp = 'cs' + i, sel = m.panel, hit = function (r) { return r ? '<rect class="hit" x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '"/>' : ''; };
+  var cp = 'cs' + i, sel = panelName(m), hit = function (r) { return r ? '<rect class="hit" x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '"/>' : ''; };
   var parts = CAR_SVG.filter(function (c) { return have[c[0]]; }), mirrors = have.Mirror ? CAR_MIRRORS : [];
   return '<svg viewBox="-10 -14 380 488" role="group" aria-label="Car, top view">' + carDefs(cp) +
-    mirrors.map(function (q) { return mapSp(i, sel, 'Mirror', hit(q[1]) + '<path class="pf mr" d="' + q[2] + '"/>' + carPill(q[3]), q[0]); }).join('') +
+    mirrors.map(function (q) { return mapSp(i, sel, q[0], hit(q[1]) + '<path class="pf mr" d="' + q[2] + '"/>' + carPill(q[3]), q[0]); }).join('') +
     '<path d="' + CAR_SIL + '" class="seam"/>' +
-    parts.map(function (c) { return mapSp(i, sel, c[0], hit(c[4]) + carShape(c, cp) + (c[5] ? carPill(c[5]) : ''), c[1]); }).join('') + carTop() + '</svg>'; /* no lines from the names to the parts (Tom 11-07 01:26) */
+    parts.map(function (c) { return mapSp(i, sel, SIDED[c[0]] ? c[1] : c[0], hit(c[4]) + carShape(c, cp) + (c[5] ? carPill(c[5]) : ''), c[1]); }).join('') + carTop() + '</svg>'; /* no lines from the names to the parts (Tom 11-07 01:26) */
 }
 /* Tires (Tom 11-07 01:18): the same car with the four wheels drawn on it; tire and wheel are separate places, each with its name */
 function tireSvg(i, m) {
@@ -2243,9 +2371,10 @@ function tireSvg(i, m) {
       mapSp(i, sel, n + ' wheel', '<circle class="rm" cx="' + x + '" cy="' + y + '" r="24"/><path class="sk" d="' + [0, 72, 144, 216, 288].map(function (d) { var a = d * Math.PI / 180; return 'M' + x + ' ' + y + 'L' + (x + 19 * Math.sin(a)).toFixed(1) + ' ' + (y - 19 * Math.cos(a)).toFixed(1); }).join('') + '"/>' + pillAt(px, y + 26, 50, 28, ['Wheel'])); }).join('');
   return h + '</svg>'; /* no lines from the names (Tom 11-07 01:27) */
 }
-function mapCap(m, pool) { return '<div class="mcap">' + (m.panel && pool.indexOf(m.panel) >= 0 ? esc(m.panel) : '') + '</div>'; }
+function mapCap(m, pool) { return '<div class="mcap">' + (m.panel && pool.indexOf(m.panel) >= 0 ? esc(panelName(m)) : '') + '</div>'; }
 function whereHTML(st, i, m, z) {
-  var gs = whereGroups(z), wt = S.wtab && S.wtab[i] != null && gs[S.wtab[i]] ? S.wtab[i] : groupOf(gs, z, m.panel), g = gs[wt], h = '';
+  var gs = whereGroups(z), ug = !m.panel && dtab(m) === 'Underbody' ? gs.map(function (x) { return x.t; }).indexOf('Underbody') : -1;
+  var wt = S.wtab && S.wtab[i] != null && gs[S.wtab[i]] ? S.wtab[i] : ug >= 0 ? ug : groupOf(gs, z, m.panel), g = gs[wt], h = '';
   function pr(o) { return ' data-lset="panel" data-di="' + i + '" data-o="' + esc(o) + '" aria-pressed="' + (m.panel === o) + '"'; }
   function tile(p) { return '<button type="button" class="wt"' + pr(p) + '>' + I(WICON[p] || 'more', 22) + '<span>' + esc(WLBL[p] || p) + '</span></button>'; }
   if (gs.length > 1) h += '<div class="wtabs" role="tablist">' + gs.map(function (x, j) { return '<button type="button" role="tab" data-wtab="' + j + '" data-di="' + i + '" aria-selected="' + (j === wt) + '">' + esc(x.t) + '</button>'; }).join('') + '</div>';
@@ -2268,6 +2397,7 @@ function isStruct(pl, t) { return !!(pl && pl.st && t === STRUCT_T); }
 if (!DPLACES.Paint && BYID.ck_paint) DPLACES.Paint = EXTRA.ck_paint.opts.map(function (p) { return { p: p, ck: 'ck_paint', opts: BYID.ck_paint.options.slice(), w: null, feat: null, exo: [p], exl: EXTRA.ck_paint.label, ex: 1, fix: true, types: null }; });
 Object.keys(DPLACES).forEach(function (z) { DPLACES[z].forEach(function (x) { if (x.ex && x.exo && x.exo.length === 1) x.fix = true; }); });
 Object.keys(DPLACES).forEach(function (z) { if (ZONES[z]) ZONES[z].panels = DPLACES[z].map(function (x) { return x.p; }); });
+ZONES.Underbody.panels = ZONES.Mechanicals.panels; ZONES.Underbody.types = ZONES.Mechanicals.types;
 /* Paint in the Exterior pass (Tom 11-07 06:34): an Exterior damage photo at a body panel also offers that panel's paint problems (overspray, gaps, bolts, wrap);
    picked, the photo answers Paint and panels for that panel and is stored as a Paint damage at the Paint place (Hood = Hood or frunk lid) */
 (DPLACES.Exterior || []).forEach(function (x) { var tw = placeOf('Paint', x.p === 'Hood' ? 'Hood or frunk lid' : x.p); if (tw && !x.ck && !x.feat) x.tw = tw; });
@@ -2296,11 +2426,12 @@ function dshort(m) {
   for (var i = 0; i < cands.length; i++) { var c = cands[i]; if (c.length > 2 && t.toLowerCase().indexOf(c + ' ') === 0) { var r = t.slice(c.length + 1); if (!/^(or|and)\b/.test(r)) return r.charAt(0).toUpperCase() + r.slice(1); } }
   return t;
 }
-function dmgLine(m) { return m.panel + ': ' + dshort(m) + (m.ex && m.ex !== m.panel ? ' (' + m.ex.toLowerCase() + ')' : '') + ', ' + m.sev + (m.size ? ', ' + m.size + ' in' : ''); }
+function dmgLine(m) { var ex = m.ex || (needsSide(m) ? m.side || '' : ''); return m.panel + ': ' + dshort(m) + (ex && ex !== m.panel ? ' (' + ex.toLowerCase() + ')' : '') + ', ' + m.sev + (m.size ? ', ' + m.size + ' in' : ''); }
 /* picking a place: the type must belong to it; one choice is picked for you */
 function setLabel(m, f, v) {
   m.ai = false;
   if (f !== 'panel') { m[f] = v; return; }
+  var ps = placeSide(v); if (ps[1]) m.side = ps[1]; else if (!(SIDED[ps[0]] && m.panel === ps[0])) delete m.side; v = ps[0];
   if (WHEEL_PLACE.test(v)) m.zone = 'Tires';
   if (m.panel === v) return;
   m.panel = v;
@@ -2342,6 +2473,7 @@ var AI_PLACE = { ph_ext_roof: 'Roof', ph_vin_dash: 'Windshield', ph_int_dash: 'D
   ph_under_cats: 'Exhaust', ph_under_pack: 'Battery pack', ph_under_front: 'Structure', ph_under_rear: 'Structure', ph_under_lf: 'Suspension', ph_under_rf: 'Suspension', ph_under_lr: 'Rust', ph_under_rr: 'Rust' };
 function aiLabel(st, m) {
   var z = m.zone || 'Exterior', ok = placesFor(z), p = '', l = m.sec ? capList(m.sec, st) : [], shot = l[Math.min(m.at || 0, l.length - 1)];
+  if (z === 'Mechanicals') { var ub = dtab(m) === 'Underbody'; ok = ok.filter(function (q) { return underPlace(q.p) === ub; }); }
   if (shot) { if (shot.panel) p = shot.panel; else if (shot.wheel) p = wheelName(shot.wheel) + ' tire'; else p = AI_PLACE[shot.id] || ''; }
   var pl = ok.filter(function (q) { return q.p === p; })[0] || ok.filter(function (q) { return p && q.p.indexOf(p + ' ') === 0; })[0] || ok[0]; if (!pl) return;
   var ts = placeOpts(pl);
@@ -2352,6 +2484,8 @@ function aiLabel(st, m) {
 function atWheel(m, w) { if (!w || (m.zone || '') !== 'Tires') return; var pl = placeOf('Tires', wheelName(w) + ' tire'); if (!pl) return; m.panel = pl.p; var ts = placeOpts(pl); if (ts.indexOf(m.type) < 0) m.type = ts[0] || ''; }
 /* labelled and, if the AI filled it, confirmed by the inspector */
 function dmgDone(m) { return labelled(m) && !m.ai; }
+/* a damage added on a tab: the zone that holds the tab's places; Underbody is kept as its tab */
+function newDmg(k, src, n) { var m = { zone: DZONE[k] || k, panel: '', type: '', sev: '', size: '', shot: true, src: src, n: n }; if (k === 'Underbody') m.tab = k; return m; }
 /* keeps the checks in step with the photos: adds what a photo says, and takes back only what it added itself when the photo is relabelled or removed */
 function syncDamages(st) {
   if (!st || !st.manual || !st.probs) return null;
@@ -2386,22 +2520,28 @@ function dmgToast(st, ch) {
 }
 function labelOrder(st) { var o = []; DZ.forEach(function (z) { zoneDamages(st, z).forEach(function (e) { o.push(e[1]); }); }); return o; }
 function unlabelledOrder(st) { return labelOrder(st).filter(function (i) { return !dmgDone(st.manual[i]); }); }
-function nextUnlabelled(st, from) { var o = labelOrder(st), p = o.indexOf(from); for (var j = 1; j <= o.length; j++) { var i = o[(p + j + o.length) % o.length]; if (!dmgDone(st.manual[i])) return i; } return -1; }
+function nextUnlabelled(st, from) { var o = labelOrder(st), p = o.indexOf(from), z = st.manual[from] ? dtab(st.manual[from]) : null; for (var j = 1; j <= o.length; j++) { var i = o[(p + j + o.length) % o.length]; if (!dmgDone(st.manual[i]) && dtab(st.manual[i]) === z) return i; } var u = unlabelledOrder(st); return u.length ? u[0] : -1; }
+/* while a page (or tab) is unfinished, the ones after it are shut */
+function openTo(done, cur) { var f = done.indexOf(false); return f < 0 ? done.length - 1 : f > cur ? f : cur; }
+/* Damages: the tabs that have photos, how far they are open, and how many photos the pages run to */
+function labelOpen(st, m) { var zs = DZ.filter(function (z) { return zoneDamages(st, z).length; }), open = openTo(zs.map(function (z) { return zoneDamages(st, z).every(function (e) { return dmgDone(e[0]); }); }), zs.indexOf(dtab(m))), n = 0;
+  for (var k = 0; k <= open; k++) n += zoneDamages(st, zs[k]).length; return { zs: zs, open: open, count: n }; }
 function afterCapture(st) { S.capRet = null; S.cap = null; var u = unlabelledOrder(st); if (u.length) { st.phase = 'label'; st.li = u[0]; } else toSummary(st); }
 function dmgText(m) { return dmgLine(m); }
 function labelBody(st, i, sw) {
   var m = st.manual[i]; if (!m) return '';
-  var z = m.zone || 'Exterior', Z = ZONES[z], zl = zoneDamages(st, z), n = zl.map(function (e) { return e[1]; }).indexOf(i) + 1;
+  var z = m.zone || 'Exterior', tb = dtab(m), Z = ZONES[z], zl = zoneDamages(st, tb), n = zl.map(function (e) { return e[1]; }).indexOf(i) + 1;
   function b(f, o, txt, area, cls) { return '<button type="button" class="' + (cls || 'lp') + '" data-lset="' + f + '" data-di="' + i + '" data-o="' + esc(o) + '" aria-pressed="' + (m[f] === o) + '"' + (area ? ' style="grid-area:' + area + '"' : '') + '>' + esc(txt || o) + '</button>'; }
-  var o = sw ? labelOrder(st) : [], pos = o.indexOf(i);
-  var arr = sw ? '<button type="button" class="lar l" data-lgo="' + (pos > 0 ? o[pos - 1] : '') + '" data-ldir="l" aria-label="Previous photo"' + (pos > 0 ? '' : ' hidden') + '>' + I('left', 20) + '</button><button type="button" class="lar r" data-lgo="' + (pos < o.length - 1 ? o[pos + 1] : '') + '" data-ldir="r" aria-label="Next photo"' + (pos < o.length - 1 ? '' : ' hidden') + '>' + I('right', 20) + '</button>' : '';
-  var h = '<div class="lph' + (sw && S.swipeIn ? ' in-' + S.swipeIn : '') + '"' + (sw ? ' data-swipe="1"' : '') + '><span class="th">' + I(m.src === 'library' ? 'upload' : 'camera', 30) + '</span><em>' + esc(stTitle(z)) + ' · ' + n + ' of ' + zl.length + '</em>' + (m.ai ? '<span class="aib">' + I('sparkles', 13) + 'AI</span>' : '') + '<span class="lpa"><button type="button" data-lretake="' + i + '" aria-label="Retake">' + I('camera', 18) + '</button><button type="button" data-ldel="' + i + '" aria-label="Remove">' + I('trash', 18) + '</button></span>' + arr + '</div>';
+  var o = sw ? labelOrder(st) : [], pos = o.indexOf(i), cnt = sw ? labelOpen(st, m).count : 0;
+  var arr = sw && pos < cnt - 1 ? '<button type="button" class="lar r" data-lgo="' + o[pos + 1] + '" data-ldir="r" aria-label="Next photo">' + I('right', 20) + '</button>' : '';
+  var h = '<div class="lph"><span class="th">' + I(m.src === 'library' ? 'upload' : 'camera', 30) + '</span><em>' + esc(stTitle(tb)) + ' · ' + n + ' of ' + zl.length + '</em>' + (m.ai ? '<span class="aib">' + I('sparkles', 13) + 'AI</span>' : '') + '<span class="lpa"><button type="button" data-lretake="' + i + '" aria-label="Retake">' + I('camera', 18) + '</button><button type="button" data-ldel="' + i + '" aria-label="Remove">' + I('trash', 18) + '</button></span>' + arr + '</div>';
   var pl = placeOf(z, m.panel);
   h += '<div class="sub2">Where</div>';
   h += whereHTML(st, i, m, z);
   if (pl) { var nd = '<span class="need">Pick</span>';
     h += '<div class="card ldsum"><div class="rlist">' + (pl.ex && !pl.fix ? rowBtn('data-ldrw="' + i + '"', pl.exl || 'Where', m.ex ? esc(m.ex) : nd, m.ex ? 'set' : '') : '') +
-      rowBtn('data-ldrw="' + i + '"', 'Type', m.type ? esc(dshort(m)) : nd, m.type ? 'set' : '') + rowBtn('data-ldrw="' + i + '"', 'Severity', m.sev ? esc(m.sev) + (m.size ? ' · ' + esc(m.size) + ' in' : '') : nd, m.sev ? 'set' : '') + '</div></div>'; }
+      rowBtn('data-ldrw="' + i + '"', 'Type', m.type ? esc(dshort(m)) : nd, m.type ? 'set' : '') + rowBtn('data-ldrw="' + i + '"', 'Severity', m.sev ? esc(m.sev) + (m.size && z === 'Exterior' ? ' · ' + esc(m.size) + ' in' : '') : nd, m.sev ? 'set' : '') + '</div></div>'; }
+  if (sw && pos > 0) h += '<button type="button" class="lprev" data-lgo="' + o[pos - 1] + '" data-ldir="l">' + I('left', 16) + 'Previous photo</button>';
   return h;
 }
 /* Type and severity (Tom 11-06 08:04): a drawer that opens when a place is tapped */
@@ -2410,13 +2550,13 @@ function ldrwHTML() {
   var st = cur(), m = st.manual[d.i]; if (!m || (S.cap ? S.cap.di !== d.i : st.phase !== 'label' || st.li !== d.i)) { S.ldrw = null; return ''; }
   var pl = placeOf(m.zone || 'Exterior', m.panel); if (!pl) return '';
   function rb(f, o, txt) { return '<button type="button" role="radio" class="cho ca" data-lset="' + f + '" data-di="' + d.i + '" data-o="' + esc(o) + '" aria-checked="' + (m[f] === o) + '"><span>' + esc(txt || o) + '</span><i class="rd"></i></button>'; }
-  var h = '';
+  var h = '', ext = (m.zone || 'Exterior') === 'Exterior';
   if (pl.ex && !pl.fix) h += '<div class="sub2">' + esc(pl.exl || 'Where') + '</div><div class="chl" role="radiogroup">' + pl.exo.map(function (o) { return rb('ex', o); }).join('') + '</div>';
   h += '<div class="sub2">Type</div><div class="chl" role="radiogroup">' + placeOpts(pl).map(function (t) { return rb('type', t, dshort({ panel: m.panel, type: t })); }).join('') + '</div>';
-  h += '<div class="sub2">Severity</div><div class="lsev">' + DMG_SEV.map(function (v) { return '<button type="button" class="lp" data-lset="sev" data-di="' + d.i + '" data-o="' + v + '" aria-pressed="' + (m.sev === v) + '">' + v + '</button>'; }).join('') +
-    '<button type="button" class="pkb lsz" data-pk="dsize" data-w="' + d.i + '"><small>Size</small><b class="' + (m.size ? '' : 'ph') + '">' + (m.size ? esc(m.size) + ' in' : 'Optional') + '</b></button></div>';
-  return '<div class="sheet-bg ld-bg" data-ldbg="1"><div class="sheet ch ld" role="dialog" aria-label="' + esc(m.panel) + '"><div class="chh"><span><b>' + esc(m.panel) + '</b></span></div><div class="ldb">' + h + '</div>' +
-    '<button type="button" class="ok" data-ldok="1"' + (labelled(m) ? '' : ' disabled') + '>Done</button></div></div>';
+  var f = '<div class="sub2">Severity</div><div class="lsev' + (ext ? '' : ' n3') + '">' + DMG_SEV.map(function (v) { return '<button type="button" class="lp" data-lset="sev" data-di="' + d.i + '" data-o="' + v + '" aria-pressed="' + (m.sev === v) + '">' + v + '</button>'; }).join('') +
+    (ext ? '<button type="button" class="pkb lsz" data-pk="dsize" data-w="' + d.i + '" aria-pressed="' + !!m.size + '"><small>Size</small><b class="' + (m.size ? '' : 'ph') + '">' + (m.size ? esc(m.size) + ' in' : 'Optional') + '</b></button>' : '') + '</div>';
+  return '<div class="sheet-bg ld-bg" data-ldbg="1"><div class="sheet ch ld" role="dialog" aria-label="' + esc(panelName(m)) + '"><div class="chh"><span><b>' + esc(panelName(m)) + '</b></span></div><div class="ldb">' + h + '</div>' +
+    '<div class="ldf">' + f + '<button type="button" class="ok" data-ldok="1"' + (labelled(m) ? '' : ' disabled') + '>Done</button></div></div></div>';
 }
 /* after Done or Confirm on the Damages step: the next photo still to label or confirm */
 function ldNext(st) { if (st.phase !== 'label' || S.cap) return; var nx = nextUnlabelled(st, st.li); if (nx >= 0 && nx !== st.li) { st.li = nx; S.swipeIn = 'r'; } }
@@ -2425,11 +2565,12 @@ function viewLabel() {
   if (!o.length) { toSummary(st); return viewSummary(); }
   if (o.indexOf(st.li) < 0) { var u0 = unlabelledOrder(st); st.li = u0.length ? u0[0] : o[0]; }
   var i = st.li, m = st.manual[i], left = unlabelledOrder(st).length, ok = dmgDone(m), guess = labelled(m) && m.ai;
-  var strip = '<nav class="sstrip" aria-label="Damage sections">' + DZ.filter(function (z) { return zoneDamages(st, z).length; }).map(function (z) { var zl = zoneDamages(st, z), done = zl.filter(function (e) { return dmgDone(e[0]); }).length, on = (m.zone || 'Exterior') === z;
-    return '<button type="button" class="' + (on ? 'cur' : '') + (done === zl.length ? ' ok' : '') + '" data-lgo="' + zl[0][1] + '"' + (on ? ' aria-current="step"' : '') + '>' + (done === zl.length ? I('check', 13) : '') + esc(stTitle(z)) + ' ' + done + '/' + zl.length + '</button>'; }).join('') + '</nav>';
+  var lo = labelOpen(st, m), tb = dtab(m);
+  var strip = '<nav class="sstrip" aria-label="Damage sections">' + lo.zs.map(function (z, k) { var zl = zoneDamages(st, z), done = zl.filter(function (e) { return dmgDone(e[0]); }).length, on = tb === z;
+    return '<button type="button" class="' + (on ? 'cur' : '') + (done === zl.length ? ' ok' : '') + '" data-lgo="' + zl[0][1] + '"' + (on ? ' aria-current="step"' : '') + (k <= lo.open ? '' : ' disabled') + '>' + esc(stTitle(z)) + ' ' + done + '/' + zl.length + '</button>'; }).join('') + '</nav>';
   var foot = '<div class="lnav">' + (guess ? '<button type="button" class="pbtn green" data-lconf="' + i + '">' + I('check', 18) + 'Confirm</button>' :
     left ? '<button type="button" class="pbtn' + (ok ? ' green' : '') + '" data-lnext="1"' + (ok ? '' : ' disabled') + '>' + (ok ? 'Next photo' + I('right', 18) : left + ' to label') + '</button>' : '<button type="button" class="pbtn green" data-toreview="1">Next: Review' + I('right', 18) + '</button>') + '</div>';
-  var lbh = labelBody(st, i, true); delete S.swipeIn;
+  var lbh = '<div class="lpg' + (S.swipeIn ? ' in-' + S.swipeIn : '') + '" data-swipe="1">' + labelBody(st, i, true) + '</div>'; delete S.swipeIn;
   return header(st) + '<div class="body"><div class="pad lab">' + strip + lbh + '</div></div><div class="ff">' + foot + '</div>';
 }
 function dmgForm(st, cp) {
@@ -2441,7 +2582,7 @@ var MULTI_PLUS = { ph_obd_other: 'Image', ph_under_pack: 'Pack photo', ph_mod_ex
 var MULTI_HINT = { ph_scan: 'One photo per scan screen', ph_ev_battery: 'One photo per battery screen', ph_ev_charging: 'One photo per charging screen', ph_ev_alerts: 'One photo per alert screen' };
 /* +1: one more photo for the multi-photo slot just taken (another scan page, another converter), without stopping the pass */
 function plusBtn(st, cp) { var pv = cp.prev; if (!pv || !MULTI[pv] || cp.rec) return ''; var n = (st.multi[pv] || []).length; return '<button type="button" class="pl1" data-cplus="1" aria-label="One more photo: ' + esc(MULTI_PLUS[pv] || SHORT[pv]) + ', ' + n + ' taken">' + I('plus', 18) + '<span>' + esc(MULTI_PLUS[pv] || 'Another') + '</span><em>' + n + '</em></button>'; }
-function nextLabel(st, k) { var nk = nextSection(st, k); return nk ? 'Next: ' + stTitle(nk) : st.manual.length ? 'Next: Damages' : 'Next: Review'; }
+function nextLabel(st, k) { var nk = nextSection(st, k); return nk ? 'Next: ' + camTitle(nk) : st.manual.length ? 'Next: Damages' : 'Next: Review'; }
 /* video length limits (Tom 11-06 18:46): walk-around 60 s, engine sound and exhaust 30 s; recording stops by itself at the limit */
 var VMAX = { video_360: 60, video_engine: 30, video_exhaust: 30 };
 function recMax() { var cp = S.cap, st = S.car && cur(), x = cp && st ? capList(cp.k, st)[cp.i] : null; return x && VMAX[x.id] || 0; }
@@ -2456,8 +2597,10 @@ function capMark(st, x, src) {
 /* the app reads these from the photos; the inspector can correct them on Review */
 function autoRead(st, id, wheel) {
   if (id === 'tread_photo' && wheel) { var tg = st.tires[wheel]; if (tg.tread === '' || tg.treadAuto) { tg.tread = TREAD_DEMO[wheel] || '6'; tg.treadAuto = true; } }
-  if (id === 'tire_photo' && wheel) { var t = st.tires[wheel], r = tireRead(t), dm = TIRE_DEMO[wheel]; if (!r.brand && !r.size) { r.brand = dm[0]; r.size = dm[1]; r.auto = true; } }
-  if (id === 'ph_vin_door') st.vals.vin_scan = 1;
+  if (id === 'tire_photo' && wheel) { var t = st.tires[wheel], r = tireRead(t), dm = TIRE_DEMO[wheel]; if (!r.brand && !r.size) { r.brand = dm[0]; r.size = dm[1]; r.model = dm[3] || dm[0]; r.auto = true; }
+    /* AI: all 4 tires match = same brand and same model on the 4 whole-tire photos (Tom 11-10 07:26); the inspector can change it */
+    var rd = WHEELS.map(function (w) { return tireRead(st.tires[w[0]]); }); if (TMQ && (!st.vals.tires_match || st.vals.tm_auto) && rd.every(function (x) { return x.brand; })) { st.vals.tires_match = rd.every(function (x) { return x.brand === rd[0].brand && (x.model || x.brand) === (rd[0].model || rd[0].brand); }) ? 'Match' : 'Mismatch'; st.vals.tm_auto = 1; } }
+  if (id === 'ph_vin_door') { st.vals.vin_scan = 1; if (!vinCheck((st.vals.vin_read || '').toUpperCase()) && vinCheck(car().vin)) { st.vals.vin_read = car().vin; st.vals.idconf = false; } }
   if (id === 'ph_vin_dash' && !st.vals.vin_read) { st.vals.vin_read = car().vin; st.vals.idconf = false; }
   if (id === 'ph_keys' && st.vals.keys_n == null) { st.vals.keys_n = String(car().keys != null ? car().keys : 2); st.vals.keys_auto = 1; keysSync(st); }
   if (id === 'ph_odo' && !st.vals.odo_read) { st.vals.odo_read = String(car().miles + 85); st.vals.idconf = false; }
@@ -2472,7 +2615,7 @@ function inspectionPayload(st) {
   function pn(p) { return p === 'Hood' ? 'Hood or frunk lid' : p; }
   function fname(e) { return [e.question_id, e.wheel, e.panel, e.n].filter(function (x) { return x; }).join('-').toLowerCase().replace(/[^a-z0-9_]+/g, '-') + '.jpg'; }
   function put(e) { if (!e.skipped) { e.file = fname(e); e.upright_turn_deg = 0; } photos.push(e); }
-  CAPSEQ.forEach(function (k) { capList(k, st).forEach(function (x) {
+  CAMRUN.forEach(function (k) { capList(k, st).forEach(function (x) { /* camera passes: each shot once (OBDII shots sit in Interior) */
     var id = x.id, has = capHas(st, x), e = { section: photoSec(k, id), question_id: id };
     if (/^video_/.test(id)) return;
     if (x.wheel) e.wheel = x.wheel; if (x.panel) e.panel = pn(x.panel);
@@ -2493,9 +2636,9 @@ function inspectionPayload(st) {
       if (it.id === 'ck_scan' && st.codes) e.codes = st.codes;
       checks.push(e); }); });
   var damages = [];
-  st.manual.forEach(function (m, j) { var pl0 = placeOf(m.zone || 'Exterior', m.panel), tw = twinOf(pl0, m.type), pl = tw || pl0, d = { n: j + 1, section: tw ? 'Paint' : dmgSec(m.zone, m.panel), place: tw ? tw.p : m.panel || '', type: m.type || '', severity: m.sev || '', size_in: m.size ? +m.size : null, source: src(m.src), taken_in: m.sec || '' };
+  st.manual.forEach(function (m, j) { var pl0 = placeOf(m.zone || 'Exterior', m.panel), tw = twinOf(pl0, m.type), pl = tw || pl0, d = { n: j + 1, section: tw ? 'Paint' : dmgSec(m.zone, m.panel), place: tw ? tw.p : m.panel || '', type: m.type || '', severity: m.sev || '', size_in: m.size && (m.zone || 'Exterior') === 'Exterior' ? +m.size : null, source: src(m.src), taken_in: m.sec || '' };
     d.file = 'damage-' + (j + 1) + '.jpg'; d.upright_turn_deg = 0;
-    if (m.ex) d.where = m.ex; if (tw) d.where = tw.exo[0];
+    if (m.ex) d.where = m.ex; else if (!tw && needsSide(m) && m.side) d.where = m.side; if (tw) d.where = tw.exo[0];
     if (pl && m.type) { if (isStruct(pl, m.type)) { d.check_id = 'ck_structure'; d.check_option = pl.st; } else if (pl.ck) { d.check_id = pl.ck; d.check_option = m.type; } else if (pl.feat) { d.feature = pl.feat; d.feature_answer = 'Not working'; } }
     d.ai_first_guess = m.aiWas || null; d.confirmed = dmgDone(m);
     damages.push(d); });
@@ -2506,7 +2649,7 @@ function inspectionPayload(st) {
     vehicle: { vin_listing: c.vin, vin_read: st.vals.vin_read || null, vin_door_jamb_read: !!st.vals.vin_scan, mileage_listing: c.miles, mileage_read: st.vals.odo_read ? +st.vals.odo_read : null, vin_mileage_confirmed: !!st.vals.idconf, keys_count: st.vals.keys_n != null ? +st.vals.keys_n : null, keys_count_read_from_photo: !!st.vals.keys_auto, fuel: fuel, ev_battery_health_pct: st.vals.ev_soh ? +st.vals.ev_soh : null },
     owner_check: st.owner, documents: { license: 'seller upload', registration: 'seller upload', family_proof: st.owner === 'Family, with proof' ? 'photo' : null },
     photos: photos, videos: ['video_360', 'video_engine', 'video_exhaust'].filter(function (id) { return st.shots[id]; }).map(function (id) { return { question_id: id, file: id + '.mp4', max_seconds: VMAX[id] }; }), spin_frames: st.shots.video_360 ? 36 : 0,
-    checks: checks, tires: tires, tires_match: st.vals.tires_match || null, paint: paint,
+    checks: checks, tires: tires, tires_match: st.vals.tires_match || null, tires_match_read_from_photo: !!(st.vals.tires_match && st.vals.tm_auto), paint: paint,
     features: { sunroof: featOf(st).sunroof || null, navigation: featOf(st).navigation || null },
     damages: damages, overall_condition: st.overall || null, inspector_note: st.note || '',
     signature: { seller_name: st.signName || '', agreed: !!st.agree, signed: st.status === 'done' }
@@ -2516,9 +2659,29 @@ function capAdvance(st) {
   var l = capList(S.cap.k, st); S.cap.i = capNext(st, l, S.cap.i + 1); S.cap.rec = false; S.cap.recAt = 0; S.cap.banner = false;
   if (S.cap.run && S.cap.i >= l.length && !S.cap.prev && (S.cap.k !== 'start' || (st.owner && st.owner !== 'No'))) capEnd(st);
 }
-/* end of a section in the camera pass. Exterior (Tom 11-07 06:31): after its last shot (windshield VIN) a dialog asks for exterior damage and mod photos first;
-   I'm done (Tom 07:11) moves on, Record damage now stays on the Exterior camera with the Damage and Mod shutters and a Next button at the top right */
-function capEnd(st) { if (S.cap.k === 'Exterior') { S.cap.i = capList('Exterior', st).length - 1; S.cap.ask = 'ext'; S.cap.free = false; return; } capGoNext(st); }
+var ASKQ = { Interior: 1, Tires: 1, Mechanicals: 1, Underbody: 1 };
+/* Mechanicals questions asked at the end of other camera sections instead (Tom 11-10 07:20): Brakes after the walk-around, leaks (also kept in Mechanicals, Tom 07:21), exhaust, suspension and CV after Underbody; transmission only after Interior. Review keeps them on Mechanicals. */
+var ASKMOVE = { Tires: ['ck_brakes'], Underbody: ['ck_leaks', 'ck_exhaust', 'ck_susp', 'ck_cv'] }, ASKOUT = { ck_trans: 1, ck_brakes: 1, ck_exhaust: 1, ck_susp: 1, ck_cv: 1 };
+/* end of a camera section (Tom 11-10): that section's Review questions, every one OK until the inspector taps it (same drawer as Review), then Record damage or Next. Interior also asks the OBDII questions and Transmission and clutch.
+   The walk-around asks Exterior, Paint and each wheel's tire and wheel, then All 4 tires match. */
+function askRows(st, k) {
+  var g = function (t) { return '<div class="aqh">' + esc(t) + '</div>'; };
+  var mx = function (ids) { var l = ids.map(function (id) { return BYID[id]; }).filter(function (it) { return it && fuelOk(it.cars, st.fuel); }); return l.length ? g('Mechanicals') + '<div class="rlist">' + checkRows(l, st) + '</div>' : ''; };
+  if (k === 'Tires') return g('Exterior') + '<div class="rlist">' + checkRows(stepItems('Exterior', st).checks, st) + '</div>' + mx(ASKMOVE.Tires) + g('Paint') + '<div class="rlist">' + checkRows([BYID.ck_paint], st) + '</div>' +
+    WHEELS.map(function (w) { var t = st.tires[w[0]], dk = ' data-w="' + w[0] + '"';
+      return g(w[2]) + '<div class="rlist">' + [['ck_tire', 'Tire'], ['ck_wheel', 'Wheel']].map(function (q) { var v = ckVal(BYID[q[0]], st, t); return rowBtn('data-chopen="ck" data-id="' + q[0] + '"' + dk, q[1], v.val, v.cls, v.sub); }).join('') + '</div>'; }).join('') +
+    '<div class="rlist aqm">' + tmHTML(st) + '</div>';
+  var tr = k === 'Interior' && fuelOk(BYID.ck_trans.cars, st.fuel) ? g('Mechanicals') + '<div class="rlist">' + checkRows([BYID.ck_trans], st) + '</div>' : ''; /* transmission asked after the first drive-off check in Interior too (Tom 11-10 07:00) */
+  var ob = k === 'Interior' && stepItems('OBDII', st).checks.length ? g('OBDII') + '<div class="rlist">' + checkRows(stepItems('OBDII', st).checks, st) + '</div>' : ''; /* OBDII is shot inside Interior (Tom 11-10 07:14) */
+  var own = stepItems(k, st).checks.filter(function (it) { return !ASKOUT[it.id]; });
+  return '<div class="rlist">' + (k === 'Interior' ? featHTML(st) : '') + checkRows(own, st) + '</div>' + ob + tr + (ASKMOVE[k] ? mx(ASKMOVE[k]) : '');
+}
+function askHTML(st, k) {
+  var s0 = STEPS[stepIdx(k)], dm = k !== 'OBDII';
+  return '<div class="ask" role="alertdialog" aria-label="' + esc(camTitle(k)) + '"><div class="askc askq"><h4>' + I(k === 'Tires' ? 'car' : s0.ic, 20) + esc(camTitle(k)) + '</h4><div class="aql">' + askRows(st, k) + '</div>' +
+    '<div class="row">' + (dm ? '<button type="button" data-cextrec="1">' + I('alert', 18) + 'Record damage</button>' : '') + '<button type="button" class="ok" data-cextno="1">' + esc(nextLabel(st, k)) + '</button></div></div></div>';
+}
+function capEnd(st) { var k = S.cap.k; if (ASKQ[k]) { S.cap.i = capList(k, st).length - 1; S.cap.ask = k; S.cap.free = false; return; } capGoNext(st); }
 function capScroll() { var s = document.getElementById('capstrip'), c = s && s.querySelector('.cur'); if (c) s.scrollLeft = c.offsetLeft - s.clientWidth / 2 + 23; else if (s && S.cap && (S.cap.free || S.cap.ask)) s.scrollLeft = s.scrollWidth; }
 function checkRow(it, st, t, wk) {
   var cs = checkState(st, it, t), open = (t ? t.open : st.open)[it.id], probs = cs.probs, lv = worstLevel(it, probs);
@@ -2593,7 +2756,7 @@ function viewStep() {
   } else if (k === 'review') {
     st.seen.review = true;
     var tot = totals(st), plist = problemsList(st);
-    h += '<div class="sumrow"><div><b>' + tot.photos + '/' + tot.photosNeed + '</b>Photos</div><div><b>' + tot.videos + '/' + tot.videosNeed + '</b>Videos</div><div><b>' + (plist.length + tot.damages) + '</b>Problems</div><div><b>' + st.manual.length + '</b>Damage photos</div></div>';
+    h += '<div class="sumrow"><div><b>' + tot.photos + '/' + tot.photosNeed + '</b>Photos</div><div><b>' + tot.videos + '/' + tot.videosNeed + '</b>Videos</div><div><b>' + (plist.length + tot.damages) + '</b>Problems</div><div><b>' + st.manual.length + '</b>Damages</div></div>';
     h += fullList(st);
     h += visitCard(st);
     h += idNumCard(st);
@@ -2603,7 +2766,7 @@ function viewStep() {
   } else if (k === 'sign') {
     var pl = problemsList(st), tt2 = totals(st);
     h += '<div class="card"><h3>' + I('car', 18) + esc(c.ymmt) + '</h3><div class="stmt">Inspection findings</div>' +
-      ((pl.length + tt2.dlist.length) ? '<div class="fl">' + pl.map(function (p) { return '<div>' + I('alert', 16, 'muted') + '<span>' + esc(p.text) + '<small>' + esc(p.where) + '</small></span></div>'; }).join('') + tt2.dlist.map(function (d) { return '<div>' + I('alert', 16, 'muted') + '<span>' + esc(d) + '</span></div>'; }).join('') + '</div>' : '<div class="muted">Nothing found.</div>') +
+      ((pl.length + tt2.dlist.length) ? findingsBySec(st).map(function (g) { return '<div class="fsh">' + esc(stTitle(g.k)) + '</div><div class="fl">' + g.p.map(function (p) { var wi = whereIn(g.k, p.where); return '<div>' + I('alert', 16, 'muted') + '<span>' + esc(p.text) + (wi ? '<small>' + esc(wi) + '</small>' : '') + '</span></div>'; }).join('') + g.d.map(function (e) { return '<div>' + I('alert', 16, 'muted') + '<span>' + esc(dmgLine(e[0])) + '</span></div>'; }).join('') + '</div>'; }).join('') : '<div class="muted">Nothing found.</div>') +
       '<div class="muted" style="font-size:13px">' + (tt2.photos + tt2.extra) + ' photos and ' + tt2.videos + ' videos taken.</div></div>';
     h += '<div class="card disc"><h3>' + I('file', 18) + 'Disclosure</h3><ul>' +
       '<li>This inspection records the condition of the vehicle that our inspector could see and test today, at your location. The vehicle was not lifted or taken apart.</li>' +
@@ -2637,10 +2800,10 @@ function viewCapture() {
   h += '<div class="card capov"><span class="big">' + I(open ? 'camera' : 'check', 30) + '</span><h2>' + (open ? 'Photos and videos' : 'All photos and videos are in') + '</h2>' +
     '<div class="bar"><i style="width:' + (tot ? Math.round(got / tot * 100) : 0) + '%"></i></div><small>' + got + ' of ' + tot + ' taken</small></div>';
   h += '<div class="card secl">' + CAMRUN.map(function (k) { var c = capCount(st, k), done = secDone(st, k), zd = ZONES[k] ? zoneDamages(st, k).length : 0;
-    return '<div class="' + (done ? 'ok' : k === open ? 'cur' : '') + '">' + I(STEPS[stepIdx(k)].ic, 18) + '<span>' + esc(stTitle(k)) + '<small>' + (c[1] ? c[0] + ' of ' + c[1] : '') + (zd ? ' · ' + zd + (zd > 1 ? ' damage photos' : ' damage photo') : '') + (k === 'start' ? (c[1] ? ' · ' : '') + (st.owner ? 'Owner: ' + esc(st.owner) : 'Owner question') : '') + '</small></span>' + (done ? I('check', 16) : k === open ? '<em>Next</em>' : '') + '</div>'; }).join('') + '</div>';
+    return '<div class="' + (done ? 'ok' : k === open ? 'cur' : '') + '">' + I(STEPS[stepIdx(k)].ic, 18) + '<span>' + esc(camTitle(k)) + '<small>' + (c[1] ? c[0] + ' of ' + c[1] : '') + (zd ? ' · ' + zd + (zd > 1 ? ' damage photos' : ' damage photo') : '') + (k === 'start' ? (c[1] ? ' · ' : '') + (st.owner ? 'Owner: ' + esc(st.owner) : 'Owner question') : '') + '</small></span>' + (done ? I('check', 16) : k === open ? '<em>Next</em>' : '') + '</div>'; }).join('') + '</div>';
   h += visitCard(st);
   var foot = st.owner === 'No' ? '<button type="button" class="pbtn red" data-end="1">' + I('ban', 20) + 'End the visit</button>'
-    : open ? '<button type="button" class="pbtn green" data-run="1">' + I('camera', 20) + (got ? 'Continue: ' + stTitle(open) : 'Open the camera') + '</button>'
+    : open ? '<button type="button" class="pbtn green" data-run="1">' + I('camera', 20) + (got ? 'Continue: ' + camTitle(open) : 'Open the camera') + '</button>'
     : '<button type="button" class="pbtn green" data-tosum="1">' + (st.manual.length ? 'Next: Damages' : 'Next: Review') + I('chev', 18) + '</button>';
   return header(st) + '<div class="body"><div class="pad">' + h + '</div></div><div class="ff">' + foot + '</div>';
 }
@@ -2649,6 +2812,7 @@ function viewCapture() {
 var CHIP_LABEL = { ck_road: 'Road test (if needed)', ck_srs: 'Seat belts, airbags', ck_hv: 'High voltage, frunk' };
 /* Review (Tom 11-06 05:42): one column, one answer per question; a tap opens a drawer with the options */
 function rowBtn(attrs, label, val, cls, sub) {
+  if (String(val).indexOf('class="need"') >= 0) cls = (cls ? cls + ' ' : '') + 'nf';
   return '<button type="button" class="rw' + (cls ? ' ' + cls : '') + '" ' + attrs + '><span class="rt"><b>' + esc(label) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</span><span class="rvl">' + val + '</span>' + I('chev', 16) + '</button>';
 }
 function ckVal(it, st, t) {
@@ -2676,8 +2840,8 @@ function carEnds() { return '<i class="pend pfb" aria-hidden="true"><i></i>' + m
 function paintCar(st) {
   return '<div class="pcar" role="group" aria-label="Paint readings, mils">' + ['wlf', 'wrf', 'wlr', 'wrr'].map(function (a) { return '<i class="pwh" style="grid-area:' + a + '"></i>'; }).join('') + carEnds() +
     PCAR.map(function (p) { var r = st.paint[p[0]] || {}, hi = paintHigh(r), has = r.v !== '' && r.v != null;
-      var cls = r.na ? ' na' : hi ? ' hi' : !r.shot && !has ? ' ms' : '';
-      return '<button type="button" class="pcl p-' + p[1] + cls + '" style="grid-area:' + p[1] + '" data-chopen="paint" data-id="' + esc(p[0]) + '" aria-label="' + esc(p[0]) + ': ' + (r.na ? 'not on this car' : has ? esc(r.v) + ' mils' : 'no reading') + '"><b>' + (r.na ? 'N/A' : has ? esc(r.v) : '–') + '</b><small>' + p[2] + '</small></button>'; }).join('') + '</div>';
+      var cls = r.na ? ' na' : hi ? ' hi' : !has ? ' ms' : '';
+      return '<button type="button" class="pcl p-' + p[1] + cls + '" style="grid-area:' + p[1] + '" data-chopen="paint" data-id="' + esc(p[0]) + '" aria-label="' + esc(p[0]) + ': ' + (r.na ? 'not on this car' : has ? esc(r.v) + ' mils' : 'no reading') + '"><b>' + (r.na ? 'N/A' : has ? esc(milsTxt(r.v)) : '–') + '</b><small>' + p[2] + '</small></button>'; }).join('') + '</div>';
 }
 function wheelName(w) { var x = WHEELS.filter(function (y) { return y[0] === w; })[0]; return x ? x[2] : ''; }
 var PAINT_OPT = 'Panel repainted (the meter reads high)';
@@ -2700,7 +2864,10 @@ function choiceHTML() {
   else if (ch.k === 'ovr') { title = 'Overall condition'; list = OVERALL.map(function (o, i) { return [o, o, i === 4 ? 'cr' : i === 3 ? 'ca' : 'cg']; }); sel = [st.overall]; }
   else if (ch.k === 'tm') { title = 'All 4 tires match'; list = TMQ.options.map(function (o, i) { return [o, o, i === 1 ? 'ca' : 'cg']; }); sel = [st.vals.tires_match]; }
   else if (ch.k === 'owner') { var ow = BYID.id_owner; title = ow.label; sub = 'Registered owner: ' + car().owner.name; list = ow.options.map(function (o) { return [o, o, o === 'No' ? 'cr' : 'cg']; }); sel = [st.owner]; }
-  else if (ch.k === 'paint') { var r = st.paint[ch.id] || {}; title = ch.id; body = '<label class="chnum"><input class="chin" id="pvin" data-pval="' + esc(ch.id) + '" inputmode="decimal" maxlength="4" autocomplete="off" value="' + esc(r.na ? '' : r.v || '') + '"' + (r.na ? ' disabled' : '') + ' aria-label="' + esc(ch.id) + ', mils"><span>mils</span></label>'; foot = '<button type="button" class="ok" data-chx="1">Done</button><button type="button" data-chna="1" aria-pressed="' + !!r.na + '">' + (r.na ? 'On this car' : 'Not on this car') + '</button>'; }
+  else if (ch.k === 'paint') { var r = st.paint[ch.id] || {}; title = ch.id; if (ch.x == null) ch.x = Math.min(10.1, Math.max(3, parseFloat(r.v) || 5)); var ov = ch.x > 10;
+    body = '<div class="mils"><button type="button" class="mst" data-pstep="-1" aria-label="Less"' + (ch.x <= 3 ? ' disabled' : '') + '>' + I('minus', 22) + '</button><b id="pvshow">' + milsTxt(ch.x.toFixed(1)) + ' mils</b><button type="button" class="mst" data-pstep="1" aria-label="More"' + (ov ? ' disabled' : '') + '>' + I('plus', 22) + '</button></div>' +
+      '<input type="range" class="mrange" id="pvin" min="3" max="10.1" step="0.1" value="' + ch.x + '" data-prange="1" aria-label="' + esc(ch.id) + ', mils"><div class="mends"><span>3.0</span><span>10+</span></div>';
+    foot = '<button type="button" class="ok" data-pdone="1">Done</button><button type="button" data-chna="1" aria-pressed="' + !!r.na + '">' + (r.na ? 'On this car' : 'Not on this car') + '</button>'; }
   else if (ch.k === 'vin' || ch.k === 'odo') { var vv = ch.k === 'vin'; title = vv ? 'VIN' : 'Mileage'; body = vv ? '<input class="chin vin" id="vinr" data-idv="vin_read" maxlength="17" autocapitalize="characters" autocomplete="off" spellcheck="false" value="' + esc(st.vals.vin_read || '') + '" aria-label="VIN">' : '<label class="chnum"><input class="chin" id="odor" data-idv="odo_read" inputmode="numeric" maxlength="7" autocomplete="off" value="' + esc(st.vals.odo_read || '') + '" aria-label="Mileage"><span>mi</span></label>'; foot = '<button type="button" class="ok" data-chx="1">Done</button>'; }
   var rows = list ? '<div class="chl" role="radiogroup" aria-label="' + esc(title) + '">' + list.map(function (o) { var on = sel.indexOf(o[0]) >= 0;
     return '<button type="button" role="radio" class="cho ' + o[2] + (o[4] ? ' ' + o[4] : '') + '" data-chpick="' + esc(o[0]) + '" aria-checked="' + on + '"' + (o[4] ? ' disabled' : '') + '><span>' + (o[4] === 'lk' ? I('camera', 15) : '') + esc(o[1]) + (o[3] ? '<em>' + esc(o[3]) + '</em>' : '') + '</span><i class="rd"></i></button>'; }).join('') + '</div>' : '';
@@ -2722,7 +2889,7 @@ function pickChoice(st, v) {
     if (it.id === 'ck_keys') { var k1 = (st.probs.ck_keys || []).indexOf('Only one key') >= 0; if (k1 && st.vals.keys_n !== '1') { st.vals.keys_n = '1'; st.vals.keys_auto = 0; } else if (!k1 && st.vals.keys_n === '1') { st.vals.keys_n = '2'; st.vals.keys_auto = 0; } }
   } else if (ch.k === 'keys') { st.vals.keys_n = v; st.vals.keys_auto = 0; keysSync(st); S.choice = null; }
   else if (ch.k === 'feat') { featOf(st)[ch.id] = v; S.choice = null; }
-  else if (ch.k === 'tm') { st.vals.tires_match = v; S.choice = null; }
+  else if (ch.k === 'tm') { st.vals.tires_match = v; st.vals.tm_auto = 0; S.choice = null; }
   else if (ch.k === 'ovr') { st.overall = v; S.choice = null; }
   else if (ch.k === 'owner') { st.owner = v; if (v !== 'Family, with proof') delete st.shots.ph_family; S.choice = null; }
   save(); render();
@@ -2737,20 +2904,21 @@ function sumBlock(st) {
   if (tmMissing(st)) return 'Answer: do the 4 tires match?';
   if (keysMissing(st)) return 'Pick the number of keys';
   if (featMissing(st)) return 'Answer sunroof and navigation';
+  if (paintMissing(st).length) return 'Add the paint reading: ' + paintMissing(st).join(', ');
   var unc = sumUnconfirmed(st); if (unc.length) return 'Review ' + unc.length + ' more section' + (unc.length > 1 ? 's' : '');
+  var vin = (st.vals.vin_read || '').toUpperCase(); if (vin.length === 17 && !vinCheck(vin)) return /^[A-HJ-NPR-Z0-9]{17}$/.test(vin) ? 'Fix the VIN: the check digit is wrong' : 'Fix the VIN: no I, O, Q or spaces';
   if (!idReady(st)) return 'Add the VIN and mileage';
   if (!st.overall) return 'Pick the overall condition';
-  if (!st.note.trim()) return 'Write the note';
   return '';
 }
 function sumFoot(st) { var why = sumBlock(st); return '<button type="button" class="pbtn green" data-tosign="1"' + (why ? ' disabled' : '') + '>' + (why ? esc(why) : I('user', 20) + 'Show the seller') + '</button>'; }
 function dmgOfWheel(m, w) { return !m.panel || m.panel.indexOf(wheelName(w) + ' ') === 0; }
-function dmgRowsHTML(st, z, w) {
+function dmgRowsHTML(st, k, w) {
   /* Review (Tom 11-06 17:35): the section's damage photos sit right under its Photos, as tiles like the photos; tap one to relabel, retake or remove it; the last tile adds one */
-  var list = zoneDamages(st, z).filter(function (e) { return !w || dmgOfWheel(e[0], w); });
+  var z = zoneOf(k), list = pageDamages(st, k).filter(function (e) { return !w || dmgOfWheel(e[0], w); });
   return '<div class="sub3">' + I('alert', 15) + 'Damages</div><div class="shots dshots">' + list.map(function (e, j) { var m = e[0], i = e[1], ok = dmgDone(m), lb = labelled(m);
     return '<button type="button" class="sh1 dm' + (ok ? '' : ' todo') + '" data-dedit="' + i + '" aria-label="Damage ' + (j + 1) + (lb ? ': ' + esc(m.panel) + ', ' + esc(dshort(m)) + ', ' + esc(m.sev) : ', not labelled') + '"><span class="th' + (lb ? ' hs' : '') + '">' + I(m.src === 'library' ? 'upload' : 'camera', 18) + '<em>' + (j + 1) + '</em>' + (lb && m.ai ? '<span class="aib">AI</span>' : '') + (lb ? '<span class="sv sv-' + esc(m.sev).toLowerCase() + '">' + esc(m.sev) + '</span>' : '') + '</span><small>' + (lb ? esc(m.panel) : 'Not labelled') + '</small>' + (lb ? '<small class="dt">' + esc(dshort(m)) + '</small>' : '') + '</button>'; }).join('') +
-    '<button type="button" class="sh1 dadd" data-addman="' + z + '"' + (w ? ' data-aw="' + w + '"' : '') + ' aria-label="Add a damage"><span class="th">' + I('plus', 18) + '</span><small>Add</small></button></div>';
+    '<button type="button" class="sh1 dadd" data-addman="' + k + '"' + (w ? ' data-aw="' + w + '"' : '') + ' aria-label="Add a damage"><span class="th">' + I('plus', 18) + '</span><small>Add</small></button></div>';
 }
 function sumCard(st, k) {
   var c = car(), s = STEPS[stepIdx(k)], cc = revCount(st, k), miss = cc[1] - cc[0], h = '', b = '';
@@ -2763,7 +2931,7 @@ function sumCard(st, k) {
   } else if (k === 'Tires') {
     var w = st.wheel, t = st.tires[w], wi = WHEELS.map(function (x) { return x[0]; }).indexOf(w);
     tb = '<div class="wheels wt" role="group" aria-label="Wheel">' + WHEELS.map(function (x) { var tt = st.tires[x[0]], np = (tt.probs.ck_tire || []).length + (tt.probs.ck_wheel || []).length; probs += np;
-      return '<button type="button" data-wsel="' + x[0] + '" aria-pressed="' + (x[0] === w) + '" class="' + (np ? 'pb' : '') + '" aria-label="' + x[2] + (np ? ', ' + np + ' problems' : '') + '"><b>' + (np ? I('alert', 13) : '') + x[1] + '</b><small data-tv="' + x[0] + '">' + (tt.tread !== '' ? esc(tt.tread) + '/32' : '–') + '</small></button>'; }).join('') + '</div>';
+      return '<button type="button" data-wsel="' + x[0] + '" aria-pressed="' + (x[0] === w) + '" class="' + (np ? 'pb' : '') + (tt.tread === '' ? ' nf' : '') + '" aria-label="' + x[2] + (np ? ', ' + np + ' problems' : '') + '"><b>' + (np ? I('alert', 13) : '') + x[1] + '</b><small data-tv="' + x[0] + '">' + (tt.tread !== '' ? esc(tt.tread) + '/32' : '–') + '</small></button>'; }).join('') + '</div>';
     var rd = tireRead(t), wd = ' data-w="' + w + '"';
     b += '<div class="rlist">' + rowBtn('data-pk="brand"' + wd, 'Brand', rd.brand ? esc(rd.brand) : '<span class="opt0">Optional</span>', rd.brand ? 'set' : '') +
       rowBtn('data-pk="size"' + wd, 'Size', rd.size ? esc(rd.size.replace('R', ' R')) : '<span class="opt0">Optional</span>', rd.size ? 'set' : '') +
@@ -2783,9 +2951,9 @@ function sumCard(st, k) {
     if (si.checks.length || k === 'Interior') b += '<div class="rlist">' + (k === 'Interior' ? featHTML(st) : '') + checkRows(si.checks, st) + '</div>';
     si.checks.forEach(function (it) { probs += (st.probs[it.id] || []).length; });
   }
-  if (k === 'Tires') ckIds = ['ck_tire', 'ck_wheel']; else if (k === 'Paint') ckIds = ['ck_paint']; else if (si) ckIds = si.checks.map(function (it) { return it.id; });
-  var dh = ''; if (ZONES[k]) { dh = dmgRowsHTML(st, k, k === 'Tires' ? st.wheel : null); probs += dmgOwnProbs(st, k, ckIds); }
-  var unl = ZONES[k] ? zoneDamages(st, k).filter(function (e) { return !dmgDone(e[0]); }).length : 0;
+  if (k === 'Tires') ckIds = ['ck_tire', 'ck_wheel']; else if (k === 'Paint') ckIds = ['ck_paint']; else if (k === 'Mechanicals' || k === 'Underbody') ckIds = stepItems('Mechanicals', st).checks.concat(stepItems('Underbody', st).checks).map(function (it) { return it.id; }); else if (si) ckIds = si.checks.map(function (it) { return it.id; });
+  var dh = ''; if (ZONES[zoneOf(k)]) { dh = dmgRowsHTML(st, k, k === 'Tires' ? st.wheel : null); probs += dmgOwnProbs(st, k, ckIds); }
+  var unl = ZONES[zoneOf(k)] ? pageDamages(st, k).filter(function (e) { return !dmgDone(e[0]); }).length : 0;
   var tdm = k === 'Tires' ? WHEELS.filter(function (x) { return st.tires[x[0]].tread === ''; }) : [];
   var fqm = k === 'Interior' ? keysMissing(st) + featMissing(st) : k === 'Tires' ? tmMissing(st) + tdm.length : 0;
   var tag = miss ? '<small class="mc">' + miss + ' to take</small>' : unl ? '<small class="mc">' + unl + ' to label</small>' : fqm ? '<small class="mc">' + fqm + ' to answer</small>' : probs ? '<small class="pc">' + probs + (probs > 1 ? ' problems' : ' problem') + '</small>' : '<small class="okc">' + I('check', 13) + 'OK</small>';
@@ -2797,6 +2965,9 @@ var SC_INFO = {};
 var SUM_ASK = { start: 'Check the documents and the owner answer.', Exterior: 'Anything wrong on the outside? Open a check only to report a problem, and label each damage photo.', Tires: 'Tire by tire: check the brand, size and DOT read from the photo, pick the tread depth, and open a check only if something is wrong. Answer whether the 4 tires match, and label each damage photo.',
   Paint: 'Check the mils read from each meter photo and correct any the app misread. ' + PAINT_HIGH + ' mils or more is marked high.', Interior: 'Answer sunroof and navigation, then open a check only to report a problem, and label each damage photo.', OBDII: 'Check what was read from the scan or battery screens.', Mechanicals: 'Anything wrong under the hood or underneath? Open a check only to report a problem, and label each damage photo.' };
 function sumPages() { return CAPSEQ; }
+/* Underbody damages are Mechanicals damages (the zone that holds their places) on their own tab */
+function zoneOf(k) { return k === 'Underbody' ? 'Mechanicals' : k; }
+function pageDamages(st, k) { return zoneDamages(st, k); }
 function sumIdx(st) { var P = sumPages(), i = +(st.sp || 0); return i < 0 ? 0 : i >= P.length ? P.length - 1 : i; }
 function sumOk(st) { return st.sok || (st.sok = {}); }
 function secInfo(st, k) { sumCard(st, k); return SC_INFO[k]; }
@@ -2807,17 +2978,18 @@ function pageBlock(st, k) {
   if (f.unl) return 'Label ' + f.unl + (f.unl > 1 ? ' damage photos' : ' damage photo');
   if (f.tdm && f.tdm.length) return 'Pick the tread depth: ' + f.tdm.join(', ');
   if (f.fqm) return k === 'Tires' ? 'Answer: do the 4 tires match?' : keysMissing(st) ? 'Pick the number of keys' : 'Answer sunroof and navigation';
+  if (k === 'Paint' && paintMissing(st).length) return 'Add the paint reading: ' + paintMissing(st).join(', ');
   return '';
 }
-function sumUnconfirmed(st) { var ok = sumOk(st); return CAPSEQ.filter(function (k) { return !ok[k]; }); }
+function sumUnconfirmed(st) { var ok = sumOk(st); return sumPages().filter(function (k) { return !ok[k]; }); }
 function sumStrip(st, i) {
-  var P = sumPages(), ok = sumOk(st);
+  var P = sumPages(), ok = sumOk(st), open = openTo(P.map(function (k) { return !pageBlock(st, k); }), i);
   return '<nav class="sstrip" aria-label="Summary sections">' + P.map(function (k, j) {
-    var t = k === 'finish' ? 'Finish' : stTitle(k), cls = j === i ? 'cur' : '', badge = '';
-    if (k !== 'finish') { var f = secInfo(st, k), bl = pageBlock(st, k);
-      if (bl && ok[k]) { cls += ' todo'; badge = '<em class="dot"></em>'; }
-      else if (ok[k]) { cls += f.probs ? ' pb' : ' ok'; badge = f.probs ? '<em>' + f.probs + '</em>' : I('check', 13); } }
-    return '<button type="button" class="' + cls + '" data-sp="' + j + '" data-spk="' + k + '"' + (j === i ? ' aria-current="step"' : '') + '><span class="sn">' + (j + 1) + '</span>' + esc(t) + badge + '</button>'; }).join('') + '</nav>';
+    var cls = j === i ? 'cur' : '', badge = '';
+    if (ok[k]) { var f = secInfo(st, k), bl = pageBlock(st, k);
+      if (bl) { cls += ' todo'; badge = '<em class="dot"></em>'; }
+      else if (f.probs) { cls += ' pb'; badge = '<em>' + f.probs + '</em>'; } }
+    return '<button type="button" class="' + cls + '" data-sp="' + j + '" data-spk="' + k + '"' + (j === i ? ' aria-current="step"' : '') + (j <= open ? '' : ' disabled') + '>' + esc(stTitle(k)) + badge + '</button>'; }).join('') + '</nav>';
 }
 function shotLabel(x) {
   if (x.panel) return x.panel;
@@ -2837,22 +3009,23 @@ function viewSummary() {
   h += sumStrip(st, i);
   h += sumCard(st, k);
   var bl = pageBlock(st, k), f = SC_INFO[k], nx = P[i + 1], nl = nx ? stTitle(nx) : 'Summary';
-  var ul = ZONES[k] && !f.miss ? zoneDamages(st, k).filter(function (e) { return !dmgDone(e[0]); }) : [];
+  var ul = ZONES[zoneOf(k)] && !f.miss ? pageDamages(st, k).filter(function (e) { return !dmgDone(e[0]); }) : [];
   if (ul.length) foot = '<button type="button" class="pbtn" data-dedit="' + ul[0][1] + '">' + I('pen', 18) + 'Label ' + (ul.length > 1 ? ul.length + ' damage photos' : 'the damage photo') + '</button>';
   else foot = '<button type="button" class="pbtn green" data-spnext="1"' + (bl ? ' disabled' : '') + '>' + (bl ? esc(bl) : (f.probs ? f.probs + (f.probs > 1 ? ' problems' : ' problem') : 'No problems') + ' · Next: ' + esc(nl) + I('right', 18)) + '</button>';
   return header(st) + '<div class="body"><div class="pad">' + h + '</div></div><div class="ff">' + foot + '</div>';
 }
 function viewFinal() {
   var st = cur(), h = '', tot = totals(st), plist = problemsList(st), un = sumUnconfirmed(st);
-  h += '<div class="sumrow"><div><b>' + tot.photos + '/' + tot.photosNeed + '</b>Photos</div><div><b>' + tot.videos + '/' + tot.videosNeed + '</b>Videos</div><div><b>' + (plist.length + tot.damages) + '</b>Problems</div><div><b>' + st.manual.length + '</b>Damage photos</div></div>';
+  h += '<div class="sumrow"><div><b>' + tot.photos + '/' + tot.photosNeed + '</b>Photos</div><div><b>' + tot.videos + '/' + tot.videosNeed + '</b>Videos</div><div><b>' + (plist.length + tot.damages) + '</b>Problems</div><div><b>' + st.manual.length + '</b>Damages</div></div>';
   if (un.length) h += '<div class="note a">' + I('alert', 20) + '<div><b>' + un.length + (un.length > 1 ? ' sections' : ' section') + ' not reviewed</b><div class="opts" style="margin-top:6px">' + un.map(function (k) { return '<button type="button" class="opt" data-revgo="' + k + '">' + esc(stTitle(k)) + '</button>'; }).join('') + '</div></div></div>';
-  var dl = st.manual.filter(function (m) { return labelled(m) && dmgOwn(st, m); }).map(function (m) { return { text: dmgLine(m), where: (m.zone || 'Exterior') + ' damage photo' }; });
-  h += '<div class="card"><h3>' + I('checks', 18) + 'What you found<small>' + (plist.length + dl.length) + '</small></h3>' + (plist.length + dl.length ? '<div class="flist">' + plist.map(function (p) { return '<div><span>' + esc(p.text) + '<small>' + esc(p.where) + (p.ph ? ' · damage photo' : '') + '</small></span><em class="lv">' + esc(p.level) + '</em></div>'; }).join('') +
-    dl.map(function (p) { return '<div><span>' + esc(p.text) + '<small>' + esc(p.where) + '</small></span><em class="lv dm">Damage</em></div>'; }).join('') + '</div>' : '<div class="muted" style="font-size:13px">No problems marked.</div>') + '</div>';
+  var fs = findingsBySec(st), fn = plist.length + tot.damages;
+  h += '<div class="card"><h3>' + I('checks', 18) + 'What you found<small>' + fn + '</small></h3>' + (fn ? fs.map(function (g) { return '<div class="fsh">' + esc(stTitle(g.k)) + '</div><div class="flist">' + g.p.map(function (p) { var sb = [whereIn(g.k, p.where), p.ph ? 'damage photo' : ''].filter(Boolean).join(' · ');
+      return '<div>' + photoThumb(p.photos || [], p.text) + '<span>' + esc(p.text) + (sb ? '<small>' + esc(sb) + '</small>' : '') + '</span><em class="lv">' + esc(p.level) + '</em></div>'; }).join('') +
+    g.d.map(function (e) { return '<div>' + photoThumb([e[1]], dmgLine(e[0])) + '<span>' + esc(dmgLine(e[0])) + '</span><em class="lv dm">Damage</em></div>'; }).join('') + '</div>'; }).join('') : '<div class="muted" style="font-size:13px">No problems marked.</div>') + '</div>';
   h += visitCard(st);
   h += idNumCard(st);
   h += overallCard(st);
-  h += '<div class="card"><h3>' + I('pen', 18) + "Inspector's note<small class=\"req\">Required</small></h3><textarea class=\"nt\" id=\"note\" placeholder=\"What a dealer should know about this car\" aria-required=\"true\">" + esc(st.note) + '</textarea></div>';
+  h += '<div class="card"><h3>' + I('pen', 18) + "Inspector's note</h3><textarea class=\"nt\" id=\"note\" placeholder=\"What a dealer should know about this car\">" + esc(st.note) + '</textarea></div>';
   return header(st) + '<div class="body"><div class="pad">' + h + '</div></div><div class="ff">' + sumFoot(st) + '</div>';
 }
 function missingCount(st, k) {
@@ -2953,17 +3126,28 @@ function problemsList(st) {
   var out = [];
   STEPS.forEach(function (s) {
     if (s.k === 'Tires') {
-      WHEELS.forEach(function (w) { ['ck_tire', 'ck_wheel'].forEach(function (id) { var it = BYID[id]; (st.tires[w[0]].probs[id] || []).forEach(function (p) { out.push({ text: (id === 'ck_tire' ? 'Tire: ' : 'Wheel: ') + p, where: w[2], level: (it.levels || {})[p] || 'Disclosed', ph: dmgVals(st, id, w[0]).indexOf(p) >= 0 }); }); }); });
-      if (st.vals.tires_match === 'Mismatch') out.push({ text: 'Tires do not match (brand, model or size)', where: s.t, level: (TMQ.levels || {}).Mismatch || 'Disclosed' });
+      WHEELS.forEach(function (w) { ['ck_tire', 'ck_wheel'].forEach(function (id) { var it = BYID[id]; (st.tires[w[0]].probs[id] || []).forEach(function (p) { out.push({ sec: s.k, text: (id === 'ck_tire' ? 'Tire: ' : 'Wheel: ') + p, where: w[2], level: (it.levels || {})[p] || 'Disclosed', ph: dmgVals(st, id, w[0]).indexOf(p) >= 0, photos: dmgPhotos(st, 'p', id, w[0], p) }); }); }); });
+      if (st.vals.tires_match === 'Mismatch') out.push({ sec: s.k, text: 'Tires do not match (brand or model)', where: s.t, level: (TMQ.levels || {}).Mismatch || 'Disclosed', photos: [] });
       return;
     }
-    if (s.k === 'Interior') FEATQ.forEach(function (q) { if (featOf(st)[q.id] === 'Not working') out.push({ text: q.label + ': Not working', where: s.t, level: (BYID[q.id] && BYID[q.id].levels || {})['Not working'] || 'Disclosed', ph: dmgDerived(st).some(function (d) { return d.t === 'f' && d.id === q.id; }) }); });
+    if (s.k === 'Interior') FEATQ.forEach(function (q) { if (featOf(st)[q.id] === 'Not working') out.push({ sec: s.k, text: q.label + ': Not working', where: s.t, level: (BYID[q.id] && BYID[q.id].levels || {})['Not working'] || 'Disclosed', ph: dmgDerived(st).some(function (d) { return d.t === 'f' && d.id === q.id; }), photos: dmgPhotos(st, 'f', q.id, null, 'Not working') }); });
     stepItems(s.k, st).checks.forEach(function (it) { (st.probs[it.id] || []).forEach(function (p) {
       var ex = (st.extra[it.id] || []).join(', ');
-      out.push({ text: it.label + ': ' + plain(p), where: s.t + (ex ? ' · ' + ex : ''), level: (it.levels || {})[p] || 'Disclosed', ph: dmgVals(st, it.id, '').indexOf(p) >= 0 }); }); });
+      out.push({ sec: s.k, text: it.label + ': ' + plain(p), where: s.t + (ex ? ' · ' + ex : ''), level: (it.levels || {})[p] || 'Disclosed', ph: dmgVals(st, it.id, '').indexOf(p) >= 0, photos: dmgPhotos(st, 'p', it.id, null, p) }); }); });
   });
   return out;
 }
+/* the damage photos (their indexes) whose label gives this answer */
+function dmgPhotos(st, t, id, w, v) { var out = []; st.manual.forEach(function (m, i) { if (dmgDerived({ manual: [m], fuel: st.fuel }).some(function (d) { return d.t === t && d.id === id && (d.w || '') === (w || '') && d.v === v; })) out.push(i); }); return out; }
+/* what was found, section by section in Review order: its problems, then its damage photos that answer no check */
+function findingsBySec(st) { var pl = problemsList(st);
+  return CAPSEQ.slice(1).map(function (k) { return { k: k, p: pl.filter(function (p) { return p.sec === k; }), d: st.manual.map(function (m, i) { return [m, i]; }).filter(function (e) { return dtab(e[0]) === k && labelled(e[0]) && dmgOwn(st, e[0]); }) }; }).filter(function (g) { return g.p.length || g.d.length; }); }
+/* a problem's place under its section heading: the section name in front is dropped ("Exterior · Hood" -> "Hood") */
+function whereIn(k, w) { var ps = [stTitle(k), k]; for (var i = 0; i < ps.length; i++) { if (w === ps[i]) return ''; if (w.indexOf(ps[i] + ' · ') === 0) return w.slice(ps[i].length + 3); } return w; }
+/* a photo thumbnail; a tap shows the photos full screen */
+function photoThumb(ids, cap) { return ids.length ? '<button type="button" class="pth" data-pview="' + ids.join(',') + '" data-pcap="' + esc(cap) + '" aria-label="Photo: ' + esc(cap) + '">' + I('camera', 18) + (ids.length > 1 ? '<em>' + ids.length + '</em>' : '') + '</button>' : ''; }
+function pviewHTML() { var v = S.pview; if (!v) return ''; var n = v.ids.length;
+  return '<div class="pvw" role="dialog" aria-label="Photo"><div class="pvh"><span>' + (n > 1 ? (v.at + 1) + ' / ' + n : '') + '</span><button type="button" data-pvx="1" aria-label="Close">' + I('x', 24) + '</button></div><div class="pvimg" data-pvswipe="1"><span class="ph">' + I('camera', 64) + '</span></div><div class="pvc">' + esc(v.cap) + '</div></div>'; }
 
 function viewUpload() {
   var st = cur(), c = car(), u = st.upload, tot = totals(st);
@@ -2991,64 +3175,77 @@ var SPEC = {
     ["Data", ["Owner name, phone, email.", "Fuel type, drivetrain and engine from the VIN decode; fuel type decides which items show.", "As on the admin vehicle page: ZIP, sell intent, accident history, modifications, smoked in, title status, loan balance or payoff, lienholder, loan or lease account.", "Carfax: title, owners, accidents, service records, odometer, owner types, last state, damage, frame damage, report link."]],
     ["Points to check", ["Red: frame damage; title not clean; mileage below the last Carfax reading.", "Amber: the seller said no accident but Carfax shows one, or Carfax has damage.", "Blue: loan or lienholder; lease or rental; 3+ owners; last owned outside California; modifications; smoked in.", "One chip per point, red first."]]]],
   "idcheck": ["Check ID", "At the car: compare the person with the uploaded license and registration, answer the owner question, then start.",
-    [["Documents", ["Both documents live from the seller portal.", "A missing document can be photographed here (Take photo on its card): it fills the same private slot (ph_license, ph_reg), marked Taken on site.", "Private: never on dealer reports."]],
+    [["Documents", ["Both documents live from the seller portal.", "A missing document can be photographed here (Take photo on its card, camera only): it fills the same private slot (ph_license, ph_reg), marked Taken on site.", "Family proof: camera or upload.", "Private: never on dealer reports."]],
     ["Question", [(BYID.id_owner ? BYID.id_owner.no + ' ' : '') + "Seller's license matches a registered owner: Yes; Family, with proof (one photo); No ends the visit."]],
     ["Start inspection", ["Off, with the reason, until both documents are in and the answer is Yes or Family with proof.", "Records the start time and location, then opens the camera on Exterior."]],
     ["Demo", ["The seller uploads 6 seconds after the link is texted; Seller uploads now does it at once."]]]],
   "start": ["Start", "The owner question and the seller documents. Answered on Check ID before the camera opens.",
     [["Question", [(BYID.id_owner ? BYID.id_owner.no + ' ' : '') + "Seller's license matches a registered owner: Yes; Family, with proof (photo); No ends the visit.", "No fuel question: fuel type comes from the VIN decode."]],
     ["Recorded by the app", ["Start time and location at Start inspection; end time and location at the signature; distance from the seller's address.", "Recorded with no signal too."]]]],
-  "Exterior": ["Exterior", "360 video, one paint meter photo per panel, roof photo, windshield VIN, then any exterior damage.",
+  "Exterior": ["Exterior", "Windshield VIN, then the 360 video. The paint readings, roof photo and exterior questions come in the Walk-around.",
     [["360 view", ["Walk-around video, engine off, up to 1 minute, from the left front corner, counter-clockwise.", "36 evenly spaced frames, extracted on the phone, shown with Cloudimage 360 View (js-cloudimage-360-view); drag to turn.", "Eight frames fill the exterior photo slots: left front corner (frame 0), left side (4), left rear corner (9), rear (13), right rear corner (18), right side (22), right front corner (27), front (31). The roof is the only separate exterior photo.", "On Review the 360 view is a tile after Walk-around; tap to open it in a bottom sheet."]],
-    ["Paint readings", ["Taken in the same walk: see Paint."]],
-    ["End of Exterior", ["After the windshield VIN: Please record any exterior damage/modification images before proceeding.", "I'm done goes to Tires. Record damage now reopens the Exterior camera with only the Damage and Mod shutters and Next (top right) to Tires."]],
+    ["Next", ["No questions at the end of this section; the camera goes on to Interior."]],
     ["Checks", ["C1 Glass and mirrors, C2 Lights, C3 Wipers and washers, C4 Fuel door and cap (gas)."]]]],
-  "Paint": ["Paint", "One paint meter photo per panel, taken in the Exterior camera walk; Paint keeps its own Review page, category and report row.",
+  "Paint": ["Paint", "One paint meter photo per panel, taken in the Walk-around; Paint keeps its own Review page, category and report row.",
     [["Panels", ["11 panels in walk order: left front fender, left front door, left rear door, left quarter panel; trunk or liftgate; right quarter panel, right rear door, right front door, right front fender; hood; roof.", "Camera or upload. The AI reads the mils; the inspector can correct it. 8 mils or more is High. Not on this car for a missing panel."]],
     ["Check", [(BYID.ck_paint ? BYID.ck_paint.no + ' ' : '') + "Paint and panels starts as OK; a High reading ticks Panel repainted with that panel.", "Review: a top view of the car with each panel and its mils (High in red); tap a panel to correct it or mark it N/A. Then the panel photos, the paint damage tiles and the Paint and panels row."]],
-    ["Damages", ["Damage tapped at a panel: the AI guesses that panel as the place.", "Exterior body panels also offer the five Paint and panels problems (repainted, overspray or colour mismatch, uneven gaps, bolts with tool marks, wrap). Picking one ticks Paint and panels with that panel and stores the photo as Paint at that place (Hood is Hood or frunk lid)."]]]],
-  "Tires": ["Tires", "Per wheel, left front, left rear, right rear, right front: a whole tire photo and a tread gauge photo.",
+    ["Damages", ["A damage photo taken during the walk: the AI picks the place only from the places seen in the shot before it and the shot after it.", "Exterior body panels also offer the five Paint and panels problems (repainted, overspray or colour mismatch, uneven gaps, bolts with tool marks, wrap). Picking one ticks Paint and panels with that panel and stores the photo as Paint at that place (Hood is Hood or frunk lid)."]]]],
+  "Tires": ["Tires & Wheels", "Per wheel, left front, left rear, right rear, right front: a whole tire photo and a tread gauge photo.",
     [["Per wheel", ["The AI reads brand and size from the tire photo (optional) and the tread depth from the gauge photo (required, 1-14/32). Deleting the gauge photo clears the reading. No DOT.", "Review: four tabs (LF, LR, RR, RF), each with its photos, damages and values. Values change in scroll pickers: brand (North American brands, A to Z, plus Other); size as width 165-355, aspect 15-85, rim R13-R25; tread 1-14/32.", (BYID.ck_tire ? BYID.ck_tire.no + ' ' : '') + "Tire damage and " + (BYID.ck_wheel ? BYID.ck_wheel.no + ' ' : '') + "wheel start as OK."]],
-    ["Question", [(BYID.tires_match ? BYID.tires_match.no + ' ' : '') + "The 4 tires match (same brand, model and size): Match or Mismatch, required, no default; Mismatch is disclosed."]],
-    ["Damages", ["Labelled with the wheel's tire or wheel and the damage (uneven wear, sidewall cracks, bulge, plug or patch, cut, curb rash, bent, cracked, other). A label that matches one of that wheel's problems ticks it."]]]],
-  "Interior": ["Interior", "Door-jamb VIN, odometer, all keys, then dash, infotainment screen (on), front seats, rear seats and cargo area.",
+    ["Question", [(BYID.tires_match ? BYID.tires_match.no + ' ' : '') + "The 4 tires match (same brand and model): read by the AI from the 4 whole-tire photos (marked Read from photo); the inspector confirms or picks Match or Mismatch; required; Mismatch is disclosed."]],
+    ["Damages", ["Labelled with the wheel's tire or wheel and the damage (uneven wear, sidewall cracks, bulge, plug or patch, cut, curb rash, bent, cracked, other). A label that matches one of that wheel's problems ticks it.", "Taken in the Walk-around, each wheel as it is reached."]]]],
+  "Interior": ["Interior", "Door-jamb VIN, front seats and rear seats, then odometer at key-on, engine sound at the first start, all keys, dash and infotainment screen (on). The cargo area photo is taken in the Walk-around, at the rear.",
     [["Readings", ["Door-jamb VIN (label and barcode), mileage (odometer), number of keys (keys photo)."]],
-    ["Questions", ["Number of keys: 0, 1 or 2 (two or more), first row of the Review Interior page, required.", (BYID.sunroof ? BYID.sunroof.no + ' ' : '') + "Sunroof and " + (BYID.navigation ? BYID.navigation.no + ' ' : '') + "Navigation on Review: Works, Not working, or No sunroof / No navigation; required, no default."]]]],
+    ["Questions", ["Number of keys: 0, 1 or 2 (two or more), first row of the Review Interior page, required.", (BYID.sunroof ? BYID.sunroof.no + ' ' : '') + "Sunroof and " + (BYID.navigation ? BYID.navigation.no + ' ' : '') + "Navigation on Review: Works, Not working, or No sunroof / No navigation; required, no default."]],
+    ["End of the section", ["Keys, Sunroof, Navigation and the Interior checks, as on Review, then Record damage or Next."]]]],
   "OBDII": ["OBDII", "Gas: current, past and emission code photos, then other images (several, optional). EV: service-mode alerts, then battery health and charging screens (optional) and battery health %.",
     [["Several photos", ["A slot that takes several photos stays open: each shot or upload adds one, Remove photo N drops the last, Done \u00b7 N moves on."]],
     ["Checks", ["Engine codes stored asks for the codes in a second step of the drawer."]],
-    ["Shutters", ["Damage and Mod are off in OBDII."]]]],
-  "Mechanicals": ["Mechanicals", "Engine bay, engine oil on the dipstick, engine sound and exhaust videos, then the underbody.",
-    [["Shots", ["Engine sound and exhaust: gas and hybrid only, up to 30 seconds each, hidden when the engine will not start.", "Underbody: left front, left rear, rear, right rear, right front, front; catalytic converters optional. Stored as Underbody.", "Every mechanicals and underbody photo can be a camera shot or an upload."]],
-    ["Checks", ["Structure, rust and battery pack checks are here. Road test starts as Not done."]],
-    ["Next", ["After the last shot the pass ends and Damages opens (Review when there are no damage photos)."]]]],
-  "capture": ["Camera", "Start inspection opens one camera pass: Exterior (with paint readings), Tires, Interior, OBDII, Mechanicals. No form screens in between.",
-    [["Camera", ["Landscape, full screen; form screens stay portrait. Top bar: section (1/5 to 5/5) and shot count.", "Three shutters: Damage (amber, above), the shot, Mod (blue, below). Damage and Mod take a tagged photo without moving the flow; off on videos and in OBDII. Zoom .5 / 1 / 2 and pinch.", "A guide outline and the shot name over the camera (guides/ in the MVP folder); the camera moves on after each shot.", "Skip only on optional shots; Not on this car for a missing paint panel.", "Back goes one shot back. A taken shot can be retaken or deleted; the camera then returns to where the inspector was. Damage and Mod thumbnails can be picked and deleted.", "The only stop is the end-of-Exterior dialog."]],
+    ["Shutters", ["Damage and Mod are off in OBDII."]],
+    ["End of the section", ["Warning lights and Scan result, as on Review, then Next. No Record damage."]]]],
+  "Mechanicals": ["Mechanicals", "Engine bay, engine oil on the dipstick, exhaust video at idle and revving, with the reverse gear. The engine sound video is taken in Interior, at the first start.",
+    [["Shots", ["Engine sound and exhaust: gas and hybrid only, up to 30 seconds each, hidden when the engine will not start.", "Every mechanicals photo can be a camera shot or an upload."]],
+    ["Checks", ["Road test starts as Not done."]],
+    ["End of the section", ["The Mechanicals checks, as on Review, then Record damage or Next."]]]],
+  "Underbody": ["Underbody", "Left front, left rear, rear, right rear, right front, front; catalytic converters optional; battery pack on electric cars.",
+    [["Shots", ["Every underbody photo can be a camera shot or an upload. Stored as Underbody."]],
+    ["Checks", ["Structure and frame, rust and, on electric cars, battery pack."]],
+    ["Damages", ["Underbody damages use the underbody places of Mechanicals and show on their own Underbody tab in Damages and Review; the record keeps section Underbody."]],
+    ["End of the section", ["Structure and frame, Rust and (electric) Battery pack, as on Review, then Record damage or Next.", "Then the pass ends and Damages opens (Review when there are no damage photos)."]]]],
+  "walk": ["Walk-around", "From the left front, counter-clockwise: paint meter photo per panel, each tire as it is reached, the trunk photo at the rear, hood, roof photo.",
+    [["Order", ["Left front fender; left front tire and tread; left front door; left rear door; left rear tire and tread; left quarter panel; trunk or liftgate; cargo area (floor raised); right quarter panel; right rear tire and tread; right rear door; right front door; right front tire and tread; right front fender; hood; roof; roof photo.", "A panel marked Not on this car drops out of the walk."]],
+    ["Review", ["Each shot shows on its own Review page: paint on Paint, tires on Tires & Wheels, cargo on Interior, roof on Exterior. A retake from Review opens the Walk-around at that shot."]],
+    ["Damages", ["A Damage photo belongs to the shot it was taken on: Exterior at a panel or the roof, Tires & Wheels at a tire, Interior at the cargo area. A Mod photo counts as Tires & Wheels at a tire, otherwise Exterior."]],
+    ["End of the section", ["Exterior checks, Paint and panels, Tire and Wheel for each wheel, All 4 tires match; as on Review, then Record damage or Next."]]]],
+  "capture": ["Camera", "Start inspection opens one camera pass: Exterior (windshield VIN, 360 video), Interior, Walk-around (paint, tires, trunk, hood, roof), Mechanicals, Underbody; OBDII is shot inside Interior. No form screens in between.",
+    [["Camera", ["Landscape, full screen; form screens stay portrait. Top bar: section (1/5 to 5/5) and shot count.", "Three shutters: Damage (amber, above), the shot, Mod (blue, below). Damage and Mod take a tagged photo without moving the flow; off on videos and OBDII shots. Zoom .5 / 1 / 2 and pinch.", "Flash: Auto when the camera opens; a tap goes Auto, On, Off. Above the zoom chips, not on videos; in the damage camera at the top right. The screen flashes white at each shot.", "A guide outline and the shot name over the camera (guides/ in the MVP folder); the camera moves on after each shot.", "Skip only on optional shots; Not on this car for a missing paint panel.", "Back goes one shot back. A taken shot shows its photo; the green shutter retakes it, Delete empties the slot. Damage and Mod thumbnails can be picked, retaken with the green shutter, or deleted.", "While recording: no Back, no jump in the strip, no lens switch.", "Look for: a few words at the top left of every guided shot (for example Frame damage, Repaint, A-pillar, Window at a front door). Information only: nothing to tap, tick or save.", "End of Interior, Walk-around, Mechanicals and Underbody: that section's questions as on Review, each OK until tapped (Interior adds the OBDII questions and Transmission and clutch; Walk-around adds Brakes; Underbody adds Leaks, Exhaust and emissions, Suspension and steering, Driveshaft and CV joints; Mechanicals leaves those out); a tap opens the same drawer as Review, on top of the camera. Record damage keeps the camera with only the Damage and Mod shutters and Next (top right); Next goes on. Answers show on Review."]],
     ["If the camera is closed", ["This screen lists the sections with their counts and reopens the camera where it stopped."]]]],
-  "label": ["Damages", "After the camera: every damage photo, one per screen, section by section (Exterior, Tires, Paint, Interior, Mechanicals).",
+  "label": ["Damages", "After the camera: every damage photo, one per page, tab by tab (Exterior, Tires & Wheels, Paint, Interior, Mechanicals, Underbody).",
     [["AI first guess", ["Each photo comes with the AI guess of place, type and severity from that section's list; the inspector confirms or changes it."]],
-    ["Place", ["Picked on a picture: Exterior is a top view of the car (each part named; side windows and rear glass are their own places) plus tiles for other lights, wipers, fuel door, other.", "Paint: top view of the 11 panels. Tires: the four wheels, each with Tire and Wheel. Interior: Cabin (seat plan, headliner, carpet, sunroof, other) and Features tabs. Mechanicals: Engine bay (Frunk on an EV) and Underbody tabs.", "Places and their problems come from damage_places in the question list."]],
-    ["Type, severity, size", ["Type from that place's list. Structure is a type on Exterior body panels and on Interior carpet, headliner, dash, door panels, cargo and Other; it answers C8 Structure and frame with the option the place gives.", "Severity Minor, Moderate or Severe, required. Size 1-36 in, optional.", "A labelled photo ticks its check (or answers sunroof or navigation); relabelling or removing it takes that back."]],
-    ["Speed", ["Moves to the next photo when place, type and severity are picked. Swipe for next or previous. Retake and Remove on the photo.", "Next: Review turns on when every photo is confirmed or labelled."]]]],
-  "summary": ["Review", "One page per section (Start, Exterior, Tires, Paint, Interior, OBDII, Mechanicals), in order with Next. Everything stays editable.",
-    [["Per section", ["One row per check, OK by default; tapping opens a drawer with OK and its problems (one per check), plus panel, wheel or codes when needed. Problems show amber or red.", "Photos, then damages, then mods, as tiles: tap a photo to retake it; tap a damage to relabel, retake or remove it; Add a damage takes a photo or an upload, then the same label form.", "Section strip pinned at the top: done, problem count, or needs something; tap to jump."]],
-    ["Required", ["Tires: 4 tires match. Interior: number of keys, sunroof, navigation.", "Next stays off, with the reason, until the page is complete."]],
+    ["Place", ["Picked on a picture: Exterior is a top view of the car (each part named; side windows and rear glass are their own places) plus tiles for other lights, wipers, fuel door, other.", "Mirror, Headlight and Tail light: the side is picked on the map (Left mirror and so on) and sent as where; the report shows Mirror: Damaged (left).", "Paint: top view of the 11 panels. Tires: the four wheels, each with Tire and Wheel. Interior: Cabin (seat plan, headliner, carpet, sunroof, other) and Features tabs. Mechanicals: Engine bay (Frunk on an EV) and Underbody tabs.", "Places and their problems come from damage_places in the question list."]],
+    ["Type, severity, size", ["Tapping a place opens a drawer of at most half the screen: the place on top, the types scroll, severity, size and Done stay at the bottom.", "Type from that place's list. Structure is a type on Exterior body panels and on Interior carpet, headliner, dash, door panels, cargo and Other; it answers C8 Structure and frame with the option the place gives.", "Severity Minor, Moderate or Severe, required. Size 1-36 in, optional, Exterior only, a button like the severity buttons.", "Where, Type and Severity rows still to answer have a red frame.", "A labelled photo ticks its check (or answers sunroof or navigation); relabelling or removing it takes that back."]],
+    ["Order", ["Swipe the page for the next or previous photo; the arrow on the photo goes to the next one, Previous photo under the page goes back. Retake and Remove on the photo.", "A tab opens only when the tabs before it are done; the pages stop at the last photo of the open tabs. A done tab turns green.", "After a photo is labelled: the next photo still to label in the same tab, then the first one anywhere. Remove stays on the tab.", "Next: Review turns on when every photo is confirmed or labelled."]]]],
+  "summary": ["Review", "One page per section (Start, Exterior, Tires & Wheels, Paint, Interior, OBDII, Mechanicals, Underbody), in order with Next. Everything stays editable.",
+    [["Per section", ["One row per check, OK by default; tapping opens a drawer with OK and its problems (one per check), plus panel, wheel or codes when needed. Problems show amber or red.", "Photos, then damages, then mods, as tiles: tap a photo to retake it; tap a damage to relabel, retake or remove it; Add a damage takes a photo or an upload, then the same label form.", "Section strip pinned at the top: a page opens only when the pages before it are done. After a page is confirmed, an amber dot when it needs something or its problem count in red."]],
+    ["Required", ["Start: owner. Tires: tread depth per wheel, 4 tires match. Paint: a reading on every panel that is on the car. Interior: number of keys, sunroof, navigation.", "A row still to answer has a red frame (also a wheel tab without tread and a paint panel without a reading).", "Next stays off, with the reason, until the page is complete."]],
+    ["Paint reading", ["A slider from 3.0 to 10+ with - and + in 0.1 steps; 10+ is sent as 10.1. Not on this car keeps no reading."]],
     ["Keys", ["Read by the AI from the All keys photo (marked Read from photo); the inspector confirms or picks 0, 1 or 2. 0 shows red, 1 amber.", "1 ticks Only one key on C35 Keys; ticking or clearing Only one key sets 1 or 2. It is the Keys item of the report highlight."]]]],
   "final": ["Summary", "What was found, VIN and mileage, overall condition and note, then Show the seller.",
-    [["Contents", ["Counts of photos, videos, problems and damage photos; every problem with its level and every damage.", "VIN and mileage read from the photos, each editable; chips for door jamb, listing VIN and check digit, listing mileage and Carfax (red when lower). Confirm needs a 17-character VIN and a mileage; any edit clears it.", "Overall condition (Like new, Pretty great, Just okay, Kind of rough, Major issues), required. Inspector note, required."]],
-    ["Show the seller", ["Off, with the reason, until every section is reviewed, every shot is in, every damage photo is labelled and every required answer is in. Unreviewed sections show as buttons."]]]],
+    [["Contents", ["Counts: Photos, Videos, Problems, Damages.", "What you found, section by section under black headings: each problem with its level and its damage photos, then the section's damage photos that answer no check. Tap a thumbnail to see the photos full screen (swipe, pinch, close; nothing can be changed there).", "VIN and mileage read from the photos, each editable; chips for door jamb, listing VIN and check digit, listing mileage and Carfax (red when lower). A door-jamb read that passes the check digit replaces a windshield read that fails it.", "Overall condition (Like new, Pretty great, Just okay, Kind of rough, Major issues), required, red frame until picked. Inspector note, optional."]],
+    ["Show the seller", ["Off, with the reason, until every section is reviewed, every shot is in, every damage photo is labelled, every required answer and paint reading is in and the VIN passes the check digit. Unreviewed sections show as buttons."]]]],
   "sign": ["Seller signs", "The phone goes to the seller: findings in plain words, the disclosure, then name and signature.",
     [["Disclosure", ["The inspection records what could be seen and tested at the visit, without lifting or taking anything apart; it is not a warranty; Bidbus is not responsible for problems that appear later or could not be seen or tested; the seller has told us every problem they know of.", "Sign stays off until the seller ticks I have read and agree to this disclosure."]],
-    ["Rules", ["Findings only; nothing about dealer protection or buybacks.", "Name (filled from the owner) and signature under I have seen the inspection findings for this car.", "Saved: signature, name, disclosure version and agreement, end time and location."]]]],
+    ["Rules", ["Findings only, section by section; nothing about dealer protection or buybacks.", "Name (filled from the owner) and signature under I have seen the inspection findings for this car.", "Saved: signature, name, disclosure version and agreement, end time and location."]]]],
   "upload": ["Upload and condition report", "Everything uploads after the signature; Bidbus makes the condition report and links it back.",
     [["Upload", ["Answers first, then media one file at a time; resumes after a lost signal. Without signal the car shows Saved on phone and uploads by itself later.", "When the report is ready the car shows Inspected \u00b7 report ready and the report is on the vehicle in the admin."]],
     ["What the app sends", ["One record per car, built by inspectionPayload (samples/inspection-*.json).", "Vehicle: listing VIN, VIN read from the photos, door-jamb VIN, listing mileage, odometer mileage, confirmed VIN and mileage, number of keys and whether it was read from the photo, fuel, EV battery health.", "Owner answer and seller documents (private); start and end time and place.", "Photos with category (the question's section in the question list: Start, Exterior, Paint, Tires, Underbody, Interior, Mechanicals, OBDII, Additionals), question id, wheel or panel, camera or upload, file, upright turn; skipped optional shots; three videos and the 36 frames.", "Checks (OK, Problem or Not done; level; from a photo or not; wheel or where; engine codes), tires, paint, damages (place, type, severity, size, check and option, AI first guess, confirmed), sunroof, navigation, overall condition, note, seller name and signature."]],
     ["AI reading", ["Every photo is read as soon as it is taken: VIN, mileage, tire brand, size and tread, paint mils, EV battery health, number of keys, and place, type and severity for damage photos. The inspector confirms or changes each one; the AI guess is kept beside the confirmed value.", "Every photo is turned upright first (EXIF orientation, or an AI check for uploads); the turn (0, 90, 180, 270) is saved."]],
     ["Issue list", ["data/issue-catalog.json (made from this app by verify/issue-catalog.js): every place per section, the types it allows, the check and option, level and seller damage photo type of each; severity and size; check problems with no place. Every record is checked against it; anything not on it is refused with the reason."]],
-    ["Condition report", ["tools/cr_from_inspection.py (samples/cr-*.json): issues with text in the app's words, the highlight (structural damage, keys, odor, mechanical), CR rows in dealer order with their photos and damages, tires, paint, videos, 360 view, light (stored, not shown), seller signature; it also fills the seller self-inspect fields the listing uses."]]]]
+    ["Condition report", ["tools/cr_from_inspection.py (samples/cr-*.json): issues with text in the app's words, the highlight (structural damage, keys, odor, mechanical), CR rows in dealer order with their photos and damages, tires, paint, videos, 360 view, light (stored, not shown), seller signature; it also fills the seller self-inspect fields the listing uses."]],
+    ["Reports: 360 view", ["Seller and dealer reports: the 360 view leads the Exterior photos, then eight exterior views from its frames 1, 5, 10, 14, 19, 23, 28, 32.", "Each confirmed Exterior, Paint or Tires damage with a photo gets a dot on its part, on the frames that show it; it turns with the car and hides on the far side. Amber, red for Red or worse; one dot per part (wheel and tire are one part) with a count when there are several.", "Tap a dot: a card with each damage's photo and line (scrolls). Tap a damage: its photo full screen; close goes back to the 360 view. The timeline under the view has a mark per dot.", "Mirror, headlight, tail light and fuel door: the side the inspector picked, else the side the AI reads from the photo, else no dot. Other and Other lights: no dot. Part positions are worked out on the server after upload; no dots until then."]]]]
 };
 function renderSpec() {
-  var key = S.screen === 'cars' ? 'cars' : S.screen === 'brief' ? 'brief' : S.screen === 'idcheck' && !S.cap ? 'idcheck' : S.screen === 'upload' ? 'upload' : S.cap ? (SPEC[S.cap.k] ? S.cap.k : 'capture') : (cur().phase === 'summary' ? 'summary' : cur().phase === 'label' ? 'label' : cur().phase === 'final' ? 'final' : cur().phase === 'sign' ? 'sign' : 'capture');
+  var key = S.screen === 'cars' ? 'cars' : S.screen === 'brief' ? 'brief' : S.screen === 'idcheck' && !S.cap ? 'idcheck' : S.screen === 'upload' ? 'upload' : S.cap ? (S.cap.k === 'Tires' && !S.cap.mode ? 'walk' : SPEC[S.cap.k] ? S.cap.k : 'capture') : (cur().phase === 'summary' ? 'summary' : cur().phase === 'label' ? 'label' : cur().phase === 'final' ? 'final' : cur().phase === 'sign' ? 'sign' : 'capture');
   var sp = SPEC[key], title = sp[0];
   if (S.cap && key !== 'capture') title = 'Camera · ' + sp[0];
   var h = '<div class="eyebrow">' + I('code', 14) + 'For developers · this screen</div><h2>' + esc(title) + '</h2><p>' + esc(sp[1]) + '</p>';
@@ -3101,18 +3298,18 @@ function fillStep() {
     if (!st.vals.vin_read) st.vals.vin_read = car().vin; if (!st.vals.odo_read) st.vals.odo_read = String(car().miles + 85); st.vals.idconf = true;
     if (st.vals.keys_n == null) { st.vals.keys_n = '2'; keysSync(st); }
     FEATQ.forEach(function (q) { var f = featOf(st); if (!f[q.id]) f[q.id] = featListed(q) ? q.opts[0] : q.opts[2]; });
-    CAPSEQ.forEach(function (k) { sumOk(st)[k] = true; }); st.phase = 'final';
+    sumPages().forEach(function (k) { sumOk(st)[k] = true; }); st.phase = 'final';
     if (!st.note.trim()) st.note = 'Clean car for its age. See the paint readings and the damages listed.'; render(); return; }
   st.agree = true; render();
 }
 function fillSection(st, k) {
   if (k === 'start') { st.owner = st.owner || 'Yes'; startPhotos().forEach(function (m) { st.shots[m.id] = true; }); if (st.owner === 'Family, with proof') st.shots.ph_family = true; }
-  else if (k === 'Tires') { WHEELS.forEach(function (w) { var t = st.tires[w[0]]; TIRE_SHOTS.forEach(function (q) { t.shots[q] = true; autoRead(st, q, w[0]); }); }); }
+  else if (k === 'Tires') { capList('Tires', st).forEach(function (x) { if (x.panel) { var r = st.paint[x.panel] = st.paint[x.panel] || {}; if (!r.shot) { r.shot = true; r.src = 'camera'; } if (!r.v) { r.v = paintDemo(x.panel); r.auto = true; } } else if (x.wheel) { st.tires[x.wheel].shots[x.id] = true; autoRead(st, x.id, x.wheel); } else { st.shots[x.id] = true; autoRead(st, x.id); } }); syncPaint(st); }
   else if (k === 'Paint') { PAINT_PANELS.forEach(function (x) { var r = st.paint[x.panel] = st.paint[x.panel] || {}; if (r.na) return; if (!r.shot) { r.shot = true; r.src = 'camera'; } if (!r.v) { r.v = paintDemo(x.panel); r.auto = true; } }); syncPaint(st); }
   else if (k === 'Damages') { st.manual.forEach(fillDmg); }
   else if (k === 'review') { if (!st.overall) st.overall = 'Pretty great'; if (!st.note.trim()) st.note = 'Clean car for its age. See the paint readings and the damages listed.'; }
   else if (k === 'sign') { st.agree = true; }
-  else { if (k === 'Exterior') fillSection(st, 'Paint'); var s = stepItems(k, st); s.media.forEach(function (m) { if (MULTI[m.id]) fillMulti(st, m.id); else { st.shots[m.id] = true; if (LIB[m.id] && !st.src[m.id]) st.src[m.id] = 'library'; } autoRead(st, m.id); }); }
+  else { var s = { media: capList(k, st).map(function (x) { return x.it; }) }; s.media.forEach(function (m) { if (MULTI[m.id]) fillMulti(st, m.id); else { st.shots[m.id] = true; if (LIB[m.id] && !st.src[m.id]) st.src[m.id] = 'library'; } autoRead(st, m.id); }); }
 }
 
 function fillMulti(st, id) {
@@ -3146,7 +3343,7 @@ document.addEventListener('click', function (e) {
   if (d.doclink) { sendDocLink(cur()); render(); return; }
   if (d.idconf) { var stc = cur(); stc.vals.idconf = !stc.vals.idconf; save(); render(); return; }
   if (d.feat) { var stf = cur(); featOf(stf)[d.feat] = d.fv; save(); render(); return; }
-  if (d.tmatch) { var stt = cur(); stt.vals.tires_match = d.tmatch; save(); render(); return; }
+  if (d.tmatch) { var stt = cur(); stt.vals.tires_match = d.tmatch; stt.vals.tm_auto = 0; save(); render(); return; }
   if (d.overall) { var sto = cur(); sto.overall = d.overall; save(); var ffo = document.querySelector('.ff'); if (ffo && ffo.querySelector('[data-tosign]')) ffo.innerHTML = sumFoot(sto); document.querySelectorAll('[data-overall]').forEach(function (x) { x.setAttribute('aria-checked', String(x.dataset.overall === d.overall)); }); return; }
   if (d.copy) { try { navigator.clipboard.writeText(d.copy).then(function () {}, function () {}); } catch (x) {} toast('copy', 'Copied', d.copy); render(); return; }
   if (d.carfax) { if (S.online) toast('ext', 'Opens the full Carfax report', 'The report link from the vehicle\'s Carfax data opens in the browser.'); else toast('upload', 'The full report needs signal', 'The Carfax summary on this screen is saved on the phone.'); render(); return; }
@@ -3158,7 +3355,9 @@ document.addEventListener('click', function (e) {
   if (S.choice) {
     if (d.chpick != null && d.chpick !== undefined) { pickChoice(st, d.chpick); return; }
     if (d.chback) { S.choice.step = 'main'; render(); return; }
-    if (d.chna) { var pn5 = st.paint[S.choice.id] = st.paint[S.choice.id] || {}; pn5.na = !pn5.na; if (pn5.na) { pn5.shot = false; pn5.v = ''; S.choice = null; } syncPaint(st); save(); render(); return; }
+    if (d.chna) { var pn5 = st.paint[S.choice.id] = st.paint[S.choice.id] || {}; pn5.na = !pn5.na; if (pn5.na) { pn5.shot = false; pn5.v = ''; } S.choice = null; syncPaint(st); save(); render(); return; }
+    if (d.pstep) { var cx5 = S.choice, ov5 = cx5.x > 10; cx5.x = Math.round((+d.pstep < 0 ? (ov5 ? 10 : Math.max(3, cx5.x - 0.1)) : (cx5.x >= 10 ? 10.1 : cx5.x + 0.1)) * 10) / 10; render(); return; }
+    if (d.pdone) { var pn6 = st.paint[S.choice.id] = st.paint[S.choice.id] || {}; if (!pn6.na) { pn6.v = S.choice.x.toFixed(1); pn6.auto = false; } S.choice = null; syncPaint(st); save(); render(); return; }
     if (d.chx) { S.choice = null; save(); render(); return; }
   }
   if (d.back) { S.cap = null; if (st.phase === 'sign') st.phase = 'final'; else if (st.phase === 'final') { st.phase = 'summary'; st.sp = sumPages().length - 1; } else if (st.phase === 'summary' && sumIdx(st) > 0) st.sp = sumIdx(st) - 1; else if (st.phase === 'summary') { if (st.manual.length) { st.phase = 'label'; st.li = labelOrder(st)[0]; } else st.phase = 'capture'; } else if (st.phase === 'label') st.phase = 'capture'; else S.screen = 'brief'; render(); var bk = scr.querySelector('.body'); if (bk) bk.scrollTop = 0; return; }
@@ -3178,14 +3377,15 @@ document.addEventListener('click', function (e) {
   if (d.lnext) { var nx4 = nextUnlabelled(st, st.li); if (nx4 >= 0) st.li = nx4; render(); var lb5 = scr.querySelector('.body'); if (lb5) lb5.scrollTop = 0; return; }
   if (d.toreview) { if (unlabelledOrder(st).length) return; toSummary(st); render(); var lb6 = scr.querySelector('.body'); if (lb6) lb6.scrollTop = 0; return; }
   if (d.revgo) { st.phase = 'summary'; st.sp = sumPages().indexOf(d.revgo); render(); return; }
-  if (d.ldel != null && d.ldel !== '') { st.manual.splice(+d.ldel, 1); S.ldrw = null; toast('trash', 'Damage removed', '');
-    if (S.cap && S.cap.mode === 'dmgform') S.cap = null; else { var u7 = unlabelledOrder(st), o7 = labelOrder(st); if (!o7.length) toSummary(st); else st.li = u7.length ? u7[0] : o7[0]; }
+  if (d.ldel != null && d.ldel !== '') { var z7 = st.manual[+d.ldel] ? dtab(st.manual[+d.ldel]) : null; st.manual.splice(+d.ldel, 1); S.ldrw = null; toast('trash', 'Damage removed', '');
+    /* stay on the tab: a photo still to label there, else its first; with none left, the first photo still to label */
+    if (S.cap && S.cap.mode === 'dmgform') S.cap = null; else { var s7 = zoneDamages(st, z7), t7 = s7.filter(function (e) { return !dmgDone(e[0]); }), u7 = unlabelledOrder(st), o7 = labelOrder(st); if (!o7.length) toSummary(st); else st.li = t7.length ? t7[0][1] : s7.length ? s7[0][1] : u7.length ? u7[0] : o7[0]; }
     save(); render(); return; }
-  if (d.lretake != null && d.lretake !== '') { var ri = +d.lretake, rz = (st.manual[ri] || {}).zone || 'Exterior', inForm = !!(S.cap && S.cap.mode === 'dmgform'); S.cap = { k: rz, i: capList(rz, st).length, rec: false, run: false, mode: 'dmg', sum: true, redo: ri, lab: !inForm, prev: null }; S.sheet = null; render(); return; }
+  if (d.lretake != null && d.lretake !== '') { var ri = +d.lretake, rz = st.manual[ri] ? dtab(st.manual[ri]) : 'Exterior', inForm = !!(S.cap && S.cap.mode === 'dmgform'); S.cap = { k: rz, i: capList(rz, st).length, rec: false, run: false, mode: 'dmg', sum: true, redo: ri, lab: !inForm, prev: null }; S.sheet = null; render(); return; }
   if (d.tosign) { if (sumBlock(st)) return; st.phase = 'sign'; st.step = stepIdx('sign'); st.seen.review = true; render(); var bs = scr.querySelector('.body'); if (bs) bs.scrollTop = 0; return; }
   if (d.capsec) { openCap(st, d.capsec, false); if (st.phase === 'summary') S.cap.sum = true; render(); return; }
   if (d.sret != null && d.sret !== '' && d.sk) { S.capRet = null; S.cap = { k: d.sk, i: +d.sret, rec: false, run: false, single: true, sum: true, prev: null }; S.sheet = null; render(); return; }
-  if (d.dedit != null && d.dedit !== '') { var dmi = +d.dedit, mz = (st.manual[dmi] || {}).zone || 'Exterior'; S.cap = { k: mz, i: capList(mz, st).length, rec: false, run: false, mode: 'dmgform', di: dmi, sum: st.phase === 'summary' }; S.sheet = null; render(); return; }
+  if (d.dedit != null && d.dedit !== '') { var dmi = +d.dedit, mz = st.manual[dmi] ? dtab(st.manual[dmi]) : 'Exterior'; S.cap = { k: mz, i: capList(mz, st).length, rec: false, run: false, mode: 'dmgform', di: dmi, sum: st.phase === 'summary' }; S.sheet = null; render(); return; }
   if (d.sp != null && d.sp !== '') { st.sp = +d.sp; render(); var bsp = scr.querySelector('.body'); if (bsp) bsp.scrollTop = 0; var cc0 = scr.querySelector('.sstrip .cur'); if (cc0) cc0.scrollIntoView({ block: 'nearest', inline: 'center' }); return; }
   if (d.spnext) { var kk2 = sumPages()[sumIdx(st)]; if (pageBlock(st, kk2)) return; sumOk(st)[kk2] = true; if (sumIdx(st) >= sumPages().length - 1) st.phase = 'final'; else st.sp = sumIdx(st) + 1; save(); render(); var bsn = scr.querySelector('.body'); if (bsn) bsn.scrollTop = 0; var cc1 = scr.querySelector('.sstrip .cur'); if (cc1) cc1.scrollIntoView({ block: 'nearest', inline: 'center' }); return; }
   if (d.next) { var kk = STEPS[st.step].k; if (kk === 'Tires') st.seen.Tires = true; if (kk === 'review' && (!st.note.trim() || !st.overall)) return; if (missingCount(st, kk)) return; go(st.step + 1); return; }
@@ -3200,9 +3400,12 @@ document.addEventListener('click', function (e) {
   if (S.cap) {
     var cl2 = capList(S.cap.k, st), cx = cl2[S.cap.i];
     if (d.csel) { S.cap.sel = { t: d.csel[0], i: +d.csel.slice(1) }; S.cap.tag = null; S.cap.note = ''; S.cap.rec = false; render(); return; }
+    if (S.cap.rec && (d.cjump != null || d.csel || d.cback)) return;
+    if (d.cshot && S.cap.sel && capSel(st, S.cap)) { var rs = S.cap.sel, re = rs.t === 'd' ? st.manual[rs.i] : (st.multi[MODSLOT[S.cap.k]] || [])[rs.i]; if (re) re.src = 'camera'; S.cap.flash = true; render(); return; }
     if (d.cshot || d.cup || d.cjump != null || d.cback || d.ctag || d.cskip || d.cnext || d.cmdone || d.cna || d.cplus || d.cmundo) S.cap.sel = null;
     if (d.cextno) { S.cap.ask = null; capGoNext(st); render(); return; }
     if (d.cextrec) { S.cap.ask = null; S.cap.free = true; S.cap.tag = null; S.cap.note = ''; render(); capScroll(); return; }
+    if (d.cflash) { S.flashMode = FLASHES[(FLASHES.indexOf(S.flashMode || 'auto') + 1) % 3]; render(); return; }
     if (d.cextnext) { S.cap.free = false; capGoNext(st); render(); return; }
     if (S.cap.ask) return;
     if (d.cback && S.cap.free) { S.cap.free = false; S.cap.tag = null; render(); return; }
@@ -3212,7 +3415,7 @@ document.addEventListener('click', function (e) {
     if (d.cdshot || d.cdup) { var dsrc = d.cdup ? 'library' : 'camera';
       if (S.cap.sum && S.cap.redo != null && st.manual[S.cap.redo] && S.cap.lab) { st.manual[S.cap.redo].src = dsrc; S.cap = null; toast('check', 'Retaken', ''); render(); return; }
       if (S.cap.sum && S.cap.redo != null && st.manual[S.cap.redo]) { st.manual[S.cap.redo].src = dsrc; S.cap.di = S.cap.redo; S.cap.redo = null; S.cap.mode = 'dmgform'; render(); return; }
-      st.manual.push({ zone: S.cap.k, panel: '', type: '', sev: '', size: '', shot: true, src: dsrc, n: st.manual.length + 1 }); aiLabel(st, st.manual[st.manual.length - 1]); atWheel(st.manual[st.manual.length - 1], S.cap.aw); syncDamages(st);
+      st.manual.push(newDmg(S.cap.k, dsrc, st.manual.length + 1)); aiLabel(st, st.manual[st.manual.length - 1]); atWheel(st.manual[st.manual.length - 1], S.cap.aw); syncDamages(st);
       if (S.cap.sum) { S.cap.di = st.manual.length - 1; S.cap.mode = 'dmgform'; render(); return; }
       S.cap.flash = !d.cdup; render(); return; }
     if (d.dset && S.cap.mode === 'dmgform') { var dm = st.manual[S.cap.di]; if (dm) { setLabel(dm, d.dset, d.o); dmgToast(st, syncDamages(st)); } save(); render(); return; }
@@ -3236,10 +3439,10 @@ document.addEventListener('click', function (e) {
     if (d.cmdone && cx) { S.cap.prev = null; S.cap.note = ''; if (S.capRet) capResume(st); else capAdvance(st); render(); capScroll(); return; }
     if (d.cmundo && cx && MULTI[cx.id]) { var ua = st.multi[cx.id] || []; ua.pop(); st.shots[cx.id] = ua.length || 0; if (!ua.length) delete st.shots[cx.id]; S.cap.note = ''; render(); return; }
     if (d.cplus && S.cap.prev) { var pa = st.multi[S.cap.prev] = st.multi[S.cap.prev] || []; pa.push({ src: 'camera', panel: null }); st.shots[S.cap.prev] = pa.length; S.cap.flash = true; S.cap.note = (MULTI_PLUS[S.cap.prev] || 'Photo') + ' ' + pa.length + ' added'; render(); return; }
-    if (d.czoom) { S.zoom = +d.czoom; render(); return; }
-    if (d.ctag && cx && S.cap.k !== 'OBDII' && cx.it.kind !== 'video') { var tk = S.cap.k, tn; S.tagN = (S.tagN || 0) + 1;
-      if (d.ctag === 'dmg') { st.manual.push({ zone: DZONE[tk] || 'Exterior', panel: '', type: '', sev: '', size: '', shot: true, src: 'camera', sec: tk, at: S.cap.i, n: S.tagN }); aiLabel(st, st.manual[st.manual.length - 1]); syncDamages(st); tn = st.manual.filter(function (m) { return m.sec === tk; }).length; }
-      else { var tm2 = st.multi[MODSLOT[tk]] = st.multi[MODSLOT[tk]] || []; tm2.push({ src: 'camera', panel: null, sec: tk, at: S.cap.i, n: S.tagN }); st.shots[MODSLOT[tk]] = tm2.length; tn = tm2.filter(function (m) { return m.sec === tk; }).length; }
+    if (d.czoom) { if (S.cap.rec && (+d.czoom === 0.5) !== ((S.zoom || 1) === 0.5)) return; S.zoom = +d.czoom; render(); return; }
+    if (d.ctag && cx && (S.cap.free || (homeOf(cx, S.cap.k) !== 'OBDII' && cx.it.kind !== 'video'))) { var tk = S.cap.k, tn; S.tagN = (S.tagN || 0) + 1;
+      if (d.ctag === 'dmg') { st.manual.push({ zone: DZONE[shotZone(cx, tk)] || 'Exterior', panel: '', type: '', sev: '', size: '', shot: true, src: 'camera', sec: tk, at: S.cap.i, n: S.tagN }); aiLabel(st, st.manual[st.manual.length - 1]); syncDamages(st); tn = st.manual.filter(function (m) { return m.sec === tk; }).length; }
+      else { var tm2 = st.multi[MODSLOT[tk]] = st.multi[MODSLOT[tk]] || []; tm2.push({ src: 'camera', panel: null, sec: tk, rs: tk === 'Tires' ? (cx.wheel ? 'Tires' : 'Exterior') : tk, at: S.cap.i, n: S.tagN }); st.shots[MODSLOT[tk]] = tm2.length; tn = tm2.filter(function (m) { return m.sec === tk; }).length; }
       S.cap.flash = true; S.cap.tag = [d.ctag, tn, S.cap.i]; render(); capScroll(); return; }
     if ((d.cshot || d.cup) && cx) { S.cap.tag = null;
       if (cx.it.kind === 'video' && d.cshot && !S.cap.rec) { S.cap.rec = true; S.cap.recAt = Date.now(); render(); return; }
@@ -3267,12 +3470,14 @@ document.addEventListener('click', function (e) {
   if (d.extra) { var srcx = d.wheel ? st.tires[d.wheel] : st; srcx.extra = srcx.extra || {}; var ax = srcx.extra[d.extra] = srcx.extra[d.extra] || [], jx = ax.indexOf(d.o); if (jx >= 0) ax.splice(jx, 1); else ax.push(d.o); render(); return; }
   if (d.ok) { var s2 = d.wheel ? st.tires[d.wheel] : st; s2.probs[d.ok] = []; s2.open[d.ok] = false; if (d.ok === 'ck_road') st.vals.road_done = false; render(); return; }
   if (d.vin) { st.vals.vin_scan = 1; render(); return; }
+  if (d.pview) { S.pview = { ids: d.pview.split(','), cap: d.pcap || '', at: 0 }; render(); return; }
+  if (d.pvx) { S.pview = null; render(); return; }
   if (d.v360) { S.sheet = { v360: true }; render(); return; }
   if (d.v3x) { S.sheet = null; render(); return; }
   if (d.addman) { S.sheet = { aw: d.aw || null, addz: ZONES[d.addman] ? d.addman : 'Exterior' }; render(); return; }
   if (d.addsrc != null && S.sheet && S.sheet.addz) { var az = S.sheet.addz, awOf = S.sheet.aw || null; S.sheet = null;
     if (d.addsrc === 'camera') S.cap = { k: az, i: capList(az, st).length, rec: false, run: false, mode: 'dmg', sum: st.phase === 'summary', nolib: true, aw: awOf };
-    else if (d.addsrc === 'library') { st.manual.push({ zone: az, panel: '', type: '', sev: '', size: '', shot: true, src: 'library', n: st.manual.length + 1 }); aiLabel(st, st.manual[st.manual.length - 1]); atWheel(st.manual[st.manual.length - 1], awOf); syncDamages(st); S.cap = { k: az, i: capList(az, st).length, rec: false, run: false, mode: 'dmgform', sum: true, di: st.manual.length - 1 }; }
+    else if (d.addsrc === 'library') { st.manual.push(newDmg(az, 'library', st.manual.length + 1)); aiLabel(st, st.manual[st.manual.length - 1]); atWheel(st.manual[st.manual.length - 1], awOf); syncDamages(st); S.cap = { k: az, i: capList(az, st).length, rec: false, run: false, mode: 'dmgform', sum: true, di: st.manual.length - 1 }; }
     save(); render(); return; }
   if (d.mandel != null && d.mandel !== '') { st.manual.splice(+d.mandel, 1); render(); return; }
   if (d.pshot) { var pr = st.paint[d.pshot] = st.paint[d.pshot] || {}; pr.shot = !pr.shot; if (pr.shot) { pr.src = 'camera'; if (!pr.v) { pr.v = paintDemo(d.pshot); pr.auto = true; } } else { pr.v = ''; pr.auto = false; } syncPaint(st); render(); return; }
@@ -3292,7 +3497,7 @@ document.addEventListener('pointerup', function () { SXD = null; setTimeout(func
 document.addEventListener('click', function (e) { if (SXMOVED && e.target.closest && e.target.closest('.sstrip')) { e.stopPropagation(); e.preventDefault(); SXMOVED = false; } }, true);
 document.addEventListener('wheel', function (e) { var sx = e.target.closest && e.target.closest('.sstrip'); if (!sx || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; sx.scrollLeft += e.deltaY; e.preventDefault(); }, { passive: false });
 document.addEventListener('pointerdown', function (e) {
-  var el = e.target.closest && e.target.closest('.lph[data-swipe]'); if (!el || e.target.closest('button')) return;
+  var el = e.target.closest && e.target.closest('.lpg[data-swipe]'); if (!el || e.target.closest('button')) return;
   SW = { x: e.clientX, y: e.clientY, el: el, dx: 0, on: false, id: e.pointerId };
 });
 document.addEventListener('pointermove', function (e) {
@@ -3302,12 +3507,16 @@ document.addEventListener('pointermove', function (e) {
 });
 function swipeEnd(e) {
   if (!SW || (e && e.pointerId !== SW.id)) return; var w = SW; SW = null; if (!w.on || !S.car) return;
-  var st = cur(), o = labelOrder(st), p = o.indexOf(st.li), to = w.dx < -50 ? p + 1 : w.dx > 50 ? p - 1 : p;
-  if (to === p || to < 0 || to >= o.length) { w.el.style.transition = 'transform .18s'; w.el.style.transform = ''; return; }
+  var st = cur(), o = labelOrder(st), p = o.indexOf(st.li), to = w.dx < -50 ? p + 1 : w.dx > 50 ? p - 1 : p, cn = st.manual[st.li] ? labelOpen(st, st.manual[st.li]).count : o.length;
+  if (to === p || to < 0 || to >= Math.min(o.length, cn)) { w.el.style.transition = 'transform .18s'; w.el.style.transform = ''; return; }
   w.el.style.transition = 'transform .14s ease-in'; w.el.style.transform = 'translateX(' + (w.dx < 0 ? -115 : 115) + '%)';
   setTimeout(function () { st.li = o[to]; S.swipeIn = w.dx < 0 ? 'r' : 'l'; render(); var lb = scr.querySelector('.body'); if (lb) lb.scrollTop = 0; }, 140);
 }
 document.addEventListener('pointerup', swipeEnd); document.addEventListener('pointercancel', swipeEnd);
+/* the photo viewer: swipe for the next or previous photo */
+var PVX = null;
+document.addEventListener('pointerdown', function (e) { if (S.pview && e.target.closest && e.target.closest('[data-pvswipe]')) PVX = e.clientX; });
+document.addEventListener('pointerup', function (e) { if (PVX == null || !S.pview) { PVX = null; return; } var dx = e.clientX - PVX, v = S.pview; PVX = null; if (Math.abs(dx) < 40) return; v.at = Math.max(0, Math.min(v.ids.length - 1, v.at + (dx < 0 ? 1 : -1))); render(); });
 /* 360 view: drag sideways on the picture to turn the car, one frame per 8 px (frames wrap around) */
 var SPD = null;
 function spinSet(f) { var st = cur(); st.spin = f; var sc = document.getElementById('spincar'), sl = document.getElementById('spinlbl'), sr = scr.querySelector('[data-spin]'); if (sc) sc.style.transform = 'scaleX(' + (f >= 18 ? -1 : 1) + ')'; if (sl) sl.textContent = spinLabel(f); if (sr) sr.value = f; }
@@ -3325,6 +3534,7 @@ document.addEventListener('input', function (e) {
   if (t.dataset.val) { st.vals[t.dataset.val] = t.value.replace(/\D/g, '').slice(0, 3); save(); return; }
   if (t.id === 'codes') { st.codes = t.value; save(); return; }
   if (t.id === 'note') { st.note = t.value; var ff2 = document.querySelector('.ff'); if (ff2 && ff2.querySelector('[data-tosign]')) ff2.innerHTML = sumFoot(st); save(); return; }
+  if (t.dataset.prange && S.choice) { S.choice.x = Math.round(+t.value * 10) / 10; var pvs = document.getElementById('pvshow'); if (pvs) pvs.textContent = milsTxt(S.choice.x.toFixed(1)) + ' mils'; var mb = document.querySelectorAll('.mils .mst'); if (mb.length === 2) { mb[0].disabled = S.choice.x <= 3; mb[1].disabled = S.choice.x > 10; } return; }
   if (t.dataset.pval) { var rr = st.paint[t.dataset.pval] = st.paint[t.dataset.pval] || {}; rr.v = t.value.replace(/[^\d.]/g, '').slice(0, 4); rr.auto = false; syncPaint(st); save(); var row2 = t.closest('.prow'), hi2 = paintHigh(rr); if (row2) { row2.classList.toggle('hi', hi2); var tg2 = row2.querySelector('.ptag'); if (hi2 && !tg2) t.insertAdjacentHTML('afterend', '<span class="ptag">High</span>'); if (!hi2 && tg2) tg2.remove(); } return; }
   if (t.dataset.spin) { spinSet(+t.value); save(); return; }
   if (t.id === 'sname') { st.signName = t.value; var b = document.querySelector('[data-sign]'); if (b) b.disabled = !canSign(st); save(); return; }
@@ -3348,4 +3558,3 @@ document.getElementById('reset').innerHTML = I('reset', 15) + 'Reset';
 })();
 render();
 </script>
-</body></html>
