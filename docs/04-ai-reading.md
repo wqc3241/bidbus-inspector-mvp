@@ -26,9 +26,9 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 
 ## Damage first guess
 
-- The app sends `section`, `fuel` and, when the Damage shutter was pressed during the Exterior walk (paint panels, roof, windshield VIN) or the Tires walk, `near`: a JSON list of the places between the shot taken before the damage photo and the shot to take next. The inspector may photograph a damage before or after that panel's or wheel's own shot, so both shots count: a paint panel brings the parts next to it (left front door: the door, its window and the mirror), a wheel its tire and its wheel; Exterior adds Other. After the last shot of a section (Record damage now), the app sends no `near`: the damage can be anywhere in the section.
+- The app sends `section` and `fuel`. The section is the zone of the shot the Damage shutter was pressed at (docs/11): a paint panel, the roof photo or the windshield VIN Exterior, a tire Tires, cargo and the Interior shots Interior, Mechanicals; an underbody shot sends `Underbody`. In Record damage it is the zone of the section's last shot. The AI picks the place from every place of that section, not only the shots around it.
 - A damage photo taken from Review for one wheel sends `hint` (that wheel's tire) instead.
-- The server builds the allowed list from `data/issue-catalog.json` `places` for that section and fuel: each place with its allowed types. With `near`, only those places stay (all of them when none of the `near` places is in the section). It sends this list in the instruction and requires the answer to be one of its pairs.
+- The server builds the allowed list from `data/issue-catalog.json` `places` for that section and fuel: each place with its allowed types. It sends this list in the instruction and requires the answer to be one of its pairs.
 - With a `hint`, the place defaults to the hint; the AI picks type and severity.
 - A pair not in the list is dropped to `{place: hint or null, type: null, severity: null}`.
 

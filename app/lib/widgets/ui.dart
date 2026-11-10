@@ -78,14 +78,29 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       );
 }
 
+// rows, values and drawers drawn dark over the camera (the end-of-section questions; the mockup's .cap .ask and .cap ~ .ch-bg)
+class DarkRows extends InheritedWidget {
+  const DarkRows({super.key, required super.child});
+  static bool of(BuildContext c) => c.dependOnInheritedWidgetOfExactType<DarkRows>() != null;
+  @override
+  bool updateShouldNotify(DarkRows old) => false;
+}
+
+const dkCard = Color(0xFF1F2326), dkSub = Color(0x8CFFFFFF), dkBtn = Color(0x1FFFFFFF), dkOk = Color(0xFF4ADE80), dkAmber = Color(0xFFFBBF24), dkRed = Color(0xFFF87171);
+Color dk(Color? c) => c == red ? dkRed : c == amber ? dkAmber : c == bid ? dkOk : Colors.white;
+
 // full-width rows, white and light grey in turn, no dividers
 class RowList extends StatelessWidget {
   final List<Widget> children;
   const RowList(this.children, {super.key});
   @override
-  Widget build(BuildContext context) => Column(children: [
-        for (var i = 0; i < children.length; i++) ColoredBox(color: i.isEven ? alt : Colors.white, child: children[i]),
-      ]);
+  Widget build(BuildContext context) {
+    final d = DarkRows.of(context);
+    final col = Column(children: [
+      for (var i = 0; i < children.length; i++) ColoredBox(color: d ? (i.isEven ? const Color(0x0FFFFFFF) : const Color(0x1CFFFFFF)) : (i.isEven ? alt : Colors.white), child: children[i]),
+    ]);
+    return d ? ClipRRect(borderRadius: BorderRadius.circular(12), child: col) : col;
+  }
 }
 
 class RowBtn extends StatelessWidget {
@@ -97,34 +112,71 @@ class RowBtn extends StatelessWidget {
   final bool need; // still to answer: a red frame round the whole row
   const RowBtn(this.label, this.value, {super.key, this.sub, this.subColor, this.onTap, this.need = false});
   @override
-  Widget build(BuildContext context) => InkWell(
+  Widget build(BuildContext context) {
+    final d = DarkRows.of(context);
+    return InkWell(
         onTap: onTap,
         child: DecoratedBox(
           position: DecorationPosition.foreground,
           decoration: need ? BoxDecoration(border: Border.all(color: const Color(0xFFE1255D), width: 2), borderRadius: BorderRadius.circular(10)) : const BoxDecoration(),
           child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 52),
+          constraints: BoxConstraints(minHeight: d ? 42 : 52),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: d ? const EdgeInsets.fromLTRB(12, 6, 10, 6) : const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Row(children: [
               Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(label, style: const TextStyle(fontSize: 15)),
-                if (sub != null && sub!.isNotEmpty) Text(sub!, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: subColor ?? muted)),
+                Text(label, style: d ? const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white) : const TextStyle(fontSize: 15)),
+                if (sub != null && sub!.isNotEmpty)
+                  d
+                      ? Text(sub!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: subColor == red ? dkRed : subColor != null ? dkAmber : dkSub))
+                      : Text(sub!, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: subColor ?? muted)),
               ])),
               value,
-              if (onTap != null) const Padding(padding: EdgeInsets.only(left: 6), child: Icon(LucideIcons.chevronRight, size: 16, color: Color(0xFFB0B5BA))),
+              if (onTap != null) Padding(padding: const EdgeInsets.only(left: 6), child: Icon(LucideIcons.chevronRight, size: 16, color: d ? const Color(0x59FFFFFF) : const Color(0xFFB0B5BA))),
             ]),
           ),
           ),
         ),
       );
+  }
 }
 
-Widget okVal(String t) => Row(mainAxisSize: MainAxisSize.min, children: [const Icon(LucideIcons.check, size: 15, color: bid), const SizedBox(width: 4), Text(t, style: const TextStyle(color: bid, fontWeight: FontWeight.w600))]);
-Widget needVal([String t = 'Pick']) => Text(t, style: const TextStyle(color: Color(0xFFE1255D), fontWeight: FontWeight.w700));
-Widget alertVal(Color c, [String t = '']) => Row(mainAxisSize: MainAxisSize.min, children: [Icon(LucideIcons.triangleAlert, size: 15, color: c), if (t.isNotEmpty) ...[const SizedBox(width: 4), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.w600))]]);
-Widget setVal(String t) => Text(t, style: const TextStyle(fontWeight: FontWeight.w600));
+Widget okVal(String t) => _Val(t, 'ok', bid);
+Widget needVal([String t = 'Pick']) => _Val(t, 'need', null);
+Widget alertVal(Color c, [String t = '']) => _Val(t, 'alert', c);
+Widget setVal(String t) => _Val(t, 'set', null);
+Widget plainVal(String t) => _Val(t, 'plain', null); // a neutral value: Not done, Not read
+
+// a row's value; over the camera a pill (the mockup's .ask .v): OK and answers green, problems amber or red, Pick blue
+class _Val extends StatelessWidget {
+  final String t, kind;
+  final Color? c;
+  const _Val(this.t, this.kind, this.c);
+  @override
+  Widget build(BuildContext context) {
+    if (DarkRows.of(context)) {
+      final (bg, fg) = switch (kind) {
+        'ok' || 'set' => (const Color(0x3322C55E), dkOk),
+        'alert' => c == red ? (const Color(0x33EF4444), dkRed) : (const Color(0x33F59E0B), dkAmber),
+        'need' => (dkBtn, const Color(0xFF93C5FD)),
+        _ => (dkBtn, Colors.white),
+      };
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(99)),
+        child: t.isEmpty && kind == 'alert' ? Icon(LucideIcons.triangleAlert, size: 13, color: fg) : Text(t, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: fg)),
+      );
+    }
+    return switch (kind) {
+      'ok' => Row(mainAxisSize: MainAxisSize.min, children: [const Icon(LucideIcons.check, size: 15, color: bid), const SizedBox(width: 4), Text(t, style: const TextStyle(color: bid, fontWeight: FontWeight.w600))]),
+      'need' => Text(t, style: const TextStyle(color: Color(0xFFE1255D), fontWeight: FontWeight.w700)),
+      'alert' => Row(mainAxisSize: MainAxisSize.min, children: [Icon(LucideIcons.triangleAlert, size: 15, color: c), if (t.isNotEmpty) ...[const SizedBox(width: 4), Text(t, style: TextStyle(color: c, fontWeight: FontWeight.w600))]]),
+      'plain' => Text(t, style: const TextStyle(color: muted, fontWeight: FontWeight.w600)),
+      _ => Text(t, style: const TextStyle(fontWeight: FontWeight.w600)),
+    };
+  }
+}
 
 class Sub3 extends StatelessWidget {
   final String text;
@@ -245,9 +297,33 @@ class Opt {
   const Opt(this.value, {String? label, this.color, this.tag, this.locked = false}) : label = label ?? value;
 }
 
-// radio: false for a list of actions (Take photo, Upload), which have no selected state
-Future<String?> showChoice(BuildContext context, String title, List<Opt> opts, List<String?> sel, {String? sub, Widget? body, List<Widget> actions = const [], bool radio = true}) =>
-    showModalBottomSheet<String>(
+// radio: false for a list of actions (Take photo, Upload), which have no selected state. dark: over the camera, centred
+Future<String?> showChoice(BuildContext context, String title, List<Opt> opts, List<String?> sel, {String? sub, Widget? body, List<Widget> actions = const [], bool radio = true, bool dark = false}) => dark
+    ? _darkDialog<String>(context, (c) => [
+          for (var i = 0; i < opts.length; i++)
+            () {
+              final o = opts[i], on = sel.contains(o.value);
+              return Material(
+                color: on ? const Color(0x2EFFFFFF) : i.isEven ? const Color(0x0FFFFFFF) : const Color(0x1CFFFFFF),
+                child: InkWell(
+                  onTap: o.locked ? null : () => Navigator.pop(c, o.value),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 46),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      child: Row(children: [
+                        if (o.locked) const Padding(padding: EdgeInsets.only(right: 6), child: Icon(LucideIcons.camera, size: 15, color: dkSub)),
+                        Expanded(child: Text(o.label, style: TextStyle(fontSize: 14, color: o.locked ? dkSub : Colors.white, fontWeight: on ? FontWeight.w700 : FontWeight.w600))),
+                        if (o.tag != null) Padding(padding: const EdgeInsets.only(right: 8), child: Text(o.tag!, style: const TextStyle(fontSize: 12, color: dkRed, fontWeight: FontWeight.w700))),
+                        if (radio) Icon(on ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: on ? dk(o.color) : const Color(0x59FFFFFF), size: 22),
+                      ]),
+                    ),
+                  ),
+                ),
+              );
+            }(),
+        ], title, sub)
+    : showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.white,
@@ -297,8 +373,24 @@ Future<String?> showChoice(BuildContext context, String title, List<Opt> opts, L
     );
 
 // text value in a drawer (VIN, mileage, mils, codes)
-Future<String?> showTextSheet(BuildContext context, String title, String value, {String? unit, TextInputType kb = TextInputType.text, int? max, bool caps = false, List<Widget> extraActions = const []}) {
+Future<String?> showTextSheet(BuildContext context, String title, String value, {String? unit, TextInputType kb = TextInputType.text, int? max, bool caps = false, List<Widget> extraActions = const [], bool dark = false}) {
   final c = TextEditingController(text: value);
+  if (dark) {
+    return _darkDialog<String>(context, (ctx) => [
+          TextField(
+              controller: c,
+              autofocus: true,
+              keyboardType: kb,
+              maxLength: max,
+              style: const TextStyle(color: Colors.white),
+              cursorColor: Colors.white,
+              textCapitalization: caps ? TextCapitalization.characters : TextCapitalization.none,
+              decoration: InputDecoration(
+                  suffixText: unit, counterText: '', filled: true, fillColor: const Color(0x0FFFFFFF),
+                  enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Color(0x33FFFFFF)), borderRadius: BorderRadius.circular(10)),
+                  focusedBorder: OutlineInputBorder(borderSide: const BorderSide(color: Color(0x80FFFFFF)), borderRadius: BorderRadius.circular(10)))),
+        ], title, null, done: (ctx) => Navigator.pop(ctx, c.text.trim()));
+  }
   return showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
@@ -324,6 +416,45 @@ Future<String?> showTextSheet(BuildContext context, String title, String value, 
     ),
   );
 }
+
+// the drawer over the camera: a dark card in the middle (landscape), the same answers as the white drawer on Review
+Future<T?> _darkDialog<T>(BuildContext context, List<Widget> Function(BuildContext c) rows, String title, String? sub, {void Function(BuildContext c)? done}) => showDialog<T>(
+      context: context,
+      barrierColor: const Color(0xA6000000),
+      builder: (c) => Dialog(
+        backgroundColor: dkCard,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 480, maxHeight: MediaQuery.of(c).size.height * .94),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Colors.white)),
+              if (sub != null && sub.isNotEmpty) Text(sub, style: const TextStyle(color: dkSub)),
+              const SizedBox(height: 12),
+              Flexible(child: ClipRRect(borderRadius: BorderRadius.circular(12), child: ListView(shrinkWrap: true, padding: EdgeInsets.zero, children: rows(c)))),
+              const SizedBox(height: 12),
+              Row(children: [
+                Expanded(child: darkBtn('Cancel', () => Navigator.pop(c))),
+                if (done != null) ...[const SizedBox(width: 10), Expanded(child: darkBtn('Done', () => done(c), bg: bid))],
+              ]),
+            ]),
+          ),
+        ),
+      ),
+    );
+
+Widget darkBtn(String t, VoidCallback on, {Color bg = dkBtn, IconData? icon}) => SizedBox(
+      height: 50,
+      child: TextButton(
+        onPressed: on,
+        style: TextButton.styleFrom(backgroundColor: bg, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
+        child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(mainAxisSize: MainAxisSize.min, children: [if (icon != null) ...[Icon(icon, size: 18), const SizedBox(width: 6)], Text(t, maxLines: 1, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600))])),
+      ),
+    );
 
 // a paint reading on a slider from 3.0 to 10+ mils, with - and + for 0.1. "10+" is more than 10: it is kept as 10.1,
 // or as the meter's own reading when the photo gave one above 10

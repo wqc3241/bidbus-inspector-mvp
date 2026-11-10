@@ -1,4 +1,5 @@
-// One camera pass, landscape: guided shots section by section, Damage (amber) and Mod (blue) shutters at any point.
+// One camera pass, landscape (docs/11-camera-flow-1109.md): Exterior, Interior with the OBDII screens, the walk-around, Mechanicals,
+// Underbody; guided shots with a Look for list, Damage (amber) and Mod (blue) shutters at any point, questions at a section's end.
 // The state machine is the mockup's capture handlers (capAdvance, capBack, capResume, capEnd, capGoNext) ported one to one.
 import 'dart:async';
 import 'dart:io';
@@ -14,6 +15,7 @@ import '../data/ql.dart';
 import '../logic/insp.dart';
 import '../services/media.dart';
 import '../services/store.dart';
+import '../widgets/questions.dart';
 import '../widgets/ui.dart';
 
 class CamArgs {
@@ -183,7 +185,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   // the photo already taken for what is on screen (a taken shot, a picked tag, the damage being retaken); null: live camera
   String? get shown {
     final s = sel;
-    if (s != null) return ((s.$1 == 'd' ? manual(st) : (m(st, 'multi')[modslot[k]] ?? []) as List)[s.$2] as Map)['f'];
+    if (s != null) {
+      final a = s.$1 == 'd' ? manual(st) : (m(st, 'multi')[modslot[k]] ?? []) as List;
+      return s.$2 < a.length ? (a[s.$2] as Map)['f'] : null; // a pick of another section's list is no pick (see capGoNext)
+    }
     if (dmgMode) {
       final d = manual(st).where((d) => d['id'] == widget.args.redo).firstOrNull;
       return d == null ? null : d['f'];
@@ -199,6 +204,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 
   Object get here => (k, i, sel);
+  // the Damage and Mod shutters are off on videos and on the OBDII screens (taken in Interior), on in Record damage
+  bool get tagShut => !free && i < l.length && (homeOf(l[i], k) == 'OBDII' || (l[i]['it'] as J)['kind'] == 'video');
   bool get showing => shown != null && liveFor != here;
   List<J> get l => capList(k, st);
 
@@ -211,6 +218,9 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     final a = widget.args, saved = st['cap'] as J?;
     sel = a.sel;
     k = a.dmg ?? a.k ?? saved?['k'] ?? firstOpenSection(st) ?? 'Exterior';
+    // the run goes on where it stopped, unless an earlier section still has shots to take (the mockup opens the first open one)
+    final fo = firstOpenSection(st);
+    if (a.run && a.k == null && fo != null && camseq.contains(k) && camseq.indexOf(fo) < camseq.indexOf(k)) k = fo;
     final lst = capList(k, st);
     i = a.i ?? capNext(st, lst, 0);
     if (a.run && i >= lst.length && !a.single) {
@@ -336,8 +346,9 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (widget.args.run && i >= l.length) capEnd();
   }
 
+  // the end of a section: its questions (docs/11), then Record damage or Next; Exterior goes straight on
   void capEnd() {
-    if (k != 'OBDII') {
+    if (askQ.contains(k)) {
       i = l.length - 1;
       ask = true;
       free = false;
@@ -349,6 +360,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   void capGoNext() {
     final nk = nextSection(st, k);
     capRet = null;
+    sel = null; // a picked tag belongs to the section left (the mockup's new S.cap)
+    liveFor = null;
     if (nk == null) {
       store.mut(widget.id, afterCapture);
       Navigator.of(context).pop();
@@ -386,6 +399,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   bool get canBack => !widget.args.single && (i > 0 || (widget.args.run && prevSection(st, k) != null && camseq.contains(prevSection(st, k))));
   void capBack() {
     capRet ??= {'k': k, 'i': i};
+    sel = null;
     if (i > 0) {
       i = i.clamp(0, l.length) - 1;
     } else {
@@ -594,23 +608,23 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 
   Future<void> _tag(String t) async {
-    if (busy || (cc == null && !noCam) || i >= l.length || k == 'OBDII' || ((l[i]['it'] as J)['kind'] == 'video' && !free)) return;
+    if (busy || (cc == null && !noCam) || i >= l.length || tagShut) return;
     sel = null;
     if (showing && !noCam) return setState(() => liveFor = here); // a taken photo is on screen: show the camera first
     setState(() => busy = true);
     if (!noCam) _blink();
     try {
-      final at = i, sec = k, near = free ? null : dmgNear(st, k, i), from = noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
+      final at = i, sec = k, x = l[i], home = shotZone(x, k), from = noCam ? (await ImagePicker().pickImage(source: ImageSource.gallery))?.path : (await cc!.takePicture()).path;
       if (from == null) return;
       if (!noCam) _blink(taken: true);
       if (t == 'dmg') {
-        final zone = dzone[sec] ?? 'Exterior';
+        // the zone of the shot it was taken at (a paint panel or the roof Exterior, a tire Tires, cargo Interior); the AI picks the
+        // place from every place of that zone. A damage shot under the car is read against the underbody places, so it stays on Underbody
+        final zone = dzone[home] ?? 'Exterior';
         final did = 'd${DateTime.now().microsecondsSinceEpoch}';
-        // a damage shot under the car is read against the underbody places, so the guess keeps it on Underbody;
-        // during the walk the AI picks the place between the shot before and the shot after (none in free mode: it can be anywhere)
-        final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': sec == 'Underbody' ? sec : zone, 'near': ?near});
+        final rel = await keepPhoto(widget.id, from, 'damage', read: {'kind': 'damage', 'did': did, 'section': home == 'Underbody' ? home : zone});
         store.mut(widget.id, (s) {
-          manual(s).add(<String, dynamic>{'id': did, 'zone': zone, 'sec': sec, 'at': at, 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': rel});
+          manual(s).add(<String, dynamic>{'id': did, 'zone': zone, 'sec': sec, 'at': at, 'key': slotKey(x), 'panel': '', 'type': '', 'sev': '', 'size': '', 'src': 'camera', 'f': rel});
           syncDamages(s);
         });
         tag = ('dmg', manual(st).where((d) => d['sec'] == sec).length, at);
@@ -619,7 +633,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         final slot = modslot[sec]!;
         store.mut(widget.id, (s) {
           final a = (m(s, 'multi')[slot] ??= <dynamic>[]) as List;
-          a.add({'src': 'camera', 'panel': null, 'sec': sec, 'at': at, 'f': rel});
+          // rs: the Review page it shows on; in the walk-around a mod at a tire is a Tires mod, elsewhere an Exterior one
+          a.add({'src': 'camera', 'panel': null, 'sec': sec, 'at': at, 'key': slotKey(x), 'rs': sec == 'Tires' ? (x['wheel'] != null ? 'Tires' : 'Exterior') : sec, 'f': rel});
           m(s, 'shots')[slot] = a.length;
         });
         tag = ('mod', ((m(st, 'multi')[slot] ?? []) as List).where((d) => d['sec'] == sec).length, at);
@@ -778,6 +793,9 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         );
     }
 
+    // the damage and mod tags of this section, each after the shot it was taken at
+    final mods = (m(st, 'multi')[modslot[k]] ?? []) as List;
+    final dj = [for (final dm in manual(st)) dm['sec'] == k ? tagAt(st, dm) : null], mj = [for (final e in mods) e['sec'] == k ? tagAt(st, e as J) : null];
     for (var j = 0; j < list.length; j++) {
       final x = list[j], has = capHas(st, x), sk = capSkipped(st, x), mn = isMulti(x['id']) ? ((m(st, 'multi')[x['id']] ?? []) as List).length : 0;
       if (mn > 0) {
@@ -794,12 +812,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
         ));
       }
       for (var d = 0; d < manual(st).length; d++) {
-        final dm = manual(st)[d];
-        if (dm['sec'] == k && dm['at'] == j) out.add(cell(const Icon(LucideIcons.triangleAlert, color: Colors.white, size: 18), bg: const Color(0xFFC2410C), cur: sel == ('d', d), on: rec ? null : () => setState(() => sel = ('d', d))));
+        if (dj[d] == j) out.add(cell(const Icon(LucideIcons.triangleAlert, color: Colors.white, size: 18), bg: const Color(0xFFC2410C), cur: sel == ('d', d), on: rec ? null : () => setState(() => sel = ('d', d))));
       }
-      final mods = (m(st, 'multi')[modslot[k]] ?? []) as List;
       for (var d = 0; d < mods.length; d++) {
-        if (mods[d]['sec'] == k && mods[d]['at'] == j) out.add(cell(const Icon(LucideIcons.wrench, color: Colors.white, size: 18), bg: modBlue, cur: sel == ('m', d), on: rec ? null : () => setState(() => sel = ('m', d))));
+        if (mj[d] == j) out.add(cell(const Icon(LucideIcons.wrench, color: Colors.white, size: 18), bg: modBlue, cur: sel == ('m', d), on: rec ? null : () => setState(() => sel = ('m', d))));
       }
     }
     // the strip follows the current cell, or its end in free mode (the mockup's capScroll)
@@ -862,6 +878,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       },
       child: Scaffold(
         backgroundColor: Colors.black,
+        resizeToAvoidBottomInset: false, // the Engine codes keyboard opens over the camera; nothing here moves for it
         body: Stack(fit: StackFit.expand, children: [
           if (c != null && c.value.isInitialized)
             GestureDetector(
@@ -876,6 +893,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
           if (showing) Positioned.fill(child: ColoredBox(color: Colors.black, child: Image.file(File(store.abs(shown!)), fit: BoxFit.contain, cacheWidth: 1600, gaplessPlayback: true, key: ValueKey(shown)))),
           if (flash) Container(color: Colors.white54),
           SafeArea(child: dmgMode ? _dmgLayout() : _passLayout()),
+          if (ask && !dmgMode) _askCard(),
         ]),
       ),
     );
@@ -911,7 +929,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       child: Row(children: [
         if (rec) const SizedBox(width: 40) else if (canBack && !free && !ask) _btn(LucideIcons.chevronLeft, () => setState(capBack)) else if (free) _btn(LucideIcons.chevronLeft, () => setState(() => free = false)) else const SizedBox(width: 40),
         const SizedBox(width: 8),
-        Expanded(child: Center(child: _pill('${run ? '${camseq.indexOf(k) + 1}/${camseq.length}  ' : ''}${stTitle(k)}${i < n && !free && !ask ? ' · ${i + 1} of $n' : ''}', bg: banner ? bid : Colors.black54))),
+        Expanded(child: Center(child: _pill('${run && camseq.contains(k) ? '${camseq.indexOf(k) + 1}/${camseq.length}  ' : ''}${camTitle(k)}${i < n && !free && !ask ? ' · ${i + 1} of $n' : ''}', bg: banner ? bid : Colors.black54))),
         const SizedBox(width: 8),
         if (free) ...[
           _btn(LucideIcons.chevronRight, () => setState(() {
@@ -940,7 +958,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     if (rv) hint = vid ? 'Taken. Record again to replace it.' : showing ? 'Taken. Tap the green shutter to retake it.' : 'Take the new photo.';
     if (multiStay) hint = '${multiHint[id] ?? 'One photo each'}. ${arr.isNotEmpty ? '${arr.length} taken. Take another, or tap Done.' : 'Take as many as you need, then tap Done.'}';
     final selLbl = sel == null ? null : sel!.$1 == 'd' ? 'Damage' : 'Mod';
-    final tagOk = !widget.args.single, tagOff = k == 'OBDII' || (vid && !free) || busy || (cc == null && !noCam) || rec;
+    final tagOk = !widget.args.single, tagOff = tagShut || busy || (cc == null && !noCam) || rec;
     final recS = recAt == null ? 0 : DateTime.now().difference(recAt!).inSeconds;
     final g = guideFor(x, fuel, guides);
     final scale = zoom == .5 ? .6 : zoom == 2 ? 1.35 : 1.0;
@@ -982,6 +1000,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                   ),
                 ),
               ),
+              // Look for: a few words top left of a guided shot, information only (hidden in Record damage, under the questions, on a tag)
+              if (k != 'start' && !free && !ask && sel == null && lookOf(x) != null) Positioned(left: 8, top: 4, child: IgnorePointer(child: _look(lookOf(x)!))),
               if (k != 'start')
                 Positioned(
                   right: 8,
@@ -1026,14 +1046,100 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             const SizedBox(height: 40),
         ]),
       ),
-    ]).withAsk(ask, askWord[k] ?? k.toLowerCase(), () => setState(() {
-          ask = false;
-          capGoNext();
-        }), () => setState(() {
-          ask = false;
-          free = true;
-          tag = null;
-        }));
+    ]);
+  }
+
+  Widget _look(List<String> l) => Container(
+        padding: const EdgeInsets.fromLTRB(12, 10, 14, 10),
+        decoration: BoxDecoration(color: const Color(0xB3000000), borderRadius: BorderRadius.circular(14)),
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Padding(padding: EdgeInsets.only(bottom: 2), child: Text('LOOK FOR', style: TextStyle(color: Color(0xA6FFFFFF), fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: .66))),
+          for (final t in l)
+            SizedBox(
+              height: 26,
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                Container(width: 6, height: 6, decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle)),
+                const SizedBox(width: 10),
+                Text(t, softWrap: false, style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
+              ]),
+            ),
+        ]),
+      );
+
+  // Next at the end of a section: the next camera section, or Damages / Review after the last
+  String get nextLabel {
+    final nk = nextSection(st, k);
+    return nk != null && camseq.contains(nk) ? 'Next: ${camTitle(nk)}' : manual(st).isNotEmpty ? 'Next: Damages' : 'Next: Review';
+  }
+
+  // the end-of-section questions over the camera (docs/11): the section's questions from Review, each OK until tapped, required
+  // rows Pick until answered; a tap opens the same drawer as Review, drawn dark. Record damage keeps the camera with only the
+  // Damage and Mod shutters and Next at the top right; Next goes on to the next section
+  Widget _askCard() {
+    const icons = {'Interior': LucideIcons.armchair, 'Tires': LucideIcons.car, 'Mechanicals': LucideIcons.wrench, 'Underbody': LucideIcons.layers};
+    final cx = context; // the camera's own context: drawers opened from a row stay valid while the card redraws
+    return Stack(key: const ValueKey('ask'), children: [
+      const ModalBarrier(dismissible: false, color: Color(0xA6000000)),
+      SafeArea(
+        child: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 460),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+            decoration: BoxDecoration(color: dkCard, borderRadius: BorderRadius.circular(18)),
+            child: DarkRows(
+              child: ListenableBuilder(
+                listenable: store,
+                builder: (c, _) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  Row(children: [
+                    Icon(icons[k] ?? LucideIcons.camera, color: Colors.white, size: 20),
+                    const SizedBox(width: 8),
+                    Text(camTitle(k), style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w700)),
+                  ]),
+                  const SizedBox(height: 12),
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                        for (final g in askGroups(st, k)) ...[
+                          if (g.head != null)
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(2, 4, 0, 6),
+                              child: Text(g.head!.toUpperCase(), style: const TextStyle(color: dkSub, fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: .66)),
+                            ),
+                          RowList([
+                            if (g.feat) ...featRows(cx, widget.id, st, dark: true),
+                            ...checkRowItems(cx, widget.id, st, g.checks, w: g.w, dark: true, labels: g.w != null ? const {'ck_tire': 'Tire', 'ck_wheel': 'Wheel'} : const {}),
+                            if (g.tm) tmRow(cx, widget.id, st, dark: true),
+                          ]),
+                          const SizedBox(height: 6),
+                        ],
+                      ]),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Row(children: [
+                    Expanded(
+                        child: darkBtn('Record damage', () => setState(() {
+                              ask = false;
+                              free = true;
+                              tag = null;
+                              // an answer on the card may have shortened the list (Will not start drops the engine videos)
+                              if (l.isNotEmpty && i >= l.length) i = l.length - 1;
+                            }), icon: LucideIcons.triangleAlert)),
+                    const SizedBox(width: 10),
+                    Expanded(
+                        child: darkBtn(nextLabel, () => setState(() {
+                              ask = false;
+                              capGoNext();
+                            }), bg: bid)),
+                  ]),
+                ]),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ]);
   }
 
   void _notOnCar() {
@@ -1065,7 +1171,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   Widget _doneLayout(Widget top, int n) {
     final list = l, got = list.where((x) => capOk(st, x)).length, miss = n - got, run = widget.args.run;
-    final nk = nextSection(st, k), nextLbl = nk != null && camseq.contains(nk) ? 'Next: ${stTitle(nk)}' : manual(st).isNotEmpty ? 'Next: Damages' : 'Next: Review';
+    final nextLbl = nextLabel;
     return Column(children: [
       top,
       Expanded(
@@ -1074,7 +1180,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             Icon(miss > 0 ? LucideIcons.triangleAlert : LucideIcons.circleCheck, color: miss > 0 ? amber : const Color(0xFF4ADE80), size: 40),
             const SizedBox(height: 8),
             Text(miss > 0 ? '$miss still to take' : 'All $n taken', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)),
-            Text('$got of $n done in ${stTitle(k)}', style: const TextStyle(color: Colors.white70)),
+            Text('$got of $n done in ${camTitle(k)}', style: const TextStyle(color: Colors.white70)),
             const SizedBox(height: 16),
             Wrap(alignment: WrapAlignment.center, spacing: 12, runSpacing: 8, children: [
               if (miss > 0) _btn(LucideIcons.camera, () => _jump(capNext(st, list, 0)), label: 'Take the rest'),
@@ -1086,37 +1192,4 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       Padding(padding: const EdgeInsets.fromLTRB(8, 0, 128, 6), child: _strip()),
     ]);
   }
-}
-
-// the end-of-section dialog names the section's damages
-const askWord = {'Exterior': 'exterior', 'Tires': 'tire and wheel', 'Interior': 'interior', 'Mechanicals': 'mechanical', 'Underbody': 'underbody'};
-
-extension on Widget {
-  // the end-of-section dialog over the camera: every section of the pass but OBDII, which has no Damage and Mod shutters
-  Widget withAsk(bool ask, String word, VoidCallback done, VoidCallback record) => !ask
-      ? this
-      : Stack(children: [
-          this,
-          Positioned.fill(
-            child: Container(
-              color: Colors.black54,
-              child: Center(
-                child: Container(
-                  width: 480,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    Text('Please record any $word damage/modification images before proceeding.', textAlign: TextAlign.center, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 16),
-                    Row(children: [
-                      Expanded(child: OutlinedButton(onPressed: done, child: const FittedBox(fit: BoxFit.scaleDown, child: Text("I'm done", maxLines: 1)))),
-                      const SizedBox(width: 12),
-                      Expanded(child: FilledButton(onPressed: record, child: const FittedBox(fit: BoxFit.scaleDown, child: Text('Record damage now', maxLines: 1)))),
-                    ]),
-                  ]),
-                ),
-              ),
-            ),
-          ),
-        ]);
 }

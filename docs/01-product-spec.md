@@ -38,7 +38,7 @@ The inspection takes about 18 minutes.
 - Never stops otherwise: Damage (amber) and Mod (blue) shutters on the right take a tagged photo at any point without moving the flow. Off on videos and OBDII shots.
 - Every shot can go Back and be retaken; optional shots can be skipped.
 - Each tire: a whole tire photo and a tread gauge photo.
-- Damage tapped at a paint panel: the AI guess for the place is that panel.
+- A damage photo takes the zone of the shot it was taken at (a paint panel or the roof Exterior, a tire Tires, cargo Interior); the AI guesses its place from every place of that zone.
 
 **1.5 360 view** on Review Exterior: made from the walk-around; drag to turn; shows the frame number.
 

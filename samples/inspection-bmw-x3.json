@@ -699,6 +699,7 @@
   }
  ],
  "tires_match": "Match",
+ "tires_match_read_from_photo": false,
  "paint": [
   {
    "panel": "Left front fender",

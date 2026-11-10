@@ -24,7 +24,7 @@ Payload inspectionPayload(J st) {
     photos.add(e);
   }
 
-  for (final k in capseq) {
+  for (final k in camRun) { // each shot once, in camera order (the OBDII screens are taken in Interior)
     for (final x in capList(k, st)) {
       final id = x['id'] as String;
       if (id.startsWith('video_')) continue;
@@ -144,7 +144,8 @@ Payload inspectionPayload(J st) {
       'family_proof': st['owner'] == 'Family, with proof' && fl['ph_family'] != null ? 'taken on site' : null,
     },
     'photos': photos, 'videos': videos, 'spin_frames': m(st, 'shots')['video_360'] == true ? 36 : 0,
-    'checks': checks, 'tires': tires, 'tires_match': (vals['tires_match'] ?? '') == '' ? null : vals['tires_match'], 'paint': paint,
+    'checks': checks, 'tires': tires, 'tires_match': (vals['tires_match'] ?? '') == '' ? null : vals['tires_match'],
+    'tires_match_read_from_photo': (vals['tires_match'] ?? '') != '' && vals['tm_auto'] == 1, 'paint': paint,
     'features': {'sunroof': (feat['sunroof'] ?? '') == '' ? null : feat['sunroof'], 'navigation': (feat['navigation'] ?? '') == '' ? null : feat['navigation']},
     'damages': damages, 'overall_condition': (st['overall'] ?? '') == '' ? null : st['overall'], 'inspector_note': st['note'] ?? '',
     'signature': {'seller_name': st['signName'] ?? '', 'agreed': st['agree'] == true, 'signed': st['signed'] == true}, // when and where: source.ended

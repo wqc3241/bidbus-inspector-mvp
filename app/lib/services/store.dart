@@ -50,9 +50,9 @@ class Store extends ChangeNotifier {
     db = database ?? Db();
     docs = docsDir ?? (await getApplicationDocumentsDirectory()).path;
     for (final r in await db.all()) {
-      final st = jsonDecode(r.json) as J, old = st['ub'] != true;
-      ins[r.id] = splitUnderbody(st);
-      if (old) await db.put(r.id, jsonEncode(st)); // saved at once, so it is never split twice
+      final st = jsonDecode(r.json) as J, old = st['ub'] != true || st['c9'] != true;
+      ins[r.id] = cam1109(splitUnderbody(st));
+      if (old) await db.put(r.id, jsonEncode(st)); // saved at once, so it is never moved twice
     }
     final s = await db.settingsMap();
     inspector = s['inspector'] ?? '';
@@ -129,7 +129,7 @@ class Store extends ChangeNotifier {
   }
 
   // ---------- AI readings (docs/04-ai-reading.md) ----------
-  // queue item: {kind, f, section?, hint?, near?, w?, panel?, did?, vin?}
+  // queue item: {kind, f, section?, hint?, w?, panel?, did?, vin?} (a damage is read against every place of its section)
   void queueRead(String id, J item) {
     mut(id, (st) => (st['aiq'] as List).add(item));
     kick();
@@ -151,7 +151,7 @@ class Store extends ChangeNotifier {
           J res;
           try {
             final f = File(abs(item['f']));
-            res = f.existsSync() ? await api.read(item['kind'], f, section: item['section'], fuel: st['fuel'], hint: item['hint'], near: (item['near'] as List?)?.cast<String>()) : {'ok': false};
+            res = f.existsSync() ? await api.read(item['kind'], f, section: item['section'], fuel: st['fuel'], hint: item['hint']) : {'ok': false};
           } on DioException catch (e) {
             // no answer from the server (no signal, timeout, server down, passcode): keep the reading for the next round
             final code = e.response?.statusCode ?? 0;
@@ -296,9 +296,11 @@ void applyReading(J st, J item, J r) {
       final t = m(tire(st, item['w']), 'read');
       if (((t['brand'] ?? '') == '' && (t['size'] ?? '') == '') || t['auto'] == true) {
         t['brand'] = r['brand'] ?? '';
+        t['model'] = r['model'] ?? ''; // the tire line on the sidewall: only to tell whether the four tires match
         t['size'] = r['size'] ?? '';
         t['auto'] = true;
       }
+      tiresMatchSync(st);
     case 'tread':
       final t = tire(st, item['w']);
       if (r['tread_32nds'] != null && (t['tread'] == '' || t['treadAuto'] == true)) {

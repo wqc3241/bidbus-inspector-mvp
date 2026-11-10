@@ -1,4 +1,4 @@
-// One inspection's state and its rules, ported one to one from the mockup (reference/mockup/src/template.html).
+// One inspection's state and its rules, ported one to one from the mockup (reference/mockup-1109/src/template.html).
 // The state is a plain JSON map with the mockup's shape, saved whole in drift after every change.
 import '../data/ql.dart';
 
@@ -11,7 +11,7 @@ J newInspection({required String id, required J car, required String fuel, requi
     'manual': <dynamic>[], 'multi': <String, dynamic>{}, 'skip': <String, dynamic>{}, 'feat': <String, dynamic>{}, 'note': '', 'overall': '',
     'signName': car['owner_name'] ?? '', 'signed': false, 'agree': false, 'sok': <String, dynamic>{}, 'dprev': <dynamic>[],
     'files': <String, dynamic>{}, 'turn': <String, dynamic>{}, 'docs': <String, dynamic>{}, 'start': null, 'end': null, 'cap': null,
-    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true,
+    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true, 'c9': true,
   };
 }
 
@@ -19,7 +19,7 @@ J newInspection({required String id, required J car, required String fuel, requi
 J splitUnderbody(J st) {
   if (st['ub'] == true) return st;
   st['ub'] = true;
-  final n = capList('Mechanicals', st).length;
+  final n = capList0('Mechanicals', st).length;
   for (final e in [...manual(st), ...((m(st, 'multi')['ph_mod_mech'] ?? []) as List).cast<J>()]) {
     if (e['sec'] == 'Mechanicals' && e['at'] is int && (e['at'] as int) >= n) {
       e['sec'] = 'Underbody';
@@ -28,6 +28,67 @@ J splitUnderbody(J st) {
   }
   if (m(st, 'sok')['Mechanicals'] == true) m(st, 'sok')['Underbody'] = true;
   return st;
+}
+
+// an inspection saved before the 1109 camera pass: its damage and mod photos (and where the camera stopped) point at shots of the
+// old pass; each moves to the same shot in the new pass. A mod keeps the Review page it showed on (rs).
+J cam1109(J st) {
+  if (st['c9'] == true) return st;
+  st['c9'] = true;
+  // the shot at an old section and index, and where that shot is in the new pass
+  (String, String, int)? spot(Object? sec, Object? at) {
+    if (sec is! String || at is! int || !camseq0.contains(sec)) return null;
+    final old = capList0(sec, st);
+    if (at < 0 || at >= old.length) return null;
+    final key = slotKey(old[at]);
+    for (final k in camseq) {
+      final l = capList(k, st);
+      for (var j = 0; j < l.length; j++) {
+        if (slotKey(l[j]) == key) return (key, k, j);
+      }
+    }
+    return null;
+  }
+
+  for (final d in manual(st)) {
+    final n = spot(d['sec'], d['at']);
+    if (n != null) d..['key'] = n.$1..['sec'] = n.$2..['at'] = n.$3;
+  }
+  for (final s in const ['ph_mod_ext', 'ph_mod_int', 'ph_mod_mech']) {
+    for (final e in ((m(st, 'multi')[s] ?? []) as List).cast<J>()) {
+      final n = spot(e['sec'], e['at']);
+      if (n == null) continue;
+      e['key'] = n.$1;
+      // a mod stays in its own list (the camera shows mods from modslot[section]): when its shot moved to a section of another
+      // list (cargo, now in the walk-around), it keeps its section and is at no shot of it (tagAt)
+      if (modslot[n.$2] != s) continue;
+      if (n.$2 != e['sec']) e['rs'] ??= e['sec'];
+      e..['sec'] = n.$2..['at'] = n.$3;
+    }
+  }
+  final cap = st['cap'] as J?, c = spot(cap?['k'], cap?['i']), n = c == null ? null : (c.$2, c.$3);
+  if (cap != null) {
+    if (n != null) {
+      cap..['k'] = n.$1..['i'] = n.$2;
+    } else if (!camRun.contains(cap['k'])) {
+      st['cap'] = null;
+    }
+  }
+  return st;
+}
+
+String slotKey(J x) => x['panel'] != null ? 'paint:${x['panel']}' : x['wheel'] != null ? '${x['id']}-${x['wheel']}' : x['id'] as String;
+
+// the shot a damage or mod photo was taken at, as an index of its camera section: found by the shot itself (key) when known, so a
+// shot dropping out of the list (a panel not on the car, the engine videos when it will not start) moves no tag; null: at no shot
+int? tagAt(J st, J e) {
+  final sec = e['sec'], key = e['key'];
+  if (sec is! String) return null;
+  if (key is String) {
+    final j = capList(sec, st).indexWhere((x) => slotKey(x) == key);
+    return j < 0 ? null : j;
+  }
+  return e['at'] is int ? e['at'] as int : null;
 }
 
 String fuelOf(J st) => st['fuel'] as String;
@@ -60,20 +121,71 @@ StepItems stepItems(String k, J st) {
   return StepItems(media, entries, checks);
 }
 
+// the end-of-section questions (docs/11, the mockup's askRows): groups of Review questions, the same answers as on Review.
+// head: a group heading (null: the section's own list); w: a wheel's Tire and Wheel; feat: keys, sunroof, navigation; tm: All 4 tires match
+typedef AskGroup = ({String? head, List<J> checks, String? w, bool feat, bool tm});
+List<AskGroup> askGroups(J st, String k) {
+  final fuel = fuelOf(st);
+  List<J> its(Iterable<String> ids) => [for (final id in ids) if (byId[id] != null && fuelOk(byId[id]!['cars'], fuel)) byId[id]!];
+  AskGroup g(String? head, List<J> checks, {String? w, bool feat = false, bool tm = false}) => (head: head, checks: checks, w: w, feat: feat, tm: tm);
+  if (k == 'Tires') {
+    return [
+      g('Exterior', stepItems('Exterior', st).checks),
+      if (its(askMove['Tires']!).isNotEmpty) g('Mechanicals', its(askMove['Tires']!)),
+      g('Paint', its(['ck_paint'])),
+      for (final w in wheels) g(w[2], its(['ck_tire', 'ck_wheel']), w: w[0]),
+      if (byId['tires_match'] != null) g(null, const [], tm: true),
+    ];
+  }
+  final obd = stepItems('OBDII', st).checks, trans = its(['ck_trans']), moved = its(askMove[k] ?? const []);
+  return [
+    g(null, stepItems(k, st).checks.where((it) => !askOut.contains(it['id'])).toList(), feat: k == 'Interior'),
+    if (k == 'Interior' && obd.isNotEmpty) g('OBDII', obd), // the OBDII screens are taken at the end of Interior
+    if (k == 'Interior' && trans.isNotEmpty) g('Mechanicals', trans), // asked after the first drive-off checks too
+    if (moved.isNotEmpty) g('Mechanicals', moved),
+  ];
+}
+
 // ---------- camera pass ----------
 // a slot of the pass: {id, wheel?, panel?, it}
 List<J> capList(String k, J st) {
   if (k == 'start') {
     return [if (st['owner'] == 'Family, with proof') {'id': 'ph_family', 'it': {'id': 'ph_family', 'kind': 'photo', 'label': 'Proof of family relationship'}}];
   }
+  if (k == 'Paint') return [];
+  final fuel = fuelOf(st), noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
+  J? shot(String id) {
+    final it = byId[id];
+    // engine sound and exhaust videos are hidden when the engine will not start
+    if (it == null || !fuelOk(it['cars'], fuel) || (noStart && (id == 'video_engine' || id == 'video_exhaust'))) return null;
+    return {'id': id, 'it': it};
+  }
+
+  if (k == 'Tires') {
+    // the walk-around: paint panel by panel, each tire (whole tire, tread gauge) as it is reached, cargo at the rear, hood, roof
+    return [
+      for (final w in walk)
+        if (w[0] == 'p')
+          ...paintSlots(st).where((x) => x['panel'] == w[1])
+        else if (w[0] == 'w')
+          for (final p in tireShots) {'id': p, 'wheel': w[1], 'it': {'id': p, 'kind': 'photo', 'label': '${wheelName(w[1])}${p == 'tread_photo' ? ' tire: tread gauge' : ' tire: whole tire photo'}'}}
+        else
+          ?shot(w[1]),
+    ];
+  }
+  return [for (final id in camLayout[k] ?? const <String>[]) ?shot(id)];
+}
+
+// the pass before 1109 (Exterior with the paint panels, Tires & Wheels, Interior, OBDII, Mechanicals, Underbody): only to find where
+// photos saved then were taken (cam1109, splitUnderbody)
+List<J> capList0(String k, J st) {
   if (k == 'Tires') {
     return [
       for (final w in wheels)
         for (final p in tireShots) {'id': p, 'wheel': w[0], 'it': {'id': p, 'kind': 'photo', 'label': '${w[2]}${p == 'tread_photo' ? ' tire: tread gauge' : ' tire: whole tire photo'}'}}
     ];
   }
-  if (k == 'Paint') return [];
-  // engine sound and exhaust videos are hidden when the engine will not start
+  if (k == 'start' || k == 'Paint') return capList(k, st);
   final noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
   var ml = stepItems(k, st)
       .media
@@ -115,22 +227,25 @@ int capNext(J st, List<J> l, int from) {
   return l.length;
 }
 
-int capLeft(J st) => capseq.fold(0, (n, k) {
+// the camera run: Check ID's family proof, then the five camera sections
+const camRun = ['start', ...camseq];
+int capLeft(J st) => camRun.fold(0, (n, k) {
       final c = capCount(st, k);
       return n + c[1] - c[0];
     });
 String? nextSection(J st, String k) {
-  final i = capseq.indexOf(k);
-  for (var j = i + 1; j < capseq.length; j++) {
-    if (capList(capseq[j], st).isNotEmpty) return capseq[j];
+  final i = camRun.indexOf(k);
+  if (i < 0) return null; // OBDII opened from Review: not a section of the run
+  for (var j = i + 1; j < camRun.length; j++) {
+    if (capList(camRun[j], st).isNotEmpty) return camRun[j];
   }
   return null;
 }
 
 String? prevSection(J st, String k) {
-  final i = capseq.indexOf(k);
+  final i = camRun.indexOf(k);
   for (var j = i - 1; j >= 0; j--) {
-    if (capseq[j] != 'start' && capList(capseq[j], st).isNotEmpty) return capseq[j];
+    if (camRun[j] != 'start' && capList(camRun[j], st).isNotEmpty) return camRun[j];
   }
   return null;
 }
@@ -143,13 +258,15 @@ String? firstOpenSection(J st) {
   return null;
 }
 
-// Review pages: paint photos are taken in the Exterior pass but shown on the Paint page
+// Review pages keep their own sections: a shot shows on its home page (paint meter photos taken in the walk-around on Paint, the
+// OBDII screens taken in Interior on OBDII, ...), in camera order; each entry keeps its camera section and index for a retake
 List<(J, String, int)> revList(String k, J st) {
-  final ck = k == 'Paint' ? 'Exterior' : k, out = <(J, String, int)>[];
-  final l = capList(ck, st);
-  for (var j = 0; j < l.length; j++) {
-    if (ck == 'Exterior' && (l[j]['id'] == 'paint') != (k == 'Paint')) continue;
-    out.add((l[j], ck, j));
+  final out = <(J, String, int)>[];
+  for (final ck in camRun) {
+    final l = capList(ck, st);
+    for (var j = 0; j < l.length; j++) {
+      if (homeOf(l[j], ck) == k) out.add((l[j], ck, j));
+    }
   }
   return out;
 }
@@ -508,44 +625,32 @@ int dmgOwnProbs(J st, String k, List<String> ids) {
   }).length;
 }
 
-// the Exterior places each shot of the walk sees: the paint panel (or photo) and the parts next to it
-const shotNear = {
-  'Left front fender': ['Left front fender', 'Front bumper', 'Headlight', 'Mirror', 'Other lights'],
-  'Left front door': ['Left front door', 'Left front window', 'Mirror'],
-  'Left rear door': ['Left rear door', 'Left rear window'],
-  'Left quarter panel': ['Left quarter panel', 'Left rear window', 'Fuel door', 'Tail light', 'Rear bumper', 'Other lights'], // the rear window: a coupe's quarter glass
-  'Trunk or liftgate': ['Trunk or liftgate', 'Rear glass', 'Tail light', 'Rear bumper', 'Wipers', 'Other lights'],
-  'Right quarter panel': ['Right quarter panel', 'Right rear window', 'Fuel door', 'Tail light', 'Rear bumper', 'Other lights'],
-  'Right rear door': ['Right rear door', 'Right rear window'],
-  'Right front door': ['Right front door', 'Right front window', 'Mirror'],
-  'Right front fender': ['Right front fender', 'Front bumper', 'Headlight', 'Mirror', 'Other lights'],
-  'Hood': ['Hood', 'Front bumper', 'Headlight', 'Windshield', 'Wipers', 'Other lights'],
-  'Roof': ['Roof', 'Windshield', 'Rear glass'],
-  'ph_ext_roof': ['Roof', 'Windshield', 'Rear glass'],
-  'ph_vin_dash': ['Windshield', 'Wipers', 'Hood'],
-};
-
-// a damage shot during the walk (Exterior panel by panel, Tires wheel by wheel) is somewhere between the shot taken before it
-// and the shot to take next, whichever of the two it was taken nearer: the AI picks its place from those places only
-List<String>? dmgNear(J st, String sec, int at) {
-  if (sec != 'Exterior' && sec != 'Tires') return null;
-  final l = capList(sec, st);
-  if (l.isEmpty) return null;
-  final a = at.clamp(0, l.length - 1), out = <String>{};
-  for (final x in [if (a > 0) l[a - 1], l[a]]) {
-    final w = x['wheel'] as String?;
-    out.addAll(w != null ? ['${wheelName(w)} tire', '${wheelName(w)} wheel'] : shotNear[x['panel'] ?? x['id']] ?? const <String>[]);
-  }
-  if (out.isEmpty) return null;
-  if (sec == 'Exterior') out.add('Other');
-  return out.toList();
-}
-
 // ---------- Review and Summary gates ----------
 List<J> featMissingList(J st) => featq.where((q) => (m(st, 'feat')[q[0]] ?? '') == '').map((q) => {'id': q[0]}).toList();
 int featMissing(J st) => featMissingList(st).length;
 int keysMissing(J st) => m(st, 'vals')['keys_n'] == null ? 1 : 0;
 int tmMissing(J st) => byId['tires_match'] != null && (m(st, 'vals')['tires_match'] ?? '') == '' ? 1 : 0;
+
+// All 4 tires match, answered by the AI once the four whole-tire photos are read (docs/11): the same brand and the same model on all
+// four is Match, a different brand or model Mismatch; size does not count. Left for the inspector while a brand, or a model of four
+// tires of one brand, cannot be read. Never over the inspector's own pick (tm_auto 0); a later reading updates the AI's answer.
+String _tw(Object? v) => '${v ?? ''}'.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), ''); // case, spaces and dashes do not count
+void tiresMatchSync(J st) {
+  final vals = m(st, 'vals');
+  if (byId['tires_match'] == null || ((vals['tires_match'] ?? '') != '' && vals['tm_auto'] != 1)) return;
+  final rd = [for (final w in wheels) m(tire(st, w[0]), 'read')];
+  if (rd.any((r) => _tw(r['brand']) == '')) return;
+  final String v;
+  if (rd.any((r) => _tw(r['brand']) != _tw(rd[0]['brand']))) {
+    v = 'Mismatch';
+  } else if (rd.any((r) => _tw(r['model']) == '')) {
+    return;
+  } else {
+    v = rd.every((r) => _tw(r['model']) == _tw(rd[0]['model'])) ? 'Match' : 'Mismatch';
+  }
+  vals['tires_match'] = v;
+  vals['tm_auto'] = 1;
+}
 bool idReady(J st) => vinCheck((m(st, 'vals')['vin_read'] ?? '') as String) && (m(st, 'vals')['odo_read'] ?? '') != ''; // the CR refuses a VIN that fails the check digit
 
 class SecInfo {
@@ -628,7 +733,7 @@ List<J> problemsList(J st) {
           }
         }
       }
-      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'sec': k, 'text': 'Tires do not match (brand, model or size)', 'where': stTitle('Tires'), 'level': level(byId['tires_match']!, 'Mismatch')});
+      if (m(st, 'vals')['tires_match'] == 'Mismatch') out.add({'sec': k, 'text': 'Tires do not match (brand or model)', 'where': stTitle('Tires'), 'level': level(byId['tires_match']!, 'Mismatch')});
       continue;
     }
     if (k == 'Paint') {

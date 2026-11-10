@@ -38,7 +38,7 @@ void main() {
 
   test('an inspection saved before the split is moved over once', () {
     final st = fresh()..remove('ub');
-    final n = capList('Mechanicals', st).length;
+    final n = capList0('Mechanicals', st).length; // the shot indexes of then: the pass before 1109
     (st['manual'] as List).addAll([dm('Mechanicals', sec: 'Mechanicals', at: n + 2), dm('Mechanicals', sec: 'Mechanicals', at: 0)]);
     m(st, 'multi')['ph_mod_mech'] = [
       {'src': 'camera', 'panel': null, 'sec': 'Mechanicals', 'at': n, 'f': 'x.jpg'}
