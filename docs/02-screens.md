@@ -1,14 +1,14 @@
 # 02 Screens
 
-Open `reference/mockup/internal-mvp.html` in a desktop browser to click through every screen; Build notes shows the notes for the screen on show. Still images of each screen: `reference/field-phases/bidbus-field-phases.html` (phase 1, UI 1.1 to 1.7) and `reference/inspection-journey/inspection-journey.html` (2.1 to 2.9). Build the screens below; where the mockup shows Cars to inspect, Car brief, Carfax, points to check or Text the seller an upload link, use this file instead.
+Open `reference/mockup-1109/internal-mvp.html` in a desktop browser to click through every screen; Build notes shows the notes for the screen on show. Still images of each screen: `reference/field-phases/bidbus-field-phases.html` (phase 1, UI 1.1 to 1.7) and `reference/inspection-journey/inspection-journey.html` (2.1 to 2.9). Build the screens below; where the mockup shows Cars to inspect, Car brief, Carfax, points to check or Text the seller an upload link, use this file instead.
 
 ## Style
 
-Use the mockup's final style (end of the `<style>` block in `reference/mockup/src/template.html`):
+Use the mockup's final style (end of the `<style>` block in `reference/mockup-1109/src/template.html`):
 - White page. Cards only for photos, document images, the tire frame, the paint diagram, the bottom sheet and the bottom button.
 - Sections split by thin lines. Spacing: 16 px side gutter, 20 between sections, 12 heading to content, 8 label to content.
 - Same-kind lists are full-width rows alternating white and `#f5f5f5`, no dividers. The choice drawer keeps dividers.
-- Icons: Lucide (`reference/mockup/assets/lu.js`); logo `reference/mockup/assets/logo.html`.
+- Icons: Lucide (`reference/mockup-1109/assets/lu.js`); logo `reference/mockup-1109/assets/logo.html`.
 - Icon first, little text.
 
 ## Inspections (home)
@@ -32,25 +32,19 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup/sr
 
 ## Camera
 
-- Landscape, full screen; form screens stay portrait. Top bar: section (1/6 to 6/6) and shot count.
-- Three shutters on the right: Damage (amber, above), the shot (big, middle), Mod (blue, below). Damage and Mod take a tagged photo without moving the flow; off on videos and in OBDII. Zoom chips .5 / 1 / 2 and pinch where the device allows.
+- Landscape, full screen; form screens stay portrait. Top bar: section (1/5 to 5/5) and shot count.
+- Three shutters on the right: Damage (amber, above), the shot (big, middle), Mod (blue, below). Damage and Mod take a tagged photo without moving the flow; off on videos and OBDII shots. Zoom chips .5 / 1 / 2 and pinch where the device allows.
 - A guide outline (`guides/svg`) and the shot name over the camera; the camera moves on after each shot.
 - Skip only on optional shots; Not on this car for a missing paint panel.
 - Back goes one shot back. A taken shot can be retaken or deleted; the camera then returns to where the inspector was. Damage and Mod thumbnails can be picked and deleted.
-- Order:
-  - **Exterior**: walk-around video (engine off, up to 60 s, from the left front corner, counter-clockwise); one paint meter photo per panel: left front fender, left front door, left rear door, left quarter panel, trunk or liftgate, right quarter panel, right rear door, right front door, right front fender, hood, roof; roof photo; windshield VIN; then the end-of-section dialog.
-  - **Tires & Wheels** LF, LR, RR, RF: whole tire, tread gauge.
-  - **Interior**: door-jamb VIN, odometer (car on, warning lights visible), all keys, dash, infotainment screen (on), front seats, rear seats, cargo.
-  - **OBDII**: gas: current, past and emission code screens, other images (several, optional). EV: service-mode alerts, battery health and charging screens (optional).
-  - **Mechanicals**: engine bay (EV: frunk), engine oil on the dipstick, engine sound and exhaust videos (gas and hybrid, up to 30 s each, hidden when the engine will not start).
-  - **Underbody**: underbody LF, LR, rear, RR, RF, front, catalytic converters (optional). A damage or mod shutter here makes a Mechanicals damage or mod.
+- Order, Look for and end-of-section questions: `docs/11-camera-flow-1109.md`.
 - A slot that takes several photos stays open: each shot adds one, Remove photo N drops the last, Done · N moves on.
-- Every section but OBDII ends with the end-of-section dialog ("Please record any … damage/modification images before proceeding.", I'm done or Record damage now; `docs/01-product-spec.md` 1.4).
+- Interior, Walk-around, Mechanicals and Underbody end with their questions, then Record damage or Next (`docs/11-camera-flow-1109.md`).
 - Photos are taken 4:3 with the whole sensor, and the preview shows the whole frame, so .5, 1 and 2 frame what the iPhone camera's .5, 1 and 2 frame. Videos are 16:9 1080p.
 - Flash chip above the zoom chips (and in the damage camera's top bar): Auto (the default; fires when it is dark), On, Off, tap to go round; kept while the camera is open; hidden on video slots.
 - If the camera is closed, a screen lists the sections with counts and reopens the camera where it stopped.
 - After the last shot: Damages (or Review when there are no damage photos).
-- The exact shot list per fuel comes from the question list (`kind: photo` and `video` items with their `cars`). The mockup's `CAPSEQ`, `capList` and `MULTI` show the order logic.
+- The exact shot list per fuel comes from the question list (`kind: photo` and `video` items with their `cars`). The mockup's `CAMLAYOUT`, `WALK`, `CAMRUN`, `capList` and `MULTI` (`reference/mockup-1109/src/template.html`) show the order logic.
 
 ## Damages
 

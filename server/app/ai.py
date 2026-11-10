@@ -32,8 +32,9 @@ KINDS = {
                  "Read the total mileage on this odometer, in whole miles. Ignore trip meters. Null if it cannot be read."),
     "vin": ("read_vin", {"vin": _null("string")},
             "Read the 17-character VIN in this photo (letters I, O and Q never appear). Null if it cannot be read."),
-    "tire": ("read_tire", {"brand": {"type": ["string", "null"], "enum": TIRE_BRANDS + [None]}, "size": _null("string")},
-             "Read the tire brand (one of the listed brands, Other if not listed) and the size as WWW/AARDD, for example 245/50R19. "
+    "tire": ("read_tire", {"brand": {"type": ["string", "null"], "enum": TIRE_BRANDS + [None]}, "model": _null("string"), "size": _null("string")},
+             "Read the tire brand (one of the listed brands, Other if not listed), the model (the tire line name on the sidewall, for "
+             "example Pilot Sport 4S, without the brand or the size) and the size as WWW/AARDD, for example 245/50R19. "
              "Null for anything that cannot be read."),
     "tread": ("read_tread", {"tread_32nds": _null("integer")},
               "Read the tread depth gauge, in 32nds of an inch. Null if it cannot be read."),
@@ -78,7 +79,8 @@ def validate(kind: str, data: dict, pairs=None, hint=None) -> dict:
         size = re.sub(r"\s", "", str(data.get("size") or "")).upper()
         m = re.fullmatch(r"(\d{3})/(\d{2})R(\d{2})", size)
         ok = m and 165 <= int(m[1]) <= 355 and 15 <= int(m[2]) <= 85 and 13 <= int(m[3]) <= 25
-        return {"brand": brand, "size": size if ok else None}
+        model = re.sub(r"\s+", " ", str(data.get("model") or "")).strip()[:40]  # the app compares the four tires' models
+        return {"brand": brand, "model": model or None, "size": size if ok else None}
     if kind == "tread":
         return {"tread_32nds": _int(data.get("tread_32nds"), 1, 14)}
     if kind == "paint_meter":
@@ -148,15 +150,13 @@ def ask(name: str, props: dict, text: str, image: bytes) -> dict:
     return next(b.input for b in msg.content if b.type == "tool_use" and b.name == name)
 
 
-def read(kind: str, image: bytes, section=None, fuel=None, hint=None, near=None) -> dict:
+def read(kind: str, image: bytes, section=None, fuel=None, hint=None) -> dict:
     if kind not in KINDS or not configured():
         return {"ok": False}
     try:
         name, props, text = KINDS[kind]
+        # a damage: every place of its section (the zone of the shot it was taken at), with that place's types
         pairs = allowed_pairs(section, fuel) if kind == "damage" else None
-        # near: the places between the shot taken before the damage photo and the shot taken after it; the AI picks one of them
-        if pairs is not None and near and not hint:
-            pairs = {p: ts for p, ts in pairs.items() if p in near} or pairs
         if pairs is not None:  # place: its types, one line per place
             text += "\n" + "\n".join(f"{p}: {'; '.join(ts)}" for p, ts in pairs.items())
             if hint:

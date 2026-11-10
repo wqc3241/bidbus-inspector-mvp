@@ -28,8 +28,9 @@ void main() {
           continue;
         }
         expect(fuelOk(it['cars'], fuel), r['on'], reason: '${it['id']} on/off for $fuel');
-        // the mockup's Mechanicals pass holds the underbody shots; the app gives them their own section after it
-        if (where.startsWith('Camera ')) expect([where.substring(7), if (where == 'Camera Mechanicals') 'Underbody'].any((k) => capList(k, st).any((x) => x['id'] == it['id'])), true, reason: '${it['id']} in the camera pass');
+        // every camera item of the report is in the pass; the 1109 pass takes some in another section (the roof photo and cargo in
+        // the walk-around, engine sound in Interior, the underbody shots in their own section)
+        if (where.startsWith('Camera ')) expect(camRun.any((k) => capList(k, st).any((x) => x['id'] == it['id'])), true, reason: '${it['id']} in the camera pass');
       }
       for (final k in capseq.skip(1)) {
         for (final id in ckIdsOf(k, st)) {
@@ -50,7 +51,7 @@ void main() {
       // the report also counts the plug-in-only option "Charging cable or adapters missing" for Hybrid; docs/01 2.2 limits charging items to EV and plug-in hybrid
       if (fuel != 'Plug-in hybrid') expect(options, run['options'] - (fuel == 'Hybrid' ? 1 : 0), reason: 'check options for $fuel');
       if (fuel != 'Plug-in hybrid') expect(damage, run['damage'], reason: 'damage place and type pairs for $fuel');
-      expect(capList('Exterior', st).where((x) => x['id'] == 'paint').length, 11);
+      expect(capList('Tires', st).where((x) => x['id'] == 'paint').length, 11); // the paint panels are in the walk-around
     });
 
     test('every damage place and type for $fuel labels and ticks its check', () {

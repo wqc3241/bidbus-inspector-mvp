@@ -76,8 +76,8 @@ def read(client, **form):
     ("vin", {"vin": "5uxty5c00l9b00230"}, {"vin": "5UXTY5C00L9B00230", "check_digit_ok": True}),
     ("vin", {"vin": "5UXTY5C00L9B00231"}, {"vin": "5UXTY5C00L9B00231", "check_digit_ok": False}),
     ("vin", {"vin": "5UXTY5C00L9B0023I"}, {"vin": None, "check_digit_ok": False}),
-    ("tire", {"brand": "michelin", "size": "245/50 R19"}, {"brand": "Michelin", "size": "245/50R19"}),
-    ("tire", {"brand": "Acme", "size": "145/50R19"}, {"brand": None, "size": None}),
+    ("tire", {"brand": "michelin", "model": " Pilot  Sport 4S ", "size": "245/50 R19"}, {"brand": "Michelin", "model": "Pilot Sport 4S", "size": "245/50R19"}),
+    ("tire", {"brand": "Acme", "model": None, "size": "145/50R19"}, {"brand": None, "model": None, "size": None}),
     ("tread", {"tread_32nds": 7}, {"tread_32nds": 7}),
     ("tread", {"tread_32nds": 15}, {"tread_32nds": None}),
     ("paint_meter", {"mils": 8.04}, {"mils": 8.0, "high": True}),
@@ -114,31 +114,22 @@ def test_ai_damage_pair_not_in_the_list_is_dropped(client, monkeypatch):
     assert read(client, kind="damage", section="Exterior", hint="Left rear door") == {"ok": True, "place": "Left rear door", "type": "Dent", "severity": None}
 
 
-def test_ai_damage_near_places(client, monkeypatch):
+def test_ai_damage_reads_every_place_of_its_zone(client, monkeypatch):
+    # the AI picks from every place of the damage's section (the zone of the shot it was taken at), not only the shots around it;
+    # a near list an older app still sends is ignored
     seen = {}
-    near = '["Left front door", "Left front window", "Mirror", "Left rear door", "Left rear window", "Other"]'
-    fake_ai(monkeypatch, {"place": "Left front door", "type": "Dent", "severity": "Minor"}, seen)
-    assert read(client, kind="damage", section="Exterior", fuel="Gas or diesel", near=near) == {"ok": True, "place": "Left front door", "type": "Dent", "severity": "Minor"}
-    lines = seen["messages"][0]["content"][1]["text"].split("\n")
-    listed = [x.split(":")[0] for x in lines[1:] if ": " in x]
-    # only the places between the shot before and the shot after are offered
-    assert listed == ["Left front door", "Left rear door", "Left front window", "Left rear window", "Mirror", "Other"]
-    # a place outside them is dropped
-    fake_ai(monkeypatch, {"place": "Hood", "type": "Dent", "severity": "Minor"})
-    assert read(client, kind="damage", section="Exterior", fuel="Gas or diesel", near=near) == {"ok": True, "place": None, "type": None, "severity": None}
-    # near names no place of the section, or is not a list: every place of the section stays
     fake_ai(monkeypatch, {"place": "Hood", "type": "Dent", "severity": "Minor"}, seen)
-    for bad in ('["Left front tire"]', "Hood", '{"a": 1}', "[1, 2]"):
-        assert read(client, kind="damage", section="Exterior", fuel="Gas or diesel", near=bad)["place"] == "Hood", bad
+    near = '["Left front door", "Left front window", "Mirror"]'
+    assert read(client, kind="damage", section="Exterior", fuel="Gas or diesel", near=near) == {"ok": True, "place": "Hood", "type": "Dent", "severity": "Minor"}
+    listed = [x.split(":")[0] for x in seen["messages"][0]["content"][1]["text"].split("\n")[1:] if ": " in x]
+    assert listed == list(ai.allowed_pairs("Exterior", "Gas or diesel"))
+    fake_ai(monkeypatch, {"place": "Left rear wheel", "type": "Curb rash", "severity": "Minor"}, seen)
+    assert read(client, kind="damage", section="Tires")["place"] == "Left rear wheel"
+    listed = [x.split(":")[0] for x in seen["messages"][0]["content"][1]["text"].split("\n")[1:] if ": " in x]
+    assert listed == list(ai.allowed_pairs("Tires", None)) and len(listed) == 8
     # a hint still decides the place
     fake_ai(monkeypatch, {"place": "Left rear tire", "type": "Uneven wear", "severity": "Minor"})
-    assert read(client, kind="damage", section="Tires", hint="Left front tire", near='["Left front tire", "Left front wheel"]')["place"] == "Left front tire"
-    # tires: both the tire and the wheel of each wheel in range
-    fake_ai(monkeypatch, {"place": "Left rear wheel", "type": "Curb rash", "severity": "Minor"}, seen)
-    got = read(client, kind="damage", section="Tires", near='["Left front tire", "Left front wheel", "Left rear tire", "Left rear wheel"]')
-    assert got["place"] == "Left rear wheel"
-    listed = [x.split(":")[0] for x in seen["messages"][0]["content"][1]["text"].split("\n")[1:] if ": " in x]
-    assert listed == ["Left front tire", "Left front wheel", "Left rear tire", "Left rear wheel"]
+    assert read(client, kind="damage", section="Tires", hint="Left front tire")["place"] == "Left front tire"
 
 
 def test_ai_errors_give_ok_false(client, monkeypatch):

@@ -16,7 +16,7 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 |---|---|---|---|
 | `odometer` | `ph_odo` | `{ mileage: int \| null }` | 0 to 999999; ignore trip meters |
 | `vin` | `ph_vin_dash`, `ph_vin_door` | `{ vin: str \| null }` | 17 characters, no I, O, Q; server checks the check digit (`vin_ok` in `tools/cr_from_inspection.py`) and returns `check_digit_ok` |
-| `tire` | `tire_photo` | `{ brand: str \| null, size: str \| null }` | brand from the North American brand list in the mockup (`TIRE_BRANDS`); size `WWW/AARDD`, width 165-355, aspect 15-85, rim 13-25 |
+| `tire` | `tire_photo` | `{ brand: str \| null, model: str \| null, size: str \| null }` | brand from the North American brand list in the mockup (`TIRE_BRANDS`); model = the tire line name on the sidewall; size `WWW/AARDD`, width 165-355, aspect 15-85, rim 13-25. After the fourth tire the app sets All 4 tires match: same brand and model on all four = Match, else Mismatch |
 | `tread` | `tread_photo` | `{ tread_32nds: int \| null }` | 1 to 14 |
 | `paint_meter` | `paint` (per panel) | `{ mils: number \| null }` | 0 to 99.9, one decimal; convert microns to mils (÷ 25.4) when the meter shows µm; server sets `high` at 8 or more |
 | `ev_battery` | `ph_ev_battery` | `{ health_pct: int \| null }` | 1 to 100 |
@@ -26,9 +26,9 @@ The phone sends each photo to `POST /api/ai/read` as soon as it is taken (queued
 
 ## Damage first guess
 
-- The app sends `section`, `fuel` and, when the Damage shutter was pressed during the Exterior walk (paint panels, roof, windshield VIN) or the Tires walk, `near`: a JSON list of the places between the shot taken before the damage photo and the shot to take next. The inspector may photograph a damage before or after that panel's or wheel's own shot, so both shots count: a paint panel brings the parts next to it (left front door: the door, its window and the mirror), a wheel its tire and its wheel; Exterior adds Other. After the last shot of a section (Record damage now), the app sends no `near`: the damage can be anywhere in the section.
+- The app sends `section` and `fuel`. The section is the zone of the shot the Damage shutter was pressed at (docs/11): a paint panel, the roof photo or the windshield VIN Exterior, a tire Tires, cargo and the Interior shots Interior, Mechanicals; an underbody shot sends `Underbody`. In Record damage it is the zone of the section's last shot. The AI picks the place from every place of that section, not only the shots around it.
 - A damage photo taken from Review for one wheel sends `hint` (that wheel's tire) instead.
-- The server builds the allowed list from `data/issue-catalog.json` `places` for that section and fuel: each place with its allowed types. With `near`, only those places stay (all of them when none of the `near` places is in the section). It sends this list in the instruction and requires the answer to be one of its pairs.
+- The server builds the allowed list from `data/issue-catalog.json` `places` for that section and fuel: each place with its allowed types. It sends this list in the instruction and requires the answer to be one of its pairs.
 - With a `hint`, the place defaults to the hint; the AI picks type and severity.
 - A pair not in the list is dropped to `{place: hint or null, type: null, severity: null}`.
 

@@ -1,5 +1,5 @@
 // Question list (assets/question-list.json) and the lists the app derives from it.
-// Ported from the mockup (reference/mockup/src/template.html); never hardcode questions.
+// Ported from the mockup (reference/mockup-1109/src/template.html); never hardcode questions.
 import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
@@ -100,7 +100,7 @@ const extra = {
   'ck_brakes': ['Which wheel', ['Left front', 'Left rear', 'Right rear', 'Right front']],
 };
 
-// camera layout per section
+// each shot's home section: the Review page it shows on (the camera takes some of them in another pass, see camLayout)
 const layout = {
   'Exterior': ['video_360', 'ph_ext_roof', 'ph_vin_dash', 'ph_mod_ext'],
   'Interior': ['ph_vin_door', 'ph_odo', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_int_front', 'ph_int_rear', 'ph_int_cargo', 'ph_mod_int'],
@@ -110,10 +110,59 @@ const layout = {
 };
 const msec = {'vin_scan': 'Interior', 'ck_ids': 'Interior', 'ck_keys': 'Interior', 'ck_equip': 'Interior', 'ck_account': 'Interior'};
 String secOf(J it) => msec[it['id']] ?? it['section'];
-// sections of the pass and of Review (Underbody last, so saved page indexes and the record's photo order stay)
+// sections of Review (Underbody last, so saved page indexes stay)
 const capseq = ['start', 'Exterior', 'Tires', 'Paint', 'Interior', 'OBDII', 'Mechanicals', 'Underbody'];
-const camseq = ['Exterior', 'Tires', 'Interior', 'OBDII', 'Mechanicals', 'Underbody'];
+// the camera pass (docs/11-camera-flow-1109.md): windshield VIN and the 360 video, Interior with the OBDII screens at its end,
+// one walk round the car (key 'Tires', shown as Walk-around), Mechanicals, Underbody
+const camseq = ['Exterior', 'Interior', 'Tires', 'Mechanicals', 'Underbody'];
+const camseq0 = ['Exterior', 'Tires', 'Interior', 'OBDII', 'Mechanicals', 'Underbody']; // the pass before 1109 (saved shot indexes point into it)
+const camLayout = {
+  'Exterior': ['ph_vin_dash', 'video_360'],
+  'Interior': ['ph_vin_door', 'ph_int_front', 'ph_int_rear', 'ph_odo', 'video_engine', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'],
+  'OBDII': ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'], // opened from Review only
+  'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_exhaust'],
+  'Underbody': ['ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
+};
+// the walk-around, from the left front counter-clockwise: paint panel (p), tire and tread gauge (w), other shot (i)
+const walk = [
+  ['p', 'Left front fender'], ['w', 'lf'], ['p', 'Left front door'], ['p', 'Left rear door'], ['w', 'lr'], ['p', 'Left quarter panel'], ['p', 'Trunk or liftgate'], ['i', 'ph_int_cargo'],
+  ['p', 'Right quarter panel'], ['w', 'rr'], ['p', 'Right rear door'], ['p', 'Right front door'], ['w', 'rf'], ['p', 'Right front fender'], ['p', 'Hood'], ['p', 'Roof'], ['i', 'ph_ext_roof'],
+];
 String stTitle(String k) => const {'start': 'Start', 'Tires': 'Tires & Wheels'}[k] ?? k;
+String camTitle(String k) => k == 'Tires' ? 'Walk-around' : stTitle(k);
+final homeSec = {for (final e in layout.entries) for (final id in e.value) id: e.key};
+// the Review page a shot taken in camera section ck shows on; the zone a damage photo taken at it gets (a paint panel is Exterior)
+String homeOf(J x, String ck) => x['panel'] != null ? 'Paint' : x['wheel'] != null ? 'Tires' : homeSec[x['id']] ?? ck;
+String shotZone(J? x, String ck) {
+  final h = x == null ? ck : homeOf(x, ck);
+  return h == 'Paint' ? 'Exterior' : h;
+}
+
+// Look for: a few words top left of each guided shot, information only (docs/11)
+const lookFor = {
+  'ph_vin_dash': ['Clear photo', 'Full VIN visible'], 'video_360': ['Move smoothly'], 'ph_vin_door': ['VIN label', 'Jamb repaint', 'Spot welds'],
+  'ph_int_front': ['Seats', 'Windows', 'Seat belts', 'Airbag covers'], 'ph_int_rear': ['Seats', 'Windows', 'Odor', 'Flood signs'],
+  'ph_odo': ['Warning lights', 'Total miles', 'Dash cracks'], 'video_engine': ['Hard start', 'Knock', 'Rough idle', 'Smoke'], 'ph_keys': ['All keys', 'Key works'],
+  'ph_int_dash': ['Dash cracks', 'A/C cold', 'Heat', 'Warning lights'], 'ph_int_screen': ['Screen', 'Audio', 'Cameras', 'Navigation'],
+  'ph_obd_current': ['Engine codes'], 'ph_obd_past': ['Cleared codes'], 'ph_obd_emission': ['Not ready'], 'ph_obd_other': ['Airbag faults', 'ABS faults'],
+  'Left front fender': ['Repaint', 'Fender bolts', 'Panel gaps', 'Dents'], 'Right front fender': ['Repaint', 'Fender bolts', 'Panel gaps', 'Dents'],
+  'Left front door': ['Frame damage', 'Repaint', 'A-pillar', 'Window'], 'Right front door': ['Frame damage', 'Repaint', 'A-pillar', 'Window'],
+  'Left rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'], 'Right rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'],
+  'Left quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'], 'Right quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'],
+  'Trunk or liftgate': ['Repaint', 'Tail lights', 'Panel gaps', 'Rear window'], 'Hood': ['Repaint', 'Hood bolts', 'Chips'], 'Roof': ['Repaint', 'Dents', 'Hail'],
+  'ph_ext_roof': ['Dents', 'Hail', 'Sunroof'], 'tire_photo': ['Sidewall cracks', 'Bulge', 'Curb rash', 'Plug or patch'], 'tread_photo': ['Lowest groove', 'Uneven wear'],
+  'ph_int_cargo': ['Trunk floor', 'Rails', 'Water', 'Spare tire'], 'ph_engine_bay': ['Aprons', 'Strut towers', 'Core support', 'Leaks'],
+  'ph_engine_oil': ['Sludge', 'Milky oil', 'Oil level'], 'video_exhaust': ['Rev noise', 'Smoke', 'Reverse gear'], 'ph_frunk': ['Coolant', 'Water', 'Damage'],
+  'ph_ev_port': ['Scorched pins', 'Latch'], 'ph_under_lf': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_lr': ['Leaks', 'Rust', 'Frame rails', 'Kinks'],
+  'ph_under_rr': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_rf': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_rear': ['Rear rails', 'Exhaust', 'Leaks'],
+  'ph_under_front': ['Core support', 'Subframe', 'Leaks'], 'ph_under_cats': ['Missing converter', 'Cut pipe'], 'ph_under_pack': ['Scrapes', 'Dents', 'Bolts'],
+};
+List<String>? lookOf(J? x) => x == null ? null : lookFor[x['panel'] ?? x['id']];
+
+// end-of-section questions (docs/11): which camera sections ask, Mechanicals checks asked after another section instead
+const askQ = {'Interior', 'Tires', 'Mechanicals', 'Underbody'};
+const askMove = {'Tires': ['ck_brakes'], 'Underbody': ['ck_leaks', 'ck_exhaust', 'ck_susp', 'ck_cv']};
+const askOut = {'ck_trans', 'ck_brakes', 'ck_exhaust', 'ck_susp', 'ck_cv'}; // not on the Mechanicals card (Leaks stays: asked twice, one answer)
 const vmax = {'video_360': 60, 'video_engine': 30, 'video_exhaust': 30};
 const short = {
   'video_360': 'Walk-around', 'video_engine': 'Engine sound', 'video_exhaust': 'Exhaust', 'ph_under_front': 'Underbody, front', 'ph_under_rear': 'Underbody, rear', 'ph_under_cats': 'Catalytic converters',

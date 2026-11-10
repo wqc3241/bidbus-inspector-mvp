@@ -319,7 +319,7 @@ class DamageEditor extends ConsumerWidget {
       ),
       const SizedBox(height: 20),
       const Sub3('Where', LucideIcons.mapPin),
-      WhereView(d, fuel, make: (st['car'] as J?)?['make'], shot: d['sec'] is String && d['at'] is int ? (capList(d['sec'], st).elementAtOrNull(d['at']) ?? {})['id'] : null, (p) {
+      WhereView(d, fuel, make: (st['car'] as J?)?['make'], shot: tagAt(st, d) == null ? null : (capList(d['sec'], st).elementAtOrNull(tagAt(st, d)!) ?? {})['id'], (p) {
         store.mut(id, (s) {
           setLabel(dmgById(s, did)!, 'panel', p, fuel);
           syncDamages(s);
