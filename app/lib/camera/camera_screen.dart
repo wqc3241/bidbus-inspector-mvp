@@ -465,15 +465,10 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     }
   }
 
-  // the white flash over the screen: the moment the shutter is tapped. When the flash fires (On, or Auto in the dark) the
-  // photo comes a moment after the tap, so the screen flashes again when it is in (the inspector holds still until then):
-  // always with On; with Auto when the photo took longer than a photo without the flash does
-  DateTime? tapAt;
+  // the white flash over the screen, once for each shutter press: at the tap (the photo is kept at once), or with the flash On
+  // when the photo is in (it comes a moment after the tap, once the flash has fired: the inspector holds still until then)
   void _blink({bool taken = false}) {
-    if (!taken) tapAt = DateTime.now();
-    final slow = tapAt != null && DateTime.now().difference(tapAt!) > const Duration(milliseconds: 350);
-    final on = flashMode == FlashMode.always;
-    if (taken ? !(on || (flashMode == FlashMode.auto && slow)) : on) return;
+    if (taken != (flashMode == FlashMode.always)) return;
     setState(() => flash = true);
     Future.delayed(const Duration(milliseconds: 150), () => mounted ? setState(() => flash = false) : null);
   }
