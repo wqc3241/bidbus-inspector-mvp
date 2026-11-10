@@ -402,9 +402,11 @@ void main() {
     expect(lastDamage('r')!.containsKey('near'), false);
     expect(lastDamage('r')!.containsKey('hint'), false);
     expect((manual(store.ins['r']!).single['zone'], manual(store.ins['r']!).single['sec']), ('Tires', 'Tires'));
-    // Auto and a photo that takes long (the flash fired in the dark): the screen flashes again when it is in
+    // Auto and a photo that takes long (the flash fired in the dark): the screen flashes once, at the tap, not again when it is in
     cam.hold = Completer<void>();
     await t.tap(find.byType(AnimatedContainer));
+    await t.pump();
+    expect(white(), findsOneWidget);
     await t.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 400))); // the photo takes a while
     await t.pump(const Duration(milliseconds: 400)); // the tap flash is over
     expect(white(), findsNothing);
@@ -412,9 +414,9 @@ void main() {
     cam.hold = null;
     await t.pump();
     await t.pump();
-    expect(white(), findsOneWidget);
+    expect(white(), findsNothing);
     await settle();
-    // with the flash On the photo comes a moment after the tap: the screen flashes when it is in, not before
+    // with the flash On the photo comes a moment after the tap: the screen flashes once, when it is in, not before
     await t.tap(find.byIcon(LucideIcons.zap));
     await settle();
     cam.hold = Completer<void>();
