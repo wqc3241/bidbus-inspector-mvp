@@ -1328,7 +1328,7 @@ function stTitle(k) { return STEPS[stepIdx(k)].t; }
 function secDone(st, k) { var l = capList(k, st); return capNext(st, l, 0) >= l.length && (k !== 'start' || (!!st.owner && st.owner !== 'No')); }
 function firstOpenSection(st) { for (var j = 0; j < CAMRUN.length; j++) if (!secDone(st, CAMRUN[j])) return CAMRUN[j]; return null; }
 function nextSection(st, k) { var i = CAMRUN.indexOf(k); for (var j = i + 1; j < CAMRUN.length; j++) if (capList(CAMRUN[j], st).length) return CAMRUN[j]; return null; }
-function capLeft(st) { var n = 0; CAPSEQ.forEach(function (k) { var c = capCount(st, k); n += c[1] - c[0]; }); return n; }
+function capLeft(st) { var n = 0; CAMRUN.forEach(function (k) { var c = capCount(st, k); n += c[1] - c[0]; }); return n; }
 function openCap(st, k, run) { S.capRet = null; var pf = k === 'Paint'; if (pf) k = 'Tires'; var l = capList(k, st), i = capNext(st, l, 0);
   if (pf) { for (var pj = 0; pj < l.length; pj++) if (l[pj].panel && !capOk(st, l[pj])) { i = pj; break; } } S.cap = { k: k, i: run || i < l.length ? i : 0, rec: false, run: !!run }; S.sheet = null; }
 function prevSection(st, k) { var i = CAMRUN.indexOf(k); for (var j = i - 1; j >= 0; j--) if (CAMRUN[j] !== 'start' && capList(CAMRUN[j], st).length) return CAMRUN[j]; return null; }
@@ -2283,7 +2283,7 @@ function capHTML() {
   if (rv) hint = multi ? arr.length + ' taken. Tap the green shutter to retake photo ' + arr.length + '.' : vid ? 'Taken. Record again to replace it.' : 'Taken. Tap the green shutter to retake it.';
   if (!hint && x.id === 'ph_ext_roof') hint = 'Hold the phone up high, the whole roof in view.';
   if (ms) hint = (MULTI_HINT[x.id] || 'One photo each') + '. ' + (arr.length ? arr.length + ' taken. Take another, or tap Done.' : 'Take as many as you need, then tap Done.') + (it.optional && !arr.length ? ' Optional.' : '');
-  var tagOk = cp.k !== 'start' && !cp.single && !!DZONE[cp.k], tagOff = (x && homeOf(x, cp.k) === 'OBDII') || vid ? ' disabled' : '', zf = S.zoom || 1, zs = ZOOMS.filter(function (z) { return z[0] === zf; })[0][2];
+  var tagOk = cp.k !== 'start' && !cp.single && !!DZONE[cp.k], tagOff = !cp.free && ((x && homeOf(x, cp.k) === 'OBDII') || vid) ? ' disabled' : '', zf = S.zoom || 1, zs = ZOOMS.filter(function (z) { return z[0] === zf; })[0][2];
   var zoomHTML = cp.k !== 'start' ? '<div class="zm">' + (vid ? '' : flashChip()) + ZOOMS.map(function (z) { return '<button type="button" class="' + (z[0] === zf ? 'on' : '') + '" data-czoom="' + z[0] + '" aria-label="Zoom ' + z[1] + 'x" aria-pressed="' + (z[0] === zf) + '"' + (cp.rec && (z[0] === 0.5) !== (zf === 0.5) ? ' disabled' : '') + '>' + z[1] + (z[0] === zf ? '×' : '') + '</button>'; }).join('') + '</div>' : '';
   if (sel) { lbl = sel.lbl; hint = 'Delete it, or tap the green shutter to retake it.'; }
   var tagPill = sel ? '<span class="tkn ' + (sel.t === 'd' ? 'dm' : 'md') + '">' + I(sel.t === 'd' ? 'alert' : 'wrench', 14) + sel.lbl + '</span>' : cp.tag && cp.tag[2] === cp.i ? '<span class="tkn ' + (cp.tag[0] === 'dmg' ? 'dm' : 'md') + '">' + I(cp.tag[0] === 'dmg' ? 'alert' : 'wrench', 14) + (cp.tag[0] === 'dmg' ? 'Damage ' : 'Mod ') + cp.tag[1] + '</span>' : '';
@@ -2615,7 +2615,7 @@ function inspectionPayload(st) {
   function pn(p) { return p === 'Hood' ? 'Hood or frunk lid' : p; }
   function fname(e) { return [e.question_id, e.wheel, e.panel, e.n].filter(function (x) { return x; }).join('-').toLowerCase().replace(/[^a-z0-9_]+/g, '-') + '.jpg'; }
   function put(e) { if (!e.skipped) { e.file = fname(e); e.upright_turn_deg = 0; } photos.push(e); }
-  CAPSEQ.forEach(function (k) { capList(k, st).forEach(function (x) {
+  CAMRUN.forEach(function (k) { capList(k, st).forEach(function (x) { /* camera passes: each shot once (OBDII shots sit in Interior) */
     var id = x.id, has = capHas(st, x), e = { section: photoSec(k, id), question_id: id };
     if (/^video_/.test(id)) return;
     if (x.wheel) e.wheel = x.wheel; if (x.panel) e.panel = pn(x.panel);
@@ -3440,7 +3440,7 @@ document.addEventListener('click', function (e) {
     if (d.cmundo && cx && MULTI[cx.id]) { var ua = st.multi[cx.id] || []; ua.pop(); st.shots[cx.id] = ua.length || 0; if (!ua.length) delete st.shots[cx.id]; S.cap.note = ''; render(); return; }
     if (d.cplus && S.cap.prev) { var pa = st.multi[S.cap.prev] = st.multi[S.cap.prev] || []; pa.push({ src: 'camera', panel: null }); st.shots[S.cap.prev] = pa.length; S.cap.flash = true; S.cap.note = (MULTI_PLUS[S.cap.prev] || 'Photo') + ' ' + pa.length + ' added'; render(); return; }
     if (d.czoom) { if (S.cap.rec && (+d.czoom === 0.5) !== ((S.zoom || 1) === 0.5)) return; S.zoom = +d.czoom; render(); return; }
-    if (d.ctag && cx && homeOf(cx, S.cap.k) !== 'OBDII' && cx.it.kind !== 'video') { var tk = S.cap.k, tn; S.tagN = (S.tagN || 0) + 1;
+    if (d.ctag && cx && (S.cap.free || (homeOf(cx, S.cap.k) !== 'OBDII' && cx.it.kind !== 'video'))) { var tk = S.cap.k, tn; S.tagN = (S.tagN || 0) + 1;
       if (d.ctag === 'dmg') { st.manual.push({ zone: DZONE[shotZone(cx, tk)] || 'Exterior', panel: '', type: '', sev: '', size: '', shot: true, src: 'camera', sec: tk, at: S.cap.i, n: S.tagN }); aiLabel(st, st.manual[st.manual.length - 1]); syncDamages(st); tn = st.manual.filter(function (m) { return m.sec === tk; }).length; }
       else { var tm2 = st.multi[MODSLOT[tk]] = st.multi[MODSLOT[tk]] || []; tm2.push({ src: 'camera', panel: null, sec: tk, rs: tk === 'Tires' ? (cx.wheel ? 'Tires' : 'Exterior') : tk, at: S.cap.i, n: S.tagN }); st.shots[MODSLOT[tk]] = tm2.length; tn = tm2.filter(function (m) { return m.sec === tk; }).length; }
       S.cap.flash = true; S.cap.tag = [d.ctag, tn, S.cap.i]; render(); capScroll(); return; }
