@@ -14,7 +14,8 @@ Start a Claude Code session in this folder and say: **"Read CLAUDE.md and build 
 | `tools/cr_from_inspection.py` | Condition report generator |
 | `samples/` | Two inspection records (gas, EV) and their condition reports |
 | `guides/` | Camera guide outlines (SVG, PNG) |
-| `reference/mockup/` | Clickable mockup of every screen (`internal-mvp.html`) and its source |
+| `reference/mockup-1109/` | Clickable mockup of every screen (`internal-mvp.html`) and its source; camera flow per `docs/11-camera-flow-1109.md` |
+| `reference/mockup/` | Previous mockup (camera in six sections), kept for comparison |
 | `reference/condition-report/` | Seller and dealer report reference page and its source |
 | `reference/field-phases/` | DEV-190 phase 1 UI images (1.1 to 1.7) |
 | `reference/inspection-journey/` | One car end to end: inspector app, seller report, dealer screens |

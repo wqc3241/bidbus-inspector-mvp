@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-You are building the **Bidbus Field inspector app (DEV-190, phase 1)** end to end, as a home build that Tom tests on his own phone. This file is the entry point. Read it fully, then `docs/` in number order (01 to 10), before writing code.
+You are building the **Bidbus Field inspector app (DEV-190, phase 1)** end to end, as a home build that Tom tests on his own phone. This file is the entry point. Read it fully, then `docs/` in number order (01 to 11), before writing code.
 
 ## Goal
 
@@ -38,8 +38,9 @@ Everything else follows DEV-190 exactly: question list, one camera pass, Damage 
 |---|---|
 | Product requirements | `docs/01-product-spec.md` |
 | Every screen and its rules | `docs/02-screens.md` |
-| Clickable reference of every screen (open in a browser, press Build notes for notes per screen) | `reference/mockup/internal-mvp.html` |
-| Reference source code of that mockup (camera order, labelling logic, `inspectionPayload`) | `reference/mockup/src/template.html` |
+| Clickable reference of every screen (open in a browser, press Build notes for notes per screen) | `reference/mockup-1109/internal-mvp.html` |
+| Reference source code of that mockup (camera order, labelling logic, `inspectionPayload`) | `reference/mockup-1109/src/template.html` |
+| Camera order, Look for, end-of-section questions, AI tires match | `docs/11-camera-flow-1109.md` |
 | Questions, options, levels, damage places | `data/question-list.json` (never hardcode questions; render from this file) |
 | Every allowed place, type, check option, level | `data/issue-catalog.json` |
 | Record the app sends | `docs/03-data-contract.md`, `samples/inspection-*.json` |
@@ -74,7 +75,7 @@ Follow `docs/09-build-plan.md`. Each milestone ends with its checks passing. Com
 # app
 cd app && flutter pub get && flutter test && flutter run   # phone plugged in
 # reference mockup (rebuild after a question list change)
-python3 reference/mockup/build.py
+python3 reference/mockup-1109/build.py
 # CR generator on a sample
 python3 -I tools/cr_from_inspection.py samples/inspection-bmw-x3.json /tmp/cr.json
 # regenerate the issue catalog from the mockup (needs Node + Playwright)

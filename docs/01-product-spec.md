@@ -7,7 +7,7 @@
 
 ## Flow
 
-New inspection (YMMT) → Check ID at the car → one camera pass: Exterior (360 video, paint readings, roof, windshield VIN), Tires & Wheels, Interior, OBDII, Mechanicals, Underbody; Damage and Mod shutters at any point → Damages: confirm or label every damage photo → Review: one page per section → Summary: VIN, mileage, overall condition, note → disclosure and seller signature → upload → backend makes the condition report and emails the seller and dealer report links.
+New inspection (YMMT) → Check ID at the car → one camera pass: Exterior (windshield VIN, 360 video), Interior with OBDII, Walk-around (paint readings, tires, cargo, roof), Mechanicals, Underbody; Damage and Mod shutters at any point → Damages: confirm or label every damage photo → Review: one page per section → Summary: VIN, mileage, overall condition, note → disclosure and seller signature → upload → backend makes the condition report and emails the seller and dealer report links.
 
 The inspection takes about 18 minutes.
 
@@ -33,9 +33,9 @@ The inspection takes about 18 minutes.
 - Start inspection records the start time and GPS and opens the camera on Exterior.
 
 **1.4 One camera pass, landscape**
-- Six sections in order: Exterior (360 walk-around video; then one paint meter photo per panel starting at the left front fender, counter-clockwise, then hood and roof, 11 panels; roof photo; windshield VIN), Tires & Wheels, Interior, OBDII, Mechanicals, Underbody. "Tires & Wheels" is the name shown; the section key in the data stays `Tires`.
-- After the last shot of each section, a dialog: "Please record any exterior damage/modification images before proceeding." (tire and wheel, interior, mechanical, underbody for the other sections) with I'm done and Record damage now. I'm done goes to the next section. Record damage now reopens that section's camera with only the Damage and Mod shutters and Next (top right) to the next section. Every section has this step but OBDII, which has no Damage and Mod shutters.
-- Never stops otherwise: Damage (amber) and Mod (blue) shutters on the right take a tagged photo at any point without moving the flow. Off on videos and in OBDII.
+- Five sections in order: Exterior (windshield VIN, 360 walk-around video), Interior (OBDII shots at its end), Walk-around (paint panels, tires and tread gauges, cargo, hood, roof), Mechanicals, Underbody. Full order, Look for and end-of-section questions: `docs/11-camera-flow-1109.md`.
+- After the last shot of Interior, Walk-around, Mechanicals and Underbody: that section's questions from Review (`docs/11-camera-flow-1109.md`), then Record damage (the camera stays with only the Damage and Mod shutters and Next at the top right) or Next to the next section.
+- Never stops otherwise: Damage (amber) and Mod (blue) shutters on the right take a tagged photo at any point without moving the flow. Off on videos and OBDII shots.
 - Every shot can go Back and be retaken; optional shots can be skipped.
 - Each tire: a whole tire photo and a tread gauge photo.
 - Damage tapped at a paint panel: the AI guess for the place is that panel.
@@ -66,7 +66,7 @@ The inspection takes about 18 minutes.
 - Fuel type: EVs hide engine bay, leaks and scan result items; charging items (Charging check, charge port photo, charge port damage place, missing charge cable) show for EV and plug-in hybrid.
 - Readings come from the photos by AI (2.8); photos can also be picked from the library.
 - Tires: whole tire photo and tread gauge photo (gauge in the lowest groove). AI reads brand and size from the first (optional) and tread from the second (1-14/32, required per tire). Review Tires edits them with scroll pickers: brand from North American tire brands; size as width 165-355, aspect 15-85, rim R13-R25. No DOT.
-- The 4 tires match (same brand, model, size): Match or Mismatch on Review Tires, required, no default; Mismatch is Disclosed.
+- The 4 tires match (same brand and model): read by the AI after the fourth whole-tire photo and marked Read from photo; the inspector confirms or picks Match or Mismatch on Review Tires; required; Mismatch is Disclosed.
 - Tire and wheel damage photos are labelled in Damages with the wheel and the type (tire: uneven wear, sidewall cracks, bulge, plug or patch, cut; wheel: curb rash, bent, cracked, aftermarket). A label matching that wheel's tire or wheel problem ticks it.
 
 **2.3 Sending**
