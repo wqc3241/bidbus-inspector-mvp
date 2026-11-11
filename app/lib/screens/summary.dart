@@ -174,7 +174,7 @@ class _SummaryScreenState extends ConsumerState<SummaryScreen> {
 }
 
 // the disclosure the seller agrees to; its version is saved with the signature
-const discVersion = '2026-11-07';
+const discVersion = '2026-11-11';
 
 class SignScreen extends ConsumerStatefulWidget {
   final String id;
@@ -222,6 +222,7 @@ class _SignScreenState extends ConsumerState<SignScreen> {
       'It describes the vehicle at the time of the inspection. It is not a warranty.',
       'Bidbus is not responsible for any problem with the vehicle that appears or develops after this inspection, or that could not be seen or tested during it.',
       'You have told us about every problem with the vehicle that you know of.',
+      'By signing below, I agree to list my vehicle for sale on Bidbus with the condition found during this inspection.',
     ];
     return Scaffold(
       appBar: PhaseHeader('Seller signs', 4, onBack: () => store.mut(id, (s) => s['phase'] = 'final')),

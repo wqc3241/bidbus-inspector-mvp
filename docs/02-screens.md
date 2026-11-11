@@ -79,7 +79,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup-11
 ## Seller signs
 
 - Findings in plain words, section by section like the Summary.
-- Disclosure: the inspection records what our inspector could see and test at the visit, without lifting the car or taking it apart; it describes the car at that time and is not a warranty; Bidbus is not responsible for problems that appear later or could not be seen or tested; the seller has told us every problem they know of.
+- Disclosure: the inspection records what our inspector could see and test at the visit, without lifting the car or taking it apart; it describes the car at that time and is not a warranty; Bidbus is not responsible for problems that appear later or could not be seen or tested; the seller has told us every problem they know of; by signing, the seller agrees to list the car for sale on Bidbus with the condition found during the inspection.
 - Tick "I have read and agree to this disclosure"; Sign stays off until ticked.
 - Name (filled from the owner name, editable) and a signature pad under "I have seen the inspection findings for this car."
 - Saved: signature, name, disclosure version and agreement, end time and GPS.
