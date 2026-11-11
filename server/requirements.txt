@@ -71,6 +71,8 @@ pydantic==2.14.3
     #   fastapi
 pydantic-core==2.50.4
     # via pydantic
+pypdfium2==5.15.2
+    # via -r requirements.in
 python-dotenv==1.2.4
     # via uvicorn
 python-multipart==0.0.33

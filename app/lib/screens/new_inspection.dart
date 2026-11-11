@@ -1,5 +1,7 @@
 // New inspection: year, make, model and trim picked from lists (assets/vehicles.json), each with Other to type;
 // fuel and report email required. A typed VIN is decoded (NHTSA vPIC via the server) to prefill.
+// Started from a scheduler appointment (car brief, Start inspection) it comes filled in from the booking and Bidbus;
+// with scheduler sign-in the inspector is the signed-in team member.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
@@ -8,17 +10,19 @@ import '../data/ql.dart';
 import '../data/vehicles.dart';
 import '../logic/insp.dart';
 import '../services/store.dart';
+import '../services/team.dart';
 import '../widgets/ui.dart';
 
 class NewInspectionScreen extends StatefulWidget {
-  const NewInspectionScreen({super.key});
+  final J? prefill; // from a car brief: vin, year, make, model, series, trim, mileage, owner_name, fuel, appt
+  const NewInspectionScreen({super.key, this.prefill});
   @override
   State<NewInspectionScreen> createState() => _NewInspectionScreenState();
 }
 
 class _NewInspectionScreenState extends State<NewInspectionScreen> {
   final vin = TextEditingController(), miles = TextEditingController(), owner = TextEditingController(), email = TextEditingController(text: store.defaultEmail);
-  final inspector = TextEditingController(text: store.inspector);
+  final inspector = TextEditingController(text: team.on && team.signedIn ? team.name : store.inspector);
   // a pick from the list, or Other with the typed value
   final typed = {for (final k in ['year', 'make', 'model', 'trim']) k: TextEditingController()};
   final pick = <String, String?>{'year': null, 'make': null, 'model': null, 'trim': null};
@@ -58,17 +62,57 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
     m != null ? _set(k, m) : _set(k, other, text: v.trim());
   }
 
+  @override
+  void initState() {
+    super.initState();
+    final p = widget.prefill;
+    if (p == null) return;
+    vin.text = '${p['vin'] ?? ''}'.trim().toUpperCase();
+    miles.text = p['mileage'] == null ? '' : '${p['mileage']}';
+    owner.text = '${p['owner_name'] ?? ''}';
+    _fill('year', p['year']?.toString());
+    _fill('make', p['make']);
+    _fill('model', p['model']);
+    _fillTrim(p['series'], p['trim']);
+    if (fuelChoices.contains(p['fuel'])) fuel = p['fuel'];
+    // the VIN decode fills in what Bidbus did not give, or corrects a car split from the booking's text
+    if (vin.text.length == 17 && (p['bidbus'] != true || ['year', 'make', 'model', 'trim'].any((k) => pick[k] == null))) _decode(vin.text);
+  }
+
+  // Bidbus trims are series + body style ("xDrive30i Sport Utility 4D"): the series, the whole trim, else the longest
+  // list trim the series' first words are ("Limited Hybrid" for "Limited Hybrid AWD"). Never from the body style alone
+  void _fillTrim(String? series, String? trim) {
+    final opts = _opts('trim').where((o) => o != other).toList();
+    String w(String? x) => ' ${(x ?? '').toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), ' ').trim()} ';
+    final m =
+        matchOption(opts, series) ??
+        matchOption(opts, trim) ??
+        (series == null
+            ? null
+            : (opts.where((o) => w(o).trim().isNotEmpty && w(series).startsWith(w(o))).toList()
+                    ..sort((a, b) => b.length.compareTo(a.length)))
+                  .firstOrNull);
+    if (m != null) {
+      _set('trim', m);
+    } else if (series != null && (opts.isEmpty || pick['model'] == other)) {
+      _fill('trim', series); // no list to pick from: typed under Other
+    }
+  }
+
   Future<void> _decode(String v) async {
     if (v.length != 17 || !store.online) return;
     try {
       final r = await store.api.vin(v);
       if (!mounted) return;
+      // the booked car's own VIN: a Bidbus car keeps what Bidbus gave, and the fuel stays unless vPIC really knows it
+      // (the decode says Gas when it does not know); any other VIN typed here is another car: all of it is filled in
+      final booked = widget.prefill != null && v == '${widget.prefill!['vin'] ?? ''}'.trim().toUpperCase(), keep = booked && widget.prefill!['bidbus'] == true;
       setState(() {
-        _fill('year', r['year']?.toString());
-        _fill('make', r['make']);
-        _fill('model', r['model']);
-        _fill('trim', r['trim']);
-        if (fuelChoices.contains(r['fuel'])) fuel = r['fuel'];
+        if (!keep || pick['year'] == null) _fill('year', r['year']?.toString());
+        if (!keep || pick['make'] == null) _fill('make', r['make']);
+        if (!keep || pick['model'] == null) _fill('model', r['model']);
+        if (!keep || pick['trim'] == null) _fill('trim', r['trim']);
+        if (fuelChoices.contains(r['fuel']) && (!booked || fuel == null && r['fuel'] != 'Gas')) fuel = r['fuel'];
       });
     } catch (_) {}
   }
@@ -77,14 +121,17 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
 
   void _go() {
     final id = const Uuid().v4();
-    if (store.inspector.isEmpty) store.saveSettings(server: store.server, passcode: store.passcode, inspector: inspector.text, email: store.defaultEmail); // next time it is filled in
-    store.add(newInspection(
+    if (store.inspector.isEmpty && !team.on) store.saveSettings(server: store.server, passcode: store.passcode, inspector: inspector.text, email: store.defaultEmail); // next time it is filled in
+    final st = newInspection(
       id: id,
       fuel: fuelGroup(fuel!),
       email: email.text.trim(),
       inspector: inspector.text.trim(),
       car: {'year': year, 'make': _val('make'), 'model': _val('model'), 'trim': _val('trim'), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim(), 'fuel': fuel},
-    ));
+    );
+    if (widget.prefill?['appt'] != null) st['appt'] = widget.prefill!['appt']; // the scheduler appointment it was started from
+    if (team.on) st['member'] = team.member?['id']; // sent only while this inspector is signed in
+    store.add(st);
     context.pushReplacement('/i/$id');
   }
 
@@ -152,7 +199,7 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
           _f('Mileage (optional)', miles, kb: TextInputType.number, max: 7),
           _f('Owner name (optional)', owner),
           _f('Report email', email, kb: TextInputType.emailAddress),
-          _f('Inspector name', inspector),
+          if (!team.on) _f('Inspector name', inspector),
         ]),
         bottomNavigationBar: BottomBar(PBtn('At the car: check ID', ready ? _go : null)),
       );

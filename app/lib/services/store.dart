@@ -18,6 +18,7 @@ import '../logic/insp.dart';
 import '../logic/payload.dart';
 import 'api.dart';
 import 'media.dart';
+import 'team.dart';
 
 const defaultServer = String.fromEnvironment('API_BASE_URL', defaultValue: 'https://server-production-c5da.up.railway.app');
 final storeProvider = ChangeNotifierProvider<Store>((ref) => store);
@@ -82,7 +83,11 @@ class Store extends ChangeNotifier {
     super.dispose();
   }
 
-  Api get api => Api(server, passcode);
+  // the app passcode, or the scheduler sign-in when the server uses it (team.dart)
+  String get bearer =>
+      team.on ? (team.session?['access_token'] as String? ?? '') : passcode;
+  bool get canCall => bearer.isNotEmpty;
+  Api get api => Api(server, bearer);
   String abs(String rel) => '$docs/$rel';
   String dirOf(String id) {
     final d = Directory('$docs/insp/$id');
@@ -105,6 +110,7 @@ class Store extends ChangeNotifier {
     await db.setSetting('email', defaultEmail);
     notifyListeners();
     kick();
+    unawaited(team.serverChanged());
   }
 
   // every change goes through here: applied, saved at once, then the screens redraw
@@ -136,9 +142,10 @@ class Store extends ChangeNotifier {
   }
 
   Future<void> _runAi() async {
-    if (_aiBusy || passcode.isEmpty) return;
+    if (_aiBusy || !canCall) return;
     _aiBusy = true;
     try {
+      if (team.on) await team.token();
       for (final st in list) {
         final q = (st['aiq'] as List? ?? []);
         // after the signature the record is fixed: readings still queued are dropped
@@ -186,11 +193,13 @@ class Store extends ChangeNotifier {
   }
 
   Future<void> _runUploads() async {
-    if (_upBusy || passcode.isEmpty) return;
+    if (_upBusy || !canCall) return;
     _upBusy = true;
     try {
+      if (team.on) await team.token();
       for (final st in list.where((s) => ['saved', 'uploading', 'building'].contains(s['status']))) {
         if (!online) break;
+        if (team.on && st['member'] != null && st['member'] != team.member?['id']) continue; // another inspector's, signed out
         await _upload(st['id']);
       }
     } finally {
@@ -203,9 +212,11 @@ class Store extends ChangeNotifier {
     try {
       if (st['status'] != 'building') {
         final p = st['rec'] != null ? Payload(st['rec'], (st['recFiles'] as Map).cast<String, String>()) : inspectionPayload(st), car = st['car'] as J;
+        final appt = st['appt'] as Map?;
         final r = await a.putInspection(id, {
           'report_email': st['report_email'], 'inspector': st['inspector'],
           'car': {'year': car['year'], 'make': car['make'], 'model': car['model'], 'trim': car['trim'], 'owner_name': car['owner_name'], 'fuel': ?car['fuel']}, 'record': p.record,
+          if (appt != null) 'appointment': {'slot_id': appt['slot_id'], 'booked_at': appt['booked_at'], 'vehicle_id': appt['vehicle_id']},
         });
         var missing = (r['missing'] as List).cast<String>();
         final extra = p.files.keys.where((n) => n.startsWith('spin-')).where((n) => !(m(st, 'up')['spin'] as List? ?? []).contains(n)).toList();
@@ -219,11 +230,12 @@ class Store extends ChangeNotifier {
           final local = p.files[name]!;
           // a video not made smaller yet (the app was closed while it was being done): now, before it goes
           if (!name.endsWith('.jpg') && !name.endsWith('.png')) await squeezeVideo(abs(local));
+          if (team.on) await team.token(); // a sign-in renewed during a long round
           final slash = local.lastIndexOf('/');
           final task = UploadTask(
             url: '${server.replaceAll(RegExp(r'/+$'), '')}/api/inspections/$id/files/$name', baseDirectory: BaseDirectory.applicationDocuments,
             directory: local.substring(0, slash), filename: local.substring(slash + 1), httpRequestMethod: 'PUT', post: 'binary',
-            headers: {'Authorization': 'Bearer $passcode', 'Content-Type': name.endsWith('.png') ? 'image/png' : name.endsWith('.jpg') ? 'image/jpeg' : 'video/mp4'},
+            headers: {'Authorization': 'Bearer $bearer', 'Content-Type': name.endsWith('.png') ? 'image/png' : name.endsWith('.jpg') ? 'image/jpeg' : 'video/mp4'},
             retries: 3,
           );
           final res = await FileDownloader().upload(task);
@@ -248,8 +260,8 @@ class Store extends ChangeNotifier {
         }
 
         await Future.wait([for (var w = 0; w < 3; w++) lane()]);
-        final c = await a.complete(id);
-        if (c.statusCode == 409) return; // something still missing: the next round sends it
+        final c = await (team.on ? Api(server, await team.token() ?? '') : a).complete(id); // a sign-in renewed during the round
+        if ((c.statusCode ?? 0) >= 300) return; // something still missing (409), or refused: the next round tries again
         mut(id, (s) => s['status'] = 'building');
       }
       final s = await a.status(id);
@@ -258,6 +270,7 @@ class Store extends ChangeNotifier {
         if (s['status'] == 'sent') x['status'] = 'sent';
         if (s['status'] == 'failed') x['status'] = 'failed';
       });
+      if (s['status'] == 'sent' && st['appt'] != null) team.reportSent(); // the seller's documents for this car are deleted
     } catch (e) {
       debugPrint('upload $id: $e');
     }

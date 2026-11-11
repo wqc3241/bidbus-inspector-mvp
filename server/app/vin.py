@@ -24,3 +24,11 @@ def decode(vin: str) -> dict:
     year = (r.get("ModelYear") or "").strip()
     return {"year": int(year) if year.isdigit() else None, "make": r.get("Make") or None, "model": r.get("Model") or None,
             "trim": r.get("Trim") or None, "fuel": fuel(r)}
+
+
+def decode_fuel(vin: str) -> str | None:
+    """the fuel when vPIC knows it (decode() says Gas when it does not); raises like decode()"""
+    resp = httpx.get(URL.format(vin), timeout=10)
+    resp.raise_for_status()
+    r = resp.json()["Results"][0]
+    return fuel(r) if (r.get("ElectrificationLevel") or r.get("FuelTypePrimary") or "").strip() else None
