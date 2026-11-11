@@ -134,7 +134,8 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
     _fill('make', p['make']);
     _fill('model', p['model']);
     _fillTrim(p['series'], p['trim']);
-    if (pick['trim'] == null) _fill('trim', p['dtrim']); // the decoded trim, when Bidbus names none
+    // the decoded trim, when Bidbus names none (as the direct start picks it: a list trim, else typed only with no series)
+    if (pick['trim'] == null && ('${p['series'] ?? ''}'.trim().isEmpty || matchOption(_opts('trim'), p['dtrim']) != null)) _fill('trim', p['dtrim']);
     if (fuelChoices.contains(p['fuel'])) fuel = p['fuel'];
     // the VIN decode fills in what Bidbus did not give, or corrects a car split from the booking's text
     if (vin.text.length == 17 && (p['bidbus'] != true || ['year', 'make', 'model', 'trim'].any((k) => pick[k] == null))) _decode(vin.text);

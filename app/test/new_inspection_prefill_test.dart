@@ -106,11 +106,16 @@ void main() {
     expect(store.ins.length, n);
     await open(t, {'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': null, 'trim': 'Sedan 4D', 'dtrim': 'SE', 'fuel': 'Gas', 'bidbus': true, 'appt': {'key': 'k6', 'slot_id': 's6'}});
     expect(find.text('SE'), findsOneWidget);
+    // a Bidbus series off the list: no decoded trim typed under Other
+    await open(t, {'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': 'Night', 'trim': 'Night Sedan 4D', 'dtrim': 'LE/SE', 'fuel': 'Gas', 'bidbus': true, 'appt': {'key': 'k5', 'slot_id': 's5'}});
+    expect(find.text('LE/SE'), findsNothing);
   });
 
   testWidgets('no fuel known: New inspection opens filled in', (t) async {
     final n = store.ins.length;
-    await atCar(t, {'vin': '2T3P1RFV0MC123456', 'year': 2021, 'make': 'Toyota', 'model': 'RAV4', 'fuel': null, 'bidbus': true, 'appt': {'key': 'k8', 'slot_id': 's8'}});
+    final p = {'vin': '2T3P1RFV0MC123456', 'year': 2021, 'make': 'Toyota', 'model': 'RAV4', 'series': 'XLE', 'fuel': null, 'bidbus': true, 'appt': {'key': 'k8', 'slot_id': 's8'}};
+    expect(carFromBrief(p)!['trim'], 'XLE'); // only the fuel is missing
+    await atCar(t, p);
     expect(find.text('New inspection'), findsOneWidget);
     expect(store.ins.length, n);
   });
