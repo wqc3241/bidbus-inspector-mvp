@@ -132,7 +132,8 @@ Payload inspectionPayload(J st) {
 
   final feat = m(st, 'feat');
   final record = <String, dynamic>{
-    'source': {'system': 'bidbus_field', 'listing_id': st['id'], 'inspector': st['inspector'] ?? '', 'started': st['start'], 'ended': st['end']},
+    // listing_id: the Bidbus vehicle ID when the inspection was started from a scheduler appointment that has one
+    'source': {'system': 'bidbus_field', 'listing_id': (st['appt'] as Map?)?['vehicle_id'] ?? st['id'], 'inspector': st['inspector'] ?? '', 'started': st['start'], 'ended': st['end']},
     'vehicle': {
       'vin_listing': (car['vin'] ?? '') == '' ? null : car['vin'], 'vin_read': (vals['vin_read'] ?? '') == '' ? null : vals['vin_read'], 'vin_door_jamb_read': vals['vin_scan'] == 1 || vals['vin_scan'] == true,
       'mileage_listing': _int(car['mileage']), 'mileage_read': _int(vals['odo_read']), 'vin_mileage_confirmed': vals['idconf'] == true,

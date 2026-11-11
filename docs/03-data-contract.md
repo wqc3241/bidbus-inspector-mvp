@@ -6,7 +6,7 @@ The app sends one **inspection record** per car. Its shape is exactly `samples/i
 
 | Part | Holds |
 |---|---|
-| `source` | `system: "bidbus_field"`, `listing_id` (= the inspection id in this build), `inspector`, `started {at, loc}`, `ended {at, loc}`; `at` is the phone's local time with its UTC offset, e.g. `2026-11-07T21:28:12-08:00`, `loc` is `lat, lng` |
+| `source` | `system: "bidbus_field"`, `listing_id` (the Bidbus vehicle ID when started from a scheduler appointment that has one, else the inspection id), `inspector`, `started {at, loc}`, `ended {at, loc}`; `at` is the phone's local time with its UTC offset, e.g. `2026-11-07T21:28:12-08:00`, `loc` is `lat, lng` |
 | `vehicle` | `vin_listing` (VIN typed at New inspection, or null), `vin_read`, `vin_door_jamb_read`, `mileage_listing` (typed mileage, or null), `mileage_read`, `vin_mileage_confirmed`, `keys_count`, `keys_count_read_from_photo`, `fuel`, `ev_battery_health_pct` |
 | `owner_check` | Yes, Family, with proof, or No |
 | `documents` | `license`, `registration`, `family_proof`: `"taken on site"` or null. Private |
