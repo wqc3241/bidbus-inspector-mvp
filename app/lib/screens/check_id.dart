@@ -1,4 +1,5 @@
-// Check ID: driver's license and registration photos (private), the owner question; No ends the visit.
+// Check ID: the person against the driver's license and registration the seller uploaded (from the car brief), or a photo
+// of a missing one taken here (private); the owner question; No ends the visit.
 import 'dart:io';
 
 import 'package:camera/camera.dart' show availableCameras;
@@ -15,6 +16,7 @@ import '../data/ql.dart';
 import '../logic/insp.dart';
 import '../services/media.dart' show here;
 import '../services/store.dart';
+import '../services/team.dart';
 import '../widgets/ui.dart';
 import 'home.dart';
 
@@ -44,9 +46,34 @@ Future<void> takeDoc(BuildContext context, String id, String doc) async {
   PaintingBinding.instance.imageCache.clear();
 }
 
+// the license and registration the seller uploaded for this inspection's booking (its car brief): the file on the phone,
+// '' while it is not saved yet (it counts only once saved)
+const sellerDocTypes = {'ph_license': 'driver_license', 'ph_reg': 'registration'};
+String _docFile(J st, Object? docId) {
+  final p = team.docPath('${(st['appt'] as Map)['slot_id']}', '$docId');
+  return File(p).existsSync() ? p : '';
+}
+
+Map<String, String> _sellerDocIds(J st) {
+  final ap = (st['appt'] as Map?)?.cast<String, dynamic>(), b = ap == null ? null : team.briefFor(ap);
+  final docs = (((b?['vehicle'] as Map?)?['documents'] as List?) ?? const []).cast<Map>();
+  return {
+    for (final e in sellerDocTypes.entries)
+      if (docs.where((x) => x['type'] == e.value).firstOrNull case final d?) e.key: '${d['document_id']}',
+  };
+}
+
+Map<String, String> sellerDocs(J st) => _sellerDocIds(st).map((k, v) => MapEntry(k, _docFile(st, v)));
+
+// the seller's document the inspector checked at Start (kept by its id, so a later upload does not take its place)
+String checkedSellerDoc(J st, String k) {
+  final ids = (st['sdoc_ids'] as Map?) ?? const {};
+  return ids[k] == null ? '' : _docFile(st, ids[k]);
+}
+
 String idBlock(J st) {
-  final d = m(st, 'docs');
-  if (d['ph_license'] == null || d['ph_reg'] == null) return 'Add the license and registration';
+  final d = m(st, 'docs'), s = sellerDocs(st);
+  if (sellerDocTypes.keys.any((k) => d[k] == null && (s[k] ?? '').isEmpty)) return 'Add the license and registration';
   if ((st['owner'] ?? '') == '') return 'Answer the owner question';
   if (st['owner'] == 'No') return 'End the visit';
   if (st['owner'] == 'Family, with proof' && d['ph_family'] == null) return 'Take the proof photo';
@@ -64,31 +91,49 @@ Future<void> endVisit(BuildContext context, String id) async {
   if (context.mounted) context.go('/');
 }
 
-class CheckIdScreen extends ConsumerWidget {
+class CheckIdScreen extends ConsumerStatefulWidget {
   final String id;
   const CheckIdScreen(this.id, {super.key});
+  @override
+  ConsumerState<CheckIdScreen> createState() => _CheckIdScreenState();
+}
+
+class _CheckIdScreenState extends ConsumerState<CheckIdScreen> {
+  String get id => widget.id;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final st = ref.watch(storeProvider).ins[id]!, fl = m(st, 'files'), why = idBlock(st), ow = byId['id_owner']!;
+  void initState() {
+    super.initState();
+    // the seller may have just uploaded: the brief and its documents are fetched again
+    final ap = store.ins[id]?['appt'] as Map?;
+    if (store.online && team.on && ap?['slot_id'] != null) team.loadBrief('${ap!['slot_id']}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.watch(teamProvider);
+    final st = ref.watch(storeProvider).ins[id]!, fl = m(st, 'files'), why = idBlock(st), ow = byId['id_owner']!, seller = sellerDocs(st);
+    final ap = (st['appt'] as Map?)?.cast<String, dynamic>(), reg = '${(((ap == null ? null : team.briefFor(ap))?['vehicle'] as Map?)?['owner'] as Map?)?['registered'] ?? ''}';
     Widget card(String doc, String label) {
-      final has = fl[doc] != null;
+      final has = fl[doc] != null, up = !has && (seller[doc] ?? '').isNotEmpty;
       return Expanded(
         child: GestureDetector(
-          onTap: () => takeDoc(context, id, doc),
+          onTap: up ? () => showPhotos(context, [seller[doc]!], label) : () => takeDoc(context, id, doc),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             AspectRatio(
               aspectRatio: 1.58,
               child: Container(
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: has ? Colors.black : alt, borderRadius: BorderRadius.circular(10), border: Border.all(color: line)),
+                decoration: BoxDecoration(color: has || up ? Colors.black : alt, borderRadius: BorderRadius.circular(10), border: Border.all(color: line)),
                 child: has
                     ? Image.file(File(store.abs(fl[doc])), fit: BoxFit.cover, key: ValueKey(m(st, 'docs')[doc]))
+                    : up
+                    ? Image.file(File(seller[doc]!), fit: BoxFit.cover, cacheWidth: 800, errorBuilder: (c, e, s) => const Center(child: Icon(LucideIcons.fileText, color: muted)))
                     : const Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(LucideIcons.camera, size: 26, color: bid), SizedBox(height: 4), Text('Take photo', style: TextStyle(fontWeight: FontWeight.w700))]),
               ),
             ),
             const SizedBox(height: 6),
-            Row(children: [Icon(has ? LucideIcons.check : LucideIcons.clock, size: 14, color: has ? bid : muted), const SizedBox(width: 4), Expanded(child: Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)))]),
+            Row(children: [Icon(has || up ? LucideIcons.check : LucideIcons.clock, size: 14, color: has || up ? bid : muted), const SizedBox(width: 4), Expanded(child: Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)))]),
           ]),
         ),
       );
@@ -99,6 +144,7 @@ class CheckIdScreen extends ConsumerWidget {
       body: ListView(children: [
         Section(title: "Seller's documents", children: [
           Row(children: [card('ph_license', "Driver's license"), const SizedBox(width: 12), card('ph_reg', 'Registration card')]),
+          if (reg.isNotEmpty) ...[const SizedBox(height: 12), Text('Registered owner: $reg', style: const TextStyle(fontSize: 14.5))],
         ]),
         Section(title: ow['label'], children: [
           Wrap(spacing: 8, runSpacing: 8, children: [
@@ -125,17 +171,21 @@ class CheckIdScreen extends ConsumerWidget {
       ]),
       bottomNavigationBar: BottomBar(st['owner'] == 'No'
           ? PBtn('End the visit', () => endVisit(context, id), icon: LucideIcons.ban, color: const Color(0xFFDC2626))
-          : PBtn(why.isEmpty ? 'Start inspection' : why, why.isEmpty ? () => _start(context) : null)),
+          : PBtn(why.isEmpty ? 'Start inspection' : why, why.isEmpty ? () => _start(context, seller) : null)),
     );
   }
 
-  // the start time is saved at once and the camera opens; the location is added when GPS answers
-  void _start(BuildContext context) {
+  // the start time is saved at once and the camera opens; the location is added when GPS answers. The documents the
+  // seller uploaded (and no photo was taken of here) go in the record as seller uploads
+  void _start(BuildContext context, Map<String, String> seller) {
     final at = nowIso();
     store.mut(id, (st) {
       st['start'] = {'at': at, 'loc': null};
       st['phase'] = 'capture';
       st['cap'] = {'k': 'Exterior', 'i': 0};
+      st['sdocs'] = [for (final k in sellerDocTypes.keys) if (m(st, 'files')[k] == null && (seller[k] ?? '').isNotEmpty) k];
+      final ids = _sellerDocIds(st);
+      st['sdoc_ids'] = {for (final k in st['sdocs'] as List) k: ids[k]};
     });
     here().then((h) => store.mut(id, (st) => st['start'] = {'at': at, 'loc': h['loc']}));
     context.push('/i/$id/cam', extra: const CamArgs(run: true));

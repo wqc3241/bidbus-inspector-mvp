@@ -296,6 +296,11 @@ class Team extends ChangeNotifier {
         b['fuel'] = old['fuel'];
         b['vin_differs'] = old['vin_differs'];
       }
+      // vPIC not reached: keep the decode from the last look at the same booking and VIN
+      if (b['decoded'] == null && same && old['decoded'] != null && (old['appointment'] as Map?)?['vin'] == (b['appointment'] as Map?)?['vin']) {
+        b['decoded'] = old['decoded'];
+        b['fuel'] ??= old['fuel'];
+      }
       // the hour was booked again for another car: the last seller's documents go
       if (!same) _rm('$_dir/docs/$slot');
       briefs[slot] = b;

@@ -110,7 +110,8 @@ class RowBtn extends StatelessWidget {
   final Color? subColor;
   final VoidCallback? onTap;
   final bool need; // still to answer: a red frame round the whole row
-  const RowBtn(this.label, this.value, {super.key, this.sub, this.subColor, this.onTap, this.need = false});
+  final Widget? lead; // drawn in place of the label (the Carfax logo); the label stays its name for screen readers
+  const RowBtn(this.label, this.value, {super.key, this.sub, this.subColor, this.onTap, this.need = false, this.lead});
   @override
   Widget build(BuildContext context) {
     final d = DarkRows.of(context);
@@ -126,7 +127,9 @@ class RowBtn extends StatelessWidget {
             child: Row(children: [
               Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(label, style: d ? const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white) : const TextStyle(fontSize: 15)),
+                lead != null
+                    ? Semantics(label: label, child: lead)
+                    : Text(label, style: d ? const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white) : const TextStyle(fontSize: 15)),
                 if (sub != null && sub!.isNotEmpty)
                   d
                       ? Text(sub!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: subColor == red ? dkRed : subColor != null ? dkAmber : dkSub))

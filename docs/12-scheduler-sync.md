@@ -38,17 +38,23 @@ The app refreshes on open, on pull and every 5 minutes. A job no longer listed s
 
 ## Car brief
 
-`GET /api/appointments/{slot_id}/brief`: `{appointment, vehicle, bidbus, fuel, vin_differs}`.
+`GET /api/appointments/{slot_id}/brief`: `{appointment, vehicle, bidbus, fuel, decoded, vin_differs}`.
+
+On the phone, in this order: car, the visit (Navigate, Call, Text), seller's documents, Check before you start, Carfax (first row: the Carfax logo, opens the Carfax report inside the app), seller's photos. Bottom button: At the car: check ID (Open inspection once started).
 
 - The Bidbus car is found by the booking's 17-character VIN alone (`GET /api/admin/vehicles?vehicle_query=<VIN>`, VIN read as Bidbus stores it: I, O, Q as 1, 0, 0). With several Bidbus cars on that VIN: the one the Listing ID names, else the newest. No Listing ID is needed.
 - `vehicle` (from `GET /api/admin/vehicles/:id`): car, photo, owner name and registered owner, seller documents, seller photos, Carfax (owners, accident, title, frame damage, total loss, airbag, odometer, service records, recall), checks.
 - `bidbus`: `ok`, `none` (no Bidbus account on the server), `not_found` (no 17-character VIN on the booking, or no Bidbus car with that VIN) or `error` (the app keeps the last brief it had for the same booking). `vin_differs` is always false.
-- `fuel`: from the booking VIN's decode, only when vPIC gives it.
+- `fuel`: from the booking VIN's decode, only when vPIC gives it. `decoded`: that decode's year, make, model and trim (null when the booking has no 17-character VIN or vPIC is not reached; the app then keeps the last decode of the same booking and VIN).
 
 `GET /api/appointments/{slot_id}/documents/{document_id}`: one of that car's documents (license, registration) as a photo; a PDF comes as one JPEG of its first 3 pages, each at most 1600 px. Each call is logged with the inspector's email. Private: never on a report. Deleted from the phone once that car's report is sent.
 
 ## Inspection
 
-Start inspection on the brief opens New inspection filled in (VIN, year, make, model, trim, mileage, owner name, fuel). The inspection keeps the appointment; the record's `source.listing_id` is the Bidbus vehicle ID. The server stores `member_id`, `slot_id`, `booked_at`, `vehicle_id` and lets only that inspector change it. The phone shows, opens and uploads an inspection only while the inspector who started it is signed in.
+At the car: check ID on the brief starts the inspection and opens Check ID, with no New inspection. The car: Bidbus, else `decoded`, else the booking's text ("2020 BMW X3"); year, make and model matched to the vehicle lists, the list trim the Bidbus series or the decoded trim names (else the series, else the decoded trim); fuel from `fuel`; report email: the default report email in Settings, else the inspector's email. New inspection opens filled in instead only when the year, make, model, trim, fuel or report email is not known.
+
+Check ID uses the driver's license and registration the seller uploaded (from the brief, saved on the phone): no photos of those; one missing or not yet on the phone is photographed there. They go in the record as `"seller upload"`. Check ID fetches the brief again when there is signal (the seller may have just uploaded).
+
+The inspection keeps the appointment; the record's `source.listing_id` is the Bidbus vehicle ID. The server stores `member_id`, `slot_id`, `booked_at`, `vehicle_id` and lets only that inspector change it. The phone shows, opens and uploads an inspection only while the inspector who started it is signed in.
 
 When the report is sent, the server calls `mark_slot_done` once: the job turns Done on the scheduler if it is still the same booking (`skipped` when it was cancelled or rebooked). A call that fails is tried again on the next calls for 2 days.
