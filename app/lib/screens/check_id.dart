@@ -47,7 +47,7 @@ Future<void> takeDoc(BuildContext context, String id, String doc) async {
 }
 
 // the license and registration the seller uploaded for this inspection's booking (its car brief): the file on the phone,
-// '' while it is not saved yet
+// '' while it is not saved yet (it counts only once saved)
 const sellerDocTypes = {'ph_license': 'driver_license', 'ph_reg': 'registration'};
 Map<String, String> sellerDocs(J st) {
   final ap = (st['appt'] as Map?)?.cast<String, dynamic>(), b = ap == null ? null : team.briefFor(ap);
@@ -64,7 +64,7 @@ Map<String, String> sellerDocs(J st) {
 
 String idBlock(J st) {
   final d = m(st, 'docs'), s = sellerDocs(st);
-  if (sellerDocTypes.keys.any((k) => d[k] == null && !s.containsKey(k))) return 'Add the license and registration';
+  if (sellerDocTypes.keys.any((k) => d[k] == null && (s[k] ?? '').isEmpty)) return 'Add the license and registration';
   if ((st['owner'] ?? '') == '') return 'Answer the owner question';
   if (st['owner'] == 'No') return 'End the visit';
   if (st['owner'] == 'Family, with proof' && d['ph_family'] == null) return 'Take the proof photo';
@@ -106,22 +106,20 @@ class _CheckIdScreenState extends ConsumerState<CheckIdScreen> {
     final st = ref.watch(storeProvider).ins[id]!, fl = m(st, 'files'), why = idBlock(st), ow = byId['id_owner']!, seller = sellerDocs(st);
     final ap = (st['appt'] as Map?)?.cast<String, dynamic>(), reg = '${(((ap == null ? null : team.briefFor(ap))?['vehicle'] as Map?)?['owner'] as Map?)?['registered'] ?? ''}';
     Widget card(String doc, String label) {
-      final has = fl[doc] != null, up = !has && seller.containsKey(doc), upFile = up && seller[doc]!.isNotEmpty;
+      final has = fl[doc] != null, up = !has && (seller[doc] ?? '').isNotEmpty;
       return Expanded(
         child: GestureDetector(
-          onTap: up ? (upFile ? () => showPhotos(context, [seller[doc]!], label) : null) : () => takeDoc(context, id, doc),
+          onTap: up ? () => showPhotos(context, [seller[doc]!], label) : () => takeDoc(context, id, doc),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             AspectRatio(
               aspectRatio: 1.58,
               child: Container(
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: has || upFile ? Colors.black : alt, borderRadius: BorderRadius.circular(10), border: Border.all(color: line)),
+                decoration: BoxDecoration(color: has || up ? Colors.black : alt, borderRadius: BorderRadius.circular(10), border: Border.all(color: line)),
                 child: has
                     ? Image.file(File(store.abs(fl[doc])), fit: BoxFit.cover, key: ValueKey(m(st, 'docs')[doc]))
-                    : upFile
-                    ? Image.file(File(seller[doc]!), fit: BoxFit.cover, cacheWidth: 800, errorBuilder: (c, e, s) => const Center(child: Icon(LucideIcons.fileText, color: muted)))
                     : up
-                    ? const Center(child: Icon(LucideIcons.download, color: muted))
+                    ? Image.file(File(seller[doc]!), fit: BoxFit.cover, cacheWidth: 800, errorBuilder: (c, e, s) => const Center(child: Icon(LucideIcons.fileText, color: muted)))
                     : const Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(LucideIcons.camera, size: 26, color: bid), SizedBox(height: 4), Text('Take photo', style: TextStyle(fontWeight: FontWeight.w700))]),
               ),
             ),
@@ -176,7 +174,7 @@ class _CheckIdScreenState extends ConsumerState<CheckIdScreen> {
       st['start'] = {'at': at, 'loc': null};
       st['phase'] = 'capture';
       st['cap'] = {'k': 'Exterior', 'i': 0};
-      st['sdocs'] = [for (final k in sellerDocTypes.keys) if (m(st, 'files')[k] == null && seller.containsKey(k)) k];
+      st['sdocs'] = [for (final k in sellerDocTypes.keys) if (m(st, 'files')[k] == null && (seller[k] ?? '').isNotEmpty) k];
     });
     here().then((h) => store.mut(id, (st) => st['start'] = {'at': at, 'loc': h['loc']}));
     context.push('/i/$id/cam', extra: const CamArgs(run: true));

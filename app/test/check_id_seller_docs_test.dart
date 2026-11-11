@@ -1,5 +1,6 @@
 // Check ID with a scheduler appointment: the license and registration the seller uploaded (car brief) need no photo; the
-// inspector checks the person against them and they go in the record as seller uploads; a missing one is photographed here.
+// inspector checks the person against them and they go in the record as seller uploads; one missing or not yet on the
+// phone is photographed here.
 import 'dart:convert';
 import 'dart:io';
 
@@ -50,8 +51,16 @@ void main() {
     expect(find.text('Registered owner: Ana Ruiz'), findsOneWidget);
     expect(find.text('Add the license and registration'), findsOneWidget);
 
-    // the seller uploads the license too (its file is not on the phone yet)
+    // the seller uploads the license too: while its file is not on the phone it still has Take photo
     team.briefs['s1'] = brief([{'type': 'driver_license', 'document_id': 'd1'}, {'type': 'registration', 'document_id': 'd2'}]);
+    store.mut('c', (s) {});
+    await t.pumpAndSettle();
+    expect(find.text('Take photo'), findsOneWidget);
+    expect(find.text('Add the license and registration'), findsOneWidget);
+    expect(idBlock(store.ins['c']!), 'Add the license and registration');
+
+    // saved on the phone: no photo
+    File(team.docPath('s1', 'd1')).writeAsBytesSync([1, 2, 3]);
     store.mut('c', (s) {});
     await t.pumpAndSettle();
     expect(find.text('Take photo'), findsNothing);

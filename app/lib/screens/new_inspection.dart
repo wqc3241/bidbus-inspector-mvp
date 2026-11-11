@@ -1,7 +1,7 @@
 // New inspection: year, make, model and trim picked from lists (assets/vehicles.json), each with Other to type;
 // fuel and report email required. A typed VIN is decoded (NHTSA vPIC via the server) to prefill.
 // A scheduler appointment (car brief, At the car: check ID) starts the inspection without it (atTheCar); it opens filled in
-// from the booking and Bidbus only when the year, make, model, fuel or report email is not known.
+// from the booking and Bidbus only when the year, make, model, trim, fuel or report email is not known.
 // With scheduler sign-in the inspector is the signed-in team member.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,14 +31,16 @@ String? listTrim(List<String> opts, String? series, String? trim) {
 bool emailOk(String e) => RegExp(r'^\S+@\S+\.\S+$').hasMatch(e.trim());
 
 // the car New inspection fills in from a car brief, without the VIN decode: year, make and model matched to the lists (else
-// as given), the list trim, else the Bidbus series or the decoded trim. Null when the year, make or model is not known
+// as given), the list trim the Bidbus series or the decoded trim names, else the series or the decoded trim. Null when the
+// year, make or model is not known
 J? carFromBrief(J p) {
   String s(Object? x) => '${x ?? ''}'.trim();
   final y = int.tryParse(s(p['year']));
   if (y == null || y < 1981 || y > DateTime.now().year + 1 || s(p['make']).isEmpty || s(p['model']).isEmpty) return null;
   final mk = matchOption(makesFor(y), s(p['make'])), md = mk == null ? null : matchOption(modelsFor(mk, y), s(p['model']));
-  final make = mk ?? s(p['make']), model = md ?? s(p['model']);
-  final trim = listTrim(md == null ? const [] : trimsFor(make, model, y), p['series'], p['trim']) ?? s(p['bidbus'] == true ? p['series'] : p['trim']);
+  final make = mk ?? s(p['make']), model = md ?? s(p['model']), opts = md == null ? const <String>[] : trimsFor(make, model, y);
+  final own = s(p['bidbus'] == true ? p['series'] : p['trim']);
+  final trim = listTrim(opts, p['series'], p['trim']) ?? matchOption(opts, s(p['dtrim'])) ?? (own.isNotEmpty ? own : s(p['dtrim']));
   return {'year': y, 'make': make, 'model': model, 'trim': trim, 'vin': s(p['vin']).toUpperCase(), 'mileage': s(p['mileage']), 'owner_name': s(p['owner_name'])};
 }
 
@@ -53,7 +55,7 @@ String createInspection({required J car, required String fuel, required String e
 }
 
 // At the car: check ID on a car brief. The inspection starts filled in and Check ID opens; New inspection opens instead when
-// the year, make, model, fuel, report email or inspector is not known
+// the year, make, model, trim, fuel, report email or inspector is not known
 void atTheCar(BuildContext context, J p) {
   final appt = (p['appt'] as Map?)?.cast<String, dynamic>(), have = appt == null ? null : team.inspectionFor(appt);
   if (have != null) {
@@ -63,7 +65,7 @@ void atTheCar(BuildContext context, J p) {
   final car = carFromBrief(p), fuel = fuelChoices.contains(p['fuel']) ? p['fuel'] as String : null;
   final email = store.defaultEmail.trim().isNotEmpty ? store.defaultEmail.trim() : '${team.member?['email'] ?? ''}'.trim();
   final inspector = (team.on && team.signedIn ? team.name : store.inspector).trim();
-  if (car == null || fuel == null || !emailOk(email) || inspector.isEmpty) {
+  if (car == null || car['trim'] == '' || fuel == null || !emailOk(email) || inspector.isEmpty) {
     context.push('/new', extra: p);
     return;
   }
@@ -132,6 +134,7 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
     _fill('make', p['make']);
     _fill('model', p['model']);
     _fillTrim(p['series'], p['trim']);
+    if (pick['trim'] == null) _fill('trim', p['dtrim']); // the decoded trim, when Bidbus names none
     if (fuelChoices.contains(p['fuel'])) fuel = p['fuel'];
     // the VIN decode fills in what Bidbus did not give, or corrects a car split from the booking's text
     if (vin.text.length == 17 && (p['bidbus'] != true || ['year', 'make', 'model', 'trim'].any((k) => pick[k] == null))) _decode(vin.text);

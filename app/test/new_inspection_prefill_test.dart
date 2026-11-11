@@ -1,6 +1,6 @@
 // At the car: check ID on a car brief starts the inspection filled in from Bidbus, the VIN decode or the booking and opens
 // Check ID, with no New inspection; New inspection opens filled in only when something is not known (the Bidbus trim is
-// series + body style), the inspector is the signed-in member (no name field), and the inspection keeps its appointment.
+// series + body style; the decoded trim fills in when Bidbus names none), the inspector is the signed-in member (no name field), and the inspection keeps its appointment.
 import 'dart:convert';
 import 'dart:io';
 
@@ -99,6 +99,15 @@ void main() {
     expect(st['car'], {'year': 2021, 'make': 'Toyota', 'model': 'RAV4', 'trim': 'XLE Premium', 'vin': '2T3P1RFV0MC123456', 'mileage': '41250', 'owner_name': 'Ana Ruiz', 'fuel': 'Gas'});
   });
 
+  testWidgets('no trim known: New inspection opens; the decoded trim fills it in', (t) async {
+    final n = store.ins.length;
+    await atCar(t, {'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': null, 'trim': 'Sedan 4D', 'fuel': 'Gas', 'bidbus': true, 'appt': {'key': 'k6', 'slot_id': 's6'}});
+    expect(find.text('New inspection'), findsOneWidget);
+    expect(store.ins.length, n);
+    await open(t, {'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': null, 'trim': 'Sedan 4D', 'dtrim': 'SE', 'fuel': 'Gas', 'bidbus': true, 'appt': {'key': 'k6', 'slot_id': 's6'}});
+    expect(find.text('SE'), findsOneWidget);
+  });
+
   testWidgets('no fuel known: New inspection opens filled in', (t) async {
     final n = store.ins.length;
     await atCar(t, {'vin': '2T3P1RFV0MC123456', 'year': 2021, 'make': 'Toyota', 'model': 'RAV4', 'fuel': null, 'bidbus': true, 'appt': {'key': 'k8', 'slot_id': 's8'}});
@@ -107,7 +116,7 @@ void main() {
   });
 
   testWidgets('no report email: New inspection opens; the member email is the default', (t) async {
-    final p = {'year': 2021, 'make': 'Toyota', 'model': 'RAV4', 'fuel': 'Gas', 'bidbus': true, 'appt': {'key': 'k7', 'slot_id': 's7'}};
+    final p = {'year': 2021, 'make': 'Toyota', 'model': 'RAV4', 'series': 'XLE', 'fuel': 'Gas', 'bidbus': true, 'appt': {'key': 'k7', 'slot_id': 's7'}};
     store.defaultEmail = '';
     team.member = {'id': 'm1', 'name': 'Ana Ruiz', 'email': ''};
     await atCar(t, p);
@@ -121,6 +130,10 @@ void main() {
   test('the car without the form: list names, the list trim, else the series or the decoded trim', () {
     final body = carFromBrief({'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': null, 'trim': 'Sedan 4D', 'bidbus': true})!;
     expect(body['trim'], ''); // never a trim from the body style alone
+    final bodyDec = carFromBrief({'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': null, 'trim': 'Sedan 4D', 'dtrim': 'se', 'bidbus': true})!;
+    expect(bodyDec['trim'], 'SE'); // the decoded trim, as the list names it
+    final serDec = carFromBrief({'year': 2021, 'make': 'Toyota', 'model': 'Camry', 'series': 'XSE', 'trim': 'XSE Sedan 4D', 'dtrim': 'SE', 'bidbus': true})!;
+    expect(serDec['trim'], 'XSE'); // Bidbus first
     final ser = carFromBrief({'year': 2021, 'make': 'Rivian', 'model': 'R1S', 'series': 'Adventure', 'trim': 'Adventure Sport Utility 4D', 'bidbus': true})!;
     expect([ser['make'], ser['model'], ser['trim']], ['Rivian', 'R1S', 'Adventure']);
     final dec = carFromBrief({'year': '2021', 'make': 'TOYOTA', 'model': 'RAV4', 'series': null, 'trim': 'XLE', 'bidbus': false})!;
@@ -136,6 +149,6 @@ void main() {
     final typed = prefill(a, {'bidbus': 'not_found', 'vehicle': null, 'fuel': null, 'decoded': null});
     expect([typed['year'], typed['make'], typed['model'], typed['trim']], ['2003', 'Honda', 'Accord EX', null]);
     final bb = prefill(a, {'bidbus': 'ok', 'vehicle': {'vehicle_id': 9, 'car': {'year': 2003, 'make': 'Honda', 'model': 'Accord', 'series': 'EX', 'trim': 'EX Sedan 4D'}}, 'decoded': {'year': 2003, 'make': 'HONDA', 'model': 'Accord', 'trim': 'EX-L'}});
-    expect([bb['make'], bb['series'], bb['trim'], bb['bidbus']], ['Honda', 'EX', 'EX Sedan 4D', true]);
+    expect([bb['make'], bb['series'], bb['trim'], bb['dtrim'], bb['bidbus']], ['Honda', 'EX', 'EX Sedan 4D', 'EX-L', true]);
   });
 }

@@ -156,6 +156,7 @@ J prefill(J a, J? b) {
     'model': car['model'] ?? dec['model'] ?? typed?.group(3),
     'series': car['series'],
     'trim': car.isEmpty ? dec['trim'] : car['trim'],
+    'dtrim': dec['trim'],
     'mileage': car['mileage'] ?? a['mileage'],
     'owner_name': (v?['owner'] as Map?)?['name'] ?? a['seller_name'],
     'fuel': b?['fuel'],

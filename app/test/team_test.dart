@@ -26,6 +26,7 @@ void main() {
   late Directory tmp;
   var list = <J>[];
   var refuse = false, forbid = false, renew = false;
+  J? decoded; // the booking VIN's decode in the brief (null: vPIC not reached)
   final hits = <String>[];
 
   setUpAll(() async {
@@ -56,7 +57,7 @@ void main() {
         r.response.write(jsonEncode({'today': d(0), 'appointments': list}));
       } else if (p.endsWith('/brief')) {
         final slot = p.split('/')[3];
-        r.response.write(jsonEncode({'appointment': list.firstWhere((x) => x['slot_id'] == slot), 'bidbus': 'ok',
+        r.response.write(jsonEncode({'appointment': list.firstWhere((x) => x['slot_id'] == slot), 'bidbus': 'ok', 'decoded': decoded, 'fuel': decoded?['fuel'],
           'vehicle': {'documents': [{'type': 'registration', 'document_id': list.firstWhere((x) => x['slot_id'] == slot)['doc'] ?? '7'}]}}));
       } else if (p.contains('/documents/')) {
         r.response.headers.contentType = ContentType('image', 'jpeg');
@@ -155,6 +156,18 @@ void main() {
     expect(dayGap('2027-03-14', '2027-03-13'), 1);
     expect(dayGap('2026-11-02', '2026-11-01'), 1);
     expect(dayGap(null, '2026-11-01'), null);
+  });
+
+  test('vPIC not reached: the last decode of the same booking and VIN stays', () async {
+    list = [{...appt('s4', 0), 'vin': '1HGCM82633A004352'}];
+    decoded = {'year': 2003, 'make': 'HONDA', 'model': 'Accord', 'trim': 'EX', 'fuel': 'Gas'};
+    await team.loadBrief('s4');
+    decoded = null;
+    await team.loadBrief('s4');
+    expect([team.briefs['s4']!['decoded']?['trim'], team.briefs['s4']!['fuel']], ['EX', 'Gas']);
+    list = [{...appt('s4', 0), 'vin': '5YJ3E1EA7KF000000'}]; // another VIN typed on the booking: not kept
+    await team.loadBrief('s4');
+    expect(team.briefs['s4']!['decoded'], isNull);
   });
 
   test('a refused sign-in signs out and deletes the jobs and documents', () async {
