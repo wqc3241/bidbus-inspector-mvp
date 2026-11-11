@@ -161,7 +161,7 @@ class ReviewScreen extends ConsumerWidget {
   }
 
   List<Widget> _start(BuildContext context, J st) {
-    final fl = m(st, 'files'), ow = byId['id_owner']!, sd = sellerDocs(st);
+    final fl = m(st, 'files'), ow = byId['id_owner']!, sd = {for (final k in sellerDocTypes.keys) k: checkedSellerDoc(st, k)};
     return [
       const Sub3('Documents', LucideIcons.idCard),
       tiles([

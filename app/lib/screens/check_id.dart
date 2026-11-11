@@ -49,17 +49,26 @@ Future<void> takeDoc(BuildContext context, String id, String doc) async {
 // the license and registration the seller uploaded for this inspection's booking (its car brief): the file on the phone,
 // '' while it is not saved yet (it counts only once saved)
 const sellerDocTypes = {'ph_license': 'driver_license', 'ph_reg': 'registration'};
-Map<String, String> sellerDocs(J st) {
+String _docFile(J st, Object? docId) {
+  final p = team.docPath('${(st['appt'] as Map)['slot_id']}', '$docId');
+  return File(p).existsSync() ? p : '';
+}
+
+Map<String, String> _sellerDocIds(J st) {
   final ap = (st['appt'] as Map?)?.cast<String, dynamic>(), b = ap == null ? null : team.briefFor(ap);
   final docs = (((b?['vehicle'] as Map?)?['documents'] as List?) ?? const []).cast<Map>();
   return {
     for (final e in sellerDocTypes.entries)
-      if (docs.where((x) => x['type'] == e.value).firstOrNull case final d?)
-        e.key: () {
-          final p = team.docPath('${ap!['slot_id']}', '${d['document_id']}');
-          return File(p).existsSync() ? p : '';
-        }(),
+      if (docs.where((x) => x['type'] == e.value).firstOrNull case final d?) e.key: '${d['document_id']}',
   };
+}
+
+Map<String, String> sellerDocs(J st) => _sellerDocIds(st).map((k, v) => MapEntry(k, _docFile(st, v)));
+
+// the seller's document the inspector checked at Start (kept by its id, so a later upload does not take its place)
+String checkedSellerDoc(J st, String k) {
+  final ids = (st['sdoc_ids'] as Map?) ?? const {};
+  return ids[k] == null ? '' : _docFile(st, ids[k]);
 }
 
 String idBlock(J st) {
@@ -175,6 +184,8 @@ class _CheckIdScreenState extends ConsumerState<CheckIdScreen> {
       st['phase'] = 'capture';
       st['cap'] = {'k': 'Exterior', 'i': 0};
       st['sdocs'] = [for (final k in sellerDocTypes.keys) if (m(st, 'files')[k] == null && (seller[k] ?? '').isNotEmpty) k];
+      final ids = _sellerDocIds(st);
+      st['sdoc_ids'] = {for (final k in st['sdocs'] as List) k: ids[k]};
     });
     here().then((h) => store.mut(id, (st) => st['start'] = {'at': at, 'loc': h['loc']}));
     context.push('/i/$id/cam', extra: const CamArgs(run: true));

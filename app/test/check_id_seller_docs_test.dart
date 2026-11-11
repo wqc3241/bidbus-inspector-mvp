@@ -73,6 +73,10 @@ void main() {
 
     final st = store.ins['c']!;
     expect(st['sdocs'], ['ph_license', 'ph_reg']);
+    expect(st['sdoc_ids'], {'ph_license': 'd1', 'ph_reg': 'd2'});
+    // the seller uploads another license later: the checked one stays the inspection's
+    team.briefs['s1'] = brief([{'type': 'driver_license', 'document_id': 'd3'}, {'type': 'registration', 'document_id': 'd2'}]);
+    expect(checkedSellerDoc(st, 'ph_license'), team.docPath('s1', 'd1'));
     final p = inspectionPayload(st);
     expect(p.record['documents'], {'license': 'seller upload', 'registration': 'seller upload', 'family_proof': null});
     expect(p.files.keys.where((f) => f.startsWith('ph_')), isEmpty); // nothing private to upload: Bidbus has them
