@@ -8,3 +8,4 @@ jinja2
 httpx
 anthropic
 pillow
+pypdfium2

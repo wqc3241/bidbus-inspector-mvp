@@ -38,6 +38,12 @@ class Inspection(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
     signed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     report_sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # with scheduler sign-in (docs/12-scheduler-sync.md): whose inspection it is, and the appointment it was started from
+    member_id: Mapped[str | None] = mapped_column(String(36), index=True)  # scheduler members.id
+    slot_id: Mapped[str | None] = mapped_column(String(36))  # scheduler slots.id
+    booked_at: Mapped[str | None] = mapped_column(String(40))  # slots.booked_at as the scheduler gave it: with slot_id, the appointment
+    vehicle_id: Mapped[str | None] = mapped_column(String(20))  # Bidbus vehicles.id (the scheduler's Listing ID)
+    slot_done_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))  # when the scheduler job was marked completed
 
 
 class File(Base):
