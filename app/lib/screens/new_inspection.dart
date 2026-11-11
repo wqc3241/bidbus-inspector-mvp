@@ -1,7 +1,8 @@
 // New inspection: year, make, model and trim picked from lists (assets/vehicles.json), each with Other to type;
 // fuel and report email required. A typed VIN is decoded (NHTSA vPIC via the server) to prefill.
-// Started from a scheduler appointment (car brief, Start inspection) it comes filled in from the booking and Bidbus;
-// with scheduler sign-in the inspector is the signed-in team member.
+// A scheduler appointment (car brief, At the car: check ID) starts the inspection without it (atTheCar); it opens filled in
+// from the booking and Bidbus only when the year, make, model, fuel or report email is not known.
+// With scheduler sign-in the inspector is the signed-in team member.
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
@@ -12,6 +13,63 @@ import '../logic/insp.dart';
 import '../services/store.dart';
 import '../services/team.dart';
 import '../widgets/ui.dart';
+
+// the list trim a Bidbus trim (series + body style, "xDrive30i Sport Utility 4D") or a decoded trim names: the series, the
+// whole trim, else the longest list trim the series' first words are ("Limited Hybrid" for "Limited Hybrid AWD").
+// Never from the body style alone
+String? listTrim(List<String> opts, String? series, String? trim) {
+  String w(String? x) => ' ${(x ?? '').toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), ' ').trim()} ';
+  return matchOption(opts, series) ??
+      matchOption(opts, trim) ??
+      (series == null
+          ? null
+          : (opts.where((o) => w(o).trim().isNotEmpty && w(series).startsWith(w(o))).toList()
+                  ..sort((a, b) => b.length.compareTo(a.length)))
+                .firstOrNull);
+}
+
+bool emailOk(String e) => RegExp(r'^\S+@\S+\.\S+$').hasMatch(e.trim());
+
+// the car New inspection fills in from a car brief, without the VIN decode: year, make and model matched to the lists (else
+// as given), the list trim, else the Bidbus series or the decoded trim. Null when the year, make or model is not known
+J? carFromBrief(J p) {
+  String s(Object? x) => '${x ?? ''}'.trim();
+  final y = int.tryParse(s(p['year']));
+  if (y == null || y < 1981 || y > DateTime.now().year + 1 || s(p['make']).isEmpty || s(p['model']).isEmpty) return null;
+  final mk = matchOption(makesFor(y), s(p['make'])), md = mk == null ? null : matchOption(modelsFor(mk, y), s(p['model']));
+  final make = mk ?? s(p['make']), model = md ?? s(p['model']);
+  final trim = listTrim(md == null ? const [] : trimsFor(make, model, y), p['series'], p['trim']) ?? s(p['bidbus'] == true ? p['series'] : p['trim']);
+  return {'year': y, 'make': make, 'model': model, 'trim': trim, 'vin': s(p['vin']).toUpperCase(), 'mileage': s(p['mileage']), 'owner_name': s(p['owner_name'])};
+}
+
+// saves a new inspection (at Check ID) and gives its id
+String createInspection({required J car, required String fuel, required String email, required String inspector, J? appt}) {
+  final id = const Uuid().v4();
+  final st = newInspection(id: id, fuel: fuelGroup(fuel), email: email, inspector: inspector, car: {...car, 'fuel': fuel});
+  if (appt != null) st['appt'] = appt; // the scheduler appointment it was started from
+  if (team.on) st['member'] = team.member?['id']; // sent only while this inspector is signed in
+  store.add(st);
+  return id;
+}
+
+// At the car: check ID on a car brief. The inspection starts filled in and Check ID opens; New inspection opens instead when
+// the year, make, model, fuel, report email or inspector is not known
+void atTheCar(BuildContext context, J p) {
+  final appt = (p['appt'] as Map?)?.cast<String, dynamic>(), have = appt == null ? null : team.inspectionFor(appt);
+  if (have != null) {
+    context.push('/i/${have['id']}'); // already started (a second tap): that one opens
+    return;
+  }
+  final car = carFromBrief(p), fuel = fuelChoices.contains(p['fuel']) ? p['fuel'] as String : null;
+  final email = store.defaultEmail.trim().isNotEmpty ? store.defaultEmail.trim() : '${team.member?['email'] ?? ''}'.trim();
+  final inspector = (team.on && team.signedIn ? team.name : store.inspector).trim();
+  if (car == null || fuel == null || !emailOk(email) || inspector.isEmpty) {
+    context.push('/new', extra: p);
+    return;
+  }
+  final id = createInspection(car: car, fuel: fuel, email: email, inspector: inspector, appt: appt);
+  context.push('/i/$id');
+}
 
 class NewInspectionScreen extends StatefulWidget {
   final J? prefill; // from a car brief: vin, year, make, model, series, trim, mileage, owner_name, fuel, appt
@@ -79,19 +137,9 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
     if (vin.text.length == 17 && (p['bidbus'] != true || ['year', 'make', 'model', 'trim'].any((k) => pick[k] == null))) _decode(vin.text);
   }
 
-  // Bidbus trims are series + body style ("xDrive30i Sport Utility 4D"): the series, the whole trim, else the longest
-  // list trim the series' first words are ("Limited Hybrid" for "Limited Hybrid AWD"). Never from the body style alone
+  // Bidbus trims are series + body style: the list trim it names (listTrim); with no list to pick from, the series under Other
   void _fillTrim(String? series, String? trim) {
-    final opts = _opts('trim').where((o) => o != other).toList();
-    String w(String? x) => ' ${(x ?? '').toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), ' ').trim()} ';
-    final m =
-        matchOption(opts, series) ??
-        matchOption(opts, trim) ??
-        (series == null
-            ? null
-            : (opts.where((o) => w(o).trim().isNotEmpty && w(series).startsWith(w(o))).toList()
-                    ..sort((a, b) => b.length.compareTo(a.length)))
-                  .firstOrNull);
+    final opts = _opts('trim').where((o) => o != other).toList(), m = listTrim(opts, series, trim);
     if (m != null) {
       _set('trim', m);
     } else if (series != null && (opts.isEmpty || pick['model'] == other)) {
@@ -117,21 +165,17 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
     } catch (_) {}
   }
 
-  bool get ready => inspector.text.trim().isNotEmpty && year != null && _val('make').isNotEmpty && _val('model').isNotEmpty && _val('trim').isNotEmpty && fuel != null && RegExp(r'^\S+@\S+\.\S+$').hasMatch(email.text.trim());
+  bool get ready => inspector.text.trim().isNotEmpty && year != null && _val('make').isNotEmpty && _val('model').isNotEmpty && _val('trim').isNotEmpty && fuel != null && emailOk(email.text);
 
   void _go() {
-    final id = const Uuid().v4();
     if (store.inspector.isEmpty && !team.on) store.saveSettings(server: store.server, passcode: store.passcode, inspector: inspector.text, email: store.defaultEmail); // next time it is filled in
-    final st = newInspection(
-      id: id,
-      fuel: fuelGroup(fuel!),
+    final id = createInspection(
+      fuel: fuel!,
       email: email.text.trim(),
       inspector: inspector.text.trim(),
-      car: {'year': year, 'make': _val('make'), 'model': _val('model'), 'trim': _val('trim'), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim(), 'fuel': fuel},
+      car: {'year': year, 'make': _val('make'), 'model': _val('model'), 'trim': _val('trim'), 'vin': vin.text.trim().toUpperCase(), 'mileage': miles.text.trim(), 'owner_name': owner.text.trim()},
+      appt: (widget.prefill?['appt'] as Map?)?.cast<String, dynamic>(),
     );
-    if (widget.prefill?['appt'] != null) st['appt'] = widget.prefill!['appt']; // the scheduler appointment it was started from
-    if (team.on) st['member'] = team.member?['id']; // sent only while this inspector is signed in
-    store.add(st);
     context.pushReplacement('/i/$id');
   }
 

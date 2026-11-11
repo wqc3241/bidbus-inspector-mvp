@@ -16,19 +16,13 @@ def fuel(r: dict) -> str:
     return "Diesel" if "diesel" in ft else "Gas"
 
 
-def decode(vin: str) -> dict:
-    """raises httpx.HTTPError (or ValueError, KeyError) when vPIC fails"""
+def decode(vin: str, known_fuel: bool = False) -> dict:
+    """raises httpx.HTTPError (or ValueError, KeyError) when vPIC fails. known_fuel: fuel None when vPIC does not know it
+    (instead of Gas)"""
     resp = httpx.get(URL.format(vin), timeout=10)
     resp.raise_for_status()
     r = resp.json()["Results"][0]
     year = (r.get("ModelYear") or "").strip()
+    known = bool((r.get("ElectrificationLevel") or r.get("FuelTypePrimary") or "").strip())
     return {"year": int(year) if year.isdigit() else None, "make": r.get("Make") or None, "model": r.get("Model") or None,
-            "trim": r.get("Trim") or None, "fuel": fuel(r)}
-
-
-def decode_fuel(vin: str) -> str | None:
-    """the fuel when vPIC knows it (decode() says Gas when it does not); raises like decode()"""
-    resp = httpx.get(URL.format(vin), timeout=10)
-    resp.raise_for_status()
-    r = resp.json()["Results"][0]
-    return fuel(r) if (r.get("ElectrificationLevel") or r.get("FuelTypePrimary") or "").strip() else None
+            "trim": r.get("Trim") or None, "fuel": fuel(r) if known or not known_fuel else None}

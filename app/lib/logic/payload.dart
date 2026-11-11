@@ -130,7 +130,7 @@ Payload inspectionPayload(J st) {
     files['spin-${'${i + 1}'.padLeft(2, '0')}.jpg'] = spin[i];
   }
 
-  final feat = m(st, 'feat');
+  final feat = m(st, 'feat'), sdocs = (st['sdocs'] as List?) ?? const [];
   final record = <String, dynamic>{
     // listing_id: the Bidbus vehicle ID when the inspection was started from a scheduler appointment that has one
     'source': {'system': 'bidbus_field', 'listing_id': (st['appt'] as Map?)?['vehicle_id'] ?? st['id'], 'inspector': st['inspector'] ?? '', 'started': st['start'], 'ended': st['end']},
@@ -141,7 +141,9 @@ Payload inspectionPayload(J st) {
     },
     'owner_check': st['owner'],
     'documents': {
-      'license': fl['ph_license'] != null ? 'taken on site' : null, 'registration': fl['ph_reg'] != null ? 'taken on site' : null,
+      // a photo taken at Check ID, else the seller's upload it was checked against
+      'license': fl['ph_license'] != null ? 'taken on site' : sdocs.contains('ph_license') ? 'seller upload' : null,
+      'registration': fl['ph_reg'] != null ? 'taken on site' : sdocs.contains('ph_reg') ? 'seller upload' : null,
       'family_proof': st['owner'] == 'Family, with proof' && fl['ph_family'] != null ? 'taken on site' : null,
     },
     'photos': photos, 'videos': videos, 'spin_frames': m(st, 'shots')['video_360'] == true ? 36 : 0,

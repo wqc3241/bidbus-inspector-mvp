@@ -1,9 +1,10 @@
 // Car brief for a scheduler appointment (docs/12-scheduler-sync.md; DEV-190 UI 1.2): the car from Bidbus, the visit,
-// the seller's documents, Carfax and what to check before starting, then Start inspection with the car filled in.
+// the seller's documents, what to check before starting and Carfax, then At the car: check ID with the car filled in.
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -13,7 +14,8 @@ import '../data/ql.dart';
 import '../services/store.dart';
 import '../services/team.dart';
 import '../widgets/ui.dart';
-import 'inspection.dart' show openReport;
+import '../widgets/web_page.dart';
+import 'new_inspection.dart' show atTheCar;
 
 // ---------- shared with the home screen ----------
 String apptTime(J a) {
@@ -137,21 +139,23 @@ class Chip2 extends StatelessWidget {
   );
 }
 
-// what Start inspection fills in on New inspection
+// the car the inspection starts with (At the car: check ID, or New inspection when something is not known): Bidbus, else
+// the booking VIN's decode, else the booking's text
 J prefill(J a, J? b) {
   final v = (b?['vehicle'] as Map?)?.cast<String, dynamic>(),
-      car = ((v?['car'] as Map?) ?? const {}).cast<String, dynamic>();
+      car = ((v?['car'] as Map?) ?? const {}).cast<String, dynamic>(),
+      dec = ((b?['decoded'] as Map?) ?? const {}).cast<String, dynamic>();
   final typed = car.isEmpty
       ? RegExp(r'^\s*(\d{4})\s+(\S+)\s+(.+?)\s*$')
             .firstMatch('${a['vehicle'] ?? ''}')
-      : null; // "2020 BMW X3" on the booking (corrected by the VIN decode when there is a VIN)
+      : null; // "2020 BMW X3" on the booking
   return {
     'vin': car['vin'] ?? a['vin'] ?? '',
-    'year': car['year'] ?? typed?.group(1),
-    'make': car['make'] ?? typed?.group(2),
-    'model': car['model'] ?? typed?.group(3),
+    'year': car['year'] ?? dec['year'] ?? typed?.group(1),
+    'make': car['make'] ?? dec['make'] ?? typed?.group(2),
+    'model': car['model'] ?? dec['model'] ?? typed?.group(3),
     'series': car['series'],
-    'trim': car['trim'],
+    'trim': car.isEmpty ? dec['trim'] : car['trim'],
     'mileage': car['mileage'] ?? a['mileage'],
     'owner_name': (v?['owner'] as Map?)?['name'] ?? a['seller_name'],
     'fuel': b?['fuel'],
@@ -338,7 +342,6 @@ class _BriefScreenState extends ConsumerState<BriefScreen> {
               ],
             ),
             if (v != null) _Docs(widget.slot, v),
-            if (cf != null) _Carfax(cf),
             if (checks.isNotEmpty)
               Section(
                 title: 'Check before you start',
@@ -369,6 +372,7 @@ class _BriefScreenState extends ConsumerState<BriefScreen> {
                     ),
                 ],
               ),
+            if (cf != null) _Carfax(cf),
             if (photos.isNotEmpty)
               Section(
                 title: "Seller's photos",
@@ -425,11 +429,11 @@ class _BriefScreenState extends ConsumerState<BriefScreen> {
                 icon: LucideIcons.clipboardCheck,
               )
             : PBtn(
-                'Start inspection',
+                'At the car: check ID',
                 a['status'] == 'booked'
-                    ? () => context.push('/new', extra: prefill(a, b))
+                    ? () => atTheCar(context, prefill(a, b))
                     : null,
-                icon: LucideIcons.play,
+                icon: LucideIcons.idCard,
               ),
       ),
     );
@@ -558,6 +562,13 @@ class _Carfax extends StatelessWidget {
       title: 'Carfax',
       children: [
         RowList([
+          if (cf['report_url'] != null)
+            RowBtn(
+              'Carfax report',
+              const SizedBox(),
+              lead: SvgPicture.asset('assets/carfax.svg', height: 26),
+              onTap: () => openWebPage(context, 'Carfax', cf['report_url']),
+            ),
           if (cf['owners'] != null)
             RowBtn('Owners', plainVal('${cf['owners']}')),
           RowBtn(
@@ -583,12 +594,6 @@ class _Carfax extends StatelessWidget {
           if (cf['service_records'] != null)
             RowBtn('Service records', plainVal('${cf['service_records']}')),
           RowBtn('Open recall', flag(cf['open_recall'] == true, color: amber)),
-          if (cf['report_url'] != null)
-            RowBtn(
-              'Carfax report',
-              const Icon(LucideIcons.externalLink, size: 18, color: muted),
-              onTap: () => openReport(context, cf['report_url']),
-            ),
         ]),
       ],
     );

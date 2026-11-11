@@ -119,7 +119,8 @@ class World:
                 return httpx.Response(200, content=pdf_bytes(), headers={"content-type": "application/pdf"}, request=httpx.Request("GET", url))
             return httpx.Response(200, content=b"JPEGDATA", headers={"content-type": "image/jpeg"}, request=httpx.Request("GET", url))
         if "vpic.nhtsa.dot.gov" in url:
-            return resp(200, {"Results": [{"FuelTypePrimary": "Gasoline", "ElectrificationLevel": ""}]})
+            return resp(200, {"Results": [{"FuelTypePrimary": "Gasoline", "ElectrificationLevel": "", "ModelYear": "2003", "Make": "HONDA",
+                                           "Model": "Accord", "Trim": "EX"}]})
         raise AssertionError(f"unexpected GET {url}")
 
     def post(self, url, headers=None, json=None, timeout=None):
@@ -175,7 +176,7 @@ def world(monkeypatch):
     team._cache.clear()
     bidbus._vehicles.clear()
     bidbus._vins.clear()
-    main._fuels.clear()
+    main._decoded.clear()
     return w
 
 
@@ -297,6 +298,7 @@ def test_a_failed_vin_search_is_an_error_not_a_missing_car(client, world, monkey
 def test_brief_without_a_bidbus_vehicle(client, world, monkeypatch):
     b = client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()  # a VIN Bidbus does not have
     assert b["vehicle"] is None and b["bidbus"] == "not_found" and b["appointment"]["vin"] == "1HGCM82633A004352" and b["fuel"] == "Gas"
+    assert b["decoded"] == {"year": 2003, "make": "HONDA", "model": "Accord", "trim": "EX"}  # the car without New inspection
     world.slots[1]["vin"] = None  # no VIN on the booking: nothing to look up
     assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["bidbus"] == "not_found"
     assert world.searches == ["1HGCM82633A004352"]
@@ -312,6 +314,7 @@ def test_brief_for_another_vin_and_unknown_fuel(client, world, monkeypatch):
     b = client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()
     # the Listing ID's car has another VIN: not the booked car, no Bidbus data
     assert b["vin_differs"] is False and b["vehicle"] is None and b["bidbus"] == "not_found" and b["fuel"] is None  # vPIC did not know: no Gas guess
+    assert b["decoded"] == {"year": None, "make": None, "model": None, "trim": None}
     assert client.get(f"/api/appointments/{S1}/documents/9001", headers=ANA_H).status_code == 404
     assert not any(url.startswith(BB + "/api/admin/vehicles/") for _, url in world.calls)
 

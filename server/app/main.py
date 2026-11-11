@@ -19,7 +19,7 @@ from . import ai, bidbus, config, email, hotspots, reports, spin, storage, team
 from .cr import build_cr
 from .db import File as FileRow
 from .db import Inspection, SessionLocal, get_session, now
-from .vin import decode, decode_fuel
+from .vin import decode
 
 log = logging.getLogger(__name__)
 
@@ -389,17 +389,18 @@ def appointments(s: DB, me: Me):
     return {"today": first.isoformat(), "appointments": [_appointment(r) for r in rows]}
 
 
-_fuels: dict[str, str | None] = {}
+_decoded: dict[str, dict] = {}
 
 
-def _fuel(vin: str) -> str | None:
-    if vin not in _fuels:
+def _decode(vin: str) -> dict | None:
+    """the booking VIN's vPIC decode (fuel only when vPIC knows it), kept once vPIC answers"""
+    if vin not in _decoded:
         try:
-            _fuels[vin] = decode_fuel(vin)
+            _decoded[vin] = decode(vin, known_fuel=True)
         except Exception:
-            log.warning("vPIC fuel for %s failed", vin)
+            log.warning("vPIC decode for %s failed", vin)
             return None
-    return _fuels[vin]
+    return _decoded[vin]
 
 
 _norm_vin = bidbus.normalize_vin
@@ -412,7 +413,7 @@ def appointment_brief(slot_id: SlotId, me: Me):
     row = _team_call(team.slot, m, slot_id)
     if not row:
         raise HTTPException(status_code=404, detail="No such appointment")
-    out = {"appointment": _appointment(row), "vehicle": None, "bidbus": "none", "fuel": None, "vin_differs": False}
+    out = {"appointment": _appointment(row), "vehicle": None, "bidbus": "none", "fuel": None, "decoded": None, "vin_differs": False}
     booking_vin = _norm_vin(row.get("vin"))
     if bidbus.enabled():
         try:
@@ -421,7 +422,9 @@ def appointment_brief(slot_id: SlotId, me: Me):
         except bidbus.BidbusError:
             log.exception("Bidbus car for slot %s", slot_id)
             out["bidbus"] = "error"
-    out["fuel"] = _fuel(booking_vin) if len(booking_vin) == 17 else None
+    d = _decode(booking_vin) if len(booking_vin) == 17 else None
+    if d:
+        out["fuel"], out["decoded"] = d["fuel"], {k: d[k] for k in ("year", "make", "model", "trim")}
     return out
 
 

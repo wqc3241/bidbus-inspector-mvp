@@ -161,12 +161,16 @@ class ReviewScreen extends ConsumerWidget {
   }
 
   List<Widget> _start(BuildContext context, J st) {
-    final fl = m(st, 'files'), ow = byId['id_owner']!;
+    final fl = m(st, 'files'), ow = byId['id_owner']!, sd = sellerDocs(st);
     return [
       const Sub3('Documents', LucideIcons.idCard),
       tiles([
         for (final d in ['ph_license', 'ph_reg', if (st['owner'] == 'Family, with proof') 'ph_family'])
-          ShotTile(short[d]!, file: fl[d] != null ? store.abs(fl[d]) : null, missing: fl[d] == null, icon: fl[d] != null ? LucideIcons.camera : LucideIcons.plus, onTap: () => takeDoc(context, id, d)),
+          if (fl[d] == null && ((st['sdocs'] as List?) ?? const []).contains(d))
+            // the seller's upload it was checked against at Check ID
+            ShotTile(short[d]!, file: (sd[d] ?? '').isEmpty ? null : sd[d], icon: LucideIcons.idCard, onTap: (sd[d] ?? '').isEmpty ? null : () => showPhotos(context, [sd[d]!], short[d]!))
+          else
+            ShotTile(short[d]!, file: fl[d] != null ? store.abs(fl[d]) : null, missing: fl[d] == null, icon: fl[d] != null ? LucideIcons.camera : LucideIcons.plus, onTap: () => takeDoc(context, id, d)),
       ]),
       RowList([
         RowBtn(ow['label'], (st['owner'] ?? '') == '' ? needVal() : st['owner'] == 'No' ? alertVal(red, 'No') : okVal(st['owner']), need: (st['owner'] ?? '') == '',

@@ -27,8 +27,9 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup-11
 ## Check ID
 
 - License and registration cards: Take photo, camera only (no pick from library). Private.
+- Started from a scheduler appointment (`docs/12-scheduler-sync.md`): a document the seller uploaded shows the seller's image (tap to enlarge) and needs no photo; only a missing one has Take photo. Registered owner under the cards.
 - Owner question (`id_owner`): Yes; Family, with proof (opens a photo for `ph_family`); No ends the visit (status Visit ended, end time and GPS recorded).
-- Start inspection: off, with the reason, until both photos are in and the answer is Yes or Family with proof. Records start time and GPS, opens the camera.
+- Start inspection: off, with the reason, until both documents are in (uploaded by the seller or photographed) and the answer is Yes or Family with proof. Records start time and GPS, opens the camera.
 
 ## Camera
 
