@@ -68,7 +68,6 @@ class World:
         self.vehicles = {"412345": vehicle_json()}
         self.rpc = []  # mark_slot_done calls
         self.rpc_missing = False
-        self.bb_logins = 0
         self.bb_token = "bb-1"
         self.calls = []
         self.searches = []  # Bidbus VIN searches
@@ -144,10 +143,6 @@ class World:
                 s["status"] = "done"
                 return resp(200, "done")
             return resp(200, "skipped")
-        if url == BB + "/api/admin/sessions":
-            self.bb_logins += 1
-            self.bb_phone = json["phone_number"]
-            return resp(200, {"status": "success", "token": self.bb_token})
         raise AssertionError(f"unexpected POST {url}")
 
 
@@ -175,13 +170,11 @@ def world(monkeypatch):
     monkeypatch.setattr(httpx, "get", w.get)
     monkeypatch.setattr(httpx, "post", w.post)
     for k, v in {"SUPABASE_URL": SB, "SUPABASE_ANON_KEY": "anon", "SCHEDULER_URL": SCHED, "BIDBUS_API_URL": BB,
-                 "BIDBUS_ADMIN_PHONE": "+15550000000", "BIDBUS_ADMIN_PASSWORD": "pw"}.items():
+                 "BIDBUS_ADMIN_TOKEN": "bb-1"}.items():
         monkeypatch.setattr(config, k, v)
     team._cache.clear()
     bidbus._vehicles.clear()
     bidbus._vins.clear()
-    monkeypatch.setattr(bidbus, "_token", None)
-    monkeypatch.setattr(bidbus, "_login_failed_until", 0.0)
     main._fuels.clear()
     return w
 
@@ -266,9 +259,7 @@ def test_the_car_brief_from_bidbus(client, world):
     assert [c["text"] for c in v["checks"]] == ["Carfax: Minor Damage", "Carfax: open recall", "Seller: transmission issue",
                                                 "Seller: check engine light on", "Bidbus risk medium: New seller account"]
     assert [p["label"] for p in v["photos"]] == ["front left", "dents rear door"]
-    assert world.bb_logins == 1 and world.bb_phone == "5550000000"  # Bidbus keeps 10 digits: "+1" dropped
-    client.get(f"/api/appointments/{S1}/brief", headers=ANA_H)
-    assert world.bb_logins == 1  # the admin token is kept
+    assert not any(url.endswith("/sessions") for _, url in world.calls)  # the admin token as given, no sign-in
 
 
 def test_owner_count_without_a_history_line_and_no_carfax(client, world):
@@ -281,13 +272,18 @@ def test_owner_count_without_a_history_line_and_no_carfax(client, world):
     assert v["carfax"] is None and not any(c["text"].startswith("Carfax") for c in v["checks"])
 
 
-def test_bidbus_login_again_after_a_401(client, world):
+def test_a_token_no_longer_accepted_is_an_error(client, world):
     client.get(f"/api/appointments/{S1}/brief", headers=ANA_H)
     bidbus._vehicles.clear()
     bidbus._vins.clear()
-    world.bb_token = "bb-2"  # the service account's password changed: its old token is revoked
+    world.bb_token = "bb-2"  # the admin signed out of that session: its token is revoked
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "error"  # the app keeps its last brief
+    assert client.get(f"/api/appointments/{S1}/documents/9001", headers=ANA_H).status_code == 502
+
+
+def test_the_token_as_copied_from_the_admin_site(client, world, monkeypatch):
+    monkeypatch.setattr(config, "BIDBUS_ADMIN_TOKEN", ' "bb-1"\n')  # local storage keeps it in quotes
     assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "ok"
-    assert world.bb_logins == 2 and world.searches == [VIN, VIN]  # the search is sent again, with its VIN, after the new login
 
 
 @pytest.mark.parametrize("answer", [resp(500, {"error": "x"}), httpx.Response(200, content=b"<html>", request=httpx.Request("GET", "https://x.test"))])
@@ -304,7 +300,7 @@ def test_brief_without_a_bidbus_vehicle(client, world, monkeypatch):
     world.slots[1]["vin"] = None  # no VIN on the booking: nothing to look up
     assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["bidbus"] == "not_found"
     assert world.searches == ["1HGCM82633A004352"]
-    monkeypatch.setattr(config, "BIDBUS_ADMIN_PHONE", "")  # no Bidbus account on the server
+    monkeypatch.setattr(config, "BIDBUS_ADMIN_TOKEN", " ")  # no Bidbus token on the server
     assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "none"
 
 
@@ -411,15 +407,10 @@ def test_a_huge_pdf_page_is_made_smaller(monkeypatch):
     assert im.size == (1600, 1200)
 
 
-def test_a_failed_bidbus_login_is_not_retried_at_once(client, world, monkeypatch):
-    post = world.post
-    monkeypatch.setattr(httpx, "post", lambda url, **kw: (_ for _ in ()).throw(httpx.ConnectError("down")) if url.endswith("/sessions") else post(url, **kw))
+def test_bidbus_not_reached_is_an_error(client, world, monkeypatch):
+    get = world.get
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: (_ for _ in ()).throw(httpx.ConnectError("down")) if url.startswith(BB) else get(url, **kw))
     assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "error"
-    monkeypatch.setattr(httpx, "post", post)
-    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "error"  # within 30 s: no new login
-    assert world.bb_logins == 0
-    bidbus._login_failed_until = 0
-    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "ok"
 
 
 def test_health_with_the_scheduler_down_is_not_signed_out(client, world):

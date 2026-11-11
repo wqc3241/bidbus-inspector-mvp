@@ -1,8 +1,8 @@
-"""The car brief from the Bidbus admin API (bidbus-v3), read with one admin service account held by this server.
+"""The car brief from the Bidbus admin API (bidbus-v3), read with one Bidbus admin sign-in token held by this server
+(BIDBUS_ADMIN_TOKEN, copied from admin.bidbus.com). It stops working when that admin signs out of that session.
 
 GET /api/admin/vehicles?vehicle_query=<VIN> finds the cars with a VIN (newest first); GET /api/admin/vehicles/:id gives
-the car, the seller's documents, photos, self-inspection, Carfax and risk; GET /api/admin/documents/:id gives a document's file link. Admin tokens do not expire on their own; a 401
-(logout or password change) logs in again once.
+the car, the seller's documents, photos, self-inspection, Carfax and risk; GET /api/admin/documents/:id gives a document's file link.
 """
 import io
 import logging
@@ -27,13 +27,15 @@ class BidbusError(Exception):
     pass
 
 
+def _token() -> str:
+    # as copied from the admin site's local storage, possibly in quotes
+    return config.BIDBUS_ADMIN_TOKEN.strip().strip("\"'").strip()
+
+
 def enabled() -> bool:
-    return bool(config.BIDBUS_ADMIN_PHONE and config.BIDBUS_ADMIN_PASSWORD)
+    return bool(_token())
 
 
-_token: str | None = None
-_lock = threading.Lock()
-_login_failed_until = 0.0  # after a failed login, calls fail at once for 30 s instead of queueing behind new logins
 _pdf_lock = threading.Lock()  # PDFium is not thread-safe
 _vehicles: dict[str, tuple[float, dict]] = {}
 _vins: dict[str, tuple[float, list[str]]] = {}
@@ -43,46 +45,14 @@ def _url(path: str) -> str:
     return config.BIDBUS_API_URL.rstrip("/") + "/api/admin" + path
 
 
-def _phone(p: str) -> str:
-    """the phone as Bidbus stores it: 10 digits, no +1 or punctuation ("+1 (555) 010-0000" -> "5550100000")"""
-    d = re.sub(r"\D", "", p or "")
-    return d[1:] if len(d) == 11 and d.startswith("1") else d
-
-
-def _login() -> str:
-    global _login_failed_until
-    if time.monotonic() < _login_failed_until:
-        raise BidbusError("Bidbus login failed a moment ago")
-    try:
-        r = httpx.post(_url("/sessions"), json={"phone_number": _phone(config.BIDBUS_ADMIN_PHONE), "password": config.BIDBUS_ADMIN_PASSWORD}, timeout=TIMEOUT)
-        if r.status_code >= 400:
-            raise BidbusError(f"Bidbus login failed ({r.status_code})")
-        token = r.json().get("token")
-        if not token:
-            raise BidbusError("Bidbus login gave no token")
-        return token
-    except (httpx.HTTPError, BidbusError):
-        _login_failed_until = time.monotonic() + 30
-        raise
-
-
 def _get(path: str, params: dict | None = None) -> httpx.Response:
-    global _token
     try:
-        with _lock:
-            if not _token:
-                _token = _login()
-            token = _token
-        r = httpx.get(_url(path), headers={"Authorization": f"Bearer {token}"}, params=params, timeout=TIMEOUT)
-        if r.status_code == 401:
-            with _lock:
-                if _token == token:  # not renewed meanwhile by another request
-                    _token = _login()
-                token = _token
-            r = httpx.get(_url(path), headers={"Authorization": f"Bearer {token}"}, params=params, timeout=TIMEOUT)
-        return r
+        r = httpx.get(_url(path), headers={"Authorization": f"Bearer {_token()}"}, params=params, timeout=TIMEOUT)
     except httpx.HTTPError as e:
         raise BidbusError(f"Bidbus not reached: {e}") from e
+    if r.status_code == 401:
+        raise BidbusError("Bidbus did not accept BIDBUS_ADMIN_TOKEN (401): copy a new token from admin.bidbus.com")
+    return r
 
 
 def normalize_vin(v) -> str:
