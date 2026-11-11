@@ -106,10 +106,16 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
         ],
       ),
-      bottomNavigationBar: BottomBar(
-        sent
-            ? PBtn('Sign in', busy || !okCode ? null : _verify)
-            : PBtn('Send code', busy || !okEmail ? null : _send),
+      // above the keyboard (the code keyboard has no key to close it)
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.viewInsetsOf(context).bottom,
+        ),
+        child: BottomBar(
+          sent
+              ? PBtn('Sign in', busy || !okCode ? null : _verify)
+              : PBtn('Send code', busy || !okEmail ? null : _send),
+        ),
       ),
     );
   }
