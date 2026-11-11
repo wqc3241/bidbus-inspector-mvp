@@ -402,42 +402,42 @@ def _fuel(vin: str) -> str | None:
     return _fuels[vin]
 
 
-def _norm_vin(v) -> str:
-    return re.sub(r"\s+", "", str(v or "")).upper()
+_norm_vin = bidbus.normalize_vin
 
 
 @api.get("/appointments/{slot_id}/brief")
 def appointment_brief(slot_id: SlotId, me: Me):
-    """the appointment with the Bidbus car brief when the booking has a Bidbus vehicle ID (the scheduler's Listing ID)"""
+    """the appointment with the Bidbus car brief when Bidbus has a car with the booking's VIN"""
     m = _signed_in(me)
     row = _team_call(team.slot, m, slot_id)
     if not row:
         raise HTTPException(status_code=404, detail="No such appointment")
     out = {"appointment": _appointment(row), "vehicle": None, "bidbus": "none", "fuel": None, "vin_differs": False}
-    vid, booking_vin = _vehicle_id(row), _norm_vin(row.get("vin"))
-    if vid and bidbus.enabled():
+    booking_vin = _norm_vin(row.get("vin"))
+    if bidbus.enabled():
         try:
-            v = bidbus.vehicle(vid)
-            if v and _booked_car(row, v):
-                out["vehicle"], out["bidbus"] = bidbus.brief(v), "ok"
-            else:
-                out["bidbus"] = "not_found"
-                out["vin_differs"] = bool(v and booking_vin and _norm_vin(v.get("vin")) and _norm_vin(v.get("vin")) != booking_vin)
+            v = _bidbus_car(row) if len(booking_vin) == 17 else None
+            out["vehicle"], out["bidbus"] = (bidbus.brief(v), "ok") if v else (None, "not_found")
         except bidbus.BidbusError:
-            log.exception("Bidbus vehicle %s", vid)
+            log.exception("Bidbus car for slot %s", slot_id)
             out["bidbus"] = "error"
     out["fuel"] = _fuel(booking_vin) if len(booking_vin) == 17 else None
     return out
 
 
-def _vehicle_id(row: dict) -> str | None:
-    vid = str(row.get("listing_id") or "")
-    return vid if re.fullmatch(r"[0-9]{1,12}", vid) else None
+def _bidbus_car(row: dict) -> dict | None:
+    """the booked car in Bidbus, found by the booking's 17-character VIN alone: the newest Bidbus car with that VIN,
+    or the one the scheduler's Listing ID names when it is one of them"""
+    ids = bidbus.vehicle_ids(_norm_vin(row.get("vin")))
+    if not ids:
+        return None
+    lid = str(row.get("listing_id") or "").strip()
+    v = bidbus.vehicle(lid if lid in ids else ids[0])
+    return v if v and _booked_car(row, v) else None
 
 
 def _booked_car(row: dict, v: dict) -> bool:
-    """the Bidbus car is the booked car: its VIN is the booking's 17-character VIN. With the scheduler keeping a job's
-    own inspector from setting its Listing ID, this stops a booking from opening another seller's documents."""
+    """the Bidbus car is the booked car: its VIN is the booking's 17-character VIN"""
     booking_vin = _norm_vin(row.get("vin"))
     return len(booking_vin) == 17 and _norm_vin(v.get("vin")) == booking_vin
 
@@ -445,17 +445,16 @@ def _booked_car(row: dict, v: dict) -> bool:
 def _document_vehicle(m: team.Member, slot_id: str, document_id: str) -> str:
     """the document must be one of the seller's documents on this appointment's Bidbus car; gives the vehicle ID"""
     row = _team_call(team.slot, m, slot_id)
-    vid = _vehicle_id(row or {})
-    if not row or not vid or not bidbus.enabled():
+    if not row or len(_norm_vin(row.get("vin"))) != 17 or not bidbus.enabled():
         raise HTTPException(status_code=404, detail="No such document")
     try:
-        v = bidbus.vehicle(vid) or {}
+        v = _bidbus_car(row) or {}
     except bidbus.BidbusError:
-        log.exception("Bidbus vehicle %s", vid)
+        log.exception("Bidbus car for slot %s", slot_id)
         raise HTTPException(status_code=502, detail="Bidbus not reached")
-    if not v or not _booked_car(row, v) or document_id not in {str(d.get("document_id")) for d in v.get("required_documents") or [] if isinstance(d, dict)}:
+    if not v or document_id not in {str(d.get("document_id")) for d in v.get("required_documents") or [] if isinstance(d, dict)}:
         raise HTTPException(status_code=404, detail="No such document")
-    return vid
+    return str(v.get("id"))
 
 
 @api.get("/appointments/{slot_id}/documents/{document_id}")
