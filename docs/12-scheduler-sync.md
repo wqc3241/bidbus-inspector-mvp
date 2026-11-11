@@ -49,6 +49,6 @@ The app refreshes on open, on pull and every 5 minutes. A job no longer listed s
 
 ## Inspection
 
-Start inspection on the brief opens New inspection filled in (VIN, year, make, model, trim, mileage, owner name, fuel). The inspection keeps the appointment; the record's `source.listing_id` is the Bidbus vehicle ID. The server stores `member_id`, `slot_id`, `booked_at`, `vehicle_id` and lets only that inspector change it. The phone uploads an inspection only while the inspector who started it is signed in.
+Start inspection on the brief opens New inspection filled in (VIN, year, make, model, trim, mileage, owner name, fuel). The inspection keeps the appointment; the record's `source.listing_id` is the Bidbus vehicle ID. The server stores `member_id`, `slot_id`, `booked_at`, `vehicle_id` and lets only that inspector change it. The phone shows, opens and uploads an inspection only while the inspector who started it is signed in.
 
 When the report is sent, the server calls `mark_slot_done` once: the job turns Done on the scheduler if it is still the same booking (`skipped` when it was cancelled or rebooked). A call that fails is tried again on the next calls for 2 days.

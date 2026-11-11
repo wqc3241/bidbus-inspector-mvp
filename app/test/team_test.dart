@@ -144,6 +144,12 @@ void main() {
     expect(team.session!['access_token'], 'tok');
   });
 
+  test('only the signed-in inspector\'s inspections are shown', () {
+    expect(team.mine({'member': 'm1'}), true);
+    expect(team.mine({'member': 'm2'}), false);
+    expect(team.mine({}), true); // started before scheduler sign-in
+  });
+
   test('days are counted by the calendar', () {
     expect(dayGap('2027-03-15', '2027-03-14'), 1); // the day daylight saving starts
     expect(dayGap('2027-03-14', '2027-03-13'), 1);

@@ -39,6 +39,8 @@ final router = GoRouter(
     final out = team.on && !team.signedIn, at = s.matchedLocation;
     if (out && at != '/signin' && at != '/settings') return '/signin';
     if (!out && at == '/signin') return '/';
+    final st = store.ins[s.pathParameters['id']];
+    if (st != null && !team.mine(st)) return '/'; // another inspector's
     return null;
   },
   routes: [

@@ -146,7 +146,7 @@ class Store extends ChangeNotifier {
     _aiBusy = true;
     try {
       if (team.on) await team.token();
-      for (final st in list) {
+      for (final st in list.where(team.mine)) {
         final q = (st['aiq'] as List? ?? []);
         // after the signature the record is fixed: readings still queued are dropped
         if (st['status'] != 'progress') {
@@ -199,7 +199,7 @@ class Store extends ChangeNotifier {
       if (team.on) await team.token();
       for (final st in list.where((s) => ['saved', 'uploading', 'building'].contains(s['status']))) {
         if (!online) break;
-        if (team.on && st['member'] != null && st['member'] != team.member?['id']) continue; // another inspector's, signed out
+        if (!team.mine(st)) continue; // another inspector's, signed out
         await _upload(st['id']);
       }
     } finally {

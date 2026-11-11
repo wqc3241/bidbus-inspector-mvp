@@ -44,6 +44,8 @@ class Team extends ChangeNotifier {
   int _epoch = 0; // counts sign-outs: work started before one is dropped
 
   bool get signedIn => session != null;
+  // an inspection this inspector may see, open and upload: started by them, or before scheduler sign-in was used
+  bool mine(J st) => !on || st['member'] == null || st['member'] == member?['id'];
   String get name => (member?['name'] as String?)?.trim().isNotEmpty == true
       ? member!['name']
       : (member?['email'] ?? '');
@@ -325,7 +327,7 @@ class Team extends ChangeNotifier {
       if (f.existsSync() || _sent(b)) continue;
       try {
         final bytes = await a.document(slot, '${d['document_id']}');
-        if (e != _epoch || briefs[slot] != b) return;
+        if (e != _epoch || briefs[slot] != b || _sent(b)) return;
         f.parent.createSync(recursive: true);
         f.writeAsBytesSync(bytes);
         notifyListeners();
@@ -337,7 +339,7 @@ class Team extends ChangeNotifier {
 
   // the inspection on this phone started from this appointment (the same booking)
   J? inspectionFor(J appt) => store.ins.values
-      .where((st) => (st['appt'] as Map?)?['key'] == appt['key'])
+      .where((st) => (st['appt'] as Map?)?['key'] == appt['key'] && mine(st))
       .firstOrNull;
   bool _sent(J? brief) {
     final k = (brief?['appointment'] as Map?)?['key'];

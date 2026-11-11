@@ -44,7 +44,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final s = ref.watch(storeProvider), t = ref.watch(teamProvider), list = s.list;
+    final s = ref.watch(storeProvider), t = ref.watch(teamProvider), list = s.list.where(t.mine).toList();
     final body = ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
         if (t.on) ..._today(context, t),
         if (t.on && list.isNotEmpty)
