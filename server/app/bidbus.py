@@ -43,12 +43,18 @@ def _url(path: str) -> str:
     return config.BIDBUS_API_URL.rstrip("/") + "/api/admin" + path
 
 
+def _phone(p: str) -> str:
+    """the phone as Bidbus stores it: 10 digits, no +1 or punctuation ("+1 (555) 010-0000" -> "5550100000")"""
+    d = re.sub(r"\D", "", p or "")
+    return d[1:] if len(d) == 11 and d.startswith("1") else d
+
+
 def _login() -> str:
     global _login_failed_until
     if time.monotonic() < _login_failed_until:
         raise BidbusError("Bidbus login failed a moment ago")
     try:
-        r = httpx.post(_url("/sessions"), json={"phone_number": config.BIDBUS_ADMIN_PHONE, "password": config.BIDBUS_ADMIN_PASSWORD}, timeout=TIMEOUT)
+        r = httpx.post(_url("/sessions"), json={"phone_number": _phone(config.BIDBUS_ADMIN_PHONE), "password": config.BIDBUS_ADMIN_PASSWORD}, timeout=TIMEOUT)
         if r.status_code >= 400:
             raise BidbusError(f"Bidbus login failed ({r.status_code})")
         token = r.json().get("token")

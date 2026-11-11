@@ -14,7 +14,7 @@ The app asks `GET /api/health` (`auth: "team"`) at start and when the server URL
 ## Setup
 
 1. Scheduler: add the two `bidbus-field-mark-done` commits (migration `0006_field_app_mark_done.sql` with `mark_slot_done`, and the rule that a job's own inspector can't set its Listing ID) and run 0006. Until 0006 runs, jobs are not marked done; nothing else breaks.
-2. Railway (server): set `SUPABASE_URL`, `SUPABASE_ANON_KEY` (the scheduler's public anon key), `SCHEDULER_URL` (the scheduler site, for its team-list email check), `BIDBUS_ADMIN_PHONE`, `BIDBUS_ADMIN_PASSWORD` (one Bidbus admin service account). `BIDBUS_API_URL` defaults to `https://api.bidbus.com`.
+2. Railway (server): set `SUPABASE_URL`, `SUPABASE_ANON_KEY` (the scheduler's public anon key), `SCHEDULER_URL` (the scheduler site, for its team-list email check), `BIDBUS_ADMIN_PHONE`, `BIDBUS_ADMIN_PASSWORD` (one Bidbus admin service account; the phone in any format, sent as its 10 digits). `BIDBUS_API_URL` defaults to `https://api.bidbus.com`.
 3. Deploy. The server runs migration `0002_scheduler` at start.
 4. Each inspector signs in once on the scheduler site with their email. That links their team-list row; the app then accepts the same email.
 

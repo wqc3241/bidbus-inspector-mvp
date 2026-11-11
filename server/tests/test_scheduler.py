@@ -146,6 +146,7 @@ class World:
             return resp(200, "skipped")
         if url == BB + "/api/admin/sessions":
             self.bb_logins += 1
+            self.bb_phone = json["phone_number"]
             return resp(200, {"status": "success", "token": self.bb_token})
         raise AssertionError(f"unexpected POST {url}")
 
@@ -265,7 +266,7 @@ def test_the_car_brief_from_bidbus(client, world):
     assert [c["text"] for c in v["checks"]] == ["Carfax: Minor Damage", "Carfax: open recall", "Seller: transmission issue",
                                                 "Seller: check engine light on", "Bidbus risk medium: New seller account"]
     assert [p["label"] for p in v["photos"]] == ["front left", "dents rear door"]
-    assert world.bb_logins == 1
+    assert world.bb_logins == 1 and world.bb_phone == "5550000000"  # Bidbus keeps 10 digits: "+1" dropped
     client.get(f"/api/appointments/{S1}/brief", headers=ANA_H)
     assert world.bb_logins == 1  # the admin token is kept
 
