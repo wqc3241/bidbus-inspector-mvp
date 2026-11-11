@@ -40,9 +40,9 @@ The app refreshes on open, on pull and every 5 minutes. A job no longer listed s
 
 `GET /api/appointments/{slot_id}/brief`: `{appointment, vehicle, bidbus, fuel, vin_differs}`.
 
-- The Bidbus car is used only when its VIN matches the booking's 17-character VIN. The scheduler branch keeps a job's own inspector from setting its Listing ID, so a booking cannot be pointed at another seller's car.
+- The Bidbus car is found by the booking's 17-character VIN alone (`GET /api/admin/vehicles?vehicle_query=<VIN>`, VIN read as Bidbus stores it: I, O, Q as 1, 0, 0). With several Bidbus cars on that VIN: the one the Listing ID names, else the newest. No Listing ID is needed.
 - `vehicle` (from `GET /api/admin/vehicles/:id`): car, photo, owner name and registered owner, seller documents, seller photos, Carfax (owners, accident, title, frame damage, total loss, airbag, odometer, service records, recall), checks.
-- `bidbus`: `ok`, `none` (no vehicle ID), `not_found` (no such vehicle, or its VIN is not the booking's; `vin_differs` is true when the VINs differ) or `error` (the app keeps the last brief it had for the same booking).
+- `bidbus`: `ok`, `none` (no Bidbus account on the server), `not_found` (no 17-character VIN on the booking, or no Bidbus car with that VIN) or `error` (the app keeps the last brief it had for the same booking). `vin_differs` is always false.
 - `fuel`: from the booking VIN's decode, only when vPIC gives it.
 
 `GET /api/appointments/{slot_id}/documents/{document_id}`: one of that car's documents (license, registration) as a photo; a PDF comes as one JPEG of its first 3 pages, each at most 1600 px. Each call is logged with the inspector's email. Private: never on a report. Deleted from the phone once that car's report is sent.

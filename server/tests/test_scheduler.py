@@ -71,6 +71,7 @@ class World:
         self.bb_logins = 0
         self.bb_token = "bb-1"
         self.calls = []
+        self.searches = []  # Bidbus VIN searches
         self.doc_pdf = False  # the document store holds a PDF
         self.sb_down = False  # Supabase not reached
 
@@ -99,6 +100,14 @@ class World:
                 first, last = q["and"][len("(date.gte."):-1].split(",date.lte.")
                 rows = [s for s in rows if first <= s["date"] <= last]
             return resp(200, sorted(rows, key=lambda s: (s["date"], s["start_time"])))
+        if url == BB + "/api/admin/vehicles":
+            if headers.get("Authorization") != f"Bearer {self.bb_token}":
+                return resp(401, {"error": "no"})
+            vq = str(q.get("vehicle_query") or "")
+            self.searches.append(vq)
+            rows = sorted((v for v in self.vehicles.values() if len(vq) == 17 and str(v.get("vin") or "").upper() == vq.upper()),
+                          key=lambda v: v.get("created_at") or "", reverse=True)
+            return resp(200, {"vehicles": [{"id": v["id"], "vin": v["vin"], "created_at": v.get("created_at")} for v in rows], "total": len(rows)})
         if url.startswith(BB + "/api/admin/vehicles/"):
             if headers.get("Authorization") != f"Bearer {self.bb_token}":
                 return resp(401, {"error": "no"})
@@ -169,6 +178,7 @@ def world(monkeypatch):
         monkeypatch.setattr(config, k, v)
     team._cache.clear()
     bidbus._vehicles.clear()
+    bidbus._vins.clear()
     monkeypatch.setattr(bidbus, "_token", None)
     monkeypatch.setattr(bidbus, "_login_failed_until", 0.0)
     main._fuels.clear()
@@ -243,6 +253,7 @@ def test_the_car_brief_from_bidbus(client, world):
     b = r.json()
     assert b["bidbus"] == "ok" and b["fuel"] == "Gas" and b["vin_differs"] is False and b["appointment"]["slot_id"] == S1
     v = b["vehicle"]
+    assert v["vehicle_id"] == 412345
     assert v["car"] == {"year": 2020, "make": "BMW", "model": "X3", "series": "xDrive30i", "trim": "xDrive30i Sport Utility 4D", "vin": "5UXTY5C00L9B00230",
                         "mileage": 61240, "color": "Black", "zip": "94010"}
     assert v["owner"] == {"name": "Daniel Kim", "registered": "Daniel Kim"}
@@ -272,27 +283,77 @@ def test_owner_count_without_a_history_line_and_no_carfax(client, world):
 def test_bidbus_login_again_after_a_401(client, world):
     client.get(f"/api/appointments/{S1}/brief", headers=ANA_H)
     bidbus._vehicles.clear()
+    bidbus._vins.clear()
     world.bb_token = "bb-2"  # the service account's password changed: its old token is revoked
     assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "ok"
-    assert world.bb_logins == 2
+    assert world.bb_logins == 2 and world.searches == [VIN, VIN]  # the search is sent again, with its VIN, after the new login
 
 
-def test_brief_without_a_bidbus_vehicle(client, world):
-    b = client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()
-    assert b["vehicle"] is None and b["bidbus"] == "none" and b["appointment"]["vin"] == "1HGCM82633A004352" and b["fuel"] == "Gas"
-    world.slots[0]["listing_id"] = "999"
-    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "not_found"
+@pytest.mark.parametrize("answer", [resp(500, {"error": "x"}), httpx.Response(200, content=b"<html>", request=httpx.Request("GET", "https://x.test"))])
+def test_a_failed_vin_search_is_an_error_not_a_missing_car(client, world, monkeypatch, answer):
+    get = world.get
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: answer if url == BB + "/api/admin/vehicles" else get(url, **kw))
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "error"  # the app keeps its last brief
+    assert client.get(f"/api/appointments/{S1}/documents/9001", headers=ANA_H).status_code == 502
 
 
-def test_brief_vin_differs_and_unknown_fuel(client, world, monkeypatch):
+def test_brief_without_a_bidbus_vehicle(client, world, monkeypatch):
+    b = client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()  # a VIN Bidbus does not have
+    assert b["vehicle"] is None and b["bidbus"] == "not_found" and b["appointment"]["vin"] == "1HGCM82633A004352" and b["fuel"] == "Gas"
+    world.slots[1]["vin"] = None  # no VIN on the booking: nothing to look up
+    assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["bidbus"] == "not_found"
+    assert world.searches == ["1HGCM82633A004352"]
+    monkeypatch.setattr(config, "BIDBUS_ADMIN_PHONE", "")  # no Bidbus account on the server
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "none"
+
+
+def test_brief_for_another_vin_and_unknown_fuel(client, world, monkeypatch):
     world.slots[0]["vin"] = "5UXTY5C00L9B00231"
     get = world.get
     monkeypatch.setattr(httpx, "get", lambda url, **kw: resp(200, {"Results": [{"FuelTypePrimary": "", "ElectrificationLevel": ""}]})
                         if "vpic" in url else get(url, **kw))
     b = client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()
-    # not the booked car: no Bidbus data
-    assert b["vin_differs"] is True and b["vehicle"] is None and b["bidbus"] == "not_found" and b["fuel"] is None  # vPIC did not know: no Gas guess
+    # the Listing ID's car has another VIN: not the booked car, no Bidbus data
+    assert b["vin_differs"] is False and b["vehicle"] is None and b["bidbus"] == "not_found" and b["fuel"] is None  # vPIC did not know: no Gas guess
     assert client.get(f"/api/appointments/{S1}/documents/9001", headers=ANA_H).status_code == 404
+    assert not any(url.startswith(BB + "/api/admin/vehicles/") for _, url in world.calls)
+
+
+def test_the_car_is_found_by_the_booking_vin_alone(client, world):
+    world.slots[0]["listing_id"] = None
+    b = client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()
+    assert b["bidbus"] == "ok" and b["vehicle"]["vehicle_id"] == 412345
+    assert client.get(f"/api/appointments/{S1}/documents/9001", headers=ANA_H).status_code == 200
+    world.slots[0]["listing_id"] = "999"  # a Listing ID that is not a car with this VIN changes nothing
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["vehicle"]["vehicle_id"] == 412345
+    assert world.searches == [VIN]  # a match is kept 5 minutes
+    assert not any(url.endswith("/vehicles/999") for _, url in world.calls)
+
+
+def test_the_newest_car_with_the_vin_unless_the_listing_id_names_another(client, world):
+    old = vehicle_json(400001)
+    old["created_at"], old["required_documents"] = "2026-01-05T00:00:00Z", []  # an earlier Bidbus car with the same VIN
+    world.vehicles["400001"] = old
+    world.vehicles["412345"]["created_at"] = "2026-11-01T00:00:00Z"
+    world.slots[0]["listing_id"] = None
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["vehicle"]["vehicle_id"] == 412345
+    world.slots[0]["listing_id"] = "400001"
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["vehicle"]["vehicle_id"] == 400001
+    assert client.get(f"/api/appointments/{S1}/documents/9001", headers=ANA_H).status_code == 404  # not that car's document
+
+
+def test_a_vin_typed_with_o_for_zero_finds_the_car(client, world):
+    world.slots[0].update(vin="5uxty5cOOL9BOO230", listing_id=None)  # O for 0: Bidbus stores it as 0
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "ok"
+    assert world.searches == [VIN]
+
+
+def test_a_car_added_to_bidbus_later_is_found_at_once(client, world):
+    assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["bidbus"] == "not_found"
+    honda = vehicle_json(500001)
+    honda["vin"] = "1HGCM82633A004352"
+    world.vehicles["500001"] = honda
+    assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["vehicle"]["vehicle_id"] == 500001
 
 
 def test_a_listing_id_typed_onto_a_booking_does_not_open_another_sellers_car(client, world):
@@ -302,7 +363,8 @@ def test_a_listing_id_typed_onto_a_booking_does_not_open_another_sellers_car(cli
     assert b["vehicle"] is None and b["bidbus"] == "not_found"
     assert client.get(f"/api/appointments/{S2}/documents/9001", headers=ANA_H).status_code == 404
     world.slots[1]["vin"] = None
-    assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["vehicle"] is None
+    b = client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()
+    assert b["vehicle"] is None and b["bidbus"] == "not_found"  # the app then keeps no vehicle ID for the inspection
     assert client.get(f"/api/appointments/{S2}/documents/9001", headers=ANA_H).status_code == 404
     world.slots[1]["vin"] = " 5uxty5c00l9b00230"  # the same VIN, typed loosely
     assert client.get(f"/api/appointments/{S2}/brief", headers=ANA_H).json()["bidbus"] == "ok"
@@ -316,8 +378,8 @@ def test_no_car_without_a_booking_vin(client, world):
     bidbus._vehicles.clear()
     world.vehicles["412345"]["vin"] = VIN
     world.slots[0]["vin"] = VIN
-    world.slots[0]["listing_id"] = "../users/1"  # never sent to Bidbus
-    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "none"
+    world.slots[0]["listing_id"] = "../users/1"  # never sent to Bidbus: the car is found by its VIN
+    assert client.get(f"/api/appointments/{S1}/brief", headers=ANA_H).json()["bidbus"] == "ok"
     assert not any("users" in url for _, url in world.calls)
 
 

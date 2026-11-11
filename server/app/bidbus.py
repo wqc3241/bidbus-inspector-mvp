@@ -1,7 +1,7 @@
 """The car brief from the Bidbus admin API (bidbus-v3), read with one admin service account held by this server.
 
-GET /api/admin/vehicles/:id gives the car, the seller's documents, photos, self-inspection, Carfax and risk;
-GET /api/admin/documents/:id gives a document's file link. Admin tokens do not expire on their own; a 401
+GET /api/admin/vehicles?vehicle_query=<VIN> finds the cars with a VIN (newest first); GET /api/admin/vehicles/:id gives
+the car, the seller's documents, photos, self-inspection, Carfax and risk; GET /api/admin/documents/:id gives a document's file link. Admin tokens do not expire on their own; a 401
 (logout or password change) logs in again once.
 """
 import io
@@ -36,6 +36,7 @@ _lock = threading.Lock()
 _login_failed_until = 0.0  # after a failed login, calls fail at once for 30 s instead of queueing behind new logins
 _pdf_lock = threading.Lock()  # PDFium is not thread-safe
 _vehicles: dict[str, tuple[float, dict]] = {}
+_vins: dict[str, tuple[float, list[str]]] = {}
 
 
 def _url(path: str) -> str:
@@ -59,23 +60,52 @@ def _login() -> str:
         raise
 
 
-def _get(path: str) -> httpx.Response:
+def _get(path: str, params: dict | None = None) -> httpx.Response:
     global _token
     try:
         with _lock:
             if not _token:
                 _token = _login()
             token = _token
-        r = httpx.get(_url(path), headers={"Authorization": f"Bearer {token}"}, timeout=TIMEOUT)
+        r = httpx.get(_url(path), headers={"Authorization": f"Bearer {token}"}, params=params, timeout=TIMEOUT)
         if r.status_code == 401:
             with _lock:
                 if _token == token:  # not renewed meanwhile by another request
                     _token = _login()
                 token = _token
-            r = httpx.get(_url(path), headers={"Authorization": f"Bearer {token}"}, timeout=TIMEOUT)
+            r = httpx.get(_url(path), headers={"Authorization": f"Bearer {token}"}, params=params, timeout=TIMEOUT)
         return r
     except httpx.HTTPError as e:
         raise BidbusError(f"Bidbus not reached: {e}") from e
+
+
+def normalize_vin(v) -> str:
+    """a VIN as Bidbus stores it (Vehicle.normalize_vin): no spaces, upper case, I O Q read as 1 0 0"""
+    return re.sub(r"\s+", "", str(v or "")).upper().translate(str.maketrans("IOQ", "100"))
+
+
+def vehicle_ids(vin: str) -> list[str]:
+    """the IDs of the Bidbus cars with this 17-character VIN, newest first; a match is kept 5 minutes, no match is asked again"""
+    vin = normalize_vin(vin)
+    if not re.fullmatch(r"[A-Z0-9]{17}", vin):
+        return []
+    t = time.monotonic()
+    hit = _vins.get(vin)
+    if hit and hit[0] > t:
+        return hit[1]
+    r = _get("/vehicles", {"vehicle_query": vin, "per_page": 20})
+    if r.status_code >= 400:
+        raise BidbusError(f"Bidbus VIN search: {r.status_code}")
+    try:
+        rows = r.json().get("vehicles") or []
+    except (ValueError, AttributeError) as e:
+        raise BidbusError(f"Bidbus VIN search: {e}") from e
+    ids = [str(v["id"]) for v in rows if isinstance(v, dict) and v.get("id") is not None and normalize_vin(v.get("vin")) == vin]
+    if ids:
+        if len(_vins) > 200:
+            _vins.clear()
+        _vins[vin] = (t + VEHICLE_SECONDS, ids)
+    return ids
 
 
 def vehicle(vehicle_id: str) -> dict | None:
