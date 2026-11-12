@@ -1,5 +1,6 @@
 """Seller and dealer report pages (docs/05-reports.md), ported from reference/condition-report/app.js."""
 import json
+import logging
 import re
 from pathlib import Path
 
@@ -11,10 +12,11 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import config, hotspots, spin, storage
-from .cr import CAT, PAINT_SHOWN, SPIN_SLOTS
+from .cr import CAT, PAINT_SHOWN, SPIN_SLOTS, build_cr
 from .email import car_line, inspected_when
 from .db import Inspection, get_session
 
+log = logging.getLogger(__name__)
 router = APIRouter(prefix="/r")
 templates = Jinja2Templates(directory=Path(__file__).resolve().parents[1] / "templates")
 
@@ -124,10 +126,21 @@ def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict]) -> dict:
             "hotspots": hs or None, "hotspotTrigger": "click"}
 
 
+def current_cr(insp: Inspection) -> dict:
+    """the CR in today's wording: built again from the record, so a report sent before an option was renamed shows the new text; the stored one if that fails"""
+    try:
+        out = build_cr(insp.record)
+        if out["validation"]["ok"]:
+            return out["condition_report"]
+    except Exception:
+        log.exception("rebuilding the CR of %s", insp.id)
+    return insp.cr["condition_report"]
+
+
 def view(insp: Inspection) -> dict:
-    """everything both report templates show, from the stored CR (condition_report) and the record"""
+    """everything both report templates show, from the CR (condition_report) and the record"""
     token, rec, car = insp.report_token, insp.record, insp.car or {}
-    cr = insp.cr["condition_report"]
+    cr = current_cr(insp)
     v, h, issues = cr["vehicle"], cr["highlight"], {i["id"]: i for i in cr["issues"]}
     url = lambda name: f"/r/{token}/media/{name}"  # noqa: E731
     by_photo = {i["photo"]: i for i in cr["issues"] if i["photo"]}

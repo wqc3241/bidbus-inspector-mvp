@@ -1,9 +1,10 @@
+import json
 import re
 import secrets
 import uuid
 
 import pytest
-from conftest import CARS, sample
+from conftest import CARS, ROOT, sample
 
 from app.cr import build_cr
 from app.db import Inspection, SessionLocal
@@ -199,3 +200,23 @@ def test_paint_reads_rules():
     assert paint_reads(rec) == [{"icon": "↑", "text": "Highest reading 6.2 mils", "sub": "Trunk or liftgate"},
                                 {"icon": "↓", "text": "Lowest reading 3.9 mils", "sub": "Hood"}]
     assert paint_reads({"paint": [{"panel": "Roof", "mils": None, "not_on_car": True}]}) == []
+
+
+def test_a_report_sent_before_the_rename_shows_the_new_wording(client):
+    """record and stored CR in the old option wording: the pages are the same as for a record sent today"""
+    new_to_old = {n: o for o, n in json.load(open(ROOT / "data" / "option-renames.json")).items()}
+    old_rec = json.loads(json.dumps(sample("bmw-x3")), object_hook=lambda d: {k: new_to_old.get(v, v) if isinstance(v, str) else v for k, v in d.items()})
+    assert old_rec != sample("bmw-x3")
+    old_cr = build_cr(old_rec)
+    for i in old_cr["condition_report"]["issues"]:
+        i["text"] = "old wording"
+    token, iid = make("bmw-x3")
+    old_token = secrets.token_urlsafe(24)
+    with SessionLocal() as s:
+        s.add(Inspection(id=str(uuid.uuid4()), report_email="tom@example.com", inspector="Tom", car=CARS["bmw-x3"], record=old_rec, status="sent",
+                         report_token=old_token, cr=old_cr, created_at=s.get(Inspection, iid).created_at))
+        s.commit()
+    for page in ("seller", "dealer"):
+        old_page = client.get(f"/r/{old_token}/{page}").text
+        assert "old wording" not in old_page
+        assert old_page.replace(old_token, token) == client.get(f"/r/{token}/{page}").text
