@@ -33,7 +33,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup-11
 
 ## Camera
 
-- Landscape, full screen; form screens stay portrait. Top bar: section (1/5 to 5/5) and shot count.
+- Landscape, full screen; form screens stay portrait. Top bar: section (1/5 to 5/5) and shot count; on the OBDII scanner shots (current, past, emission codes, other images) the title reads Scanner Result.
 - Three shutters on the right: Damage (amber, above), the shot (big, middle), Mod (blue, below). Damage and Mod take a tagged photo without moving the flow; off on videos and OBDII shots. Zoom chips .5 / 1 / 2 and pinch where the device allows.
 - A guide outline (`guides/svg`) and the shot name over the camera; the camera moves on after each shot.
 - Skip only on optional shots; Not on this car for a missing paint panel.
@@ -66,7 +66,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup-11
 - Paint: a top view of the car with each panel and its mils (High in red; a panel with no reading yet has the red frame); tap a panel to set its reading on a slider from 3.0 to 10+ mils, with - and + for 0.1 (10+ is more than 10), or to mark N/A; then panel photos, paint damage tiles, the Paint and panels row. A High reading ticks Panel repainted with that panel.
 - Tires & Wheels: four wheel cards (LF, LR, RR, RF; a card has the red frame until that wheel's tread depth is in), each with photos, damages and values in scroll pickers; the Match or Mismatch question.
 - Interior: number of keys first (0 red, 1 amber), sunroof and navigation (Works, Not working, No sunroof / No navigation; required, no default).
-- OBDII: the scanner photos under the title Scanner Result. Engine codes stored asks for the codes in a second drawer step.
+- OBDII: Engine codes stored asks for the codes in a second drawer step.
 - Mechanicals: road test starts as Not done.
 - Next stays off, with the reason, until the page is complete.
 

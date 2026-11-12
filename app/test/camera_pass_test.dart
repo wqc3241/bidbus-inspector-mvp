@@ -561,6 +561,16 @@ void main() {
     store.ins['g'] = g;
     await open('g', const CamArgs(run: true));
     expect(find.text('2/5  Interior · 1 of 12'), findsOneWidget);
+    // the OBDII scanner shots (at the end of Interior) have the title Scanner Result
+    final sc = fresh('sc'), at = capList('Interior', sc).indexWhere((x) => x['id'] == 'ph_obd_current');
+    sc['cap'] = {'k': 'Interior', 'i': at};
+    for (final x in [...capList('Exterior', sc), ...capList('Interior', sc).take(at)]) {
+      capMark(sc, x, 'camera', 'insp/sc/${x['id']}.jpg');
+    }
+    store.ins['sc'] = sc;
+    await open('sc', const CamArgs(run: true));
+    expect(find.text('2/5  Scanner Result · ${at + 1} of 12'), findsOneWidget);
+    expect(find.text('Current codes'), findsOneWidget);
     final g2 = fresh('g2')..['cap'] = {'k': 'Exterior', 'i': 1};
     for (final x in [...capList('Exterior', g2), ...capList('Interior', g2)]) {
       capMark(g2, x, 'camera', 'insp/g2/${x['id']}.jpg');

@@ -924,7 +924,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       child: Row(children: [
         if (rec) const SizedBox(width: 40) else if (canBack && !free && !ask) _btn(LucideIcons.chevronLeft, () => setState(capBack)) else if (free) _btn(LucideIcons.chevronLeft, () => setState(() => free = false)) else const SizedBox(width: 40),
         const SizedBox(width: 8),
-        Expanded(child: Center(child: _pill('${run && camseq.contains(k) ? '${camseq.indexOf(k) + 1}/${camseq.length}  ' : ''}${camTitle(k)}${i < n && !free && !ask ? ' · ${i + 1} of $n' : ''}', bg: banner ? bid : Colors.black54))),
+        Expanded(child: Center(child: _pill('${run && camseq.contains(k) ? '${camseq.indexOf(k) + 1}/${camseq.length}  ' : ''}${i < n && !free && !ask ? '${shotTitle(list[i], k)} · ${i + 1} of $n' : camTitle(k)}', bg: banner ? bid : Colors.black54))),
         const SizedBox(width: 8),
         if (free) ...[
           _btn(LucideIcons.chevronRight, () => setState(() {
