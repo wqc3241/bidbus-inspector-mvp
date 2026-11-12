@@ -60,10 +60,10 @@ J run(String fuel, String vin) {
     d['aiWas'] = {'place': place, 'type': 'Scratch', 'severity': sev};
   }
 
-  label('dExterior', 'Left front door', 'Overspray or colour mismatch', 'Minor');
+  label('dExterior', 'Left front door', 'Overspray/color mismatch', 'Minor');
   label('dTires', 'Right rear tire', 'Uneven wear', 'Moderate');
   label('dInterior', 'Front seats', 'Seats worn', 'Minor');
-  label('dMechanicals', fuel == ev ? 'Suspension' : 'Exhaust', fuel == ev ? 'Struts or shocks leaking or worn' : 'Aftermarket exhaust', 'Minor');
+  label('dMechanicals', fuel == ev ? 'Suspension' : 'Exhaust', fuel == ev ? 'Struts/shocks worn' : 'Aftermarket exhaust', 'Minor');
   syncDamages(st);
   vals['tires_match'] = 'Match';
   m(st, 'feat').addAll({'sunroof': 'Works', 'navigation': 'No navigation'});
@@ -107,7 +107,7 @@ void main() {
       }
       // checks ticked by the damage labels
       final checks = {for (final e in r['checks'] as List) '${e['id']}${e['wheel'] ?? ''}': e};
-      expect(checks['ck_paint']['problems'].map((x) => x['option']), containsAll(['Panel repainted (the meter reads high)', 'Overspray or colour mismatch']));
+      expect(checks['ck_paint']['problems'].map((x) => x['option']), containsAll(['Repaint', 'Overspray/color mismatch']));
       expect(checks['ck_tirerr']['problems'][0]['from_damage_photo'], true);
       expect(checks['ck_seats']['problems'][0]['option'], 'Seats worn');
       expect((r['damages'] as List).first['section'], 'Paint');
@@ -138,7 +138,7 @@ void main() {
     expect(lst(tire(st, 'lf'), 'probs', 'ck_wheel'), isEmpty);
   });
 
-  test('a high paint reading ticks Panel repainted with that panel; one key ticks Only one key', () {
+  test('a high paint reading ticks Repaint with that panel; one key ticks Only one key', () {
     final st = run('Gas or diesel', '5UXTY5C00L9B00230');
     expect(lst(st, 'extra', 'ck_paint'), contains('Left rear door'));
     m(st, 'vals')['keys_n'] = '1';

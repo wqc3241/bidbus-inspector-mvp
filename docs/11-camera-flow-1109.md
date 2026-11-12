@@ -48,7 +48,7 @@ Top left of every guided shot, a few words. Information only: nothing to tap, ti
 | Hood (paint) | Repaint, Hood bolts, Chips, Windshield |
 | Roof (paint) | Repaint, Dents, Hail |
 | Roof photo | Dents, Hail, Sunroof |
-| Whole tire | Sidewall cracks, Bulge, Curb rash, Plug or patch |
+| Whole tire | Sidewall cracks, Bulge, Curb rash, Plug/patch |
 | Tread gauge | Lowest groove, Uneven wear |
 | Cargo | Trunk floor, Rails, Water, Spare tire |
 | Engine bay | Aprons, Strut towers, Core support, Leaks |

@@ -97,7 +97,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Windshield chip under 1 in",
+     "option": "Windshield chip < 1 in",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -107,7 +107,7 @@
      ]
     },
     {
-     "option": "Windshield chip over 1 in or in the driver's view",
+     "option": "Windshield chip > 1 in / in view",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -117,7 +117,7 @@
      ]
     },
     {
-     "option": "Windshield crack",
+     "option": "Windshield cracked",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -127,7 +127,7 @@
      ]
     },
     {
-     "option": "Side, rear or roof glass chipped or cracked",
+     "option": "Glass chipped/cracked",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -160,7 +160,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Headlight cracked, hazy or water inside",
+     "option": "Headlight damaged",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -180,7 +180,7 @@
      ]
     },
     {
-     "option": "Tail light cracked or water inside",
+     "option": "Tail light damaged",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -200,7 +200,7 @@
      ]
     },
     {
-     "option": "Brake, turn, hazard, reverse, fog or plate light out",
+     "option": "Other light out",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -223,7 +223,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Blades streak or worn",
+     "option": "Wiper blades worn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -233,7 +233,7 @@
      ]
     },
     {
-     "option": "Wipers or washers not working",
+     "option": "Wipers/washers not working",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -256,7 +256,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Missing or damaged",
+     "option": "Missing/damaged",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -278,7 +278,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Panel repainted (the meter reads high)",
+     "option": "Repaint",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -288,7 +288,7 @@
      ]
     },
     {
-     "option": "Overspray or colour mismatch",
+     "option": "Overspray/color mismatch",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -298,7 +298,7 @@
      ]
     },
     {
-     "option": "Uneven panel gaps",
+     "option": "Uneven gaps",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -308,7 +308,7 @@
      ]
     },
     {
-     "option": "Hood or fender bolts show tool marks",
+     "option": "Bolt tool marks",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -318,7 +318,7 @@
      ]
     },
     {
-     "option": "Wrap or paint film",
+     "option": "Wrap/PPF",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -387,7 +387,7 @@
      ]
     },
     {
-     "option": "Plug or patch",
+     "option": "Plug/patch",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -473,7 +473,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Front structure repaired or damaged",
+     "option": "Front structural damage",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -483,7 +483,7 @@
      ]
     },
     {
-     "option": "Pillars or roof repaired or damaged",
+     "option": "Pillar/roof structural damage",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -493,7 +493,7 @@
      ]
     },
     {
-     "option": "Rear structure repaired or damaged",
+     "option": "Rear structural damage",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -503,7 +503,7 @@
      ]
     },
     {
-     "option": "Frame rails, floor or subframe repaired or damaged",
+     "option": "Frame/floor structural damage",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -513,7 +513,7 @@
      ]
     },
     {
-     "option": "Frame rails or floor scraped",
+     "option": "Frame/floor scraped",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -523,7 +523,7 @@
      ]
     },
     {
-     "option": "Structure changes or holes",
+     "option": "Structural alteration",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -533,7 +533,7 @@
      ]
     },
     {
-     "option": "Underbody could not be photographed",
+     "option": "Underbody not inspected",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -556,7 +556,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Heavy scale or fresh undercoating",
+     "option": "Heavy rust/undercoating",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -566,7 +566,7 @@
      ]
     },
     {
-     "option": "Rust through or holes",
+     "option": "Penetrating rust",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -603,7 +603,7 @@
      ]
     },
     {
-     "option": "Dented, cracked or cable damaged",
+     "option": "Pack/cable damaged",
      "level": "Yellow",
      "fuels": [
       "Electric (EV)"
@@ -643,7 +643,7 @@
      ]
     },
     {
-     "option": "Seats torn or burned",
+     "option": "Seats torn/burned",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -653,7 +653,7 @@
      ]
     },
     {
-     "option": "Headliner, carpet or trim stained, worn or damaged",
+     "option": "Carpet/headliner/trim damaged",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -663,7 +663,7 @@
      ]
     },
     {
-     "option": "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash",
+     "option": "Flood signs",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -716,7 +716,7 @@
      ]
     },
     {
-     "option": "Strong air freshener or ozone",
+     "option": "Air freshener/ozone",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -739,7 +739,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "A belt does not latch or retract",
+     "option": "Seat belt not working",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -749,7 +749,7 @@
      ]
     },
     {
-     "option": "Airbag cover damaged or tampered",
+     "option": "Airbag cover damaged",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -772,7 +772,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Power windows, locks, mirrors or seats not working",
+     "option": "Power accessories not working",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -782,7 +782,7 @@
      ]
     },
     {
-     "option": "Screen, audio or cameras not working",
+     "option": "Screen/audio/camera not working",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -792,7 +792,7 @@
      ]
     },
     {
-     "option": "Interior lights or defroster not working",
+     "option": "Interior lights/defroster not working",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -825,7 +825,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Weak or does not hold",
+     "option": "Does not hold",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -835,7 +835,7 @@
      ]
     },
     {
-     "option": "Fault or warning",
+     "option": "Fault/warning",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -868,7 +868,7 @@
      ]
     },
     {
-     "option": "One side warm or a fan speed missing",
+     "option": "Uneven cooling/fan issue",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -878,7 +878,7 @@
      ]
     },
     {
-     "option": "Heat weak or none",
+     "option": "Heat weak/none",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -910,7 +910,7 @@
      ]
     },
     {
-     "option": "Hard to start or needed a jump",
+     "option": "Hard start/jump start",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -919,7 +919,7 @@
      ]
     },
     {
-     "option": "Will not start",
+     "option": "No start",
      "level": "Not listed until fixed",
      "fuels": [
       "Gas or diesel",
@@ -928,7 +928,7 @@
      ]
     },
     {
-     "option": "Rough idle or stalls",
+     "option": "Rough idle/stalls",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -937,7 +937,7 @@
      ]
     },
     {
-     "option": "Tick, knock or timing chain rattle",
+     "option": "Engine noise",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -946,7 +946,7 @@
      ]
     },
     {
-     "option": "Turbo whine or whistle",
+     "option": "Turbo noise",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -955,7 +955,7 @@
      ]
     },
     {
-     "option": "Exhaust smoke (blue, white or black)",
+     "option": "Exhaust smoke",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -964,7 +964,7 @@
      ]
     },
     {
-     "option": "Burning oil smell or smoke from the engine bay",
+     "option": "Engine bay smoke/burning smell",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -986,14 +986,14 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Slow to wake or needs a 12 V jump",
+     "option": "Slow wake/12 V jump",
      "level": "Disclosed",
      "fuels": [
       "Electric (EV)"
      ]
     },
     {
-     "option": "Will not power on",
+     "option": "No power on",
      "level": "Not listed until fixed",
      "fuels": [
       "Electric (EV)"
@@ -1013,7 +1013,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Hard to select a gear or grinds",
+     "option": "Hard shift/grinds",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1022,7 +1022,7 @@
      ]
     },
     {
-     "option": "Clutch spongy or engages high",
+     "option": "Clutch issue",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1053,7 +1053,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Engine oil low or dark",
+     "option": "Oil low/dark",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1062,7 +1062,7 @@
      ]
     },
     {
-     "option": "Engine oil very low or dry",
+     "option": "Oil very low/dry",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1071,7 +1071,7 @@
      ]
     },
     {
-     "option": "Milky oil, metal or sludge",
+     "option": "Oil milky/sludge/metal",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1090,7 +1090,7 @@
      ]
     },
     {
-     "option": "Coolant rusty or with debris",
+     "option": "Coolant contaminated",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1100,7 +1100,7 @@
      ]
     },
     {
-     "option": "Oil or metal in the coolant",
+     "option": "Oil in coolant",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1109,7 +1109,7 @@
      ]
     },
     {
-     "option": "Brake, steering or transmission fluid low or dark",
+     "option": "Other fluid low/dark",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1119,7 +1119,7 @@
      ]
     },
     {
-     "option": "EV: battery coolant low or discoloured",
+     "option": "EV: battery coolant low/discolored",
      "level": "Yellow",
      "fuels": [
       "Electric (EV)"
@@ -1157,7 +1157,7 @@
      ]
     },
     {
-     "option": "Brake or fuel line wet or damaged",
+     "option": "Brake/fuel line leak",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1166,7 +1166,7 @@
      ]
     },
     {
-     "option": "Fresh drips on the ground",
+     "option": "Drips on ground",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1201,7 +1201,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Belt or hose cracked or worn",
+     "option": "Belt/hose worn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1219,7 +1219,7 @@
      ]
     },
     {
-     "option": "Radiator or A/C condenser bent, damaged or blocked",
+     "option": "Radiator/condenser damaged",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1237,7 +1237,7 @@
      ]
     },
     {
-     "option": "Intake cracked or aftermarket",
+     "option": "Intake cracked/aftermarket",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1246,7 +1246,7 @@
      ]
     },
     {
-     "option": "Rodent damage or nest",
+     "option": "Rodent damage",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1255,7 +1255,7 @@
      ]
     },
     {
-     "option": "Fire signs: burn or melt damage to wiring, parts or the cabin",
+     "option": "Fire signs",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -1277,7 +1277,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Terminals corroded or hold-down loose",
+     "option": "Terminals corroded/loose",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1309,7 +1309,7 @@
      ]
     },
     {
-     "option": "Catalytic converter missing, cut or hollow",
+     "option": "Catalytic converter missing",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -1336,7 +1336,7 @@
      ]
     },
     {
-     "option": "Aftermarket engine parts, with a CARB EO number",
+     "option": "Aftermarket parts, CARB EO",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1345,7 +1345,7 @@
      ]
     },
     {
-     "option": "Aftermarket engine parts, no EO number",
+     "option": "Aftermarket parts, no CARB EO",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -1367,7 +1367,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Struts or shocks leaking or worn",
+     "option": "Struts/shocks worn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1377,7 +1377,7 @@
      ]
     },
     {
-     "option": "Ball joints, bushings, arms or tie rods worn or bent",
+     "option": "Suspension/steering parts worn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1400,7 +1400,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Torn CV boot or grease thrown",
+     "option": "CV boot torn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1410,7 +1410,7 @@
      ]
     },
     {
-     "option": "Driveshaft or U-joint worn",
+     "option": "Driveshaft/U-joint worn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1433,7 +1433,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Brake pads under 3 mm",
+     "option": "Pads < 3 mm",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1443,7 +1443,7 @@
      ]
     },
     {
-     "option": "Rotors worn, scored or rusted",
+     "option": "Rotors worn",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1475,35 +1475,35 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Orange high-voltage cable or connector damaged",
+     "option": "HV cable damaged",
      "level": "Yellow",
      "fuels": [
       "Electric (EV)"
      ]
     },
     {
-     "option": "Front trunk tub or seals: water or damage",
+     "option": "Frunk water/damage",
      "level": "Disclosed",
      "fuels": [
       "Electric (EV)"
      ]
     },
     {
-     "option": "Smoke, hissing, popping, heat or fluid from the battery pack",
+     "option": "Battery pack smoke/heat/leak",
      "level": "Red",
      "fuels": [
       "Electric (EV)"
      ]
     },
     {
-     "option": "Fire signs: burn or melt damage to wiring, parts or the cabin",
+     "option": "Fire signs",
      "level": "Red",
      "fuels": [
       "Electric (EV)"
      ]
     },
     {
-     "option": "Rodent damage or nest",
+     "option": "Rodent damage",
      "level": "Disclosed",
      "fuels": [
       "Electric (EV)"
@@ -1523,7 +1523,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Charges slowly or stops",
+     "option": "Slow/interrupted charging",
      "level": "Yellow",
      "fuels": [
       "Plug-in hybrid",
@@ -1531,7 +1531,7 @@
      ]
     },
     {
-     "option": "Will not charge",
+     "option": "No charge",
      "level": "Yellow",
      "fuels": [
       "Plug-in hybrid",
@@ -1547,7 +1547,7 @@
      ]
     },
     {
-     "option": "Charge port pins scorched, bent or corroded",
+     "option": "Charge port pins damaged",
      "level": "Yellow",
      "fuels": [
       "Plug-in hybrid",
@@ -1555,7 +1555,7 @@
      ]
     },
     {
-     "option": "Charge port door or latch damaged",
+     "option": "Charge port door damaged",
      "level": "Disclosed",
      "fuels": [
       "Plug-in hybrid",
@@ -1576,7 +1576,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Hybrid codes or warnings",
+     "option": "Hybrid codes/warnings",
      "level": "Yellow",
      "fuels": [
       "Hybrid",
@@ -1607,7 +1607,7 @@
      ]
     },
     {
-     "option": "Engine hesitates or misfires",
+     "option": "Engine hesitation/misfire",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1616,7 +1616,7 @@
      ]
     },
     {
-     "option": "Transmission delayed, slips or harsh",
+     "option": "Transmission issue",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1625,7 +1625,7 @@
      ]
     },
     {
-     "option": "4WD or AWD does not engage",
+     "option": "4WD/AWD issue",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1645,7 +1645,7 @@
      ]
     },
     {
-     "option": "Steering play, noise or vibration",
+     "option": "Steering issue",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1655,7 +1655,7 @@
      ]
     },
     {
-     "option": "Brakes pulse, pull, grind or squeal",
+     "option": "Brake issue",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1665,7 +1665,7 @@
      ]
     },
     {
-     "option": "Clunks over bumps",
+     "option": "Suspension noise",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1675,7 +1675,7 @@
      ]
     },
     {
-     "option": "Wheel bearing, tire or driveline noise",
+     "option": "Driveline noise",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1695,7 +1695,7 @@
      ]
     },
     {
-     "option": "Temperature rises",
+     "option": "Overheating",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1705,7 +1705,7 @@
      ]
     },
     {
-     "option": "Warning light after the drive",
+     "option": "Warning light after drive",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1715,7 +1715,7 @@
      ]
     },
     {
-     "option": "EV: motor whine, hum or weak regen",
+     "option": "EV: motor noise/weak regen",
      "level": "Yellow",
      "fuels": [
       "Electric (EV)"
@@ -1761,7 +1761,7 @@
      ]
     },
     {
-     "option": "ABS, brake or traction",
+     "option": "ABS/brake/traction",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1771,7 +1771,7 @@
      ]
     },
     {
-     "option": "Oil, temperature or transmission",
+     "option": "Oil/temp/transmission",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1780,7 +1780,7 @@
      ]
     },
     {
-     "option": "EV: high-voltage or reduced-power alert",
+     "option": "EV: HV/reduced power",
      "level": "Yellow",
      "fuels": [
       "Electric (EV)"
@@ -1797,7 +1797,7 @@
      ]
     },
     {
-     "option": "A light never came on at key-on",
+     "option": "Bulb check failed",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1820,7 +1820,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Engine codes stored (type the codes)",
+     "option": "Engine codes",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1829,7 +1829,7 @@
      ]
     },
     {
-     "option": "Faults in airbag, ABS, transmission, body or driver-assist modules",
+     "option": "Other module faults",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1847,7 +1847,7 @@
      ]
     },
     {
-     "option": "Driver-assist camera or radar needs calibration",
+     "option": "ADAS calibration needed",
      "level": "Yellow",
      "fuels": [
       "Gas or diesel",
@@ -1856,7 +1856,7 @@
      ]
     },
     {
-     "option": "Scan tool cannot read the car",
+     "option": "Scan failed",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -1879,7 +1879,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Registration card not found",
+     "option": "No registration card",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1889,7 +1889,7 @@
      ]
     },
     {
-     "option": "Plate does not match the registration",
+     "option": "Plate mismatch",
      "level": "Ends the visit",
      "fuels": [
       "Gas or diesel",
@@ -1899,7 +1899,7 @@
      ]
     },
     {
-     "option": "Dash VIN does not match the registration",
+     "option": "Dash VIN mismatch",
      "level": "Ends the visit",
      "fuels": [
       "Gas or diesel",
@@ -1909,7 +1909,7 @@
      ]
     },
     {
-     "option": "Door-jamb VIN label missing",
+     "option": "Door VIN label missing",
      "level": "Red",
      "fuels": [
       "Gas or diesel",
@@ -1919,7 +1919,7 @@
      ]
     },
     {
-     "option": "Door-jamb VIN does not match",
+     "option": "Door VIN mismatch",
      "level": "Ends the visit",
      "fuels": [
       "Gas or diesel",
@@ -1975,7 +1975,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Missing: spare or inflator kit, jack, cargo cover, mats or anything in the listing photos",
+     "option": "Equipment missing",
      "level": "Disclosed",
      "fuels": [
       "Gas or diesel",
@@ -1985,7 +1985,7 @@
      ]
     },
     {
-     "option": "Charging cable or adapters missing",
+     "option": "Charging cable missing",
      "level": "Disclosed",
      "fuels": [
       "Plug-in hybrid",
@@ -2006,7 +2006,7 @@
    "per_wheel": false,
    "options": [
     {
-     "option": "Car not yet removed from the seller's app account",
+     "option": "Still on seller's app account",
      "level": "Disclosed",
      "fuels": [
       "Electric (EV)"
@@ -2045,7 +2045,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2057,7 +2057,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2066,7 +2066,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2103,7 +2103,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2115,7 +2115,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2124,7 +2124,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2161,7 +2161,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2173,7 +2173,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2182,7 +2182,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2219,7 +2219,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2231,7 +2231,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2240,7 +2240,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2277,7 +2277,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2289,7 +2289,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2298,7 +2298,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2335,7 +2335,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2347,7 +2347,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2356,7 +2356,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2393,7 +2393,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2405,7 +2405,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2414,7 +2414,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2451,7 +2451,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2463,7 +2463,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2472,7 +2472,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2509,7 +2509,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2521,7 +2521,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2530,7 +2530,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2567,7 +2567,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2579,7 +2579,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2588,7 +2588,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2625,7 +2625,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2637,7 +2637,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2646,7 +2646,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2683,7 +2683,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2695,7 +2695,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2704,7 +2704,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2741,7 +2741,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2753,7 +2753,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -2762,7 +2762,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -2776,28 +2776,28 @@
    "check": "ck_glass",
    "types": [
     {
-     "type": "Windshield chip under 1 in",
+     "type": "Windshield chip < 1 in",
      "answers": {
       "check": "ck_glass",
-      "option": "Windshield chip under 1 in"
+      "option": "Windshield chip < 1 in"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
     },
     {
-     "type": "Windshield chip over 1 in or in the driver's view",
+     "type": "Windshield chip > 1 in / in view",
      "answers": {
       "check": "ck_glass",
-      "option": "Windshield chip over 1 in or in the driver's view"
+      "option": "Windshield chip > 1 in / in view"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
     },
     {
-     "type": "Windshield crack",
+     "type": "Windshield cracked",
      "answers": {
       "check": "ck_glass",
-      "option": "Windshield crack"
+      "option": "Windshield cracked"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
@@ -2810,10 +2810,10 @@
    "check": "ck_glass",
    "types": [
     {
-     "type": "Side, rear or roof glass chipped or cracked",
+     "type": "Glass chipped/cracked",
      "answers": {
       "check": "ck_glass",
-      "option": "Side, rear or roof glass chipped or cracked"
+      "option": "Glass chipped/cracked"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
@@ -2826,10 +2826,10 @@
    "check": "ck_glass",
    "types": [
     {
-     "type": "Side, rear or roof glass chipped or cracked",
+     "type": "Glass chipped/cracked",
      "answers": {
       "check": "ck_glass",
-      "option": "Side, rear or roof glass chipped or cracked"
+      "option": "Glass chipped/cracked"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
@@ -2842,10 +2842,10 @@
    "check": "ck_glass",
    "types": [
     {
-     "type": "Side, rear or roof glass chipped or cracked",
+     "type": "Glass chipped/cracked",
      "answers": {
       "check": "ck_glass",
-      "option": "Side, rear or roof glass chipped or cracked"
+      "option": "Glass chipped/cracked"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
@@ -2858,10 +2858,10 @@
    "check": "ck_glass",
    "types": [
     {
-     "type": "Side, rear or roof glass chipped or cracked",
+     "type": "Glass chipped/cracked",
      "answers": {
       "check": "ck_glass",
-      "option": "Side, rear or roof glass chipped or cracked"
+      "option": "Glass chipped/cracked"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
@@ -2874,10 +2874,10 @@
    "check": "ck_glass",
    "types": [
     {
-     "type": "Side, rear or roof glass chipped or cracked",
+     "type": "Glass chipped/cracked",
      "answers": {
       "check": "ck_glass",
-      "option": "Side, rear or roof glass chipped or cracked"
+      "option": "Glass chipped/cracked"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "windshield_damage"
@@ -2906,10 +2906,10 @@
    "check": "ck_lights",
    "types": [
     {
-     "type": "Headlight cracked, hazy or water inside",
+     "type": "Headlight damaged",
      "answers": {
       "check": "ck_lights",
-      "option": "Headlight cracked, hazy or water inside"
+      "option": "Headlight damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2931,10 +2931,10 @@
    "check": "ck_lights",
    "types": [
     {
-     "type": "Tail light cracked or water inside",
+     "type": "Tail light damaged",
      "answers": {
       "check": "ck_lights",
-      "option": "Tail light cracked or water inside"
+      "option": "Tail light damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2956,10 +2956,10 @@
    "check": "ck_lights",
    "types": [
     {
-     "type": "Brake, turn, hazard, reverse, fog or plate light out",
+     "type": "Other light out",
      "answers": {
       "check": "ck_lights",
-      "option": "Brake, turn, hazard, reverse, fog or plate light out"
+      "option": "Other light out"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2972,19 +2972,19 @@
    "check": "ck_wipers",
    "types": [
     {
-     "type": "Blades streak or worn",
+     "type": "Wiper blades worn",
      "answers": {
       "check": "ck_wipers",
-      "option": "Blades streak or worn"
+      "option": "Wiper blades worn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
     },
     {
-     "type": "Wipers or washers not working",
+     "type": "Wipers/washers not working",
      "answers": {
       "check": "ck_wipers",
-      "option": "Wipers or washers not working"
+      "option": "Wipers/washers not working"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -2997,10 +2997,10 @@
    "check": "ck_fuel_cap",
    "types": [
     {
-     "type": "Missing or damaged",
+     "type": "Missing/damaged",
      "answers": {
       "check": "ck_fuel_cap",
-      "option": "Missing or damaged"
+      "option": "Missing/damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts",
@@ -3041,7 +3041,7 @@
      "bidbus_damage_type": "scratches"
     },
     {
-     "type": "Crack or break",
+     "type": "Crack/break",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "broken_or_missing_parts"
@@ -3053,7 +3053,7 @@
      "bidbus_damage_type": "dents"
     },
     {
-     "type": "Rust bubbling",
+     "type": "Rust",
      "answers": null,
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -3062,7 +3062,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Structure changes or holes"
+      "option": "Structural alteration"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -3083,46 +3083,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3142,46 +3142,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3201,46 +3201,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3260,46 +3260,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3319,46 +3319,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3378,46 +3378,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3437,46 +3437,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3496,46 +3496,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3555,46 +3555,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3614,46 +3614,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3673,46 +3673,46 @@
    },
    "types": [
     {
-     "type": "Panel repainted (the meter reads high)",
+     "type": "Repaint",
      "answers": {
       "check": "ck_paint",
-      "option": "Panel repainted (the meter reads high)"
+      "option": "Repaint"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "answers": {
       "check": "ck_paint",
-      "option": "Overspray or colour mismatch"
+      "option": "Overspray/color mismatch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Uneven panel gaps",
+     "type": "Uneven gaps",
      "answers": {
       "check": "ck_paint",
-      "option": "Uneven panel gaps"
+      "option": "Uneven gaps"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Hood or fender bolts show tool marks",
+     "type": "Bolt tool marks",
      "answers": {
       "check": "ck_paint",
-      "option": "Hood or fender bolts show tool marks"
+      "option": "Bolt tool marks"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
     },
     {
-     "type": "Wrap or paint film",
+     "type": "Wrap/PPF",
      "answers": {
       "check": "ck_paint",
-      "option": "Wrap or paint film"
+      "option": "Wrap/PPF"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "previous_paint_work"
@@ -3753,10 +3753,10 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Plug or patch",
+     "type": "Plug/patch",
      "answers": {
       "check": "ck_tire",
-      "option": "Plug or patch"
+      "option": "Plug/patch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -3850,10 +3850,10 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Plug or patch",
+     "type": "Plug/patch",
      "answers": {
       "check": "ck_tire",
-      "option": "Plug or patch"
+      "option": "Plug/patch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -3947,10 +3947,10 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Plug or patch",
+     "type": "Plug/patch",
      "answers": {
       "check": "ck_tire",
-      "option": "Plug or patch"
+      "option": "Plug/patch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4044,10 +4044,10 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Plug or patch",
+     "type": "Plug/patch",
      "answers": {
       "check": "ck_tire",
-      "option": "Plug or patch"
+      "option": "Plug/patch"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4131,10 +4131,10 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Seats torn or burned",
+     "type": "Seats torn/burned",
      "answers": {
       "check": "ck_seats",
-      "option": "Seats torn or burned"
+      "option": "Seats torn/burned"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4165,10 +4165,10 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Seats torn or burned",
+     "type": "Seats torn/burned",
      "answers": {
       "check": "ck_seats",
-      "option": "Seats torn or burned"
+      "option": "Seats torn/burned"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4181,19 +4181,19 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash",
+     "type": "Flood signs",
      "answers": {
       "check": "ck_seats",
-      "option": "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash"
+      "option": "Flood signs"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
@@ -4202,7 +4202,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Frame rails, floor or subframe repaired or damaged"
+      "option": "Frame/floor structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4216,10 +4216,10 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4228,7 +4228,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4242,10 +4242,10 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4254,7 +4254,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4268,10 +4268,10 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4280,7 +4280,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4294,10 +4294,10 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4310,10 +4310,10 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4326,10 +4326,10 @@
    "check": "ck_seats",
    "types": [
     {
-     "type": "Headliner, carpet or trim stained, worn or damaged",
+     "type": "Carpet/headliner/trim damaged",
      "answers": {
       "check": "ck_seats",
-      "option": "Headliner, carpet or trim stained, worn or damaged"
+      "option": "Carpet/headliner/trim damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4338,7 +4338,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4352,10 +4352,10 @@
    "check": "ck_srs",
    "types": [
     {
-     "type": "A belt does not latch or retract",
+     "type": "Seat belt not working",
      "answers": {
       "check": "ck_srs",
-      "option": "A belt does not latch or retract"
+      "option": "Seat belt not working"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage"
@@ -4368,10 +4368,10 @@
    "check": "ck_srs",
    "types": [
     {
-     "type": "Airbag cover damaged or tampered",
+     "type": "Airbag cover damaged",
      "answers": {
       "check": "ck_srs",
-      "option": "Airbag cover damaged or tampered"
+      "option": "Airbag cover damaged"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage"
@@ -4384,10 +4384,10 @@
    "check": "ck_features",
    "types": [
     {
-     "type": "Screen, audio or cameras not working",
+     "type": "Screen/audio/camera not working",
      "answers": {
       "check": "ck_features",
-      "option": "Screen, audio or cameras not working"
+      "option": "Screen/audio/camera not working"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4400,10 +4400,10 @@
    "check": "ck_features",
    "types": [
     {
-     "type": "Power windows, locks, mirrors or seats not working",
+     "type": "Power accessories not working",
      "answers": {
       "check": "ck_features",
-      "option": "Power windows, locks, mirrors or seats not working"
+      "option": "Power accessories not working"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4416,10 +4416,10 @@
    "check": "ck_features",
    "types": [
     {
-     "type": "Interior lights or defroster not working",
+     "type": "Interior lights/defroster not working",
      "answers": {
       "check": "ck_features",
-      "option": "Interior lights or defroster not working"
+      "option": "Interior lights/defroster not working"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -4503,19 +4503,19 @@
      "bidbus_damage_type": "warning_lights"
     },
     {
-     "type": "ABS, brake or traction",
+     "type": "ABS/brake/traction",
      "answers": {
       "check": "ck_lights_dash",
-      "option": "ABS, brake or traction"
+      "option": "ABS/brake/traction"
      },
      "level": "Yellow",
      "bidbus_damage_type": "warning_lights"
     },
     {
-     "type": "Oil, temperature or transmission",
+     "type": "Oil/temp/transmission",
      "answers": {
       "check": "ck_lights_dash",
-      "option": "Oil, temperature or transmission"
+      "option": "Oil/temp/transmission"
      },
      "level": "Yellow",
      "bidbus_damage_type": "warning_lights",
@@ -4535,19 +4535,19 @@
      "bidbus_damage_type": "warning_lights"
     },
     {
-     "type": "A light never came on at key-on",
+     "type": "Bulb check failed",
      "answers": {
       "check": "ck_lights_dash",
-      "option": "A light never came on at key-on"
+      "option": "Bulb check failed"
      },
      "level": "Yellow",
      "bidbus_damage_type": "warning_lights"
     },
     {
-     "type": "EV: high-voltage or reduced-power alert",
+     "type": "EV: HV/reduced power",
      "answers": {
       "check": "ck_lights_dash",
-      "option": "EV: high-voltage or reduced-power alert"
+      "option": "EV: HV/reduced power"
      },
      "level": "Yellow",
      "bidbus_damage_type": "warning_lights",
@@ -4613,7 +4613,7 @@
      "type": "Structure",
      "answers": {
       "check": "ck_structure",
-      "option": "Structure changes or holes"
+      "option": "Structural alteration"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4627,10 +4627,10 @@
    "check": "ck_bay",
    "types": [
     {
-     "type": "Belt or hose cracked or worn",
+     "type": "Belt/hose worn",
      "answers": {
       "check": "ck_bay",
-      "option": "Belt or hose cracked or worn"
+      "option": "Belt/hose worn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -4655,10 +4655,10 @@
      ]
     },
     {
-     "type": "Radiator or A/C condenser bent, damaged or blocked",
+     "type": "Radiator/condenser damaged",
      "answers": {
       "check": "ck_bay",
-      "option": "Radiator or A/C condenser bent, damaged or blocked"
+      "option": "Radiator/condenser damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -4683,10 +4683,10 @@
      ]
     },
     {
-     "type": "Intake cracked or aftermarket",
+     "type": "Intake cracked/aftermarket",
      "answers": {
       "check": "ck_bay",
-      "option": "Intake cracked or aftermarket"
+      "option": "Intake cracked/aftermarket"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -4697,10 +4697,10 @@
      ]
     },
     {
-     "type": "Rodent damage or nest",
+     "type": "Rodent damage",
      "answers": {
       "check": "ck_bay",
-      "option": "Rodent damage or nest"
+      "option": "Rodent damage"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -4711,10 +4711,10 @@
      ]
     },
     {
-     "type": "Fire signs: burn or melt damage to wiring, parts or the cabin",
+     "type": "Fire signs",
      "answers": {
       "check": "ck_bay",
-      "option": "Fire signs: burn or melt damage to wiring, parts or the cabin"
+      "option": "Fire signs"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -4732,10 +4732,10 @@
    "check": "ck_fluids",
    "types": [
     {
-     "type": "Engine oil low or dark",
+     "type": "Oil low/dark",
      "answers": {
       "check": "ck_fluids",
-      "option": "Engine oil low or dark"
+      "option": "Oil low/dark"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -4746,10 +4746,10 @@
      ]
     },
     {
-     "type": "Engine oil very low or dry",
+     "type": "Oil very low/dry",
      "answers": {
       "check": "ck_fluids",
-      "option": "Engine oil very low or dry"
+      "option": "Oil very low/dry"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -4760,10 +4760,10 @@
      ]
     },
     {
-     "type": "Milky oil, metal or sludge",
+     "type": "Oil milky/sludge/metal",
      "answers": {
       "check": "ck_fluids",
-      "option": "Milky oil, metal or sludge"
+      "option": "Oil milky/sludge/metal"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -4783,19 +4783,19 @@
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Coolant rusty or with debris",
+     "type": "Coolant contaminated",
      "answers": {
       "check": "ck_fluids",
-      "option": "Coolant rusty or with debris"
+      "option": "Coolant contaminated"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Oil or metal in the coolant",
+     "type": "Oil in coolant",
      "answers": {
       "check": "ck_fluids",
-      "option": "Oil or metal in the coolant"
+      "option": "Oil in coolant"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -4806,19 +4806,19 @@
      ]
     },
     {
-     "type": "Brake, steering or transmission fluid low or dark",
+     "type": "Other fluid low/dark",
      "answers": {
       "check": "ck_fluids",
-      "option": "Brake, steering or transmission fluid low or dark"
+      "option": "Other fluid low/dark"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "EV: battery coolant low or discoloured",
+     "type": "EV: battery coolant low/discolored",
      "answers": {
       "check": "ck_fluids",
-      "option": "EV: battery coolant low or discoloured"
+      "option": "EV: battery coolant low/discolored"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -4876,10 +4876,10 @@
      ]
     },
     {
-     "type": "Brake or fuel line wet or damaged",
+     "type": "Brake/fuel line leak",
      "answers": {
       "check": "ck_leaks",
-      "option": "Brake or fuel line wet or damaged"
+      "option": "Brake/fuel line leak"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -4890,10 +4890,10 @@
      ]
     },
     {
-     "type": "Fresh drips on the ground",
+     "type": "Drips on ground",
      "answers": {
       "check": "ck_leaks",
-      "option": "Fresh drips on the ground"
+      "option": "Drips on ground"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -4911,55 +4911,55 @@
    "check": "ck_structure",
    "types": [
     {
-     "type": "Front structure repaired or damaged",
+     "type": "Front structural damage",
      "answers": {
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Pillars or roof repaired or damaged",
+     "type": "Pillar/roof structural damage",
      "answers": {
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Rear structure repaired or damaged",
+     "type": "Rear structural damage",
      "answers": {
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Frame rails, floor or subframe repaired or damaged",
+     "type": "Frame/floor structural damage",
      "answers": {
       "check": "ck_structure",
-      "option": "Frame rails, floor or subframe repaired or damaged"
+      "option": "Frame/floor structural damage"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Frame rails or floor scraped",
+     "type": "Frame/floor scraped",
      "answers": {
       "check": "ck_structure",
-      "option": "Frame rails or floor scraped"
+      "option": "Frame/floor scraped"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Structure changes or holes",
+     "type": "Structural alteration",
      "answers": {
       "check": "ck_structure",
-      "option": "Structure changes or holes"
+      "option": "Structural alteration"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
@@ -4972,19 +4972,19 @@
    "check": "ck_rust",
    "types": [
     {
-     "type": "Heavy scale or fresh undercoating",
+     "type": "Heavy rust/undercoating",
      "answers": {
       "check": "ck_rust",
-      "option": "Heavy scale or fresh undercoating"
+      "option": "Heavy rust/undercoating"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Rust through or holes",
+     "type": "Penetrating rust",
      "answers": {
       "check": "ck_rust",
-      "option": "Rust through or holes"
+      "option": "Penetrating rust"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage"
@@ -5021,10 +5021,10 @@
      ]
     },
     {
-     "type": "Dented, cracked or cable damaged",
+     "type": "Pack/cable damaged",
      "answers": {
       "check": "ck_pack",
-      "option": "Dented, cracked or cable damaged"
+      "option": "Pack/cable damaged"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -5054,10 +5054,10 @@
      ]
     },
     {
-     "type": "Catalytic converter missing, cut or hollow",
+     "type": "Catalytic converter missing",
      "answers": {
       "check": "ck_exhaust",
-      "option": "Catalytic converter missing, cut or hollow"
+      "option": "Catalytic converter missing"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -5096,10 +5096,10 @@
      ]
     },
     {
-     "type": "Aftermarket engine parts, with a CARB EO number",
+     "type": "Aftermarket parts, CARB EO",
      "answers": {
       "check": "ck_exhaust",
-      "option": "Aftermarket engine parts, with a CARB EO number"
+      "option": "Aftermarket parts, CARB EO"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -5110,10 +5110,10 @@
      ]
     },
     {
-     "type": "Aftermarket engine parts, no EO number",
+     "type": "Aftermarket parts, no CARB EO",
      "answers": {
       "check": "ck_exhaust",
-      "option": "Aftermarket engine parts, no EO number"
+      "option": "Aftermarket parts, no CARB EO"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -5131,19 +5131,19 @@
    "check": "ck_susp",
    "types": [
     {
-     "type": "Struts or shocks leaking or worn",
+     "type": "Struts/shocks worn",
      "answers": {
       "check": "ck_susp",
-      "option": "Struts or shocks leaking or worn"
+      "option": "Struts/shocks worn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Ball joints, bushings, arms or tie rods worn or bent",
+     "type": "Suspension/steering parts worn",
      "answers": {
       "check": "ck_susp",
-      "option": "Ball joints, bushings, arms or tie rods worn or bent"
+      "option": "Suspension/steering parts worn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -5156,19 +5156,19 @@
    "check": "ck_cv",
    "types": [
     {
-     "type": "Torn CV boot or grease thrown",
+     "type": "CV boot torn",
      "answers": {
       "check": "ck_cv",
-      "option": "Torn CV boot or grease thrown"
+      "option": "CV boot torn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Driveshaft or U-joint worn",
+     "type": "Driveshaft/U-joint worn",
      "answers": {
       "check": "ck_cv",
-      "option": "Driveshaft or U-joint worn"
+      "option": "Driveshaft/U-joint worn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -5191,19 +5191,19 @@
    },
    "types": [
     {
-     "type": "Brake pads under 3 mm",
+     "type": "Pads < 3 mm",
      "answers": {
       "check": "ck_brakes",
-      "option": "Brake pads under 3 mm"
+      "option": "Pads < 3 mm"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
     },
     {
-     "type": "Rotors worn, scored or rusted",
+     "type": "Rotors worn",
      "answers": {
       "check": "ck_brakes",
-      "option": "Rotors worn, scored or rusted"
+      "option": "Rotors worn"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -5216,10 +5216,10 @@
    "check": "ck_battery",
    "types": [
     {
-     "type": "Terminals corroded or hold-down loose",
+     "type": "Terminals corroded/loose",
      "answers": {
       "check": "ck_battery",
-      "option": "Terminals corroded or hold-down loose"
+      "option": "Terminals corroded/loose"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage"
@@ -5232,10 +5232,10 @@
    "check": "ck_hv",
    "types": [
     {
-     "type": "Orange high-voltage cable or connector damaged",
+     "type": "HV cable damaged",
      "answers": {
       "check": "ck_hv",
-      "option": "Orange high-voltage cable or connector damaged"
+      "option": "HV cable damaged"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -5244,10 +5244,10 @@
      ]
     },
     {
-     "type": "Front trunk tub or seals: water or damage",
+     "type": "Frunk water/damage",
      "answers": {
       "check": "ck_hv",
-      "option": "Front trunk tub or seals: water or damage"
+      "option": "Frunk water/damage"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -5256,10 +5256,10 @@
      ]
     },
     {
-     "type": "Smoke, hissing, popping, heat or fluid from the battery pack",
+     "type": "Battery pack smoke/heat/leak",
      "answers": {
       "check": "ck_hv",
-      "option": "Smoke, hissing, popping, heat or fluid from the battery pack"
+      "option": "Battery pack smoke/heat/leak"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -5268,10 +5268,10 @@
      ]
     },
     {
-     "type": "Fire signs: burn or melt damage to wiring, parts or the cabin",
+     "type": "Fire signs",
      "answers": {
       "check": "ck_hv",
-      "option": "Fire signs: burn or melt damage to wiring, parts or the cabin"
+      "option": "Fire signs"
      },
      "level": "Red",
      "bidbus_damage_type": "additional_damage",
@@ -5280,10 +5280,10 @@
      ]
     },
     {
-     "type": "Rodent damage or nest",
+     "type": "Rodent damage",
      "answers": {
       "check": "ck_hv",
-      "option": "Rodent damage or nest"
+      "option": "Rodent damage"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -5299,10 +5299,10 @@
    "check": "ck_charging",
    "types": [
     {
-     "type": "Charge port pins scorched, bent or corroded",
+     "type": "Charge port pins damaged",
      "answers": {
       "check": "ck_charging",
-      "option": "Charge port pins scorched, bent or corroded"
+      "option": "Charge port pins damaged"
      },
      "level": "Yellow",
      "bidbus_damage_type": "additional_damage",
@@ -5312,10 +5312,10 @@
      ]
     },
     {
-     "type": "Charge port door or latch damaged",
+     "type": "Charge port door damaged",
      "answers": {
       "check": "ck_charging",
-      "option": "Charge port door or latch damaged"
+      "option": "Charge port door damaged"
      },
      "level": "Disclosed",
      "bidbus_damage_type": "additional_damage",
@@ -5405,7 +5405,7 @@
   {
    "section": "Exterior",
    "place": "Front bumper",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5421,7 +5421,7 @@
   {
    "section": "Exterior",
    "place": "Front bumper",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5432,7 +5432,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Front structure repaired or damaged"
+    "option": "Front structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5473,7 +5473,7 @@
   {
    "section": "Exterior",
    "place": "Left front fender",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5489,7 +5489,7 @@
   {
    "section": "Exterior",
    "place": "Left front fender",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5500,7 +5500,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Front structure repaired or damaged"
+    "option": "Front structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5541,7 +5541,7 @@
   {
    "section": "Exterior",
    "place": "Hood",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5557,7 +5557,7 @@
   {
    "section": "Exterior",
    "place": "Hood",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5568,7 +5568,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Front structure repaired or damaged"
+    "option": "Front structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5609,7 +5609,7 @@
   {
    "section": "Exterior",
    "place": "Right front fender",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5625,7 +5625,7 @@
   {
    "section": "Exterior",
    "place": "Right front fender",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5636,7 +5636,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Front structure repaired or damaged"
+    "option": "Front structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5677,7 +5677,7 @@
   {
    "section": "Exterior",
    "place": "Left front door",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5693,7 +5693,7 @@
   {
    "section": "Exterior",
    "place": "Left front door",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5704,7 +5704,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5745,7 +5745,7 @@
   {
    "section": "Exterior",
    "place": "Roof",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5761,7 +5761,7 @@
   {
    "section": "Exterior",
    "place": "Roof",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5772,7 +5772,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5813,7 +5813,7 @@
   {
    "section": "Exterior",
    "place": "Right front door",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5829,7 +5829,7 @@
   {
    "section": "Exterior",
    "place": "Right front door",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5840,7 +5840,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5881,7 +5881,7 @@
   {
    "section": "Exterior",
    "place": "Left rear door",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5897,7 +5897,7 @@
   {
    "section": "Exterior",
    "place": "Left rear door",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5908,7 +5908,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -5949,7 +5949,7 @@
   {
    "section": "Exterior",
    "place": "Right rear door",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -5965,7 +5965,7 @@
   {
    "section": "Exterior",
    "place": "Right rear door",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -5976,7 +5976,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -6017,7 +6017,7 @@
   {
    "section": "Exterior",
    "place": "Left quarter panel",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6033,7 +6033,7 @@
   {
    "section": "Exterior",
    "place": "Left quarter panel",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -6044,7 +6044,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged"
+    "option": "Rear structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -6085,7 +6085,7 @@
   {
    "section": "Exterior",
    "place": "Trunk or liftgate",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6101,7 +6101,7 @@
   {
    "section": "Exterior",
    "place": "Trunk or liftgate",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -6112,7 +6112,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged"
+    "option": "Rear structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -6153,7 +6153,7 @@
   {
    "section": "Exterior",
    "place": "Right quarter panel",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6169,7 +6169,7 @@
   {
    "section": "Exterior",
    "place": "Right quarter panel",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -6180,7 +6180,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged"
+    "option": "Rear structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -6221,7 +6221,7 @@
   {
    "section": "Exterior",
    "place": "Rear bumper",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6237,7 +6237,7 @@
   {
    "section": "Exterior",
    "place": "Rear bumper",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -6248,7 +6248,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged"
+    "option": "Rear structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -6257,10 +6257,10 @@
   {
    "section": "Exterior",
    "place": "Windshield",
-   "type": "Windshield chip under 1 in",
+   "type": "Windshield chip < 1 in",
    "answers": {
     "check": "ck_glass",
-    "option": "Windshield chip under 1 in"
+    "option": "Windshield chip < 1 in"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6268,10 +6268,10 @@
   {
    "section": "Exterior",
    "place": "Windshield",
-   "type": "Windshield chip over 1 in or in the driver's view",
+   "type": "Windshield chip > 1 in / in view",
    "answers": {
     "check": "ck_glass",
-    "option": "Windshield chip over 1 in or in the driver's view"
+    "option": "Windshield chip > 1 in / in view"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6279,10 +6279,10 @@
   {
    "section": "Exterior",
    "place": "Windshield",
-   "type": "Windshield crack",
+   "type": "Windshield cracked",
    "answers": {
     "check": "ck_glass",
-    "option": "Windshield crack"
+    "option": "Windshield cracked"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6290,10 +6290,10 @@
   {
    "section": "Exterior",
    "place": "Left front window",
-   "type": "Side, rear or roof glass chipped or cracked",
+   "type": "Glass chipped/cracked",
    "answers": {
     "check": "ck_glass",
-    "option": "Side, rear or roof glass chipped or cracked"
+    "option": "Glass chipped/cracked"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6301,10 +6301,10 @@
   {
    "section": "Exterior",
    "place": "Left rear window",
-   "type": "Side, rear or roof glass chipped or cracked",
+   "type": "Glass chipped/cracked",
    "answers": {
     "check": "ck_glass",
-    "option": "Side, rear or roof glass chipped or cracked"
+    "option": "Glass chipped/cracked"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6312,10 +6312,10 @@
   {
    "section": "Exterior",
    "place": "Right front window",
-   "type": "Side, rear or roof glass chipped or cracked",
+   "type": "Glass chipped/cracked",
    "answers": {
     "check": "ck_glass",
-    "option": "Side, rear or roof glass chipped or cracked"
+    "option": "Glass chipped/cracked"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6323,10 +6323,10 @@
   {
    "section": "Exterior",
    "place": "Right rear window",
-   "type": "Side, rear or roof glass chipped or cracked",
+   "type": "Glass chipped/cracked",
    "answers": {
     "check": "ck_glass",
-    "option": "Side, rear or roof glass chipped or cracked"
+    "option": "Glass chipped/cracked"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6334,10 +6334,10 @@
   {
    "section": "Exterior",
    "place": "Rear glass",
-   "type": "Side, rear or roof glass chipped or cracked",
+   "type": "Glass chipped/cracked",
    "answers": {
     "check": "ck_glass",
-    "option": "Side, rear or roof glass chipped or cracked"
+    "option": "Glass chipped/cracked"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "windshield_damage"
@@ -6356,10 +6356,10 @@
   {
    "section": "Exterior",
    "place": "Headlight",
-   "type": "Headlight cracked, hazy or water inside",
+   "type": "Headlight damaged",
    "answers": {
     "check": "ck_lights",
-    "option": "Headlight cracked, hazy or water inside"
+    "option": "Headlight damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6378,10 +6378,10 @@
   {
    "section": "Exterior",
    "place": "Tail light",
-   "type": "Tail light cracked or water inside",
+   "type": "Tail light damaged",
    "answers": {
     "check": "ck_lights",
-    "option": "Tail light cracked or water inside"
+    "option": "Tail light damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6400,10 +6400,10 @@
   {
    "section": "Exterior",
    "place": "Other lights",
-   "type": "Brake, turn, hazard, reverse, fog or plate light out",
+   "type": "Other light out",
    "answers": {
     "check": "ck_lights",
-    "option": "Brake, turn, hazard, reverse, fog or plate light out"
+    "option": "Other light out"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6411,10 +6411,10 @@
   {
    "section": "Exterior",
    "place": "Wipers",
-   "type": "Blades streak or worn",
+   "type": "Wiper blades worn",
    "answers": {
     "check": "ck_wipers",
-    "option": "Blades streak or worn"
+    "option": "Wiper blades worn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6422,10 +6422,10 @@
   {
    "section": "Exterior",
    "place": "Wipers",
-   "type": "Wipers or washers not working",
+   "type": "Wipers/washers not working",
    "answers": {
     "check": "ck_wipers",
-    "option": "Wipers or washers not working"
+    "option": "Wipers/washers not working"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6433,10 +6433,10 @@
   {
    "section": "Exterior",
    "place": "Fuel door",
-   "type": "Missing or damaged",
+   "type": "Missing/damaged",
    "answers": {
     "check": "ck_fuel_cap",
-    "option": "Missing or damaged"
+    "option": "Missing/damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts",
@@ -6481,7 +6481,7 @@
   {
    "section": "Exterior",
    "place": "Other",
-   "type": "Crack or break",
+   "type": "Crack/break",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "broken_or_missing_parts"
@@ -6497,7 +6497,7 @@
   {
    "section": "Exterior",
    "place": "Other",
-   "type": "Rust bubbling",
+   "type": "Rust",
    "answers": null,
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -6508,7 +6508,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Structure changes or holes"
+    "option": "Structural alteration"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -6517,10 +6517,10 @@
   {
    "section": "Paint",
    "place": "Left front fender",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6528,10 +6528,10 @@
   {
    "section": "Paint",
    "place": "Left front fender",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6539,10 +6539,10 @@
   {
    "section": "Paint",
    "place": "Left front fender",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6550,10 +6550,10 @@
   {
    "section": "Paint",
    "place": "Left front fender",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6561,10 +6561,10 @@
   {
    "section": "Paint",
    "place": "Left front fender",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6572,10 +6572,10 @@
   {
    "section": "Paint",
    "place": "Left front door",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6583,10 +6583,10 @@
   {
    "section": "Paint",
    "place": "Left front door",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6594,10 +6594,10 @@
   {
    "section": "Paint",
    "place": "Left front door",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6605,10 +6605,10 @@
   {
    "section": "Paint",
    "place": "Left front door",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6616,10 +6616,10 @@
   {
    "section": "Paint",
    "place": "Left front door",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6627,10 +6627,10 @@
   {
    "section": "Paint",
    "place": "Left rear door",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6638,10 +6638,10 @@
   {
    "section": "Paint",
    "place": "Left rear door",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6649,10 +6649,10 @@
   {
    "section": "Paint",
    "place": "Left rear door",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6660,10 +6660,10 @@
   {
    "section": "Paint",
    "place": "Left rear door",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6671,10 +6671,10 @@
   {
    "section": "Paint",
    "place": "Left rear door",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6682,10 +6682,10 @@
   {
    "section": "Paint",
    "place": "Left quarter panel",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6693,10 +6693,10 @@
   {
    "section": "Paint",
    "place": "Left quarter panel",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6704,10 +6704,10 @@
   {
    "section": "Paint",
    "place": "Left quarter panel",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6715,10 +6715,10 @@
   {
    "section": "Paint",
    "place": "Left quarter panel",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6726,10 +6726,10 @@
   {
    "section": "Paint",
    "place": "Left quarter panel",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6737,10 +6737,10 @@
   {
    "section": "Paint",
    "place": "Trunk or liftgate",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6748,10 +6748,10 @@
   {
    "section": "Paint",
    "place": "Trunk or liftgate",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6759,10 +6759,10 @@
   {
    "section": "Paint",
    "place": "Trunk or liftgate",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6770,10 +6770,10 @@
   {
    "section": "Paint",
    "place": "Trunk or liftgate",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6781,10 +6781,10 @@
   {
    "section": "Paint",
    "place": "Trunk or liftgate",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6792,10 +6792,10 @@
   {
    "section": "Paint",
    "place": "Right quarter panel",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6803,10 +6803,10 @@
   {
    "section": "Paint",
    "place": "Right quarter panel",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6814,10 +6814,10 @@
   {
    "section": "Paint",
    "place": "Right quarter panel",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6825,10 +6825,10 @@
   {
    "section": "Paint",
    "place": "Right quarter panel",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6836,10 +6836,10 @@
   {
    "section": "Paint",
    "place": "Right quarter panel",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6847,10 +6847,10 @@
   {
    "section": "Paint",
    "place": "Right rear door",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6858,10 +6858,10 @@
   {
    "section": "Paint",
    "place": "Right rear door",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6869,10 +6869,10 @@
   {
    "section": "Paint",
    "place": "Right rear door",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6880,10 +6880,10 @@
   {
    "section": "Paint",
    "place": "Right rear door",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6891,10 +6891,10 @@
   {
    "section": "Paint",
    "place": "Right rear door",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6902,10 +6902,10 @@
   {
    "section": "Paint",
    "place": "Right front door",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6913,10 +6913,10 @@
   {
    "section": "Paint",
    "place": "Right front door",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6924,10 +6924,10 @@
   {
    "section": "Paint",
    "place": "Right front door",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6935,10 +6935,10 @@
   {
    "section": "Paint",
    "place": "Right front door",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6946,10 +6946,10 @@
   {
    "section": "Paint",
    "place": "Right front door",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6957,10 +6957,10 @@
   {
    "section": "Paint",
    "place": "Right front fender",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6968,10 +6968,10 @@
   {
    "section": "Paint",
    "place": "Right front fender",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6979,10 +6979,10 @@
   {
    "section": "Paint",
    "place": "Right front fender",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -6990,10 +6990,10 @@
   {
    "section": "Paint",
    "place": "Right front fender",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7001,10 +7001,10 @@
   {
    "section": "Paint",
    "place": "Right front fender",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7012,10 +7012,10 @@
   {
    "section": "Paint",
    "place": "Hood or frunk lid",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7023,10 +7023,10 @@
   {
    "section": "Paint",
    "place": "Hood or frunk lid",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7034,10 +7034,10 @@
   {
    "section": "Paint",
    "place": "Hood or frunk lid",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7045,10 +7045,10 @@
   {
    "section": "Paint",
    "place": "Hood or frunk lid",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7056,10 +7056,10 @@
   {
    "section": "Paint",
    "place": "Hood or frunk lid",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7067,10 +7067,10 @@
   {
    "section": "Paint",
    "place": "Roof",
-   "type": "Panel repainted (the meter reads high)",
+   "type": "Repaint",
    "answers": {
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)"
+    "option": "Repaint"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7078,10 +7078,10 @@
   {
    "section": "Paint",
    "place": "Roof",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "answers": {
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch"
+    "option": "Overspray/color mismatch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7089,10 +7089,10 @@
   {
    "section": "Paint",
    "place": "Roof",
-   "type": "Uneven panel gaps",
+   "type": "Uneven gaps",
    "answers": {
     "check": "ck_paint",
-    "option": "Uneven panel gaps"
+    "option": "Uneven gaps"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7100,10 +7100,10 @@
   {
    "section": "Paint",
    "place": "Roof",
-   "type": "Hood or fender bolts show tool marks",
+   "type": "Bolt tool marks",
    "answers": {
     "check": "ck_paint",
-    "option": "Hood or fender bolts show tool marks"
+    "option": "Bolt tool marks"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7111,10 +7111,10 @@
   {
    "section": "Paint",
    "place": "Roof",
-   "type": "Wrap or paint film",
+   "type": "Wrap/PPF",
    "answers": {
     "check": "ck_paint",
-    "option": "Wrap or paint film"
+    "option": "Wrap/PPF"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "previous_paint_work"
@@ -7155,10 +7155,10 @@
   {
    "section": "Tires",
    "place": "Left front tire",
-   "type": "Plug or patch",
+   "type": "Plug/patch",
    "answers": {
     "check": "ck_tire",
-    "option": "Plug or patch"
+    "option": "Plug/patch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7254,10 +7254,10 @@
   {
    "section": "Tires",
    "place": "Left rear tire",
-   "type": "Plug or patch",
+   "type": "Plug/patch",
    "answers": {
     "check": "ck_tire",
-    "option": "Plug or patch"
+    "option": "Plug/patch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7353,10 +7353,10 @@
   {
    "section": "Tires",
    "place": "Right rear tire",
-   "type": "Plug or patch",
+   "type": "Plug/patch",
    "answers": {
     "check": "ck_tire",
-    "option": "Plug or patch"
+    "option": "Plug/patch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7452,10 +7452,10 @@
   {
    "section": "Tires",
    "place": "Right front tire",
-   "type": "Plug or patch",
+   "type": "Plug/patch",
    "answers": {
     "check": "ck_tire",
-    "option": "Plug or patch"
+    "option": "Plug/patch"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7540,10 +7540,10 @@
   {
    "section": "Interior",
    "place": "Front seats",
-   "type": "Seats torn or burned",
+   "type": "Seats torn/burned",
    "answers": {
     "check": "ck_seats",
-    "option": "Seats torn or burned"
+    "option": "Seats torn/burned"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7573,10 +7573,10 @@
   {
    "section": "Interior",
    "place": "Rear seats",
-   "type": "Seats torn or burned",
+   "type": "Seats torn/burned",
    "answers": {
     "check": "ck_seats",
-    "option": "Seats torn or burned"
+    "option": "Seats torn/burned"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7584,10 +7584,10 @@
   {
    "section": "Interior",
    "place": "Carpet",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7595,10 +7595,10 @@
   {
    "section": "Interior",
    "place": "Carpet",
-   "type": "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash",
+   "type": "Flood signs",
    "answers": {
     "check": "ck_seats",
-    "option": "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash"
+    "option": "Flood signs"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -7609,7 +7609,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Frame rails, floor or subframe repaired or damaged"
+    "option": "Frame/floor structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -7618,10 +7618,10 @@
   {
    "section": "Interior",
    "place": "Headliner",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7632,7 +7632,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -7641,10 +7641,10 @@
   {
    "section": "Interior",
    "place": "Dash",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7655,7 +7655,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Front structure repaired or damaged"
+    "option": "Front structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -7664,10 +7664,10 @@
   {
    "section": "Interior",
    "place": "Door panels",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7678,7 +7678,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -7687,10 +7687,10 @@
   {
    "section": "Interior",
    "place": "Center console",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7698,10 +7698,10 @@
   {
    "section": "Interior",
    "place": "Steering wheel",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7709,10 +7709,10 @@
   {
    "section": "Interior",
    "place": "Cargo area",
-   "type": "Headliner, carpet or trim stained, worn or damaged",
+   "type": "Carpet/headliner/trim damaged",
    "answers": {
     "check": "ck_seats",
-    "option": "Headliner, carpet or trim stained, worn or damaged"
+    "option": "Carpet/headliner/trim damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7723,7 +7723,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged"
+    "option": "Rear structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -7732,10 +7732,10 @@
   {
    "section": "Interior",
    "place": "Seat belts",
-   "type": "A belt does not latch or retract",
+   "type": "Seat belt not working",
    "answers": {
     "check": "ck_srs",
-    "option": "A belt does not latch or retract"
+    "option": "Seat belt not working"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage"
@@ -7743,10 +7743,10 @@
   {
    "section": "Interior",
    "place": "Airbag covers",
-   "type": "Airbag cover damaged or tampered",
+   "type": "Airbag cover damaged",
    "answers": {
     "check": "ck_srs",
-    "option": "Airbag cover damaged or tampered"
+    "option": "Airbag cover damaged"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage"
@@ -7754,10 +7754,10 @@
   {
    "section": "Interior",
    "place": "Screen, audio or cameras",
-   "type": "Screen, audio or cameras not working",
+   "type": "Screen/audio/camera not working",
    "answers": {
     "check": "ck_features",
-    "option": "Screen, audio or cameras not working"
+    "option": "Screen/audio/camera not working"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7765,10 +7765,10 @@
   {
    "section": "Interior",
    "place": "Power windows, locks, mirrors or seats",
-   "type": "Power windows, locks, mirrors or seats not working",
+   "type": "Power accessories not working",
    "answers": {
     "check": "ck_features",
-    "option": "Power windows, locks, mirrors or seats not working"
+    "option": "Power accessories not working"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7776,10 +7776,10 @@
   {
    "section": "Interior",
    "place": "Interior lights or defroster",
-   "type": "Interior lights or defroster not working",
+   "type": "Interior lights/defroster not working",
    "answers": {
     "check": "ck_features",
-    "option": "Interior lights or defroster not working"
+    "option": "Interior lights/defroster not working"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -7847,10 +7847,10 @@
   {
    "section": "Interior",
    "place": "Warning lights",
-   "type": "ABS, brake or traction",
+   "type": "ABS/brake/traction",
    "answers": {
     "check": "ck_lights_dash",
-    "option": "ABS, brake or traction"
+    "option": "ABS/brake/traction"
    },
    "level": "Yellow",
    "bidbus_damage_type": "warning_lights"
@@ -7858,10 +7858,10 @@
   {
    "section": "Interior",
    "place": "Warning lights",
-   "type": "Oil, temperature or transmission",
+   "type": "Oil/temp/transmission",
    "answers": {
     "check": "ck_lights_dash",
-    "option": "Oil, temperature or transmission"
+    "option": "Oil/temp/transmission"
    },
    "level": "Yellow",
    "bidbus_damage_type": "warning_lights",
@@ -7885,10 +7885,10 @@
   {
    "section": "Interior",
    "place": "Warning lights",
-   "type": "A light never came on at key-on",
+   "type": "Bulb check failed",
    "answers": {
     "check": "ck_lights_dash",
-    "option": "A light never came on at key-on"
+    "option": "Bulb check failed"
    },
    "level": "Yellow",
    "bidbus_damage_type": "warning_lights"
@@ -7896,10 +7896,10 @@
   {
    "section": "Interior",
    "place": "Warning lights",
-   "type": "EV: high-voltage or reduced-power alert",
+   "type": "EV: HV/reduced power",
    "answers": {
     "check": "ck_lights_dash",
-    "option": "EV: high-voltage or reduced-power alert"
+    "option": "EV: HV/reduced power"
    },
    "level": "Yellow",
    "bidbus_damage_type": "warning_lights",
@@ -7977,7 +7977,7 @@
    "type": "Structure",
    "answers": {
     "check": "ck_structure",
-    "option": "Structure changes or holes"
+    "option": "Structural alteration"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -7986,10 +7986,10 @@
   {
    "section": "Mechanicals",
    "place": "Engine bay",
-   "type": "Belt or hose cracked or worn",
+   "type": "Belt/hose worn",
    "answers": {
     "check": "ck_bay",
-    "option": "Belt or hose cracked or worn"
+    "option": "Belt/hose worn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8018,10 +8018,10 @@
   {
    "section": "Mechanicals",
    "place": "Engine bay",
-   "type": "Radiator or A/C condenser bent, damaged or blocked",
+   "type": "Radiator/condenser damaged",
    "answers": {
     "check": "ck_bay",
-    "option": "Radiator or A/C condenser bent, damaged or blocked"
+    "option": "Radiator/condenser damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8050,10 +8050,10 @@
   {
    "section": "Mechanicals",
    "place": "Engine bay",
-   "type": "Intake cracked or aftermarket",
+   "type": "Intake cracked/aftermarket",
    "answers": {
     "check": "ck_bay",
-    "option": "Intake cracked or aftermarket"
+    "option": "Intake cracked/aftermarket"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8066,10 +8066,10 @@
   {
    "section": "Mechanicals",
    "place": "Engine bay",
-   "type": "Rodent damage or nest",
+   "type": "Rodent damage",
    "answers": {
     "check": "ck_bay",
-    "option": "Rodent damage or nest"
+    "option": "Rodent damage"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8082,10 +8082,10 @@
   {
    "section": "Mechanicals",
    "place": "Engine bay",
-   "type": "Fire signs: burn or melt damage to wiring, parts or the cabin",
+   "type": "Fire signs",
    "answers": {
     "check": "ck_bay",
-    "option": "Fire signs: burn or melt damage to wiring, parts or the cabin"
+    "option": "Fire signs"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -8098,10 +8098,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "Engine oil low or dark",
+   "type": "Oil low/dark",
    "answers": {
     "check": "ck_fluids",
-    "option": "Engine oil low or dark"
+    "option": "Oil low/dark"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8114,10 +8114,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "Engine oil very low or dry",
+   "type": "Oil very low/dry",
    "answers": {
     "check": "ck_fluids",
-    "option": "Engine oil very low or dry"
+    "option": "Oil very low/dry"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8130,10 +8130,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "Milky oil, metal or sludge",
+   "type": "Oil milky/sludge/metal",
    "answers": {
     "check": "ck_fluids",
-    "option": "Milky oil, metal or sludge"
+    "option": "Oil milky/sludge/metal"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8157,10 +8157,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "Coolant rusty or with debris",
+   "type": "Coolant contaminated",
    "answers": {
     "check": "ck_fluids",
-    "option": "Coolant rusty or with debris"
+    "option": "Coolant contaminated"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage"
@@ -8168,10 +8168,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "Oil or metal in the coolant",
+   "type": "Oil in coolant",
    "answers": {
     "check": "ck_fluids",
-    "option": "Oil or metal in the coolant"
+    "option": "Oil in coolant"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8184,10 +8184,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "Brake, steering or transmission fluid low or dark",
+   "type": "Other fluid low/dark",
    "answers": {
     "check": "ck_fluids",
-    "option": "Brake, steering or transmission fluid low or dark"
+    "option": "Other fluid low/dark"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8195,10 +8195,10 @@
   {
    "section": "Mechanicals",
    "place": "Fluids",
-   "type": "EV: battery coolant low or discoloured",
+   "type": "EV: battery coolant low/discolored",
    "answers": {
     "check": "ck_fluids",
-    "option": "EV: battery coolant low or discoloured"
+    "option": "EV: battery coolant low/discolored"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8241,10 +8241,10 @@
   {
    "section": "Mechanicals",
    "place": "Leak",
-   "type": "Brake or fuel line wet or damaged",
+   "type": "Brake/fuel line leak",
    "answers": {
     "check": "ck_leaks",
-    "option": "Brake or fuel line wet or damaged"
+    "option": "Brake/fuel line leak"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8257,10 +8257,10 @@
   {
    "section": "Mechanicals",
    "place": "Leak",
-   "type": "Fresh drips on the ground",
+   "type": "Drips on ground",
    "answers": {
     "check": "ck_leaks",
-    "option": "Fresh drips on the ground"
+    "option": "Drips on ground"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8273,10 +8273,10 @@
   {
    "section": "Underbody",
    "place": "Structure",
-   "type": "Front structure repaired or damaged",
+   "type": "Front structural damage",
    "answers": {
     "check": "ck_structure",
-    "option": "Front structure repaired or damaged"
+    "option": "Front structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -8284,10 +8284,10 @@
   {
    "section": "Underbody",
    "place": "Structure",
-   "type": "Pillars or roof repaired or damaged",
+   "type": "Pillar/roof structural damage",
    "answers": {
     "check": "ck_structure",
-    "option": "Pillars or roof repaired or damaged"
+    "option": "Pillar/roof structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -8295,10 +8295,10 @@
   {
    "section": "Underbody",
    "place": "Structure",
-   "type": "Rear structure repaired or damaged",
+   "type": "Rear structural damage",
    "answers": {
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged"
+    "option": "Rear structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -8306,10 +8306,10 @@
   {
    "section": "Underbody",
    "place": "Structure",
-   "type": "Frame rails, floor or subframe repaired or damaged",
+   "type": "Frame/floor structural damage",
    "answers": {
     "check": "ck_structure",
-    "option": "Frame rails, floor or subframe repaired or damaged"
+    "option": "Frame/floor structural damage"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -8317,10 +8317,10 @@
   {
    "section": "Underbody",
    "place": "Structure",
-   "type": "Frame rails or floor scraped",
+   "type": "Frame/floor scraped",
    "answers": {
     "check": "ck_structure",
-    "option": "Frame rails or floor scraped"
+    "option": "Frame/floor scraped"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8328,10 +8328,10 @@
   {
    "section": "Underbody",
    "place": "Structure",
-   "type": "Structure changes or holes",
+   "type": "Structural alteration",
    "answers": {
     "check": "ck_structure",
-    "option": "Structure changes or holes"
+    "option": "Structural alteration"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -8339,10 +8339,10 @@
   {
    "section": "Underbody",
    "place": "Rust",
-   "type": "Heavy scale or fresh undercoating",
+   "type": "Heavy rust/undercoating",
    "answers": {
     "check": "ck_rust",
-    "option": "Heavy scale or fresh undercoating"
+    "option": "Heavy rust/undercoating"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8350,10 +8350,10 @@
   {
    "section": "Underbody",
    "place": "Rust",
-   "type": "Rust through or holes",
+   "type": "Penetrating rust",
    "answers": {
     "check": "ck_rust",
-    "option": "Rust through or holes"
+    "option": "Penetrating rust"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage"
@@ -8389,10 +8389,10 @@
   {
    "section": "Underbody",
    "place": "Battery pack",
-   "type": "Dented, cracked or cable damaged",
+   "type": "Pack/cable damaged",
    "answers": {
     "check": "ck_pack",
-    "option": "Dented, cracked or cable damaged"
+    "option": "Pack/cable damaged"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8419,10 +8419,10 @@
   {
    "section": "Underbody",
    "place": "Exhaust",
-   "type": "Catalytic converter missing, cut or hollow",
+   "type": "Catalytic converter missing",
    "answers": {
     "check": "ck_exhaust",
-    "option": "Catalytic converter missing, cut or hollow"
+    "option": "Catalytic converter missing"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -8467,10 +8467,10 @@
   {
    "section": "Underbody",
    "place": "Exhaust",
-   "type": "Aftermarket engine parts, with a CARB EO number",
+   "type": "Aftermarket parts, CARB EO",
    "answers": {
     "check": "ck_exhaust",
-    "option": "Aftermarket engine parts, with a CARB EO number"
+    "option": "Aftermarket parts, CARB EO"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8483,10 +8483,10 @@
   {
    "section": "Underbody",
    "place": "Exhaust",
-   "type": "Aftermarket engine parts, no EO number",
+   "type": "Aftermarket parts, no CARB EO",
    "answers": {
     "check": "ck_exhaust",
-    "option": "Aftermarket engine parts, no EO number"
+    "option": "Aftermarket parts, no CARB EO"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -8499,10 +8499,10 @@
   {
    "section": "Underbody",
    "place": "Suspension",
-   "type": "Struts or shocks leaking or worn",
+   "type": "Struts/shocks worn",
    "answers": {
     "check": "ck_susp",
-    "option": "Struts or shocks leaking or worn"
+    "option": "Struts/shocks worn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8510,10 +8510,10 @@
   {
    "section": "Underbody",
    "place": "Suspension",
-   "type": "Ball joints, bushings, arms or tie rods worn or bent",
+   "type": "Suspension/steering parts worn",
    "answers": {
     "check": "ck_susp",
-    "option": "Ball joints, bushings, arms or tie rods worn or bent"
+    "option": "Suspension/steering parts worn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8521,10 +8521,10 @@
   {
    "section": "Underbody",
    "place": "Driveshaft or CV",
-   "type": "Torn CV boot or grease thrown",
+   "type": "CV boot torn",
    "answers": {
     "check": "ck_cv",
-    "option": "Torn CV boot or grease thrown"
+    "option": "CV boot torn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8532,10 +8532,10 @@
   {
    "section": "Underbody",
    "place": "Driveshaft or CV",
-   "type": "Driveshaft or U-joint worn",
+   "type": "Driveshaft/U-joint worn",
    "answers": {
     "check": "ck_cv",
-    "option": "Driveshaft or U-joint worn"
+    "option": "Driveshaft/U-joint worn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8543,10 +8543,10 @@
   {
    "section": "Underbody",
    "place": "Brakes",
-   "type": "Brake pads under 3 mm",
+   "type": "Pads < 3 mm",
    "answers": {
     "check": "ck_brakes",
-    "option": "Brake pads under 3 mm"
+    "option": "Pads < 3 mm"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8554,10 +8554,10 @@
   {
    "section": "Underbody",
    "place": "Brakes",
-   "type": "Rotors worn, scored or rusted",
+   "type": "Rotors worn",
    "answers": {
     "check": "ck_brakes",
-    "option": "Rotors worn, scored or rusted"
+    "option": "Rotors worn"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8565,10 +8565,10 @@
   {
    "section": "Mechanicals",
    "place": "12 V battery",
-   "type": "Terminals corroded or hold-down loose",
+   "type": "Terminals corroded/loose",
    "answers": {
     "check": "ck_battery",
-    "option": "Terminals corroded or hold-down loose"
+    "option": "Terminals corroded/loose"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage"
@@ -8576,10 +8576,10 @@
   {
    "section": "Mechanicals",
    "place": "High voltage or front trunk",
-   "type": "Orange high-voltage cable or connector damaged",
+   "type": "HV cable damaged",
    "answers": {
     "check": "ck_hv",
-    "option": "Orange high-voltage cable or connector damaged"
+    "option": "HV cable damaged"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8590,10 +8590,10 @@
   {
    "section": "Mechanicals",
    "place": "High voltage or front trunk",
-   "type": "Front trunk tub or seals: water or damage",
+   "type": "Frunk water/damage",
    "answers": {
     "check": "ck_hv",
-    "option": "Front trunk tub or seals: water or damage"
+    "option": "Frunk water/damage"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8604,10 +8604,10 @@
   {
    "section": "Mechanicals",
    "place": "High voltage or front trunk",
-   "type": "Smoke, hissing, popping, heat or fluid from the battery pack",
+   "type": "Battery pack smoke/heat/leak",
    "answers": {
     "check": "ck_hv",
-    "option": "Smoke, hissing, popping, heat or fluid from the battery pack"
+    "option": "Battery pack smoke/heat/leak"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -8618,10 +8618,10 @@
   {
    "section": "Mechanicals",
    "place": "High voltage or front trunk",
-   "type": "Fire signs: burn or melt damage to wiring, parts or the cabin",
+   "type": "Fire signs",
    "answers": {
     "check": "ck_hv",
-    "option": "Fire signs: burn or melt damage to wiring, parts or the cabin"
+    "option": "Fire signs"
    },
    "level": "Red",
    "bidbus_damage_type": "additional_damage",
@@ -8632,10 +8632,10 @@
   {
    "section": "Mechanicals",
    "place": "High voltage or front trunk",
-   "type": "Rodent damage or nest",
+   "type": "Rodent damage",
    "answers": {
     "check": "ck_hv",
-    "option": "Rodent damage or nest"
+    "option": "Rodent damage"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8646,10 +8646,10 @@
   {
    "section": "Mechanicals",
    "place": "Charge port",
-   "type": "Charge port pins scorched, bent or corroded",
+   "type": "Charge port pins damaged",
    "answers": {
     "check": "ck_charging",
-    "option": "Charge port pins scorched, bent or corroded"
+    "option": "Charge port pins damaged"
    },
    "level": "Yellow",
    "bidbus_damage_type": "additional_damage",
@@ -8661,10 +8661,10 @@
   {
    "section": "Mechanicals",
    "place": "Charge port",
-   "type": "Charge port door or latch damaged",
+   "type": "Charge port door damaged",
    "answers": {
     "check": "ck_charging",
-    "option": "Charge port door or latch damaged"
+    "option": "Charge port door damaged"
    },
    "level": "Disclosed",
    "bidbus_damage_type": "additional_damage",
@@ -8727,7 +8727,7 @@
    "check": "ck_structure",
    "section": "Underbody",
    "cr_row": "Underbody",
-   "option": "Underbody could not be photographed",
+   "option": "Underbody not inspected",
    "level": "Red"
   },
   {
@@ -8755,21 +8755,21 @@
    "check": "ck_odor",
    "section": "Interior",
    "cr_row": "Interior",
-   "option": "Strong air freshener or ozone",
+   "option": "Air freshener/ozone",
    "level": "Disclosed"
   },
   {
    "check": "ck_pbrake",
    "section": "Interior",
    "cr_row": "Interior",
-   "option": "Weak or does not hold",
+   "option": "Does not hold",
    "level": "Disclosed"
   },
   {
    "check": "ck_pbrake",
    "section": "Interior",
    "cr_row": "Interior",
-   "option": "Fault or warning",
+   "option": "Fault/warning",
    "level": "Disclosed"
   },
   {
@@ -8783,14 +8783,14 @@
    "check": "ck_ac",
    "section": "Interior",
    "cr_row": "Interior",
-   "option": "One side warm or a fan speed missing",
+   "option": "Uneven cooling/fan issue",
    "level": "Yellow"
   },
   {
    "check": "ck_ac",
    "section": "Interior",
    "cr_row": "Interior",
-   "option": "Heat weak or none",
+   "option": "Heat weak/none",
    "level": "Yellow"
   },
   {
@@ -8809,7 +8809,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Hard to start or needed a jump",
+   "option": "Hard start/jump start",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -8821,7 +8821,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Will not start",
+   "option": "No start",
    "level": "Not listed until fixed",
    "fuels": [
     "Gas or diesel",
@@ -8833,7 +8833,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Rough idle or stalls",
+   "option": "Rough idle/stalls",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -8845,7 +8845,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Tick, knock or timing chain rattle",
+   "option": "Engine noise",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -8857,7 +8857,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Turbo whine or whistle",
+   "option": "Turbo noise",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -8869,7 +8869,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Exhaust smoke (blue, white or black)",
+   "option": "Exhaust smoke",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -8881,7 +8881,7 @@
    "check": "ck_engine",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Burning oil smell or smoke from the engine bay",
+   "option": "Engine bay smoke/burning smell",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -8893,7 +8893,7 @@
    "check": "ck_ev_power",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Slow to wake or needs a 12 V jump",
+   "option": "Slow wake/12 V jump",
    "level": "Disclosed",
    "fuels": [
     "Electric (EV)"
@@ -8903,7 +8903,7 @@
    "check": "ck_ev_power",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Will not power on",
+   "option": "No power on",
    "level": "Not listed until fixed",
    "fuels": [
     "Electric (EV)"
@@ -8913,7 +8913,7 @@
    "check": "ck_trans",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Hard to select a gear or grinds",
+   "option": "Hard shift/grinds",
    "level": "Disclosed",
    "fuels": [
     "Gas or diesel",
@@ -8925,7 +8925,7 @@
    "check": "ck_trans",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Clutch spongy or engages high",
+   "option": "Clutch issue",
    "level": "Disclosed",
    "fuels": [
     "Gas or diesel",
@@ -8949,7 +8949,7 @@
    "check": "ck_charging",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Charges slowly or stops",
+   "option": "Slow/interrupted charging",
    "level": "Yellow",
    "fuels": [
     "Plug-in hybrid",
@@ -8960,7 +8960,7 @@
    "check": "ck_charging",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Will not charge",
+   "option": "No charge",
    "level": "Yellow",
    "fuels": [
     "Plug-in hybrid",
@@ -8982,7 +8982,7 @@
    "check": "ck_hybrid",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Hybrid codes or warnings",
+   "option": "Hybrid codes/warnings",
    "level": "Yellow",
    "fuels": [
     "Hybrid",
@@ -9000,7 +9000,7 @@
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Engine hesitates or misfires",
+   "option": "Engine hesitation/misfire",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -9012,7 +9012,7 @@
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Transmission delayed, slips or harsh",
+   "option": "Transmission issue",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -9024,7 +9024,7 @@
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "4WD or AWD does not engage",
+   "option": "4WD/AWD issue",
    "level": "Yellow"
   },
   {
@@ -9038,28 +9038,28 @@
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Steering play, noise or vibration",
+   "option": "Steering issue",
    "level": "Yellow"
   },
   {
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Brakes pulse, pull, grind or squeal",
+   "option": "Brake issue",
    "level": "Disclosed"
   },
   {
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Clunks over bumps",
+   "option": "Suspension noise",
    "level": "Yellow"
   },
   {
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Wheel bearing, tire or driveline noise",
+   "option": "Driveline noise",
    "level": "Yellow"
   },
   {
@@ -9073,21 +9073,21 @@
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Temperature rises",
+   "option": "Overheating",
    "level": "Yellow"
   },
   {
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "Warning light after the drive",
+   "option": "Warning light after drive",
    "level": "Yellow"
   },
   {
    "check": "ck_road",
    "section": "Mechanicals",
    "cr_row": "Mechanicals",
-   "option": "EV: motor whine, hum or weak regen",
+   "option": "EV: motor noise/weak regen",
    "level": "Yellow",
    "fuels": [
     "Electric (EV)"
@@ -9107,7 +9107,7 @@
    "check": "ck_scan",
    "section": "OBDII",
    "cr_row": "OBD-II",
-   "option": "Engine codes stored (type the codes)",
+   "option": "Engine codes",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -9119,7 +9119,7 @@
    "check": "ck_scan",
    "section": "OBDII",
    "cr_row": "OBD-II",
-   "option": "Faults in airbag, ABS, transmission, body or driver-assist modules",
+   "option": "Other module faults",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -9143,7 +9143,7 @@
    "check": "ck_scan",
    "section": "OBDII",
    "cr_row": "OBD-II",
-   "option": "Driver-assist camera or radar needs calibration",
+   "option": "ADAS calibration needed",
    "level": "Yellow",
    "fuels": [
     "Gas or diesel",
@@ -9155,7 +9155,7 @@
    "check": "ck_scan",
    "section": "OBDII",
    "cr_row": "OBD-II",
-   "option": "Scan tool cannot read the car",
+   "option": "Scan failed",
    "level": "Red",
    "fuels": [
     "Gas or diesel",
@@ -9167,35 +9167,35 @@
    "check": "ck_ids",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Registration card not found",
+   "option": "No registration card",
    "level": "Disclosed"
   },
   {
    "check": "ck_ids",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Plate does not match the registration",
+   "option": "Plate mismatch",
    "level": "Ends the visit"
   },
   {
    "check": "ck_ids",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Dash VIN does not match the registration",
+   "option": "Dash VIN mismatch",
    "level": "Ends the visit"
   },
   {
    "check": "ck_ids",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Door-jamb VIN label missing",
+   "option": "Door VIN label missing",
    "level": "Red"
   },
   {
    "check": "ck_ids",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Door-jamb VIN does not match",
+   "option": "Door VIN mismatch",
    "level": "Ends the visit"
   },
   {
@@ -9216,14 +9216,14 @@
    "check": "ck_equip",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Missing: spare or inflator kit, jack, cargo cover, mats or anything in the listing photos",
+   "option": "Equipment missing",
    "level": "Disclosed"
   },
   {
    "check": "ck_equip",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Charging cable or adapters missing",
+   "option": "Charging cable missing",
    "level": "Disclosed",
    "fuels": [
     "Plug-in hybrid",
@@ -9234,7 +9234,7 @@
    "check": "ck_account",
    "section": "Additionals",
    "cr_row": "Additionals",
-   "option": "Car not yet removed from the seller's app account",
+   "option": "Still on seller's app account",
    "level": "Disclosed",
    "fuels": [
     "Electric (EV)"

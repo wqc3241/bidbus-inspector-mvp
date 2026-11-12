@@ -148,7 +148,7 @@ def build_cr(rec, carfax_owners=None):
             head = "Tire" if c["id"] == "ck_tire" else "Wheel" if c["id"] == "ck_wheel" else cc["label"]
             base = {"text": f"{head}: {plain(pr['option'])}", "sub": None, "cr_row": cc["cr_row"], "section": cc["section"], "type": pr["option"], "severity": None, "size_in": None,
                     "level": co["level"], "check": c["id"], "option": pr["option"], "from": "check row", "photo": None}
-            if c["id"] == "ck_paint" and "meter reads high" in pr["option"]:
+            if c["id"] == "ck_paint" and pr["option"] == "Repaint":
                 for p in paint_high:  # one issue per panel that reads high, with its reading
                     issues.append(dict(base, id=f"I{len(issues) + 1}", sub=PAINT_SHOWN.get(p["panel"], p["panel"]), place=p["panel"], mils=p["mils"]))
                 continue
@@ -275,10 +275,10 @@ def build_cr(rec, carfax_owners=None):
         if dp.get(t): damage_photos[t] = dp[t]
     interior = [n for n, ok in (("persistent_odors", any(has("ck_odor", w) for w in ("Smoke", "Pet", "Mildew", "freshener"))),
                                 ("damaged_dashboard", any(i["section"] == "Interior" and i["place"] == "Dash" for i in issues)),
-                                ("noticeable_stains", has("ck_seats", "stained") or any(i["type"] == "Stain" for i in issues)),
+                                ("noticeable_stains", has("ck_seats", "stained") or has("ck_seats", "trim damaged") or any(i["type"] == "Stain" for i in issues)),
                                 ("rips_tears", has("ck_seats", "torn") or any(i["type"] in ("Tear", "Burn") for i in issues))) if ok]
     tech = [n for n, ok in (("sound_system", has("ck_features", "audio")), ("interior_display", has("ck_features", "Screen")),
-                            ("backup_camera", has("ck_features", "cameras")), ("safety_sensors", has("ck_scan", "calibration")),
+                            ("backup_camera", has("ck_features", "camera")), ("safety_sensors", has("ck_scan", "calibration")),
                             ("missing_equipment", has("ck_equip", "Missing")), ("navigation", rec["features"].get("navigation") == "Not working")) if ok]
     mech = []
     if any(i.get("check") == "ck_ac" for i in issues): mech.append({"name": "air_conditioning"})
@@ -301,7 +301,7 @@ def build_cr(rec, carfax_owners=None):
         "technology_issues": [{"name": n} for n in tech] or [{"name": "none"}],
         "mechanical_issues": mech or [{"name": "none"}],
         "check_engine_light_on": "yes" if has("ck_lights_dash", "Check engine") else "no",
-        "vehicle_drivability": "not_drivable" if has("ck_engine", "Will not start") or has("ck_ev_power", "Will not power on") else "drivable",
+        "vehicle_drivability": "not_drivable" if has("ck_engine", "No start") or has("ck_ev_power", "No power on") else "drivable",
         "frame_damage": "yes" if any(i.get("check") == "ck_structure" and i["level"] == "Red" for i in issues) else "no",
         "tire_mileage": {"overall": worst_tier, "all_same": "yes" if len(set(tiers.values())) == 1 else "no",
                          "individual": {s: tiers[w] for s, w in SLOT_WHEEL.items()}},

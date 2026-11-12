@@ -131,7 +131,7 @@ void main() {
       expect(File('assets/guides/ph_tesla_hw.svg').existsSync(), true);
       // a panel not on the car drops out of the walk; engine sound and exhaust go when the engine will not start
       m(s, 'paint')['Roof'] = <String, dynamic>{'na': true};
-      lst(s, 'probs', 'ck_engine').add('Will not start');
+      lst(s, 'probs', 'ck_engine').add('No start');
       expect(ids(capList('Tires', s)).contains('Roof'), false);
       expect(ids(capList('Interior', s)).contains('video_engine'), false);
       expect(ids(capList('Mechanicals', s)).contains('video_exhaust'), false);
@@ -157,7 +157,7 @@ void main() {
       final s = fresh('tg'), l = capList('Interior', s), keys = l.indexWhere((x) => x['id'] == 'ph_keys');
       final d = <String, dynamic>{'id': 'd', 'zone': 'Interior', 'sec': 'Interior', 'at': keys, 'key': 'ph_keys'};
       expect(tagAt(s, d), keys);
-      lst(s, 'probs', 'ck_engine').add('Will not start'); // engine sound, before the keys, drops out
+      lst(s, 'probs', 'ck_engine').add('No start'); // engine sound, before the keys, drops out
       expect(capList('Interior', s)[tagAt(s, d)!]['id'], 'ph_keys');
       expect(tagAt(s, {'sec': 'Interior', 'at': 3}), 3); // saved without its shot: by index, as before
       expect(tagAt(s, {'sec': 'Interior', 'key': 'video_engine'}), isNull);
@@ -526,7 +526,7 @@ void main() {
     // the engine will not start, answered on the card: the exhaust video drops out of the list, Record damage still has its shutters
     await t.tap(find.text('Engine'));
     await settle();
-    await t.tap(find.text('Will not start'));
+    await t.tap(find.text('No start'));
     await settle();
     expect(capList('Mechanicals', store.ins['k']!).length, 2);
     await t.tap(find.text('Record damage'));

@@ -45,7 +45,7 @@ The inspection takes about 18 minutes.
 **1.6 Damages, Review, Summary**
 - Damages: after the camera, one damage photo per screen, section by section. Place (Exterior: a drawn top view of the car; Tires: pick a wheel's tire or wheel), type and severity (Minor, Moderate, Severe) required; size optional (1-36 in) on Exterior damages only. Each photo first shows the AI guess of place, type and severity; the inspector confirms or changes it. Moves to the next photo when all three are picked.
 - Structure is a type on Exterior body panels and on Interior carpet, headliner, dash, door panels and cargo; it answers Structure and frame with the option the place gives.
-- Paint problems: the 11 Exterior body panels also offer the five Paint and panels problems after Structure (Panel repainted, Overspray or colour mismatch, Uneven panel gaps, Hood or fender bolts show tool marks, Wrap or paint film). Picking one answers Paint and panels with that panel; stored as Paint.
+- Paint problems: the 11 Exterior body panels also offer the five Paint and panels problems after Structure (Repaint, Overspray/color mismatch, Uneven gaps, Bolt tool marks, Wrap/PPF). Picking one answers Paint and panels with that panel; stored as Paint.
 - Review: one page per section, Paint its own page (paint photos and readings; tap a photo to retake that panel in the Exterior camera). One row per check, OK by default; tap opens a bottom drawer with its problems; readings; damage photos; everything editable.
 - Number of keys: AI reads 0, 1 or 2 (2 = two or more) from the keys photo; first row of Review Interior, marked Read from photo; required. 1 ticks Only one key on the Keys check; ticking or clearing Only one key sets 1 or 2.
 - Summary: counts of photos, videos, problems and damage photos; findings; VIN and mileage confirm; overall condition; note.
@@ -88,7 +88,7 @@ The inspection takes about 18 minutes.
   - Mileage: odometer photo (`ph_odo`)
   - VIN: windshield VIN photo and door-jamb label, check digit
   - Tires: brand and size from the whole tire photo, tread from the gauge photo
-  - Paint meter mils per panel: 8 mils or more is High and ticks Panel repainted
+  - Paint meter mils per panel: 8 mils or more is High and ticks Repaint
   - EV battery health %: battery health screen
   - Number of keys 0, 1, 2: keys photo (`ph_keys`)
   - Damage photos: place, type, severity as first guess
