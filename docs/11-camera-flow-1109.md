@@ -45,7 +45,7 @@ Top left of every guided shot, a few words. Information only: nothing to tap, ti
 | Rear doors (paint) | Frame damage, Repaint, B-pillar, Window |
 | Quarter panels (paint) | Repaint, Dents, Panel gaps, Fuel door |
 | Trunk or liftgate (paint) | Repaint, Tail lights, Panel gaps, Rear window |
-| Hood (paint) | Repaint, Hood bolts, Chips |
+| Hood (paint) | Repaint, Hood bolts, Chips, Windshield |
 | Roof (paint) | Repaint, Dents, Hail |
 | Roof photo | Dents, Hail, Sunroof |
 | Whole tire | Sidewall cracks, Bulge, Curb rash, Plug or patch |
