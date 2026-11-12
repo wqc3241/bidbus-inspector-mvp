@@ -15,6 +15,7 @@ One outline per guided shot, drawn on a 400 x 225 canvas (16:9, landscape camera
 | ph_reg | Registration card |
 | ph_family | ph_family |
 | ph_int_dash | Dash |
+| ph_tesla_hw | Hardware Version (Tesla only) |
 | ph_int_screen | Infotainment |
 | ph_odo | Odometer, car on |
 | ph_int_front | Front seats |
