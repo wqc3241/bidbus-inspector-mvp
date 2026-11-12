@@ -44,6 +44,9 @@ class Team extends ChangeNotifier {
   int _epoch = 0; // counts sign-outs: work started before one is dropped
 
   bool get signedIn => session != null;
+  // signed in to the scheduler: booked jobs, the inspector's name and token. Without it the phone uses the app
+  // passcode and makes its own inspections with New inspection
+  bool get use => on && signedIn;
   // an inspection this inspector may see, open and upload: started by them, or before scheduler sign-in was used
   bool mine(J st) => !on || st['member'] == null || st['member'] == member?['id'];
   String get name => (member?['name'] as String?)?.trim().isNotEmpty == true

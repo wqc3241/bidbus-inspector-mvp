@@ -30,14 +30,13 @@ Future<void> main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-// with scheduler sign-in, signed out: Sign in (and Settings, for the server URL) only. The router is told only when
-// that flips (each refresh of the routes would drop the camera's arguments)
+// Sign in is open only while the server uses scheduler sign-in and no one is signed in. The router is told only
+// when that flips (each refresh of the routes would drop the camera's arguments)
 final signedOut = ValueNotifier(false);
 final router = GoRouter(
   refreshListenable: signedOut,
   redirect: (c, s) {
     final out = team.on && !team.signedIn, at = s.matchedLocation;
-    if (out && at != '/signin' && at != '/settings') return '/signin';
     if (!out && at == '/signin') return '/';
     final st = store.ins[s.pathParameters['id']];
     if (st != null && !team.mine(st)) return '/'; // another inspector's

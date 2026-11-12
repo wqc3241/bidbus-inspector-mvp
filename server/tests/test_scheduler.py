@@ -196,7 +196,8 @@ def test_api_needs_a_scheduler_sign_in(client, world):
     assert client.get("/api/health", headers=ANA_H).json() == {"ok": True, "auth": "team", "signed_in": True}
     assert client.get("/api/health", headers={"Authorization": "Bearer nope"}).json()["signed_in"] is False
     assert client.get("/api/me").status_code == 401
-    assert client.get("/api/me", headers=PASS).status_code == 401  # the passcode is off once sign-in is set up
+    assert client.get("/api/me", headers=PASS).status_code == 404  # the passcode is no inspector: no booked jobs
+    assert client.get("/api/health", headers=PASS).json() == {"ok": True, "auth": "team", "passcode_ok": True}
     assert client.get("/api/me", headers={"Authorization": "Bearer nope"}).status_code == 401
     r = client.get("/api/me", headers={"Authorization": "Bearer tok-new"})  # signed in, not linked to the team list yet
     assert r.status_code == 403 and "scheduler site" in r.json()["detail"]
@@ -456,6 +457,19 @@ def test_an_inspection_is_its_inspectors_only(client, world):
     assert client.post(f"/api/inspections/{iid}/complete", headers=BO_H).status_code == 404
     with SessionLocal() as s:
         assert s.get(Inspection, iid).inspector == "Ana Inspector"  # the team-list name, not the typed one
+
+
+def test_the_passcode_makes_its_own_inspections(client, world):
+    # a phone not signed in to the scheduler: New inspection works with the app passcode, with the typed name
+    iid, ana = str(uuid.uuid4()), str(uuid.uuid4())
+    assert put(client, iid, PASS).status_code == 200
+    assert client.get(f"/api/inspections/{iid}", headers=PASS).status_code == 200
+    with SessionLocal() as s:
+        assert s.get(Inspection, iid).member_id is None and s.get(Inspection, iid).inspector == "Typed name"
+    assert put(client, ana, ANA_H).status_code == 200
+    assert client.get(f"/api/inspections/{ana}", headers=PASS).status_code == 404  # a signed-in inspector's stays theirs
+    assert put(client, ana, PASS).status_code == 404
+    assert client.get("/api/appointments", headers=PASS).status_code == 404
 
 
 def test_an_inspection_from_before_sign_in_is_claimed(client, world):

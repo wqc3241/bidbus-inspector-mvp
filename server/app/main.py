@@ -1,4 +1,4 @@
-"""FastAPI app: API at /api (app passcode, or scheduler sign-in when it is set up), reports at /r/... (no auth)."""
+"""FastAPI app: API at /api (scheduler sign-in when it is set up, or the app passcode), reports at /r/... (no auth)."""
 import hmac
 import logging
 import mimetypes
@@ -41,11 +41,12 @@ def _passcode_ok(authorization: str | None) -> bool:
 
 
 def require_user(authorization: str | None = Header(default=None)) -> team.Member | None:
-    """with scheduler sign-in: the signed-in inspector (docs/12-scheduler-sync.md); otherwise the app passcode, and no one"""
-    if not team.enabled():
-        if not _passcode_ok(authorization):
-            raise HTTPException(status_code=401, detail="Wrong or missing passcode")
+    """the signed-in scheduler inspector (docs/12-scheduler-sync.md), or no one for a phone that sends the app passcode:
+    it has no booked jobs and makes its own inspections"""
+    if _passcode_ok(authorization):
         return None
+    if not team.enabled():
+        raise HTTPException(status_code=401, detail="Wrong or missing passcode")
     if not authorization or not authorization.startswith("Bearer ") or len(authorization) <= len("Bearer "):
         raise HTTPException(status_code=401, detail="Sign in first")
     try:
@@ -60,7 +61,9 @@ def health(authorization: str | None = Header(default=None)):
     out = {"ok": True}
     if team.enabled():
         out["auth"] = "team"
-        if authorization is not None:
+        if _passcode_ok(authorization):
+            out["passcode_ok"] = True
+        elif authorization is not None:
             try:
                 out["signed_in"] = require_user(authorization) is not None
             except HTTPException as e:
@@ -161,8 +164,10 @@ class InspectionIn(BaseModel):
 
 
 def _mine(insp: Inspection | None, me: team.Member | None) -> bool:
-    # with scheduler sign-in an inspection is its inspector's only (one made before sign-in was set up has no inspector)
-    return insp is not None and (me is None or insp.member_id in (None, me.id))
+    # a signed-in inspector's inspection is theirs only; one made with the app passcode has no inspector
+    if insp is None or insp.member_id is None:
+        return insp is not None
+    return insp.member_id == me.id if me is not None else not team.enabled()
 
 
 def _inspection(s: Session, inspection_id: str, me: team.Member | None) -> Inspection:

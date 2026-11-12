@@ -83,9 +83,9 @@ class Store extends ChangeNotifier {
     super.dispose();
   }
 
-  // the app passcode, or the scheduler sign-in when the server uses it (team.dart)
+  // the scheduler sign-in when signed in (team.dart), else the app passcode
   String get bearer =>
-      team.on ? (team.session?['access_token'] as String? ?? '') : passcode;
+      team.use ? (team.session?['access_token'] as String? ?? '') : passcode;
   bool get canCall => bearer.isNotEmpty;
   Api get api => Api(server, bearer);
   String abs(String rel) => '$docs/$rel';
@@ -145,7 +145,7 @@ class Store extends ChangeNotifier {
     if (_aiBusy || !canCall) return;
     _aiBusy = true;
     try {
-      if (team.on) await team.token();
+      if (team.use) await team.token();
       for (final st in list.where(team.mine)) {
         final q = (st['aiq'] as List? ?? []);
         // after the signature the record is fixed: readings still queued are dropped
@@ -196,7 +196,7 @@ class Store extends ChangeNotifier {
     if (_upBusy || !canCall) return;
     _upBusy = true;
     try {
-      if (team.on) await team.token();
+      if (team.use) await team.token();
       for (final st in list.where((s) => ['saved', 'uploading', 'building'].contains(s['status']))) {
         if (!online) break;
         if (!team.mine(st)) continue; // another inspector's, signed out
@@ -230,7 +230,7 @@ class Store extends ChangeNotifier {
           final local = p.files[name]!;
           // a video not made smaller yet (the app was closed while it was being done): now, before it goes
           if (!name.endsWith('.jpg') && !name.endsWith('.png')) await squeezeVideo(abs(local));
-          if (team.on) await team.token(); // a sign-in renewed during a long round
+          if (team.use) await team.token(); // a sign-in renewed during a long round
           final slash = local.lastIndexOf('/');
           final task = UploadTask(
             url: '${server.replaceAll(RegExp(r'/+$'), '')}/api/inspections/$id/files/$name', baseDirectory: BaseDirectory.applicationDocuments,
@@ -260,7 +260,7 @@ class Store extends ChangeNotifier {
         }
 
         await Future.wait([for (var w = 0; w < 3; w++) lane()]);
-        final c = await (team.on ? Api(server, await team.token() ?? '') : a).complete(id); // a sign-in renewed during the round
+        final c = await (team.use ? Api(server, await team.token() ?? '') : a).complete(id); // a sign-in renewed during the round
         if ((c.statusCode ?? 0) >= 300) return; // something still missing (409), or refused: the next round tries again
         mut(id, (s) => s['status'] = 'building');
       }
