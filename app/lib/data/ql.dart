@@ -154,7 +154,7 @@ const lookFor = {
   'Left front door': ['Frame damage', 'Repaint', 'A-pillar', 'Window'], 'Right front door': ['Frame damage', 'Repaint', 'A-pillar', 'Window'],
   'Left rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'], 'Right rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'],
   'Left quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'], 'Right quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'],
-  'Trunk or liftgate': ['Repaint', 'Tail lights', 'Panel gaps', 'Rear window'], 'Hood': ['Repaint', 'Hood bolts', 'Chips'], 'Roof': ['Repaint', 'Dents', 'Hail'],
+  'Trunk or liftgate': ['Repaint', 'Tail lights', 'Panel gaps', 'Rear window'], 'Hood': ['Repaint', 'Hood bolts', 'Chips', 'Windshield'], 'Roof': ['Repaint', 'Dents', 'Hail'],
   'ph_ext_roof': ['Dents', 'Hail', 'Sunroof'], 'tire_photo': ['Sidewall cracks', 'Bulge', 'Curb rash', 'Plug or patch'], 'tread_photo': ['Lowest groove', 'Uneven wear'],
   'ph_int_cargo': ['Trunk floor', 'Rails', 'Water', 'Spare tire'], 'ph_engine_bay': ['Aprons', 'Strut towers', 'Core support', 'Leaks'],
   'ph_engine_oil': ['Sludge', 'Milky oil', 'Oil level'], 'video_exhaust': ['Rev noise', 'Smoke', 'Reverse gear'], 'ph_frunk': ['Coolant', 'Water', 'Damage'],
