@@ -62,7 +62,7 @@ Top left of every guided shot, a few words. Information only: nothing to tap, ti
 | Catalytic converters | Missing converter, Cut pipe |
 | Battery pack (EV) | Scrapes, Dents, Bolts |
 
-EV service alerts, battery health and charging screens have no Look for.
+EV service alerts and battery health screens have no Look for.
 
 ## End-of-section questions
 

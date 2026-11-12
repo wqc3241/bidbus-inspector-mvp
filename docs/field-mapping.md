@@ -45,7 +45,7 @@ Twelve inspector shots fill the 12 required seller slots one to one, so `has_all
 | Catalytic converters (`ph_under_cats`, optional) | none | New key `underbody` |  |
 | Engine oil on the dipstick (`ph_engine_oil`), charge port on EVs and plug-in hybrids (`ph_ev_port`) | none | New key `mechanicals` | No oil cap, coolant or emission label photo |
 | Paint meter on the panel, 11 panels (`paint`, one per panel) | none | New key `paint_meter` | Panel and mils in the description; AI reads the mils |
-| OBD-II, gas: current, past and emission codes (`ph_obd_current`, `ph_obd_past`, `ph_obd_emission`) and other images (`ph_obd_other`, optional); EV: service-mode alerts (`ph_ev_alerts`), battery health (`ph_ev_battery`) and charging (`ph_ev_charging`), both optional | none | New key `obdii` |  |
+| OBD-II, gas: current, past and emission codes (`ph_obd_current`, `ph_obd_past`, `ph_obd_emission`) and other images (`ph_obd_other`, optional); EV: service-mode alerts (`ph_ev_alerts`), battery health (`ph_ev_battery`), optional | none | New key `obdii` |  |
 | VIN through the windshield, door-jamb VIN label (`ph_vin_dash`, `ph_vin_door`) | none | New key `vin` | AI reads the VIN from both |
 | All keys together (`ph_keys`) | none | New key `keys` |  |
 | Driver license, registration (`ph_license`, `ph_reg`) | Documents `driver_license`, `registration` | Reuse | Uploaded by the seller, not shot by the inspector; if missing at Check ID, the inspector texts the upload link, or photographs a missing one on site. Private, never in `vehicle_photos`, never shown to dealers |

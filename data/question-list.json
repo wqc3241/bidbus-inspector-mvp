@@ -697,18 +697,6 @@
    "optional": true
   },
   {
-   "no": "P40",
-   "part": "Photos",
-   "section": "OBDII",
-   "id": "ph_ev_charging",
-   "kind": "photo",
-   "cars": "ev",
-   "label": "Charging screen showing the rate",
-   "multi": true,
-   "upload": true,
-   "optional": true
-  },
-  {
    "no": "E9",
    "part": "Photos",
    "section": "OBDII",
