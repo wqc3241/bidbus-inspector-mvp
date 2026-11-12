@@ -127,6 +127,8 @@ void main() {
       expect(ids(capList('Interior', fresh('ev', fuel: ev))).contains('ph_tesla_hw'), false);
       expect(stepItems('Interior', tesla).media.map((it) => it['id']).contains('ph_tesla_hw'), true);
       expect(short['ph_tesla_hw'], 'Hardware Version');
+      expect(guideFor({'id': 'ph_tesla_hw'}, ev, {'assets/guides/ph_tesla_hw.svg'}), 'assets/guides/ph_tesla_hw.svg');
+      expect(File('assets/guides/ph_tesla_hw.svg').existsSync(), true);
       // a panel not on the car drops out of the walk; engine sound and exhaust go when the engine will not start
       m(s, 'paint')['Roof'] = <String, dynamic>{'na': true};
       lst(s, 'probs', 'ck_engine').add('Will not start');
