@@ -83,10 +83,10 @@ The seller answers Yes or No for 8 damage types and adds a photo with a descript
 | Exterior body panels and Other: Chip | `paintwork` Paint Damage | Transform |
 | Paint, any of the 11 panels: every Paint and panels option (`ck_paint`): repainted, overspray or colour mismatch, uneven gaps, bolt tool marks, wrap or paint film | `previous_paint_work` Previous Paint Work | Transform |
 | Exterior: Windshield, the four side windows, Rear glass (`ck_glass`) | `windshield_damage` Windshield Damage | Transform |
-| Exterior body panels and Other: Crack or break; Mirror (`ck_glass`); Headlight, Tail light, Other lights (`ck_lights`); Wipers (`ck_wipers`); Fuel door (`ck_fuel_cap`) | `broken_or_missing_parts` Broken/Missing Parts | Transform |
+| Exterior body panels and Other: Crack/break; Mirror (`ck_glass`); Headlight, Tail light, Other lights (`ck_lights`); Wipers (`ck_wipers`); Fuel door (`ck_fuel_cap`) | `broken_or_missing_parts` Broken/Missing Parts | Transform |
 | Interior: Warning lights (`ck_lights_dash`) | `warning_lights` Warning Lights | Transform |
 | Tires: each wheel's wheel, Curb rash, Bent, Cracked, Aftermarket (`ck_wheel`) | `wheel_damage` Wheel Damage | Transform |
-| Exterior: Rust bubbling, Structure; Tires: each wheel's tire (`ck_tire`); every Interior, Mechanicals and Underbody place, including Sunroof and Navigation not working | `additional_damage` Additional Damage | Transform |
+| Exterior: Rust, Structure; Tires: each wheel's tire (`ck_tire`); every Interior, Mechanicals and Underbody place, including Sunroof and Navigation not working | `additional_damage` Additional Damage | Transform |
 | Ravin AI finding the inspector kept (phase 3) | Type from its label, as above | Transform |
 
 Structure on an Exterior or Interior place also sets `frame_damage` to Yes (a Red level).
@@ -101,7 +101,7 @@ The seller's required description is built from the label: "Left front door: Den
 | `severity` | Moderate | Minor, Moderate or Severe, required; also in the description |
 | `size_in` | 2 | Whole inches, 1 to 36; optional |
 | `where` | Right front door | Which panel (Paint), Where (Leak) or Which wheel (Brakes), when the place has one |
-| `check_id`, `check_option` | `ck_glass`, Windshield crack | The check and option this damage answers |
+| `check_id`, `check_option` | `ck_glass`, Windshield cracked | The check and option this damage answers |
 | `level` | Red, Yellow, Disclosed | From the question list; drives the CR rows and the light |
 | `ai_first_guess` | place, type, severity | What AI proposed, kept beside what the inspector confirmed |
 | `upright_turn_deg` | 90 | How far the app turned the photo to make it upright |
@@ -117,12 +117,12 @@ Nine of the 13 seller answers come straight from inspector checks. The other fou
 |---|---|---|---|
 | `check_engine_light_on` | Is the Check Engine light on? | Warning lights (`ck_lights_dash`) = Check engine | Reuse |
 | `frame_damage` | Frame damage? | Structure and frame (`ck_structure`) with a Red option | Reuse |
-| `vehicle_drivability` | Issues that stop safe driving? | Engine = Will not start (`ck_engine`), EV Power-on = Will not power on (`ck_ev_power`) | Transform |
+| `vehicle_drivability` | Issues that stop safe driving? | Engine = No start (`ck_engine`), EV Power-on = No power on (`ck_ev_power`) | Transform |
 | `interior_damage` | Odors, damaged dash or panels, stains, rips | Odor (`ck_odor`), Seats, carpet and trim (`ck_seats`) | Transform |
 | `technology_issues` | Sound, display, backup camera, safety sensors, missing equipment | Features (`ck_features`), Navigation = Not working (`navigation`) adds `navigation`, Scan = calibration needed (`ck_scan`), Equipment (`ck_equip`) | Transform |
 | `mechanical_issues` | A/C, electrical (with text), tire pressure, transmission (with text) | A/C and heat (`ck_ac`), Seat belts and airbags, Lights, Warning lights (`ck_srs`, `ck_lights`, `ck_lights_dash`), Transmission (`ck_trans`), Road test (`ck_road`); text = the options picked | Transform |
 | `tire_mileage` | Great 9-11/32, Fair 5-8/32, Replace 4/32 and below; same for all four? per tire | Measured tread per tire (`tread`) mapped to the tiers; all_same when all four land in one tier | Transform |
-| `has_wrap` | Wrapped now or ever? | Yes when the car is wrapped now; otherwise the seller's answer stays, since the question also covers past wraps. Paint and panels = Wrap or paint film (`ck_paint`) | Transform |
+| `has_wrap` | Wrapped now or ever? | Yes when the car is wrapped now; otherwise the seller's answer stays, since the question also covers past wraps. Paint and panels = Wrap/PPF (`ck_paint`) | Transform |
 | `has_modifications` + `modification_photos` | Any modifications? + photos | Yes when any modification photo was taken (`ph_mod_ext`, `ph_mod_int`, `ph_mod_mech`), else No; those photos fill `modification_photo``s` | Transform |
 | `sunroof_condition` | Works great, Doesn't work, No sunroof | Sunroof (`sunroof`, Interior page): Works, Not working, No sunroof give Works great, Doesn't work, No sunroof | Reuse |
 | `additional_condition` | Free text | Inspector's note for dealers (`summary`) + battery health, keys, codes, tread line | Transform |
@@ -186,7 +186,7 @@ AI reads each photo as soon as it is taken and fills the answer; the inspector c
 | VIN | Windshield VIN (`ph_vin_dash`) and door-jamb label (`ph_vin_door`), check digit checked | `vehicle.vin_read`, confirmed on the Summary |
 | Tire brand and size | Whole tire (`tire_photo`), each wheel | `tires[].brand`, `size` (optional) |
 | Tread depth, 1 to 14/32 in | Tread gauge in the lowest groove (`tread_photo`), each wheel | `tires[].tread_32nds` |
-| Paint meter reading, mils | Meter on the panel (`paint`), 11 panels | `paint[].mils`; 8 mils or more sets High and Panel repainted |
+| Paint meter reading, mils | Meter on the panel (`paint`), 11 panels | `paint[].mils`; 8 mils or more sets High and Repaint |
 | EV battery health, % | Battery health screen (`ph_ev_battery`) | `vehicle.ev_battery_health_pct` |
 | Damage place, type, severity | Each damage photo | `damages[].ai_first_guess`; the confirmed answer goes in `place`, `type`, `severity` |
 
@@ -205,14 +205,14 @@ The backend keeps one list of every issue the app can report, `issue-catalog.jso
 | `severities`, `size_in` | Minor, Moderate, Severe; size 1 to 36 in, optional |  |
 | `levels` | Ends the visit and Not listed until fixed give Not listed; Red and Yellow set the light; Disclosed is listed with no change |  |
 
-Example rows: Exterior, Trunk or liftgate, Structure answers Structure and frame with Rear structure repaired or damaged (Red, `additional_damage`, `frame_damage` Yes). Tires, Right front wheel, Curb rash answers Wheel, each wheel (Disclosed, `wheel_damage`). Interior, Carpet, Flood signs answers Seats, carpet and trim (Red).
+Example rows: Exterior, Trunk or liftgate, Structure answers Structure and frame with Rear structural damage (Red, `additional_damage`, `frame_damage` Yes). Tires, Right front wheel, Curb rash answers Wheel, each wheel (Disclosed, `wheel_damage`). Interior, Carpet, Flood signs answers Seats, carpet and trim (Red).
 
 ## CR report generation
 
 Bidbus makes the condition report from the record as soon as it arrives. `cr_from_inspection.py` (attached to DEV-190) shows every step; it ran on both samples with no errors and wrote `cr-bmw-x3.json` and `cr-tesla-model-y.json`.
 
 1. Check the record against the issue lists: every place, type, severity, size, Which panel or Where, check option for the car's fuel and its level; tread 1 to 14; paint panels and High; VIN check digit; VIN and mileage confirmed; sunroof, navigation and overall condition answered; seller signature; every photo upright. Anything off stops the report with the reason.
-2. Build one issue list. Each damage photo is one issue: place, type, severity, size, level, CR row, photo, AI first guess and whether the inspector changed it. Each check problem no damage photo gave is one issue too: its place is the Which wheel or Where answer (a panel that reads High for Panel repainted, with its mils) or the check itself, and it has no severity. Each issue carries its text in the inspector app's own words: a damage reads "Place: Type, Severity, N in" (for example "Left front door: Scratch, Moderate, 4 in"); a check problem reads "Check: option", with "Tire:" or "Wheel:" and one issue per wheel; a second line holds the Where answer, the wheel, the High panel or the engine codes. The damage photo description is the same text.
+2. Build one issue list. Each damage photo is one issue: place, type, severity, size, level, CR row, photo, AI first guess and whether the inspector changed it. Each check problem no damage photo gave is one issue too: its place is the Which wheel or Where answer (a panel that reads High for Repaint, with its mils) or the check itself, and it has no severity. Each issue carries its text in the inspector app's own words: a damage reads "Place: Type, Severity, N in" (for example "Left front door: Scratch, Moderate, 4 in"); a check problem reads "Check: option", with "Tire:" or "Wheel:" and one issue per wheel; a second line holds the Where answer, the wheel, the High panel or the engine codes. The damage photo description is the same text.
 3. Put the issues in the CR rows in dealer order: Exterior, Paint, Tires, Underbody, Mechanicals, Engine sound (not for EVs), Interior, OBD-II, Additionals. An issue goes to its check's row, so Structure seen at the trunk or carpet shows under Underbody; one with no check goes to its section's row. Each row also gets the photos stored under its section (the VIN, odometer and keys photos under Additionals) and its videos; Start photos (seller documents) go on no row. Each damage shows in its row with its photo and text; the report has no separate Damages section.
 4. Add tires (tread, Replace 4/32 and below, Fair 5 to 8, Good 9 and up, brand, size, the issues on that wheel), paint readings, videos, the 360 frames, modification photos, features, overall condition, inspector note and seller signature.
 5. Work out the light from the worst level (Not listed, Red, Yellow, otherwise Green) and the not-listed reasons. The light is stored; V1 dealer screens do not show it. Work out the highlight that the seller and dealer reports show first: Structural damage (Yes when a Structure problem is recorded, Not checked when the inspector could not photograph it, otherwise No), Keys (the 0, 1 or 2 the inspector confirmed), Odor (the odor problems, or OK) and Mechanical (Issue when any issue sits in Mechanicals, otherwise No issue).

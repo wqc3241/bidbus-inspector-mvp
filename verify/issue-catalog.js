@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, '..');
   const cat = await p.evaluate(() => {
     const FUELS = ['Gas or diesel', 'Hybrid', 'Plug-in hybrid', 'Electric (EV)'];
     const CR_ROW = { OBDII: 'OBD-II' };
-    const DMG = { Scratch: 'scratches', Scuff: 'scratches', Dent: 'dents', Hail: 'dents', Chip: 'paintwork', 'Crack or break': 'broken_or_missing_parts', 'Rust bubbling': 'additional_damage', Structure: 'additional_damage' };
+    const DMG = { Scratch: 'scratches', Scuff: 'scratches', Dent: 'dents', Hail: 'dents', Chip: 'paintwork', 'Crack/break': 'broken_or_missing_parts', 'Rust': 'additional_damage', Structure: 'additional_damage' };
     const CK_DMG = { ck_paint: 'previous_paint_work', ck_wheel: 'wheel_damage', ck_lights_dash: 'warning_lights', ck_lights: 'broken_or_missing_parts', ck_wipers: 'broken_or_missing_parts', ck_fuel_cap: 'broken_or_missing_parts' };
     const dmgType = (ck, t) => ck === 'ck_glass' ? (/^Mirror/.test(t) ? 'broken_or_missing_parts' : 'windshield_damage') : ck ? (CK_DMG[ck] || 'additional_damage') : (DMG[t] || 'additional_damage');
     const fuelsOf = f => FUELS.filter(x => f(x));

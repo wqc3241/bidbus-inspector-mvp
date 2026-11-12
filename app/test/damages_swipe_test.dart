@@ -31,7 +31,7 @@ Future<void> open(WidgetTester t, int n) async {
   s['phase'] = 'label';
   (s['manual'] as List).addAll([dm('e0', 'Exterior'), dm('e1', 'Exterior'), dm('t2', 'Tires'), dm('i3', 'Interior'), dm('m4', 'Mechanicals')]);
   // every tab before Mechanicals is labelled, so all five pages are open (an unfinished tab shuts the ones after it)
-  for (final (i, place, type) in [(0, 'Left front door', 'Overspray or colour mismatch'), (1, 'Left front door', 'Overspray or colour mismatch'), (2, 'Right rear tire', 'Uneven wear'), (3, 'Front seats', 'Seats worn')]) {
+  for (final (i, place, type) in [(0, 'Left front door', 'Overspray/color mismatch'), (1, 'Left front door', 'Overspray/color mismatch'), (2, 'Right rear tire', 'Uneven wear'), (3, 'Front seats', 'Seats worn')]) {
     final d = manual(s)[i];
     setLabel(d, 'panel', place, 'Gas or diesel');
     setLabel(d, 'type', type, 'Gas or diesel');

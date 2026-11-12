@@ -51,7 +51,7 @@ void main() {
           damage += placeOpts(pl, fuel).length - twin;
         }
       }
-      // the report also counts the plug-in-only option "Charging cable or adapters missing" for Hybrid; docs/01 2.2 limits charging items to EV and plug-in hybrid
+      // the report also counts the plug-in-only option "Charging cable missing" for Hybrid; docs/01 2.2 limits charging items to EV and plug-in hybrid
       if (fuel != 'Plug-in hybrid') expect(options, run['options'] - (fuel == 'Hybrid' ? 1 : 0), reason: 'check options for $fuel');
       if (fuel != 'Plug-in hybrid') expect(damage, run['damage'], reason: 'damage place and type pairs for $fuel');
       expect(capList('Tires', st).where((x) => x['id'] == 'paint').length, 11); // the paint panels are in the walk-around

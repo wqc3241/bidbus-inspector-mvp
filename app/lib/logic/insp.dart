@@ -11,7 +11,7 @@ J newInspection({required String id, required J car, required String fuel, requi
     'manual': <dynamic>[], 'multi': <String, dynamic>{}, 'skip': <String, dynamic>{}, 'feat': <String, dynamic>{}, 'note': '', 'overall': '',
     'signName': car['owner_name'] ?? '', 'signed': false, 'agree': false, 'sok': <String, dynamic>{}, 'dprev': <dynamic>[],
     'files': <String, dynamic>{}, 'turn': <String, dynamic>{}, 'docs': <String, dynamic>{}, 'start': null, 'end': null, 'cap': null,
-    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true, 'c9': true,
+    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true, 'c9': true, 'rn1': true,
   };
 }
 
@@ -154,7 +154,7 @@ List<J> capList(String k, J st) {
     return [if (st['owner'] == 'Family, with proof') {'id': 'ph_family', 'it': {'id': 'ph_family', 'kind': 'photo', 'label': 'Proof of family relationship'}}];
   }
   if (k == 'Paint') return [];
-  final noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
+  final noStart = lst(st, 'probs', 'ck_engine').contains('No start');
   J? shot(String id) {
     final it = byId[id];
     // engine sound and exhaust videos are hidden when the engine will not start
@@ -187,7 +187,7 @@ List<J> capList0(String k, J st) {
     ];
   }
   if (k == 'start' || k == 'Paint') return capList(k, st);
-  final noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
+  final noStart = lst(st, 'probs', 'ck_engine').contains('No start');
   var ml = stepItems(k, st)
       .media
       .where((it) => !(it['id'] as String).startsWith('ph_mod_') && !(noStart && (it['id'] == 'video_engine' || it['id'] == 'video_exhaust')))
@@ -344,7 +344,7 @@ bool paintHigh(J? r) => r != null && r['na'] != true && r['v'] != null && r['v']
 List<String> paintHighs(J st) => [for (final x in paintPanels) if (paintHigh(m(st, 'paint')[x[1]] as J?)) x[1]];
 List<String> paintWhere(List<String> highs) => highs.map(pn).where((h) => (extra['ck_paint']![1] as List).contains(h)).toList();
 
-// a high reading ticks Panel repainted with that panel, only when the check is OK or already that problem
+// a high reading ticks Repaint with that panel, only when the check is OK or already that problem
 // what labelled damage photos set on Paint and panels is kept
 void syncPaint(J st) {
   final highs = paintHighs(st), dp = dmgVals(st, 'ck_paint', null), dx = dmgVals(st, 'ck_paint', null, 'x');
@@ -422,7 +422,7 @@ String? pickCheck(J st, String id, String? w, String v) {
     }
     if (extra[id] != null && !auto) {
       step = 'extra';
-    } else if (id == 'ck_scan' && v.contains('type the codes')) {
+    } else if (id == 'ck_scan' && v.contains('Engine codes')) {
       step = 'codes';
     }
   }

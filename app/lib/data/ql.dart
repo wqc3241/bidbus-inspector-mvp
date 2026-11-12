@@ -11,7 +11,32 @@ late List<J> items;
 late Map<String, J> byId;
 late Map<String, List<J>> dplaces;
 
-Future<void> loadQl() async => initQl(jsonDecode(await rootBundle.loadString('assets/question-list.json')));
+Future<void> loadQl() async {
+  initQl(jsonDecode(await rootBundle.loadString('assets/question-list.json')));
+  optRenames = (jsonDecode(await rootBundle.loadString('assets/option-renames.json')) as Map).cast<String, String>();
+}
+
+// option text saved before the wording was shortened -> today's text (assets/option-renames.json)
+Map<String, String> optRenames = {};
+
+dynamic _renamed(dynamic v) => v is String
+    ? (optRenames[v] ?? v)
+    : v is List
+        ? [for (final x in v) _renamed(x)]
+        : v is Map
+            ? <String, dynamic>{for (final e in v.entries) optRenames['${e.key}'] ?? '${e.key}': _renamed(e.value)}
+            : v;
+
+// a saved inspection moves to today's option text once
+J renameOpts(J st) {
+  if (st['rn1'] == true) return st;
+  final n = _renamed(st) as J;
+  st
+    ..clear()
+    ..addAll(n);
+  st['rn1'] = true;
+  return st;
+}
 
 void initQl(J q) {
   ql = q;
@@ -68,7 +93,7 @@ bool fuelOk(String? cars, String fuel) {
 // a question only for one make ("make" in the question list, e.g. the Tesla hardware version photo)
 bool makeOk(String? make, Object? carMake) => make == null || '${carMake ?? ''}'.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '') == make.toLowerCase();
 
-const gasOnlyOpts = ['Engine oil low or dark', 'Engine oil very low or dry', 'Milky oil, metal or sludge', 'Oil or metal in the coolant', 'Engine hesitates or misfires', 'Transmission delayed, slips or harsh', 'Check engine', 'Oil, temperature or transmission'];
+const gasOnlyOpts = ['Oil low/dark', 'Oil very low/dry', 'Oil milky/sludge/metal', 'Oil in coolant', 'Engine hesitation/misfire', 'Transmission issue', 'Check engine', 'Oil/temp/transmission'];
 const featDrop = {'Sunroof not working', 'Navigation not working'};
 
 List<String> optsFor(J it, String fuel) {
@@ -94,7 +119,7 @@ const paintPanels = [
   ['Right', 'Right quarter panel'], ['Right', 'Right rear door'], ['Right', 'Right front door'], ['Right', 'Right front fender'], ['Front', 'Hood'], ['Top', 'Roof'],
 ];
 const paintHighMils = 8.0;
-const paintOpt = 'Panel repainted (the meter reads high)';
+const paintOpt = 'Repaint';
 String pn(String p) => p == 'Hood' ? 'Hood or frunk lid' : p;
 
 const extra = {
@@ -155,7 +180,7 @@ const lookFor = {
   'Left rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'], 'Right rear door': ['Frame damage', 'Repaint', 'B-pillar', 'Window'],
   'Left quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'], 'Right quarter panel': ['Repaint', 'Dents', 'Panel gaps', 'Fuel door'],
   'Trunk or liftgate': ['Repaint', 'Tail lights', 'Panel gaps', 'Rear window'], 'Hood': ['Repaint', 'Hood bolts', 'Chips', 'Windshield'], 'Roof': ['Repaint', 'Dents', 'Hail'],
-  'ph_ext_roof': ['Dents', 'Hail', 'Sunroof'], 'tire_photo': ['Sidewall cracks', 'Bulge', 'Curb rash', 'Plug or patch'], 'tread_photo': ['Lowest groove', 'Uneven wear'],
+  'ph_ext_roof': ['Dents', 'Hail', 'Sunroof'], 'tire_photo': ['Sidewall cracks', 'Bulge', 'Curb rash', 'Plug/patch'], 'tread_photo': ['Lowest groove', 'Uneven wear'],
   'ph_int_cargo': ['Trunk floor', 'Rails', 'Water', 'Spare tire'], 'ph_engine_bay': ['Aprons', 'Strut towers', 'Core support', 'Leaks'],
   'ph_engine_oil': ['Sludge', 'Milky oil', 'Oil level'], 'video_exhaust': ['Rev noise', 'Smoke', 'Reverse gear'], 'ph_frunk': ['Coolant', 'Water', 'Damage'],
   'ph_ev_port': ['Scorched pins', 'Latch'], 'ph_under_lf': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_lr': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_lm': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_rm': ['Leaks', 'Rust', 'Frame rails', 'Kinks'],
@@ -231,7 +256,7 @@ J? effPlace(J? pl, String? t, String fuel) => twinOf(pl, t, fuel) ?? pl;
 bool underPlace(String? p) => underTiles.contains(p);
 String dmgSec(String? z, String? p) => (z ?? 'Exterior') == 'Mechanicals' && underPlace(p) ? 'Underbody' : (z ?? 'Exterior');
 
-// the problem without the place in front: Windshield + "Windshield crack" -> "Crack"
+// the problem without the place in front: Windshield + "Windshield cracked" -> "Cracked"
 String dshort(String? place, String? type) {
   final t = type ?? '', p = (place ?? '').toLowerCase(), parts = p.split(' ');
   for (final c in [p, parts.last, parts.first]) {

@@ -405,7 +405,7 @@
    "result": "Problem",
    "problems": [
     {
-     "option": "Windshield chip under 1 in",
+     "option": "Windshield chip < 1 in",
      "level": "Disclosed",
      "from_damage_photo": true
     }
@@ -428,12 +428,12 @@
    "result": "Problem",
    "problems": [
     {
-     "option": "Panel repainted (the meter reads high)",
+     "option": "Repaint",
      "level": "Disclosed",
      "from_damage_photo": false
     },
     {
-     "option": "Overspray or colour mismatch",
+     "option": "Overspray/color mismatch",
      "level": "Disclosed",
      "from_damage_photo": true
     }
@@ -504,12 +504,12 @@
    "result": "Problem",
    "problems": [
     {
-     "option": "Rear structure repaired or damaged",
+     "option": "Rear structural damage",
      "level": "Red",
      "from_damage_photo": true
     },
     {
-     "option": "Frame rails, floor or subframe repaired or damaged",
+     "option": "Frame/floor structural damage",
      "level": "Red",
      "from_damage_photo": true
     }
@@ -593,7 +593,7 @@
    "result": "Problem",
    "problems": [
     {
-     "option": "Struts or shocks leaking or worn",
+     "option": "Struts/shocks worn",
      "level": "Disclosed",
      "from_damage_photo": true
     }
@@ -608,7 +608,7 @@
    "result": "Problem",
    "problems": [
     {
-     "option": "Brake pads under 3 mm",
+     "option": "Pads < 3 mm",
      "level": "Disclosed",
      "from_damage_photo": false
     }
@@ -637,7 +637,7 @@
    "result": "Problem",
    "problems": [
     {
-     "option": "Engine codes stored (type the codes)",
+     "option": "Engine codes",
      "level": "Yellow",
      "from_damage_photo": false
     }
@@ -814,7 +814,7 @@
    "file": "damage-2.jpg",
    "upright_turn_deg": 0,
    "check_id": "ck_structure",
-   "check_option": "Rear structure repaired or damaged",
+   "check_option": "Rear structural damage",
    "ai_first_guess": {
     "place": "Trunk or liftgate",
     "type": "Structure",
@@ -826,7 +826,7 @@
    "n": 3,
    "section": "Exterior",
    "place": "Windshield",
-   "type": "Windshield chip under 1 in",
+   "type": "Windshield chip < 1 in",
    "severity": "Minor",
    "size_in": 1,
    "source": "camera",
@@ -834,10 +834,10 @@
    "file": "damage-3.jpg",
    "upright_turn_deg": 0,
    "check_id": "ck_glass",
-   "check_option": "Windshield chip under 1 in",
+   "check_option": "Windshield chip < 1 in",
    "ai_first_guess": {
     "place": "Windshield",
-    "type": "Windshield chip under 1 in",
+    "type": "Windshield chip < 1 in",
     "severity": "Minor"
    },
    "confirmed": true
@@ -846,7 +846,7 @@
    "n": 4,
    "section": "Paint",
    "place": "Right front door",
-   "type": "Overspray or colour mismatch",
+   "type": "Overspray/color mismatch",
    "severity": "Minor",
    "size_in": null,
    "source": "camera",
@@ -855,10 +855,10 @@
    "upright_turn_deg": 0,
    "where": "Right front door",
    "check_id": "ck_paint",
-   "check_option": "Overspray or colour mismatch",
+   "check_option": "Overspray/color mismatch",
    "ai_first_guess": {
     "place": "Right front door",
-    "type": "Overspray or colour mismatch",
+    "type": "Overspray/color mismatch",
     "severity": "Minor"
    },
    "confirmed": true
@@ -895,7 +895,7 @@
    "file": "damage-6.jpg",
    "upright_turn_deg": 0,
    "check_id": "ck_structure",
-   "check_option": "Frame rails, floor or subframe repaired or damaged",
+   "check_option": "Frame/floor structural damage",
    "ai_first_guess": {
     "place": "Carpet",
     "type": "Structure",
@@ -927,7 +927,7 @@
    "n": 8,
    "section": "Underbody",
    "place": "Suspension",
-   "type": "Struts or shocks leaking or worn",
+   "type": "Struts/shocks worn",
    "severity": "Moderate",
    "size_in": null,
    "source": "camera",
@@ -935,10 +935,10 @@
    "file": "damage-8.jpg",
    "upright_turn_deg": 0,
    "check_id": "ck_susp",
-   "check_option": "Struts or shocks leaking or worn",
+   "check_option": "Struts/shocks worn",
    "ai_first_guess": {
     "place": "Suspension",
-    "type": "Struts or shocks leaking or worn",
+    "type": "Struts/shocks worn",
     "severity": "Moderate"
    },
    "confirmed": true

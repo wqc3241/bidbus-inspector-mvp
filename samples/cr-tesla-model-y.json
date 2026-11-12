@@ -223,7 +223,7 @@
     "size_in": null,
     "level": "Red",
     "check": "ck_structure",
-    "option": "Rear structure repaired or damaged",
+    "option": "Rear structural damage",
     "photo": "damage-2.jpg",
     "from": "damage photo",
     "bidbus_damage_type": "additional_damage",
@@ -236,45 +236,45 @@
    },
    {
     "id": "I3",
-    "text": "Windshield: Chip under 1 in, Minor, 1 in",
+    "text": "Windshield: Chip < 1 in, Minor, 1 in",
     "cr_row": "Exterior",
     "section": "Exterior",
     "place": "Windshield",
-    "type": "Windshield chip under 1 in",
+    "type": "Windshield chip < 1 in",
     "severity": "Minor",
     "size_in": 1,
     "level": "Disclosed",
     "check": "ck_glass",
-    "option": "Windshield chip under 1 in",
+    "option": "Windshield chip < 1 in",
     "photo": "damage-3.jpg",
     "from": "damage photo",
     "bidbus_damage_type": "windshield_damage",
     "ai_first_guess": {
      "place": "Windshield",
-     "type": "Windshield chip under 1 in",
+     "type": "Windshield chip < 1 in",
      "severity": "Minor"
     },
     "inspector_changed_ai": false
    },
    {
     "id": "I4",
-    "text": "Right front door: Overspray or colour mismatch, Minor",
+    "text": "Right front door: Overspray/color mismatch, Minor",
     "cr_row": "Paint",
     "section": "Paint",
     "place": "Right front door",
-    "type": "Overspray or colour mismatch",
+    "type": "Overspray/color mismatch",
     "severity": "Minor",
     "size_in": null,
     "level": "Disclosed",
     "check": "ck_paint",
-    "option": "Overspray or colour mismatch",
+    "option": "Overspray/color mismatch",
     "where": "Right front door",
     "photo": "damage-4.jpg",
     "from": "damage photo",
     "bidbus_damage_type": "previous_paint_work",
     "ai_first_guess": {
      "place": "Right front door",
-     "type": "Overspray or colour mismatch",
+     "type": "Overspray/color mismatch",
      "severity": "Minor"
     },
     "inspector_changed_ai": false
@@ -313,7 +313,7 @@
     "size_in": null,
     "level": "Red",
     "check": "ck_structure",
-    "option": "Frame rails, floor or subframe repaired or damaged",
+    "option": "Frame/floor structural damage",
     "photo": "damage-6.jpg",
     "from": "damage photo",
     "bidbus_damage_type": "additional_damage",
@@ -348,37 +348,37 @@
    },
    {
     "id": "I8",
-    "text": "Suspension: Struts or shocks leaking or worn, Moderate",
+    "text": "Suspension: Struts/shocks worn, Moderate",
     "cr_row": "Mechanicals",
     "section": "Underbody",
     "place": "Suspension",
-    "type": "Struts or shocks leaking or worn",
+    "type": "Struts/shocks worn",
     "severity": "Moderate",
     "size_in": null,
     "level": "Disclosed",
     "check": "ck_susp",
-    "option": "Struts or shocks leaking or worn",
+    "option": "Struts/shocks worn",
     "photo": "damage-8.jpg",
     "from": "damage photo",
     "bidbus_damage_type": "additional_damage",
     "ai_first_guess": {
      "place": "Suspension",
-     "type": "Struts or shocks leaking or worn",
+     "type": "Struts/shocks worn",
      "severity": "Moderate"
     },
     "inspector_changed_ai": false
    },
    {
-    "text": "Paint and panels: Panel repainted (the meter reads high)",
+    "text": "Paint and panels: Repaint",
     "sub": "Right rear door",
     "cr_row": "Paint",
     "section": "Paint",
-    "type": "Panel repainted (the meter reads high)",
+    "type": "Repaint",
     "severity": null,
     "size_in": null,
     "level": "Disclosed",
     "check": "ck_paint",
-    "option": "Panel repainted (the meter reads high)",
+    "option": "Repaint",
     "from": "check row",
     "photo": null,
     "id": "I9",
@@ -403,31 +403,31 @@
     "wheel": "rr"
    },
    {
-    "text": "Power-on: Slow to wake or needs a 12 V jump",
+    "text": "Power-on: Slow wake/12 V jump",
     "cr_row": "Mechanicals",
     "section": "Mechanicals",
-    "type": "Slow to wake or needs a 12 V jump",
+    "type": "Slow wake/12 V jump",
     "severity": null,
     "size_in": null,
     "level": "Disclosed",
     "check": "ck_ev_power",
-    "option": "Slow to wake or needs a 12 V jump",
+    "option": "Slow wake/12 V jump",
     "from": "check row",
     "photo": null,
     "id": "I11",
     "place": "Power-on"
    },
    {
-    "text": "Brakes: Brake pads under 3 mm",
+    "text": "Brakes: Pads < 3 mm",
     "sub": "Left front",
     "cr_row": "Mechanicals",
     "section": "Mechanicals",
-    "type": "Brake pads under 3 mm",
+    "type": "Pads < 3 mm",
     "severity": null,
     "size_in": null,
     "level": "Disclosed",
     "check": "ck_brakes",
-    "option": "Brake pads under 3 mm",
+    "option": "Pads < 3 mm",
     "from": "check row",
     "photo": null,
     "id": "I12",
@@ -956,14 +956,14 @@
    "previous_paint_work": [
     {
      "source_file": "damage-4.jpg",
-     "description": "Right front door: Overspray or colour mismatch, Minor"
+     "description": "Right front door: Overspray/color mismatch, Minor"
     }
    ],
    "has_windshield_damage": true,
    "windshield_damage": [
     {
      "source_file": "damage-3.jpg",
-     "description": "Windshield: Chip under 1 in, Minor, 1 in"
+     "description": "Windshield: Chip < 1 in, Minor, 1 in"
     }
    ],
    "has_broken_or_missing_parts": false,
@@ -991,7 +991,7 @@
     },
     {
      "source_file": "damage-8.jpg",
-     "description": "Suspension: Struts or shocks leaking or worn, Moderate"
+     "description": "Suspension: Struts/shocks worn, Moderate"
     }
    ]
   },

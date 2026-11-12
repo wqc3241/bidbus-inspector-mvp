@@ -870,17 +870,17 @@
    "label": "Glass and mirrors",
    "default": "OK",
    "options": [
-    "Windshield chip under 1 in",
-    "Windshield chip over 1 in or in the driver's view",
-    "Windshield crack",
-    "Side, rear or roof glass chipped or cracked",
+    "Windshield chip < 1 in",
+    "Windshield chip > 1 in / in view",
+    "Windshield cracked",
+    "Glass chipped/cracked",
     "Mirror damaged"
    ],
    "levels": {
-    "Windshield chip under 1 in": "Disclosed",
-    "Windshield chip over 1 in or in the driver's view": "Disclosed",
-    "Windshield crack": "Disclosed",
-    "Side, rear or roof glass chipped or cracked": "Disclosed",
+    "Windshield chip < 1 in": "Disclosed",
+    "Windshield chip > 1 in / in view": "Disclosed",
+    "Windshield cracked": "Disclosed",
+    "Glass chipped/cracked": "Disclosed",
     "Mirror damaged": "Disclosed"
    },
    "from_ids": [
@@ -900,18 +900,18 @@
    "label": "Lights",
    "default": "OK",
    "options": [
-    "Headlight cracked, hazy or water inside",
+    "Headlight damaged",
     "Headlight not working",
-    "Tail light cracked or water inside",
+    "Tail light damaged",
     "Tail light not working",
-    "Brake, turn, hazard, reverse, fog or plate light out"
+    "Other light out"
    ],
    "levels": {
-    "Headlight cracked, hazy or water inside": "Disclosed",
+    "Headlight damaged": "Disclosed",
     "Headlight not working": "Disclosed",
-    "Tail light cracked or water inside": "Disclosed",
+    "Tail light damaged": "Disclosed",
     "Tail light not working": "Disclosed",
-    "Brake, turn, hazard, reverse, fog or plate light out": "Disclosed"
+    "Other light out": "Disclosed"
    },
    "from_ids": [
     "hl_l",
@@ -930,12 +930,12 @@
    "label": "Wipers and washers",
    "default": "OK",
    "options": [
-    "Blades streak or worn",
-    "Wipers or washers not working"
+    "Wiper blades worn",
+    "Wipers/washers not working"
    ],
    "levels": {
-    "Blades streak or worn": "Disclosed",
-    "Wipers or washers not working": "Disclosed"
+    "Wiper blades worn": "Disclosed",
+    "Wipers/washers not working": "Disclosed"
    },
    "from_ids": [
     "f_wipers"
@@ -952,10 +952,10 @@
    "label": "Fuel door and cap",
    "default": "OK",
    "options": [
-    "Missing or damaged"
+    "Missing/damaged"
    ],
    "levels": {
-    "Missing or damaged": "Disclosed"
+    "Missing/damaged": "Disclosed"
    },
    "from_ids": [
     "fuel_cap"
@@ -972,18 +972,18 @@
    "label": "Paint and panels",
    "default": "OK",
    "options": [
-    "Panel repainted (the meter reads high)",
-    "Overspray or colour mismatch",
-    "Uneven panel gaps",
-    "Hood or fender bolts show tool marks",
-    "Wrap or paint film"
+    "Repaint",
+    "Overspray/color mismatch",
+    "Uneven gaps",
+    "Bolt tool marks",
+    "Wrap/PPF"
    ],
    "levels": {
-    "Panel repainted (the meter reads high)": "Disclosed",
-    "Overspray or colour mismatch": "Disclosed",
-    "Uneven panel gaps": "Disclosed",
-    "Hood or fender bolts show tool marks": "Disclosed",
-    "Wrap or paint film": "Disclosed"
+    "Repaint": "Disclosed",
+    "Overspray/color mismatch": "Disclosed",
+    "Uneven gaps": "Disclosed",
+    "Bolt tool marks": "Disclosed",
+    "Wrap/PPF": "Disclosed"
    },
    "from_ids": [
     "paint_base",
@@ -1010,14 +1010,14 @@
     "Uneven wear",
     "Sidewall cracks",
     "Bulge",
-    "Plug or patch",
+    "Plug/patch",
     "Cut"
    ],
    "levels": {
     "Uneven wear": "Disclosed",
     "Sidewall cracks": "Disclosed",
     "Bulge": "Disclosed",
-    "Plug or patch": "Disclosed",
+    "Plug/patch": "Disclosed",
     "Cut": "Disclosed"
    },
    "from_ids": [
@@ -1062,22 +1062,22 @@
    "label": "Structure and frame",
    "default": "OK",
    "options": [
-    "Front structure repaired or damaged",
-    "Pillars or roof repaired or damaged",
-    "Rear structure repaired or damaged",
-    "Frame rails, floor or subframe repaired or damaged",
-    "Frame rails or floor scraped",
-    "Structure changes or holes",
-    "Underbody could not be photographed"
+    "Front structural damage",
+    "Pillar/roof structural damage",
+    "Rear structural damage",
+    "Frame/floor structural damage",
+    "Frame/floor scraped",
+    "Structural alteration",
+    "Underbody not inspected"
    ],
    "levels": {
-    "Front structure repaired or damaged": "Red",
-    "Pillars or roof repaired or damaged": "Red",
-    "Rear structure repaired or damaged": "Red",
-    "Frame rails, floor or subframe repaired or damaged": "Red",
-    "Frame rails or floor scraped": "Disclosed",
-    "Structure changes or holes": "Red",
-    "Underbody could not be photographed": "Red"
+    "Front structural damage": "Red",
+    "Pillar/roof structural damage": "Red",
+    "Rear structural damage": "Red",
+    "Frame/floor structural damage": "Red",
+    "Frame/floor scraped": "Disclosed",
+    "Structural alteration": "Red",
+    "Underbody not inspected": "Red"
    },
    "from_ids": [
     "st_rails",
@@ -1099,12 +1099,12 @@
    "label": "Rust",
    "default": "OK",
    "options": [
-    "Heavy scale or fresh undercoating",
-    "Rust through or holes"
+    "Heavy rust/undercoating",
+    "Penetrating rust"
    ],
    "levels": {
-    "Heavy scale or fresh undercoating": "Disclosed",
-    "Rust through or holes": "Red"
+    "Heavy rust/undercoating": "Disclosed",
+    "Penetrating rust": "Red"
    },
    "from_ids": [
     "u_rust"
@@ -1123,12 +1123,12 @@
    "options": [
     "Scraped",
     "Bolts disturbed",
-    "Dented, cracked or cable damaged"
+    "Pack/cable damaged"
    ],
    "levels": {
     "Scraped": "Disclosed",
     "Bolts disturbed": "Disclosed",
-    "Dented, cracked or cable damaged": "Yellow"
+    "Pack/cable damaged": "Yellow"
    },
    "from_ids": [
     "u_pack"
@@ -1147,16 +1147,16 @@
    "options": [
     "Seats worn",
     "Seats stained",
-    "Seats torn or burned",
-    "Headliner, carpet or trim stained, worn or damaged",
-    "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash"
+    "Seats torn/burned",
+    "Carpet/headliner/trim damaged",
+    "Flood signs"
    ],
    "levels": {
     "Seats worn": "Disclosed",
     "Seats stained": "Disclosed",
-    "Seats torn or burned": "Disclosed",
-    "Headliner, carpet or trim stained, worn or damaged": "Disclosed",
-    "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash": "Red"
+    "Seats torn/burned": "Disclosed",
+    "Carpet/headliner/trim damaged": "Disclosed",
+    "Flood signs": "Red"
    },
    "from_ids": [
     "seat_d",
@@ -1177,13 +1177,13 @@
     "Smoke",
     "Pet",
     "Mildew",
-    "Strong air freshener or ozone"
+    "Air freshener/ozone"
    ],
    "levels": {
     "Smoke": "Disclosed",
     "Pet": "Disclosed",
     "Mildew": "Disclosed",
-    "Strong air freshener or ozone": "Disclosed"
+    "Air freshener/ozone": "Disclosed"
    },
    "from_ids": [
     "odor"
@@ -1200,12 +1200,12 @@
    "label": "Seat belts and airbag covers",
    "default": "OK",
    "options": [
-    "A belt does not latch or retract",
-    "Airbag cover damaged or tampered"
+    "Seat belt not working",
+    "Airbag cover damaged"
    ],
    "levels": {
-    "A belt does not latch or retract": "Yellow",
-    "Airbag cover damaged or tampered": "Yellow"
+    "Seat belt not working": "Yellow",
+    "Airbag cover damaged": "Yellow"
    },
    "from_ids": [
     "srs_parts"
@@ -1222,15 +1222,15 @@
    "label": "Features",
    "default": "OK",
    "options": [
-    "Power windows, locks, mirrors or seats not working",
-    "Screen, audio or cameras not working",
-    "Interior lights or defroster not working",
+    "Power accessories not working",
+    "Screen/audio/camera not working",
+    "Interior lights/defroster not working",
     "Horn not working"
    ],
    "levels": {
-    "Power windows, locks, mirrors or seats not working": "Disclosed",
-    "Screen, audio or cameras not working": "Disclosed",
-    "Interior lights or defroster not working": "Disclosed",
+    "Power accessories not working": "Disclosed",
+    "Screen/audio/camera not working": "Disclosed",
+    "Interior lights/defroster not working": "Disclosed",
     "Horn not working": "Disclosed"
    },
    "from_ids": [
@@ -1251,12 +1251,12 @@
    "label": "Parking brake",
    "default": "OK",
    "options": [
-    "Weak or does not hold",
-    "Fault or warning"
+    "Does not hold",
+    "Fault/warning"
    ],
    "levels": {
-    "Weak or does not hold": "Disclosed",
-    "Fault or warning": "Disclosed"
+    "Does not hold": "Disclosed",
+    "Fault/warning": "Disclosed"
    },
    "from_ids": [
     "pbrake"
@@ -1274,13 +1274,13 @@
    "default": "OK",
    "options": [
     "A/C not cold",
-    "One side warm or a fan speed missing",
-    "Heat weak or none"
+    "Uneven cooling/fan issue",
+    "Heat weak/none"
    ],
    "levels": {
     "A/C not cold": "Yellow",
-    "One side warm or a fan speed missing": "Yellow",
-    "Heat weak or none": "Yellow"
+    "Uneven cooling/fan issue": "Yellow",
+    "Heat weak/none": "Yellow"
    },
    "from_ids": [
     "ac_temp",
@@ -1300,23 +1300,23 @@
    "default": "OK",
    "options": [
     "Warm on arrival",
-    "Hard to start or needed a jump",
-    "Will not start",
-    "Rough idle or stalls",
-    "Tick, knock or timing chain rattle",
-    "Turbo whine or whistle",
-    "Exhaust smoke (blue, white or black)",
-    "Burning oil smell or smoke from the engine bay"
+    "Hard start/jump start",
+    "No start",
+    "Rough idle/stalls",
+    "Engine noise",
+    "Turbo noise",
+    "Exhaust smoke",
+    "Engine bay smoke/burning smell"
    ],
    "levels": {
     "Warm on arrival": "Disclosed",
-    "Hard to start or needed a jump": "Yellow",
-    "Will not start": "Not listed until fixed",
-    "Rough idle or stalls": "Yellow",
-    "Tick, knock or timing chain rattle": "Yellow",
-    "Turbo whine or whistle": "Yellow",
-    "Exhaust smoke (blue, white or black)": "Yellow",
-    "Burning oil smell or smoke from the engine bay": "Yellow"
+    "Hard start/jump start": "Yellow",
+    "No start": "Not listed until fixed",
+    "Rough idle/stalls": "Yellow",
+    "Engine noise": "Yellow",
+    "Turbo noise": "Yellow",
+    "Exhaust smoke": "Yellow",
+    "Engine bay smoke/burning smell": "Yellow"
    },
    "from_ids": [
     "cold",
@@ -1338,12 +1338,12 @@
    "label": "Power-on",
    "default": "OK",
    "options": [
-    "Slow to wake or needs a 12 V jump",
-    "Will not power on"
+    "Slow wake/12 V jump",
+    "No power on"
    ],
    "levels": {
-    "Slow to wake or needs a 12 V jump": "Disclosed",
-    "Will not power on": "Not listed until fixed"
+    "Slow wake/12 V jump": "Disclosed",
+    "No power on": "Not listed until fixed"
    },
    "from_ids": [
     "ev_ready"
@@ -1360,13 +1360,13 @@
    "label": "Transmission and clutch",
    "default": "OK",
    "options": [
-    "Hard to select a gear or grinds",
-    "Clutch spongy or engages high",
+    "Hard shift/grinds",
+    "Clutch issue",
     "Transmission fluid burnt"
    ],
    "levels": {
-    "Hard to select a gear or grinds": "Disclosed",
-    "Clutch spongy or engages high": "Disclosed",
+    "Hard shift/grinds": "Disclosed",
+    "Clutch issue": "Disclosed",
     "Transmission fluid burnt": "Disclosed"
    },
    "from_ids": [
@@ -1385,24 +1385,24 @@
    "label": "Fluids",
    "default": "OK",
    "options": [
-    "Engine oil low or dark",
-    "Engine oil very low or dry",
-    "Milky oil, metal or sludge",
+    "Oil low/dark",
+    "Oil very low/dry",
+    "Oil milky/sludge/metal",
     "Coolant low",
-    "Coolant rusty or with debris",
-    "Oil or metal in the coolant",
-    "Brake, steering or transmission fluid low or dark",
-    "EV: battery coolant low or discoloured"
+    "Coolant contaminated",
+    "Oil in coolant",
+    "Other fluid low/dark",
+    "EV: battery coolant low/discolored"
    ],
    "levels": {
-    "Engine oil low or dark": "Disclosed",
-    "Engine oil very low or dry": "Yellow",
-    "Milky oil, metal or sludge": "Yellow",
+    "Oil low/dark": "Disclosed",
+    "Oil very low/dry": "Yellow",
+    "Oil milky/sludge/metal": "Yellow",
     "Coolant low": "Disclosed",
-    "Coolant rusty or with debris": "Yellow",
-    "Oil or metal in the coolant": "Yellow",
-    "Brake, steering or transmission fluid low or dark": "Disclosed",
-    "EV: battery coolant low or discoloured": "Yellow"
+    "Coolant contaminated": "Yellow",
+    "Oil in coolant": "Yellow",
+    "Other fluid low/dark": "Disclosed",
+    "EV: battery coolant low/discolored": "Yellow"
    },
    "from_ids": [
     "oil_level",
@@ -1413,11 +1413,11 @@
    ],
    "follow": [],
    "option_cars": {
-    "Engine oil low or dark": "gas",
-    "Engine oil very low or dry": "gas",
-    "Milky oil, metal or sludge": "gas",
-    "Oil or metal in the coolant": "gas",
-    "EV: battery coolant low or discoloured": "ev"
+    "Oil low/dark": "gas",
+    "Oil very low/dry": "gas",
+    "Oil milky/sludge/metal": "gas",
+    "Oil in coolant": "gas",
+    "EV: battery coolant low/discolored": "ev"
    }
   },
   {
@@ -1432,14 +1432,14 @@
    "options": [
     "Seep",
     "Active leak",
-    "Brake or fuel line wet or damaged",
-    "Fresh drips on the ground"
+    "Brake/fuel line leak",
+    "Drips on ground"
    ],
    "levels": {
     "Seep": "Disclosed",
     "Active leak": "Yellow",
-    "Brake or fuel line wet or damaged": "Yellow",
-    "Fresh drips on the ground": "Disclosed"
+    "Brake/fuel line leak": "Yellow",
+    "Drips on ground": "Disclosed"
    },
    "from_ids": [
     "lk_valve",
@@ -1467,22 +1467,22 @@
    "label": "Engine bay",
    "default": "OK",
    "options": [
-    "Belt or hose cracked or worn",
+    "Belt/hose worn",
     "Belt squeal",
-    "Radiator or A/C condenser bent, damaged or blocked",
+    "Radiator/condenser damaged",
     "Air filter dirty",
-    "Intake cracked or aftermarket",
-    "Rodent damage or nest",
-    "Fire signs: burn or melt damage to wiring, parts or the cabin"
+    "Intake cracked/aftermarket",
+    "Rodent damage",
+    "Fire signs"
    ],
    "levels": {
-    "Belt or hose cracked or worn": "Disclosed",
+    "Belt/hose worn": "Disclosed",
     "Belt squeal": "Disclosed",
-    "Radiator or A/C condenser bent, damaged or blocked": "Disclosed",
+    "Radiator/condenser damaged": "Disclosed",
     "Air filter dirty": "Disclosed",
-    "Intake cracked or aftermarket": "Disclosed",
-    "Rodent damage or nest": "Disclosed",
-    "Fire signs: burn or melt damage to wiring, parts or the cabin": "Red"
+    "Intake cracked/aftermarket": "Disclosed",
+    "Rodent damage": "Disclosed",
+    "Fire signs": "Red"
    },
    "from_ids": [
     "belts",
@@ -1503,10 +1503,10 @@
    "label": "12 V battery",
    "default": "OK",
    "options": [
-    "Terminals corroded or hold-down loose"
+    "Terminals corroded/loose"
    ],
    "levels": {
-    "Terminals corroded or hold-down loose": "Disclosed"
+    "Terminals corroded/loose": "Disclosed"
    },
    "from_ids": [
     "battery",
@@ -1528,19 +1528,19 @@
    "default": "OK",
    "options": [
     "Catalytic converter replaced",
-    "Catalytic converter missing, cut or hollow",
+    "Catalytic converter missing",
     "Aftermarket exhaust",
     "Exhaust leak",
-    "Aftermarket engine parts, with a CARB EO number",
-    "Aftermarket engine parts, no EO number"
+    "Aftermarket parts, CARB EO",
+    "Aftermarket parts, no CARB EO"
    ],
    "levels": {
     "Catalytic converter replaced": "Disclosed",
-    "Catalytic converter missing, cut or hollow": "Red",
+    "Catalytic converter missing": "Red",
     "Aftermarket exhaust": "Disclosed",
     "Exhaust leak": "Yellow",
-    "Aftermarket engine parts, with a CARB EO number": "Disclosed",
-    "Aftermarket engine parts, no EO number": "Red"
+    "Aftermarket parts, CARB EO": "Disclosed",
+    "Aftermarket parts, no CARB EO": "Red"
    },
    "from_ids": [
     "u_cats",
@@ -1559,12 +1559,12 @@
    "label": "Suspension and steering",
    "default": "OK",
    "options": [
-    "Struts or shocks leaking or worn",
-    "Ball joints, bushings, arms or tie rods worn or bent"
+    "Struts/shocks worn",
+    "Suspension/steering parts worn"
    ],
    "levels": {
-    "Struts or shocks leaking or worn": "Disclosed",
-    "Ball joints, bushings, arms or tie rods worn or bent": "Disclosed"
+    "Struts/shocks worn": "Disclosed",
+    "Suspension/steering parts worn": "Disclosed"
    },
    "from_ids": [
     "u_struts",
@@ -1582,12 +1582,12 @@
    "label": "Driveshaft and CV joints",
    "default": "OK",
    "options": [
-    "Torn CV boot or grease thrown",
-    "Driveshaft or U-joint worn"
+    "CV boot torn",
+    "Driveshaft/U-joint worn"
    ],
    "levels": {
-    "Torn CV boot or grease thrown": "Disclosed",
-    "Driveshaft or U-joint worn": "Disclosed"
+    "CV boot torn": "Disclosed",
+    "Driveshaft/U-joint worn": "Disclosed"
    },
    "from_ids": [
     "u_cv"
@@ -1604,12 +1604,12 @@
    "label": "Brakes",
    "default": "OK",
    "options": [
-    "Brake pads under 3 mm",
-    "Rotors worn, scored or rusted"
+    "Pads < 3 mm",
+    "Rotors worn"
    ],
    "levels": {
-    "Brake pads under 3 mm": "Disclosed",
-    "Rotors worn, scored or rusted": "Disclosed"
+    "Pads < 3 mm": "Disclosed",
+    "Rotors worn": "Disclosed"
    },
    "from_ids": [
     "pad",
@@ -1629,18 +1629,18 @@
    "label": "High voltage and front trunk",
    "default": "OK",
    "options": [
-    "Orange high-voltage cable or connector damaged",
-    "Front trunk tub or seals: water or damage",
-    "Smoke, hissing, popping, heat or fluid from the battery pack",
-    "Fire signs: burn or melt damage to wiring, parts or the cabin",
-    "Rodent damage or nest"
+    "HV cable damaged",
+    "Frunk water/damage",
+    "Battery pack smoke/heat/leak",
+    "Fire signs",
+    "Rodent damage"
    ],
    "levels": {
-    "Orange high-voltage cable or connector damaged": "Yellow",
-    "Front trunk tub or seals: water or damage": "Disclosed",
-    "Smoke, hissing, popping, heat or fluid from the battery pack": "Red",
-    "Fire signs: burn or melt damage to wiring, parts or the cabin": "Red",
-    "Rodent damage or nest": "Disclosed"
+    "HV cable damaged": "Yellow",
+    "Frunk water/damage": "Disclosed",
+    "Battery pack smoke/heat/leak": "Red",
+    "Fire signs": "Red",
+    "Rodent damage": "Disclosed"
    },
    "from_ids": [
     "fr_hv",
@@ -1660,18 +1660,18 @@
    "label": "Charging",
    "default": "OK",
    "options": [
-    "Charges slowly or stops",
-    "Will not charge",
+    "Slow/interrupted charging",
+    "No charge",
     "Not tested",
-    "Charge port pins scorched, bent or corroded",
-    "Charge port door or latch damaged"
+    "Charge port pins damaged",
+    "Charge port door damaged"
    ],
    "levels": {
-    "Charges slowly or stops": "Yellow",
-    "Will not charge": "Yellow",
+    "Slow/interrupted charging": "Yellow",
+    "No charge": "Yellow",
     "Not tested": "Not checked",
-    "Charge port pins scorched, bent or corroded": "Yellow",
-    "Charge port door or latch damaged": "Disclosed"
+    "Charge port pins damaged": "Yellow",
+    "Charge port door damaged": "Disclosed"
    },
    "from_ids": [
     "ev_ac",
@@ -1690,10 +1690,10 @@
    "label": "Hybrid system",
    "default": "OK",
    "options": [
-    "Hybrid codes or warnings"
+    "Hybrid codes/warnings"
    ],
    "levels": {
-    "Hybrid codes or warnings": "Yellow"
+    "Hybrid codes/warnings": "Yellow"
    },
    "from_ids": [
     "hy_codes",
@@ -1712,34 +1712,34 @@
    "default": "Not done",
    "options": [
     "Done, no problems",
-    "Engine hesitates or misfires",
-    "Transmission delayed, slips or harsh",
-    "4WD or AWD does not engage",
+    "Engine hesitation/misfire",
+    "Transmission issue",
+    "4WD/AWD issue",
     "Pulls to one side",
-    "Steering play, noise or vibration",
-    "Brakes pulse, pull, grind or squeal",
-    "Clunks over bumps",
-    "Wheel bearing, tire or driveline noise",
+    "Steering issue",
+    "Brake issue",
+    "Suspension noise",
+    "Driveline noise",
     "Vibration",
-    "Temperature rises",
-    "Warning light after the drive",
-    "EV: motor whine, hum or weak regen",
+    "Overheating",
+    "Warning light after drive",
+    "EV: motor noise/weak regen",
     "EV: reduced power"
    ],
    "levels": {
     "Done, no problems": "Normal",
-    "Engine hesitates or misfires": "Yellow",
-    "Transmission delayed, slips or harsh": "Yellow",
-    "4WD or AWD does not engage": "Yellow",
+    "Engine hesitation/misfire": "Yellow",
+    "Transmission issue": "Yellow",
+    "4WD/AWD issue": "Yellow",
     "Pulls to one side": "Disclosed",
-    "Steering play, noise or vibration": "Yellow",
-    "Brakes pulse, pull, grind or squeal": "Disclosed",
-    "Clunks over bumps": "Yellow",
-    "Wheel bearing, tire or driveline noise": "Yellow",
+    "Steering issue": "Yellow",
+    "Brake issue": "Disclosed",
+    "Suspension noise": "Yellow",
+    "Driveline noise": "Yellow",
     "Vibration": "Disclosed",
-    "Temperature rises": "Yellow",
-    "Warning light after the drive": "Yellow",
-    "EV: motor whine, hum or weak regen": "Yellow",
+    "Overheating": "Yellow",
+    "Warning light after drive": "Yellow",
+    "EV: motor noise/weak regen": "Yellow",
     "EV: reduced power": "Yellow"
    },
    "from_ids": [
@@ -1759,9 +1759,9 @@
    ],
    "follow": [],
    "option_cars": {
-    "Engine hesitates or misfires": "gas",
-    "Transmission delayed, slips or harsh": "gas",
-    "EV: motor whine, hum or weak regen": "ev",
+    "Engine hesitation/misfire": "gas",
+    "Transmission issue": "gas",
+    "EV: motor noise/weak regen": "ev",
     "EV: reduced power": "ev"
    }
   },
@@ -1777,20 +1777,20 @@
    "options": [
     "Check engine",
     "Airbag (SRS)",
-    "ABS, brake or traction",
-    "Oil, temperature or transmission",
-    "EV: high-voltage or reduced-power alert",
+    "ABS/brake/traction",
+    "Oil/temp/transmission",
+    "EV: HV/reduced power",
     "Other warning light",
-    "A light never came on at key-on"
+    "Bulb check failed"
    ],
    "levels": {
     "Check engine": "Yellow",
     "Airbag (SRS)": "Yellow",
-    "ABS, brake or traction": "Yellow",
-    "Oil, temperature or transmission": "Yellow",
-    "EV: high-voltage or reduced-power alert": "Yellow",
+    "ABS/brake/traction": "Yellow",
+    "Oil/temp/transmission": "Yellow",
+    "EV: HV/reduced power": "Yellow",
     "Other warning light": "Yellow",
-    "A light never came on at key-on": "Yellow"
+    "Bulb check failed": "Yellow"
    },
    "from_ids": [
     "wl_cel",
@@ -1809,8 +1809,8 @@
    "follow": [],
    "option_cars": {
     "Check engine": "gas",
-    "Oil, temperature or transmission": "gas",
-    "EV: high-voltage or reduced-power alert": "ev"
+    "Oil/temp/transmission": "gas",
+    "EV: HV/reduced power": "ev"
    }
   },
   {
@@ -1823,18 +1823,18 @@
    "label": "Scan result",
    "default": "OK",
    "options": [
-    "Engine codes stored (type the codes)",
-    "Faults in airbag, ABS, transmission, body or driver-assist modules",
+    "Engine codes",
+    "Other module faults",
     "Not smog ready",
-    "Driver-assist camera or radar needs calibration",
-    "Scan tool cannot read the car"
+    "ADAS calibration needed",
+    "Scan failed"
    ],
    "levels": {
-    "Engine codes stored (type the codes)": "Yellow",
-    "Faults in airbag, ABS, transmission, body or driver-assist modules": "Yellow",
+    "Engine codes": "Yellow",
+    "Other module faults": "Yellow",
     "Not smog ready": "Yellow",
-    "Driver-assist camera or radar needs calibration": "Yellow",
-    "Scan tool cannot read the car": "Red"
+    "ADAS calibration needed": "Yellow",
+    "Scan failed": "Red"
    },
    "from_ids": [
     "codes_stored",
@@ -1861,18 +1861,18 @@
    "label": "VIN, plate and registration",
    "default": "OK",
    "options": [
-    "Registration card not found",
-    "Plate does not match the registration",
-    "Dash VIN does not match the registration",
-    "Door-jamb VIN label missing",
-    "Door-jamb VIN does not match"
+    "No registration card",
+    "Plate mismatch",
+    "Dash VIN mismatch",
+    "Door VIN label missing",
+    "Door VIN mismatch"
    ],
    "levels": {
-    "Registration card not found": "Disclosed",
-    "Plate does not match the registration": "Ends the visit",
-    "Dash VIN does not match the registration": "Ends the visit",
-    "Door-jamb VIN label missing": "Red",
-    "Door-jamb VIN does not match": "Ends the visit"
+    "No registration card": "Disclosed",
+    "Plate mismatch": "Ends the visit",
+    "Dash VIN mismatch": "Ends the visit",
+    "Door VIN label missing": "Red",
+    "Door VIN mismatch": "Ends the visit"
    },
    "from_ids": [
     "reg_card",
@@ -1915,12 +1915,12 @@
    "label": "Equipment",
    "default": "OK",
    "options": [
-    "Missing: spare or inflator kit, jack, cargo cover, mats or anything in the listing photos",
-    "Charging cable or adapters missing"
+    "Equipment missing",
+    "Charging cable missing"
    ],
    "levels": {
-    "Missing: spare or inflator kit, jack, cargo cover, mats or anything in the listing photos": "Disclosed",
-    "Charging cable or adapters missing": "Disclosed"
+    "Equipment missing": "Disclosed",
+    "Charging cable missing": "Disclosed"
    },
    "from_ids": [
     "equip",
@@ -1928,7 +1928,7 @@
    ],
    "follow": [],
    "option_cars": {
-    "Charging cable or adapters missing": "plugin"
+    "Charging cable missing": "plugin"
    }
   },
   {
@@ -1941,10 +1941,10 @@
    "label": "App account",
    "default": "OK",
    "options": [
-    "Car not yet removed from the seller's app account"
+    "Still on seller's app account"
    ],
    "levels": {
-    "Car not yet removed from the seller's app account": "Disclosed"
+    "Still on seller's app account": "Disclosed"
    },
    "from_ids": [
     "acct"
@@ -2196,14 +2196,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      }
     },
     {
@@ -2213,14 +2213,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      }
     },
     {
@@ -2230,14 +2230,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      }
     },
     {
@@ -2247,14 +2247,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      }
     },
     {
@@ -2264,14 +2264,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2281,14 +2281,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2298,14 +2298,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2315,14 +2315,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2332,14 +2332,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2349,14 +2349,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      }
     },
     {
@@ -2366,14 +2366,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      }
     },
     {
@@ -2383,14 +2383,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      }
     },
     {
@@ -2400,14 +2400,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      }
     },
     {
@@ -2415,9 +2415,9 @@
      "check": "ck_glass",
      "check_cars": "all",
      "options": [
-      "Windshield chip under 1 in",
-      "Windshield chip over 1 in or in the driver's view",
-      "Windshield crack"
+      "Windshield chip < 1 in",
+      "Windshield chip > 1 in / in view",
+      "Windshield cracked"
      ]
     },
     {
@@ -2425,7 +2425,7 @@
      "check": "ck_glass",
      "check_cars": "all",
      "options": [
-      "Side, rear or roof glass chipped or cracked"
+      "Glass chipped/cracked"
      ]
     },
     {
@@ -2433,7 +2433,7 @@
      "check": "ck_glass",
      "check_cars": "all",
      "options": [
-      "Side, rear or roof glass chipped or cracked"
+      "Glass chipped/cracked"
      ]
     },
     {
@@ -2441,7 +2441,7 @@
      "check": "ck_glass",
      "check_cars": "all",
      "options": [
-      "Side, rear or roof glass chipped or cracked"
+      "Glass chipped/cracked"
      ]
     },
     {
@@ -2449,7 +2449,7 @@
      "check": "ck_glass",
      "check_cars": "all",
      "options": [
-      "Side, rear or roof glass chipped or cracked"
+      "Glass chipped/cracked"
      ]
     },
     {
@@ -2457,7 +2457,7 @@
      "check": "ck_glass",
      "check_cars": "all",
      "options": [
-      "Side, rear or roof glass chipped or cracked"
+      "Glass chipped/cracked"
      ]
     },
     {
@@ -2473,7 +2473,7 @@
      "check": "ck_lights",
      "check_cars": "all",
      "options": [
-      "Headlight cracked, hazy or water inside",
+      "Headlight damaged",
       "Headlight not working"
      ]
     },
@@ -2482,7 +2482,7 @@
      "check": "ck_lights",
      "check_cars": "all",
      "options": [
-      "Tail light cracked or water inside",
+      "Tail light damaged",
       "Tail light not working"
      ]
     },
@@ -2491,7 +2491,7 @@
      "check": "ck_lights",
      "check_cars": "all",
      "options": [
-      "Brake, turn, hazard, reverse, fog or plate light out"
+      "Other light out"
      ]
     },
     {
@@ -2499,8 +2499,8 @@
      "check": "ck_wipers",
      "check_cars": "all",
      "options": [
-      "Blades streak or worn",
-      "Wipers or washers not working"
+      "Wiper blades worn",
+      "Wipers/washers not working"
      ]
     },
     {
@@ -2508,7 +2508,7 @@
      "check": "ck_fuel_cap",
      "check_cars": "gas",
      "options": [
-      "Missing or damaged"
+      "Missing/damaged"
      ]
     },
     {
@@ -2518,14 +2518,14 @@
       "Dent",
       "Chip",
       "Scuff",
-      "Crack or break",
+      "Crack/break",
       "Hail",
-      "Rust bubbling"
+      "Rust"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Structure changes or holes"
+      "option": "Structural alteration"
      }
     }
    ],
@@ -2535,11 +2535,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2553,11 +2553,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2571,11 +2571,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2589,11 +2589,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2607,11 +2607,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2625,11 +2625,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2643,11 +2643,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2661,11 +2661,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2679,11 +2679,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2697,11 +2697,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2715,11 +2715,11 @@
      "check": "ck_paint",
      "check_cars": "all",
      "options": [
-      "Panel repainted (the meter reads high)",
-      "Overspray or colour mismatch",
-      "Uneven panel gaps",
-      "Hood or fender bolts show tool marks",
-      "Wrap or paint film"
+      "Repaint",
+      "Overspray/color mismatch",
+      "Uneven gaps",
+      "Bolt tool marks",
+      "Wrap/PPF"
      ],
      "extra": {
       "label": "Which panels",
@@ -2738,7 +2738,7 @@
       "Uneven wear",
       "Sidewall cracks",
       "Bulge",
-      "Plug or patch",
+      "Plug/patch",
       "Cut"
      ],
      "wheel": "lf"
@@ -2763,7 +2763,7 @@
       "Uneven wear",
       "Sidewall cracks",
       "Bulge",
-      "Plug or patch",
+      "Plug/patch",
       "Cut"
      ],
      "wheel": "lr"
@@ -2788,7 +2788,7 @@
       "Uneven wear",
       "Sidewall cracks",
       "Bulge",
-      "Plug or patch",
+      "Plug/patch",
       "Cut"
      ],
      "wheel": "rr"
@@ -2813,7 +2813,7 @@
       "Uneven wear",
       "Sidewall cracks",
       "Bulge",
-      "Plug or patch",
+      "Plug/patch",
       "Cut"
      ],
      "wheel": "rf"
@@ -2839,7 +2839,7 @@
      "options": [
       "Seats worn",
       "Seats stained",
-      "Seats torn or burned"
+      "Seats torn/burned"
      ]
     },
     {
@@ -2849,7 +2849,7 @@
      "options": [
       "Seats worn",
       "Seats stained",
-      "Seats torn or burned"
+      "Seats torn/burned"
      ]
     },
     {
@@ -2857,13 +2857,13 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged",
-      "Flood signs: water line, silt or mud above the rocker panels, or rust on seat rails, seat bolts or under the dash"
+      "Carpet/headliner/trim damaged",
+      "Flood signs"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Frame rails, floor or subframe repaired or damaged"
+      "option": "Frame/floor structural damage"
      }
     },
     {
@@ -2871,12 +2871,12 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged"
+      "Carpet/headliner/trim damaged"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2884,12 +2884,12 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged"
+      "Carpet/headliner/trim damaged"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Front structure repaired or damaged"
+      "option": "Front structural damage"
      }
     },
     {
@@ -2897,12 +2897,12 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged"
+      "Carpet/headliner/trim damaged"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Pillars or roof repaired or damaged"
+      "option": "Pillar/roof structural damage"
      }
     },
     {
@@ -2910,7 +2910,7 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged"
+      "Carpet/headliner/trim damaged"
      ]
     },
     {
@@ -2918,7 +2918,7 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged"
+      "Carpet/headliner/trim damaged"
      ]
     },
     {
@@ -2926,12 +2926,12 @@
      "check": "ck_seats",
      "check_cars": "all",
      "options": [
-      "Headliner, carpet or trim stained, worn or damaged"
+      "Carpet/headliner/trim damaged"
      ],
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Rear structure repaired or damaged"
+      "option": "Rear structural damage"
      }
     },
     {
@@ -2939,7 +2939,7 @@
      "check": "ck_srs",
      "check_cars": "all",
      "options": [
-      "A belt does not latch or retract"
+      "Seat belt not working"
      ]
     },
     {
@@ -2947,7 +2947,7 @@
      "check": "ck_srs",
      "check_cars": "all",
      "options": [
-      "Airbag cover damaged or tampered"
+      "Airbag cover damaged"
      ]
     },
     {
@@ -2955,7 +2955,7 @@
      "check": "ck_features",
      "check_cars": "all",
      "options": [
-      "Screen, audio or cameras not working"
+      "Screen/audio/camera not working"
      ]
     },
     {
@@ -2963,7 +2963,7 @@
      "check": "ck_features",
      "check_cars": "all",
      "options": [
-      "Power windows, locks, mirrors or seats not working"
+      "Power accessories not working"
      ]
     },
     {
@@ -2971,7 +2971,7 @@
      "check": "ck_features",
      "check_cars": "all",
      "options": [
-      "Interior lights or defroster not working"
+      "Interior lights/defroster not working"
      ]
     },
     {
@@ -3003,11 +3003,11 @@
      "options": [
       "Check engine",
       "Airbag (SRS)",
-      "ABS, brake or traction",
-      "Oil, temperature or transmission",
-      "EV: high-voltage or reduced-power alert",
+      "ABS/brake/traction",
+      "Oil/temp/transmission",
+      "EV: HV/reduced power",
       "Other warning light",
-      "A light never came on at key-on"
+      "Bulb check failed"
      ]
     },
     {
@@ -3025,7 +3025,7 @@
      "structure": {
       "type": "Structure",
       "check": "ck_structure",
-      "option": "Structure changes or holes"
+      "option": "Structural alteration"
      }
     }
    ],
@@ -3035,13 +3035,13 @@
      "check": "ck_bay",
      "check_cars": "gas",
      "options": [
-      "Belt or hose cracked or worn",
+      "Belt/hose worn",
       "Belt squeal",
-      "Radiator or A/C condenser bent, damaged or blocked",
+      "Radiator/condenser damaged",
       "Air filter dirty",
-      "Intake cracked or aftermarket",
-      "Rodent damage or nest",
-      "Fire signs: burn or melt damage to wiring, parts or the cabin"
+      "Intake cracked/aftermarket",
+      "Rodent damage",
+      "Fire signs"
      ]
     },
     {
@@ -3049,14 +3049,14 @@
      "check": "ck_fluids",
      "check_cars": "all",
      "options": [
-      "Engine oil low or dark",
-      "Engine oil very low or dry",
-      "Milky oil, metal or sludge",
+      "Oil low/dark",
+      "Oil very low/dry",
+      "Oil milky/sludge/metal",
       "Coolant low",
-      "Coolant rusty or with debris",
-      "Oil or metal in the coolant",
-      "Brake, steering or transmission fluid low or dark",
-      "EV: battery coolant low or discoloured"
+      "Coolant contaminated",
+      "Oil in coolant",
+      "Other fluid low/dark",
+      "EV: battery coolant low/discolored"
      ]
     },
     {
@@ -3066,8 +3066,8 @@
      "options": [
       "Seep",
       "Active leak",
-      "Brake or fuel line wet or damaged",
-      "Fresh drips on the ground"
+      "Brake/fuel line leak",
+      "Drips on ground"
      ],
      "extra": {
       "label": "Where",
@@ -3088,12 +3088,12 @@
      "check": "ck_structure",
      "check_cars": "all",
      "options": [
-      "Front structure repaired or damaged",
-      "Pillars or roof repaired or damaged",
-      "Rear structure repaired or damaged",
-      "Frame rails, floor or subframe repaired or damaged",
-      "Frame rails or floor scraped",
-      "Structure changes or holes"
+      "Front structural damage",
+      "Pillar/roof structural damage",
+      "Rear structural damage",
+      "Frame/floor structural damage",
+      "Frame/floor scraped",
+      "Structural alteration"
      ]
     },
     {
@@ -3101,8 +3101,8 @@
      "check": "ck_rust",
      "check_cars": "all",
      "options": [
-      "Heavy scale or fresh undercoating",
-      "Rust through or holes"
+      "Heavy rust/undercoating",
+      "Penetrating rust"
      ]
     },
     {
@@ -3112,7 +3112,7 @@
      "options": [
       "Scraped",
       "Bolts disturbed",
-      "Dented, cracked or cable damaged"
+      "Pack/cable damaged"
      ]
     },
     {
@@ -3121,11 +3121,11 @@
      "check_cars": "gas",
      "options": [
       "Catalytic converter replaced",
-      "Catalytic converter missing, cut or hollow",
+      "Catalytic converter missing",
       "Aftermarket exhaust",
       "Exhaust leak",
-      "Aftermarket engine parts, with a CARB EO number",
-      "Aftermarket engine parts, no EO number"
+      "Aftermarket parts, CARB EO",
+      "Aftermarket parts, no CARB EO"
      ]
     },
     {
@@ -3133,8 +3133,8 @@
      "check": "ck_susp",
      "check_cars": "all",
      "options": [
-      "Struts or shocks leaking or worn",
-      "Ball joints, bushings, arms or tie rods worn or bent"
+      "Struts/shocks worn",
+      "Suspension/steering parts worn"
      ]
     },
     {
@@ -3142,8 +3142,8 @@
      "check": "ck_cv",
      "check_cars": "all",
      "options": [
-      "Torn CV boot or grease thrown",
-      "Driveshaft or U-joint worn"
+      "CV boot torn",
+      "Driveshaft/U-joint worn"
      ]
     },
     {
@@ -3151,8 +3151,8 @@
      "check": "ck_brakes",
      "check_cars": "all",
      "options": [
-      "Brake pads under 3 mm",
-      "Rotors worn, scored or rusted"
+      "Pads < 3 mm",
+      "Rotors worn"
      ],
      "extra": {
       "label": "Which wheel",
@@ -3169,7 +3169,7 @@
      "check": "ck_battery",
      "check_cars": "all",
      "options": [
-      "Terminals corroded or hold-down loose"
+      "Terminals corroded/loose"
      ]
     },
     {
@@ -3177,11 +3177,11 @@
      "check": "ck_hv",
      "check_cars": "ev",
      "options": [
-      "Orange high-voltage cable or connector damaged",
-      "Front trunk tub or seals: water or damage",
-      "Smoke, hissing, popping, heat or fluid from the battery pack",
-      "Fire signs: burn or melt damage to wiring, parts or the cabin",
-      "Rodent damage or nest"
+      "HV cable damaged",
+      "Frunk water/damage",
+      "Battery pack smoke/heat/leak",
+      "Fire signs",
+      "Rodent damage"
      ]
     },
     {
@@ -3189,8 +3189,8 @@
      "check": "ck_charging",
      "check_cars": "plugin",
      "options": [
-      "Charge port pins scorched, bent or corroded",
-      "Charge port door or latch damaged"
+      "Charge port pins damaged",
+      "Charge port door damaged"
      ]
     },
     {

@@ -99,7 +99,7 @@ void main() {
     store.mut('d', (x) {
       for (final d in manual(x).take(2)) {
         setLabel(d, 'panel', 'Left front door', fuelOf(x));
-        d['type'] = 'Overspray or colour mismatch';
+        d['type'] = 'Overspray/color mismatch';
         d['sev'] = 'Minor';
       }
       syncDamages(x);

@@ -62,7 +62,7 @@ void main() {
     final s = fresh();
     final d = dmg();
     setLabel(d, 'panel', 'Left tail light', fuel);
-    setLabel(d, 'type', 'Tail light cracked or water inside', fuel);
+    setLabel(d, 'type', 'Tail light damaged', fuel);
     setLabel(d, 'sev', 'Moderate', fuel);
     final door = dmg()..['id'] = 'd2';
     setLabel(door, 'panel', 'Left front door', fuel);

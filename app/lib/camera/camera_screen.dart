@@ -1118,7 +1118,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                               ask = false;
                               free = true;
                               tag = null;
-                              // an answer on the card may have shortened the list (Will not start drops the engine videos)
+                              // an answer on the card may have shortened the list (No start drops the engine videos)
                               if (l.isNotEmpty && i >= l.length) i = l.length - 1;
                             }), icon: LucideIcons.triangleAlert)),
                     const SizedBox(width: 10),
