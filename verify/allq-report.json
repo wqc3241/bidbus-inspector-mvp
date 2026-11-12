@@ -249,11 +249,6 @@
      "kind": "photo",
      "where": ""
     },
-    "ph_ev_charging": {
-     "on": false,
-     "kind": "photo",
-     "where": ""
-    },
     "ev_soh": {
      "on": false,
      "kind": "entry",
@@ -799,11 +794,6 @@
      "where": "Camera OBDII"
     },
     "ph_ev_battery": {
-     "on": true,
-     "kind": "photo",
-     "where": "Camera OBDII"
-    },
-    "ph_ev_charging": {
      "on": true,
      "kind": "photo",
      "where": "Camera OBDII"
@@ -1357,11 +1347,6 @@
      "kind": "photo",
      "where": ""
     },
-    "ph_ev_charging": {
-     "on": false,
-     "kind": "photo",
-     "where": ""
-    },
     "ev_soh": {
      "on": false,
      "kind": "entry",
@@ -1907,11 +1892,6 @@
      "where": ""
     },
     "ph_ev_battery": {
-     "on": false,
-     "kind": "photo",
-     "where": ""
-    },
-    "ph_ev_charging": {
      "on": false,
      "kind": "photo",
      "where": ""

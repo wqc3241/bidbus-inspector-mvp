@@ -34,7 +34,6 @@ One outline per guided shot, drawn on a 400 x 225 canvas (16:9, landscape camera
 | ph_under_cats | Catalytic converters |
 | ph_under_pack | Battery pack |
 | ph_ev_battery | Battery health |
-| ph_ev_charging | Charging rate |
 | ph_ev_alerts | Service alerts |
 | damage | damage |
 | ph_obd_current | Current codes |

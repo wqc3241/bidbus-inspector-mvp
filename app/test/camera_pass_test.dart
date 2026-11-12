@@ -120,7 +120,7 @@ void main() {
       ]);
       expect(ids(capList('Mechanicals', s)), ['ph_engine_bay', 'ph_engine_oil', 'video_exhaust']);
       expect(ids(capList('Mechanicals', fresh('ev', fuel: ev))), ['ph_frunk', 'ph_ev_port']);
-      expect(ids(capList('Interior', fresh('ev', fuel: ev))).where((x) => x.startsWith('ph_ev_') || x.startsWith('ph_obd_')), ['ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging']);
+      expect(ids(capList('Interior', fresh('ev', fuel: ev))).where((x) => x.startsWith('ph_ev_') || x.startsWith('ph_obd_')), ['ph_ev_alerts', 'ph_ev_battery']);
       // a panel not on the car drops out of the walk; engine sound and exhaust go when the engine will not start
       m(s, 'paint')['Roof'] = <String, dynamic>{'na': true};
       lst(s, 'probs', 'ck_engine').add('Will not start');
