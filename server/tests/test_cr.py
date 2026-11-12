@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 
@@ -43,3 +44,27 @@ def test_a_mirror_headlight_or_tail_light_damage_says_its_side():
     assert out["validation"]["ok"], out["validation"]["errors"]
     issue = next(i for i in out["condition_report"]["issues"] if i["photo"] == "damage-9.jpg")
     assert issue["text"].startswith("Mirror: ") and "(left)" in issue["text"] and issue["where"] == "Left"
+
+
+def test_record_with_the_old_option_wording_still_builds():
+    old = {v: k for k, v in json.loads((ROOT / "data/option-renames.json").read_text()).items()}
+
+    def back(v):
+        if isinstance(v, str): return old.get(v, v)
+        if isinstance(v, list): return [back(x) for x in v]
+        if isinstance(v, dict): return {k: back(x) for k, x in v.items()}
+        return v
+    rec = back(sample("bmw-x3"))
+    assert rec != sample("bmw-x3")
+    assert build_cr(rec) == build_cr(sample("bmw-x3"))
+
+
+def test_underbody_not_inspected_is_not_structural_damage():
+    rec = sample("bmw-x3")
+    rec["damages"] = [d for d in rec["damages"] if d.get("check_id") != "ck_structure"]
+    for c in rec["checks"]:
+        if c["id"] == "ck_structure":
+            c["problems"] = [{"option": "Underbody not inspected", "level": "Red", "from_damage_photo": False}]
+    out = build_cr(rec)
+    assert out["validation"]["ok"], out["validation"]["errors"]
+    assert out["condition_report"]["highlight"]["structural_damage"] == "Not checked"

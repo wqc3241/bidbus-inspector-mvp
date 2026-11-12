@@ -23,6 +23,15 @@ import json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 CATALOG = os.path.join(HERE, "..", "data", "issue-catalog.json")
 CAT = json.load(open(CATALOG))
+# option text of records saved before the wording was shortened -> today's text
+RENAMES = json.load(open(os.path.join(HERE, "..", "data", "option-renames.json")))
+
+
+def renamed(v):
+    if isinstance(v, str): return RENAMES.get(v, v)
+    if isinstance(v, list): return [renamed(x) for x in v]
+    if isinstance(v, dict): return {RENAMES.get(k, k): renamed(x) for k, x in v.items()}
+    return v
 
 CR_ROWS = ["Exterior", "Paint", "Tires", "Underbody", "Mechanicals", "Engine sound", "Interior", "OBD-II", "Additionals"]
 # photo and issue categories = the sections of the question list (question-list.csv); Start photos (seller documents) are private and go on no row
@@ -91,6 +100,7 @@ def tread_tier(t):
 def build_cr(rec, carfax_owners=None):
     """the CR output for one record (dict in, dict out, no file IO)"""
     cat = CAT
+    rec = renamed(rec)
     fuel = rec["vehicle"]["fuel"]
     ev = fuel == "Electric (EV)"
     errors = []
@@ -219,7 +229,7 @@ def build_cr(rec, carfax_owners=None):
     # highlight: structural damage, number of keys, odor, mechanical
     def sec_of(i): return checks_cat[i["check"]]["section"] if i.get("check") in checks_cat else i["section"]
     st_all = [i for i in issues if i.get("check") == "ck_structure"]
-    st_dmg = [i for i in st_all if "could not be photographed" not in (i.get("option") or "")]
+    st_dmg = [i for i in st_all if "not inspected" not in (i.get("option") or "")]
     odor = list(dict.fromkeys(i["option"] for i in issues if i.get("check") == "ck_odor"))
     mech_i = [i["id"] for i in issues if sec_of(i) == "Mechanicals"]
     highlight = {"structural_damage": "Yes" if st_dmg else "Not checked" if st_all else "No", "structural_damage_issues": [i["id"] for i in st_dmg],

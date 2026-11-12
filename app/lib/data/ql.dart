@@ -11,7 +11,32 @@ late List<J> items;
 late Map<String, J> byId;
 late Map<String, List<J>> dplaces;
 
-Future<void> loadQl() async => initQl(jsonDecode(await rootBundle.loadString('assets/question-list.json')));
+Future<void> loadQl() async {
+  initQl(jsonDecode(await rootBundle.loadString('assets/question-list.json')));
+  optRenames = (jsonDecode(await rootBundle.loadString('assets/option-renames.json')) as Map).cast<String, String>();
+}
+
+// option text saved before the wording was shortened -> today's text (assets/option-renames.json)
+Map<String, String> optRenames = {};
+
+dynamic _renamed(dynamic v) => v is String
+    ? (optRenames[v] ?? v)
+    : v is List
+        ? [for (final x in v) _renamed(x)]
+        : v is Map
+            ? <String, dynamic>{for (final e in v.entries) optRenames['${e.key}'] ?? '${e.key}': _renamed(e.value)}
+            : v;
+
+// a saved inspection moves to today's option text once
+J renameOpts(J st) {
+  if (st['rn1'] == true) return st;
+  final n = _renamed(st) as J;
+  st
+    ..clear()
+    ..addAll(n);
+  st['rn1'] = true;
+  return st;
+}
 
 void initQl(J q) {
   ql = q;

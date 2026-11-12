@@ -11,7 +11,7 @@ J newInspection({required String id, required J car, required String fuel, requi
     'manual': <dynamic>[], 'multi': <String, dynamic>{}, 'skip': <String, dynamic>{}, 'feat': <String, dynamic>{}, 'note': '', 'overall': '',
     'signName': car['owner_name'] ?? '', 'signed': false, 'agree': false, 'sok': <String, dynamic>{}, 'dprev': <dynamic>[],
     'files': <String, dynamic>{}, 'turn': <String, dynamic>{}, 'docs': <String, dynamic>{}, 'start': null, 'end': null, 'cap': null,
-    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true, 'c9': true,
+    'aiq': <dynamic>[], 'up': null, 'nid': 0, 'ub': true, 'c9': true, 'rn1': true,
   };
 }
 
