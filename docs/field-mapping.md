@@ -41,7 +41,7 @@ Twelve inspector shots fill the 12 required seller slots one to one, so `has_all
 | Tread gauge in the lowest groove, each wheel (`tread_photo` x4) | none | New key `tread_gauge` | AI reads the tread depth from it |
 | Infotainment screen, on (`ph_int_screen`) | none | New key `infotainment` |  |
 | Cargo area (`ph_int_cargo`) | none | New key `cargo` |  |
-| Underbody, 6 photos in this order: left front, left rear, rear, right rear, right front, front (`ph_under_lf`, `ph_under_lr`, `ph_under_rear`, `ph_under_rr`, `ph_under_rf`, `ph_under_front`) | none | New key `underbody` | One question id per photo |
+| Underbody, 8 photos in this order: left front, left middle, left rear, rear, right rear, right middle, right front, front (`ph_under_lf`, `ph_under_lm`, `ph_under_lr`, `ph_under_rear`, `ph_under_rr`, `ph_under_rm`, `ph_under_rf`, `ph_under_front`) | none | New key `underbody` | One question id per photo |
 | Catalytic converters (`ph_under_cats`, optional) | none | New key `underbody` |  |
 | Engine oil on the dipstick (`ph_engine_oil`), charge port on EVs and plug-in hybrids (`ph_ev_port`) | none | New key `mechanicals` | No oil cap, coolant or emission label photo |
 | Paint meter on the panel, 11 panels (`paint`, one per panel) | none | New key `paint_meter` | Panel and mils in the description; AI reads the mils |

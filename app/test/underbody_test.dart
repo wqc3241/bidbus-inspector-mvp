@@ -19,7 +19,7 @@ void main() {
     expect(capseq.last, 'Underbody');
     expect(camseq.last, 'Underbody');
     final st = fresh();
-    expect(capList('Underbody', st).map((x) => x['id']), ['ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats']);
+    expect(capList('Underbody', st).map((x) => x['id']), ['ph_under_lf', 'ph_under_lm', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rm', 'ph_under_rf', 'ph_under_front', 'ph_under_cats']);
     expect(capList('Mechanicals', st).any((x) => (x['id'] as String).startsWith('ph_under')), false);
     expect(ckIdsOf('Underbody', st), containsAll(['ck_structure', 'ck_rust']));
     expect(ckIdsOf('Mechanicals', st).contains('ck_structure'), false);

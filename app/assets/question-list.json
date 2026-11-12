@@ -406,6 +406,16 @@
    "upload": true
   },
   {
+   "no": "P16b",
+   "part": "Photos",
+   "section": "Underbody",
+   "id": "ph_under_lm",
+   "kind": "photo",
+   "cars": "all",
+   "label": "Left middle",
+   "upload": true
+  },
+  {
    "no": "P17",
    "part": "Photos",
    "section": "Underbody",
@@ -433,6 +443,16 @@
    "kind": "photo",
    "cars": "all",
    "label": "Right rear",
+   "upload": true
+  },
+  {
+   "no": "P19b",
+   "part": "Photos",
+   "section": "Underbody",
+   "id": "ph_under_rm",
+   "kind": "photo",
+   "cars": "all",
+   "label": "Right middle",
    "upload": true
   },
   {
