@@ -106,7 +106,7 @@ const layout = {
   'Interior': ['ph_vin_door', 'ph_odo', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_int_front', 'ph_int_rear', 'ph_int_cargo', 'ph_mod_int'],
   'OBDII': ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'],
   'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_engine', 'video_exhaust', 'ph_mod_mech'],
-  'Underbody': ['ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
+  'Underbody': ['ph_under_lf', 'ph_under_lm', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rm', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
 };
 const msec = {'vin_scan': 'Interior', 'ck_ids': 'Interior', 'ck_keys': 'Interior', 'ck_equip': 'Interior', 'ck_account': 'Interior'};
 String secOf(J it) => msec[it['id']] ?? it['section'];
@@ -121,7 +121,7 @@ const camLayout = {
   'Interior': ['ph_vin_door', 'ph_int_front', 'ph_int_rear', 'ph_odo', 'video_engine', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'],
   'OBDII': ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery', 'ph_ev_charging'], // opened from Review only
   'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_exhaust'],
-  'Underbody': ['ph_under_lf', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
+  'Underbody': ['ph_under_lf', 'ph_under_lm', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rm', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
 };
 // the walk-around, from the left front counter-clockwise: paint panel (p), tire and tread gauge (w), other shot (i)
 const walk = [
@@ -155,7 +155,7 @@ const lookFor = {
   'ph_ext_roof': ['Dents', 'Hail', 'Sunroof'], 'tire_photo': ['Sidewall cracks', 'Bulge', 'Curb rash', 'Plug or patch'], 'tread_photo': ['Lowest groove', 'Uneven wear'],
   'ph_int_cargo': ['Trunk floor', 'Rails', 'Water', 'Spare tire'], 'ph_engine_bay': ['Aprons', 'Strut towers', 'Core support', 'Leaks'],
   'ph_engine_oil': ['Sludge', 'Milky oil', 'Oil level'], 'video_exhaust': ['Rev noise', 'Smoke', 'Reverse gear'], 'ph_frunk': ['Coolant', 'Water', 'Damage'],
-  'ph_ev_port': ['Scorched pins', 'Latch'], 'ph_under_lf': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_lr': ['Leaks', 'Rust', 'Frame rails', 'Kinks'],
+  'ph_ev_port': ['Scorched pins', 'Latch'], 'ph_under_lf': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_lr': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_lm': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_rm': ['Leaks', 'Rust', 'Frame rails', 'Kinks'],
   'ph_under_rr': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_rf': ['Leaks', 'Rust', 'Frame rails', 'Kinks'], 'ph_under_rear': ['Rear rails', 'Exhaust', 'Leaks'],
   'ph_under_front': ['Core support', 'Subframe', 'Leaks'], 'ph_under_cats': ['Missing converter', 'Cut pipe'], 'ph_under_pack': ['Scrapes', 'Dents', 'Bolts'],
 };
@@ -170,7 +170,7 @@ const short = {
   'video_360': 'Walk-around', 'video_engine': 'Engine sound', 'video_exhaust': 'Exhaust', 'ph_under_front': 'Underbody, front', 'ph_under_rear': 'Underbody, rear', 'ph_under_cats': 'Catalytic converters',
   'ph_int_dash': 'Dash', 'ph_int_screen': 'Infotainment', 'ph_int_front': 'Front seats', 'ph_int_rear': 'Rear seats', 'ph_int_cargo': 'Cargo, floor up', 'ph_engine_bay': 'Engine bay', 'ph_engine_oil': 'Engine oil, dipstick',
   'ph_frunk': 'Frunk and coolant', 'ph_ev_port': 'Charge port', 'ph_ev_battery': 'Battery health', 'ph_ev_charging': 'Charging rate', 'ph_ev_alerts': 'Service alerts', 'ph_vin_door': 'Door-jamb VIN', 'ph_vin_dash': 'Windshield VIN',
-  'ph_odo': 'Odometer, car on', 'ph_keys': 'All keys', 'ph_license': "Driver's license", 'ph_reg': 'Registration card', 'ph_family': 'Family proof', 'ph_ext_roof': 'Roof', 'ph_under_lf': 'Underbody, left front', 'ph_under_lr': 'Underbody, left rear',
+  'ph_odo': 'Odometer, car on', 'ph_keys': 'All keys', 'ph_license': "Driver's license", 'ph_reg': 'Registration card', 'ph_family': 'Family proof', 'ph_ext_roof': 'Roof', 'ph_under_lf': 'Underbody, left front', 'ph_under_lr': 'Underbody, left rear', 'ph_under_lm': 'Underbody, left middle', 'ph_under_rm': 'Underbody, right middle',
   'ph_under_rr': 'Underbody, right rear', 'ph_under_rf': 'Underbody, right front', 'ph_under_pack': 'Battery pack', 'ph_obd_current': 'Current codes', 'ph_obd_past': 'Past codes', 'ph_obd_emission': 'Emission codes', 'ph_obd_other': 'Other images',
   'ph_mod_ext': 'Modification', 'ph_mod_int': 'Modification', 'ph_mod_mech': 'Modification',
 };

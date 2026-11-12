@@ -190,6 +190,7 @@ List<J> capList0(String k, J st) {
   var ml = stepItems(k, st)
       .media
       .where((it) => !(it['id'] as String).startsWith('ph_mod_') && !(noStart && (it['id'] == 'video_engine' || it['id'] == 'video_exhaust')))
+      .where((it) => it['id'] != 'ph_under_lm' && it['id'] != 'ph_under_rm') // added after 1109: not in the old pass
       .map((it) => <String, dynamic>{'id': it['id'], 'it': it})
       .toList();
   if (k == 'Exterior') {

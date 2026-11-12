@@ -43,8 +43,10 @@ One outline per guided shot, drawn on a 400 x 225 canvas (16:9, landscape camera
 | ph_obd_other | Other images |
 | ph_scan | Scan result |
 | ph_under_lf | Underbody, left front |
+| ph_under_lm | Underbody, left middle |
 | ph_under_lr | Underbody, left rear |
 | ph_under_rr | Underbody, right rear |
+| ph_under_rm | Underbody, right middle |
 | ph_under_rf | Underbody, right front |
 | ph_under_front | Underbody, front |
 | ph_under_rear | Underbody, rear |
@@ -64,8 +66,10 @@ One outline per guided shot, drawn on a 400 x 225 canvas (16:9, landscape camera
 | paint-hood | Paint meter, hood |
 | paint-roof | Paint meter, roof |
 | ph_under_lf-ev | Underbody, left front (EV) |
+| ph_under_lm-ev | Underbody, left middle (EV) |
 | ph_under_lr-ev | Underbody, left rear (EV) |
 | ph_under_rear-ev | Underbody, rear (EV) |
 | ph_under_rr-ev | Underbody, right rear (EV) |
+| ph_under_rm-ev | Underbody, right middle (EV) |
 | ph_under_rf-ev | Underbody, right front (EV) |
 | ph_under_front-ev | Underbody, front (EV) |

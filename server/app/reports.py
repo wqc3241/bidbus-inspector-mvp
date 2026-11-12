@@ -61,8 +61,8 @@ ROW_ICON = {"Exterior": "car", "Paint": "brush", "Tires": "tire", "Underbody": "
 VIDEOS = {"video_360": ("Exterior", "Walk-around, 360°"), "video_engine": ("Mechanicals", "Engine sound at the first start"),
           "video_exhaust": ("Mechanicals", "Exhaust at idle and revving")}
 LABEL = {"paint": "Paint meter", "ph_int_screen": "Infotainment screen", "ph_obd_current": "OBD-II current codes", "ph_obd_past": "OBD-II past codes",
-         "ph_obd_emission": "OBD-II emission codes", "ph_obd_other": "OBD-II other", "ph_under_lf": "Underbody, left front",
-         "ph_under_lr": "Underbody, left rear", "ph_under_rear": "Underbody, rear", "ph_under_rr": "Underbody, right rear",
+         "ph_obd_emission": "OBD-II emission codes", "ph_obd_other": "OBD-II other", "ph_under_lf": "Underbody, left front", "ph_under_lm": "Underbody, left middle",
+         "ph_under_lr": "Underbody, left rear", "ph_under_rear": "Underbody, rear", "ph_under_rr": "Underbody, right rear", "ph_under_rm": "Underbody, right middle",
          "ph_under_rf": "Underbody, right front", "ph_under_front": "Underbody, front", "ph_under_cats": "Catalytic converter",
          "ph_under_pack": "Battery pack", "ph_mod_ext": "Exterior modification", "ph_mod_int": "Interior modification",
          "ph_mod_mech": "Mechanicals modification", "ph_odo": "Odometer and warning lights", "ph_keys": "Keys", "tire_photo": "Tire sidewall",

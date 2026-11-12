@@ -12,12 +12,13 @@ Five camera sections. Top bar: section 1/5 to 5/5 and shot count.
 | 2 | Interior | Door-jamb VIN; front seats; rear seats; odometer (car on); engine sound at the first start (gas, hybrid); all keys; dash; infotainment; then OBDII: gas current, past and emission code screens, other images (optional); EV service alerts, battery health, charging (optional) |
 | 3 | Walk-around | From the left front, counter-clockwise: left front fender paint; left front tire and tread gauge; left front door; left rear door; left rear tire and tread gauge; left quarter panel; trunk or liftgate; cargo (floor up); right quarter panel; right rear tire and tread gauge; right rear door; right front door; right front tire and tread gauge; right front fender; hood; roof paint; roof photo |
 | 4 | Mechanicals | Engine bay (EV: frunk, charge port); engine oil; exhaust video (idle, revving, reverse gear) |
-| 5 | Underbody | LF, LR, rear, RR, RF, front, catalytic converters (optional); EV battery pack |
+| 5 | Underbody | LF, left middle, LR, rear, RR, right middle, RF, front, catalytic converters (optional); EV battery pack |
 
 - Each shot keeps its home section from the question list: paint photos show on Review Paint, tires on Tires & Wheels, cargo on Interior, roof photo and windshield VIN on Exterior, OBDII shots on OBDII, engine sound on Mechanicals. Photo category is unchanged.
 - A retake from a Review page opens the camera at that shot.
 - Damage and Mod shutters: off on videos and on OBDII shots. A damage photo takes the zone of the shot it was taken at: paint panel or roof Exterior, tire Tires, cargo Interior. A mod at a tire is a Tires mod, elsewhere in the Walk-around an Exterior mod.
 - Underbody corner guides (LF, LR, RR, RF): one camera from that side of the car, in the gap beside the wheel (`guides/svg` and `guides/png` `ph_under_{lf,lr,rr,rf}` and their `-ev` versions updated; copy them to `app/assets/guides/`).
+- Underbody middle guides (left middle, right middle): one camera straight in from the middle of that side, between the wheels (`ph_under_{lm,rm}` and their `-ev` versions). All cars.
 
 ## Look for
 
@@ -55,7 +56,7 @@ Top left of every guided shot, a few words. Information only: nothing to tap, ti
 | Exhaust | Rev noise, Smoke, Reverse gear |
 | Frunk (EV) | Coolant, Water, Damage |
 | Charge port (EV) | Scorched pins, Latch |
-| Underbody corners | Leaks, Rust, Frame rails, Kinks |
+| Underbody corners and middles | Leaks, Rust, Frame rails, Kinks |
 | Underbody rear | Rear rails, Exhaust, Leaks |
 | Underbody front | Core support, Subframe, Leaks |
 | Catalytic converters | Missing converter, Cut pipe |

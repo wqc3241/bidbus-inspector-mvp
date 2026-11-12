@@ -40,7 +40,7 @@ SLOT = {"ph_ext_roof": "roof", "ph_int_dash": "dashboard", "ph_int_front": "driv
         "ph_odo": "odometer", "ph_engine_bay": "engine", "ph_frunk": "engine"}
 # new keys for shots the seller flow has no slot for; Underbody, OBDII and Additionals are their own photo categories
 NEW_KEY = {"ph_int_screen": "infotainment", "ph_int_cargo": "cargo", "ph_vin_dash": "vin", "ph_vin_door": "vin", "ph_keys": "keys",
-           "ph_engine_oil": "mechanicals", "ph_ev_port": "mechanicals", "ph_under_lf": "underbody", "ph_under_lr": "underbody",
+           "ph_engine_oil": "mechanicals", "ph_ev_port": "mechanicals", "ph_under_lf": "underbody", "ph_under_lr": "underbody", "ph_under_lm": "underbody", "ph_under_rm": "underbody",
            "ph_under_rear": "underbody", "ph_under_rr": "underbody", "ph_under_rf": "underbody", "ph_under_front": "underbody",
            "ph_under_cats": "underbody", "ph_under_pack": "underbody", "paint": "paint_meter", "tread_photo": "tread_gauge",
            "ph_obd_current": "obdii", "ph_obd_past": "obdii", "ph_obd_emission": "obdii", "ph_obd_other": "obdii",
