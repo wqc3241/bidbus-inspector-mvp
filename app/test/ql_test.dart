@@ -15,13 +15,16 @@ void main() {
     final fuel = run['fuel'] as String;
     // the report's plug-in run predates docs/01 2.2 (charging items show for EV and plug-in hybrid): docs win
     bool docOverride(J it) => fuel == 'Plug-in hybrid' && it['cars'] == 'plugin';
+    // one-make items (the Tesla Hardware Version photo, docs/11) came after the report: not in it
+    bool makeOnly(J it) => it['make'] != null;
     J fresh() => newInspection(id: 't', car: {}, fuel: fuel, email: '', inspector: '')..['owner'] = 'Yes';
 
     test('items for $fuel match the mockup', () {
       final st = fresh(), itemsOn = (run['items'] as Map).cast<String, dynamic>();
-      expect(items.length, itemsOn.length);
+      expect(items.where((it) => !makeOnly(it)).length, itemsOn.length);
       var options = 0, damage = 0;
       for (final it in items) {
+        if (makeOnly(it)) continue;
         final r = itemsOn[it['id']], where = r['where'] as String;
         if (docOverride(it)) {
           expect(fuelOk(it['cars'], fuel), true);

@@ -9,7 +9,7 @@ Five camera sections. Top bar: section 1/5 to 5/5 and shot count.
 | # | Section | Shots |
 |---|---|---|
 | 1 | Exterior | Windshield VIN; 360 walk-around video (engine off, from the left front corner, counter-clockwise) |
-| 2 | Interior | Door-jamb VIN; front seats; rear seats; odometer (car on); engine sound at the first start (gas, hybrid); all keys; dash; infotainment; then OBDII: gas current, past and emission code screens, other images (optional); EV service alerts, battery health, charging (optional) |
+| 2 | Interior | Door-jamb VIN; front seats; rear seats; odometer (car on); engine sound at the first start (gas, hybrid); all keys; dash; Hardware Version (Tesla only); infotainment; then OBDII: gas current, past and emission code screens, other images (optional); EV service alerts, battery health, charging (optional) |
 | 3 | Walk-around | From the left front, counter-clockwise: left front fender paint; left front tire and tread gauge; left front door; left rear door; left rear tire and tread gauge; left quarter panel; trunk or liftgate; cargo (floor up); right quarter panel; right rear tire and tread gauge; right rear door; right front door; right front tire and tread gauge; right front fender; hood; roof paint; roof photo |
 | 4 | Mechanicals | Engine bay (EV: frunk, charge port); engine oil; exhaust video (idle, revving, reverse gear) |
 | 5 | Underbody | LF, left middle, LR, rear, RR, right middle, RF, front, catalytic converters (optional); EV battery pack |

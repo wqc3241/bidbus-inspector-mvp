@@ -92,6 +92,7 @@ int? tagAt(J st, J e) {
 }
 
 String fuelOf(J st) => st['fuel'] as String;
+bool carOk(J it, J st) => fuelOk(it['cars'], fuelOf(st)) && makeOk(it['make'], (st['car'] as J?)?['make']);
 J m(J st, String k) => (st[k] ??= <String, dynamic>{}) as J;
 List<String> lst(J src, String k, String id) => ((m(src, k)[id] ??= <dynamic>[]) as List).cast<String>();
 void setLst(J src, String k, String id, List<String> v) => m(src, k)[id] = v;
@@ -111,7 +112,7 @@ StepItems stepItems(String k, J st) {
   final fuel = fuelOf(st), media = <J>[], entries = <J>[], checks = <J>[];
   for (final id in layout[k] ?? const <String>[]) {
     final it = byId[id];
-    if (it != null && fuelOk(it['cars'], fuel)) media.add(it);
+    if (it != null && carOk(it, st)) media.add(it);
   }
   for (final it in items) {
     if (secOf(it) != k || tireIds.contains(it['id']) || featIds.contains(it['id']) || !fuelOk(it['cars'], fuel)) continue;
@@ -153,11 +154,11 @@ List<J> capList(String k, J st) {
     return [if (st['owner'] == 'Family, with proof') {'id': 'ph_family', 'it': {'id': 'ph_family', 'kind': 'photo', 'label': 'Proof of family relationship'}}];
   }
   if (k == 'Paint') return [];
-  final fuel = fuelOf(st), noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
+  final noStart = lst(st, 'probs', 'ck_engine').contains('Will not start');
   J? shot(String id) {
     final it = byId[id];
     // engine sound and exhaust videos are hidden when the engine will not start
-    if (it == null || !fuelOk(it['cars'], fuel) || (noStart && (id == 'video_engine' || id == 'video_exhaust'))) return null;
+    if (it == null || !carOk(it, st) || (noStart && (id == 'video_engine' || id == 'video_exhaust'))) return null;
     return {'id': id, 'it': it};
   }
 

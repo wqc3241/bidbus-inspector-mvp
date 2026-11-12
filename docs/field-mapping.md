@@ -40,6 +40,7 @@ Twelve inspector shots fill the 12 required seller slots one to one, so `has_all
 | Front, left side, right side (360 frames 32, 5, 23) | none | New keys `front`, `left_side`, `right_side` | Video frames |
 | Tread gauge in the lowest groove, each wheel (`tread_photo` x4) | none | New key `tread_gauge` | AI reads the tread depth from it |
 | Infotainment screen, on (`ph_int_screen`) | none | New key `infotainment` |  |
+| Hardware Version, Tesla only (`ph_tesla_hw`) | none | New key `hardware_version` |  |
 | Cargo area (`ph_int_cargo`) | none | New key `cargo` |  |
 | Underbody, 8 photos in this order: left front, left middle, left rear, rear, right rear, right middle, right front, front (`ph_under_lf`, `ph_under_lm`, `ph_under_lr`, `ph_under_rear`, `ph_under_rr`, `ph_under_rm`, `ph_under_rf`, `ph_under_front`) | none | New key `underbody` | One question id per photo |
 | Catalytic converters (`ph_under_cats`, optional) | none | New key `underbody` |  |

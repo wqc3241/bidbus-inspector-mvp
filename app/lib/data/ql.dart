@@ -65,6 +65,9 @@ bool fuelOk(String? cars, String fuel) {
   return true;
 }
 
+// a question only for one make ("make" in the question list, e.g. the Tesla hardware version photo)
+bool makeOk(String? make, Object? carMake) => make == null || '${carMake ?? ''}'.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '') == make.toLowerCase();
+
 const gasOnlyOpts = ['Engine oil low or dark', 'Engine oil very low or dry', 'Milky oil, metal or sludge', 'Oil or metal in the coolant', 'Engine hesitates or misfires', 'Transmission delayed, slips or harsh', 'Check engine', 'Oil, temperature or transmission'];
 const featDrop = {'Sunroof not working', 'Navigation not working'};
 
@@ -103,7 +106,7 @@ const extra = {
 // each shot's home section: the Review page it shows on (the camera takes some of them in another pass, see camLayout)
 const layout = {
   'Exterior': ['video_360', 'ph_ext_roof', 'ph_vin_dash', 'ph_mod_ext'],
-  'Interior': ['ph_vin_door', 'ph_odo', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_int_front', 'ph_int_rear', 'ph_int_cargo', 'ph_mod_int'],
+  'Interior': ['ph_vin_door', 'ph_odo', 'ph_keys', 'ph_int_dash', 'ph_tesla_hw', 'ph_int_screen', 'ph_int_front', 'ph_int_rear', 'ph_int_cargo', 'ph_mod_int'],
   'OBDII': ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery'],
   'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_engine', 'video_exhaust', 'ph_mod_mech'],
   'Underbody': ['ph_under_lf', 'ph_under_lm', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rm', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
@@ -118,7 +121,7 @@ const camseq = ['Exterior', 'Interior', 'Tires', 'Mechanicals', 'Underbody'];
 const camseq0 = ['Exterior', 'Tires', 'Interior', 'OBDII', 'Mechanicals', 'Underbody']; // the pass before 1109 (saved shot indexes point into it)
 const camLayout = {
   'Exterior': ['ph_vin_dash', 'video_360'],
-  'Interior': ['ph_vin_door', 'ph_int_front', 'ph_int_rear', 'ph_odo', 'video_engine', 'ph_keys', 'ph_int_dash', 'ph_int_screen', 'ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery'],
+  'Interior': ['ph_vin_door', 'ph_int_front', 'ph_int_rear', 'ph_odo', 'video_engine', 'ph_keys', 'ph_int_dash', 'ph_tesla_hw', 'ph_int_screen', 'ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery'],
   'OBDII': ['ph_obd_current', 'ph_obd_past', 'ph_obd_emission', 'ph_obd_other', 'ph_ev_alerts', 'ph_ev_battery'], // opened from Review only
   'Mechanicals': ['ph_engine_bay', 'ph_engine_oil', 'ph_frunk', 'ph_ev_port', 'video_exhaust'],
   'Underbody': ['ph_under_lf', 'ph_under_lm', 'ph_under_lr', 'ph_under_rear', 'ph_under_rr', 'ph_under_rm', 'ph_under_rf', 'ph_under_front', 'ph_under_cats', 'ph_under_pack'],
@@ -168,7 +171,7 @@ const askOut = {'ck_trans', 'ck_brakes', 'ck_exhaust', 'ck_susp', 'ck_cv'}; // n
 const vmax = {'video_360': 60, 'video_engine': 30, 'video_exhaust': 30};
 const short = {
   'video_360': 'Walk-around', 'video_engine': 'Engine sound', 'video_exhaust': 'Exhaust', 'ph_under_front': 'Underbody, front', 'ph_under_rear': 'Underbody, rear', 'ph_under_cats': 'Catalytic converters',
-  'ph_int_dash': 'Dash', 'ph_int_screen': 'Infotainment', 'ph_int_front': 'Front seats', 'ph_int_rear': 'Rear seats', 'ph_int_cargo': 'Cargo, floor up', 'ph_engine_bay': 'Engine bay', 'ph_engine_oil': 'Engine oil, dipstick',
+  'ph_int_dash': 'Dash', 'ph_tesla_hw': 'Hardware Version', 'ph_int_screen': 'Infotainment', 'ph_int_front': 'Front seats', 'ph_int_rear': 'Rear seats', 'ph_int_cargo': 'Cargo, floor up', 'ph_engine_bay': 'Engine bay', 'ph_engine_oil': 'Engine oil, dipstick',
   'ph_frunk': 'Frunk and coolant', 'ph_ev_port': 'Charge port', 'ph_ev_battery': 'Battery health', 'ph_ev_alerts': 'Service alerts', 'ph_vin_door': 'Door-jamb VIN', 'ph_vin_dash': 'Windshield VIN',
   'ph_odo': 'Odometer, car on', 'ph_keys': 'All keys', 'ph_license': "Driver's license", 'ph_reg': 'Registration card', 'ph_family': 'Family proof', 'ph_ext_roof': 'Roof', 'ph_under_lf': 'Underbody, left front', 'ph_under_lr': 'Underbody, left rear', 'ph_under_lm': 'Underbody, left middle', 'ph_under_rm': 'Underbody, right middle',
   'ph_under_rr': 'Underbody, right rear', 'ph_under_rf': 'Underbody, right front', 'ph_under_pack': 'Battery pack', 'ph_obd_current': 'Current codes', 'ph_obd_past': 'Past codes', 'ph_obd_emission': 'Emission codes', 'ph_obd_other': 'Other images',
