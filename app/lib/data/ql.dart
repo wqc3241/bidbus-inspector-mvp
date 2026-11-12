@@ -130,6 +130,8 @@ const walk = [
 ];
 String stTitle(String k) => const {'start': 'Start', 'Tires': 'Tires & Wheels'}[k] ?? k;
 String camTitle(String k) => k == 'Tires' ? 'Walk-around' : stTitle(k);
+// the camera's title on a shot: Scanner Result on the OBDII scanner shots, else its section
+String shotTitle(J? x, String k) => '${x?['id'] ?? ''}'.startsWith('ph_obd_') ? 'Scanner Result' : camTitle(k);
 final homeSec = {for (final e in layout.entries) for (final id in e.value) id: e.key};
 // the Review page a shot taken in camera section ck shows on; the zone a damage photo taken at it gets (a paint panel is Exterior)
 String homeOf(J x, String ck) => x['panel'] != null ? 'Paint' : x['wheel'] != null ? 'Tires' : homeSec[x['id']] ?? ck;
