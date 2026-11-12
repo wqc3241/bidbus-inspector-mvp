@@ -16,7 +16,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import ai, bidbus, config, email, hotspots, reports, spin, storage, team
-from .cr import build_cr
+from .cr import build_cr, renamed
 from .db import File as FileRow
 from .db import Inspection, SessionLocal, get_session, now
 from .vin import decode
@@ -27,7 +27,7 @@ log = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(_app):
     # a build cut off by a restart (deploy, crash) never finishes: run it again, off the request path so the health check is not held up
-    threading.Thread(target=resume_builds, daemon=True).start()
+    threading.Thread(target=lambda: (reword_reports(), resume_builds()), daemon=True).start()
     yield
 
 
@@ -301,6 +301,24 @@ def build(inspection_id: str) -> None:
             reason = str(e) if isinstance(e, EmailNotSent) else f"{type(e).__name__}: {e}"
             insp.status, insp.validation_errors = "failed", insp.validation_errors or [reason]
             s.commit()
+
+
+def reword_reports() -> None:
+    """records saved with the old option wording move to today's (data/option-renames.json), and their reports are built again"""
+    try:
+        with SessionLocal() as s:
+            for insp in s.scalars(select(Inspection).where(Inspection.record.is_not(None))):
+                new = renamed(insp.record)
+                if new == insp.record:
+                    continue
+                insp.record = new
+                if insp.cr:
+                    out = build_cr(new)
+                    if out["validation"]["ok"]:
+                        insp.cr = out
+            s.commit()
+    except Exception:
+        log.exception("rewording saved reports failed")
 
 
 def resume_builds() -> None:

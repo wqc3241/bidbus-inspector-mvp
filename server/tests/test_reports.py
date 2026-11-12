@@ -199,3 +199,29 @@ def test_paint_reads_rules():
     assert paint_reads(rec) == [{"icon": "↑", "text": "Highest reading 6.2 mils", "sub": "Trunk or liftgate"},
                                 {"icon": "↓", "text": "Lowest reading 3.9 mils", "sub": "Hood"}]
     assert paint_reads({"paint": [{"panel": "Roof", "mils": None, "not_on_car": True}]}) == []
+
+
+def test_reports_saved_with_the_old_wording_are_reworded(client):
+    import json
+
+    from conftest import ROOT
+
+    from app.main import reword_reports
+    old = {v: k for k, v in json.loads((ROOT / "data/option-renames.json").read_text()).items()}
+
+    def back(v):
+        if isinstance(v, str): return old.get(v, v)
+        if isinstance(v, list): return [back(x) for x in v]
+        if isinstance(v, dict): return {k: back(x) for k, x in v.items()}
+        return v
+    token, iid = make("bmw-x3")
+    with SessionLocal() as s:
+        insp = s.get(Inspection, iid)
+        insp.record, insp.cr = back(insp.record), back(insp.cr)
+        s.commit()
+    reword_reports()
+    for page in ("seller", "dealer"):
+        html = client.get(f"/r/{token}/{page}").text
+        assert not any(o in html for o in old.values())
+    with SessionLocal() as s:
+        assert s.get(Inspection, iid).cr == build_cr(sample("bmw-x3"))
