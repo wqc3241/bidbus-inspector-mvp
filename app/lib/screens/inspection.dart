@@ -127,9 +127,8 @@ class SentScreen extends ConsumerWidget {
             part(LucideIcons.camera, 'Photos and videos', total == 0 ? 0 : done / total, '$done of ${total == 0 ? files.length : total}'),
             part(LucideIcons.fileText, 'Condition report', status == 'building' ? .5 : 0, status == 'building' ? 'Building' : 'Waiting'),
             const SizedBox(height: 8),
-            Text(s.online ? 'Everything is saved on this phone. It carries on by itself.' : 'Waiting for signal. Everything is saved on this phone; the upload starts by itself when there is signal.',
-                style: const TextStyle(color: muted, fontSize: 13)),
-            Text('$photos photos, $videos videos', style: const TextStyle(color: muted, fontSize: 13)),
+            Text(sendingNote(s), style: const TextStyle(color: muted, fontSize: 13)),
+            Text('$photos photo${photos == 1 ? '' : 's'}, $videos video${videos == 1 ? '' : 's'}', style: const TextStyle(color: muted, fontSize: 13)),
             if (uploadsDone) const SizedBox(),
           ]),
         visitCard(st),
@@ -148,3 +147,10 @@ Future<void> openReport(BuildContext context, String? url) async {
   }
   if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not open the report')));
 }
+
+// what the upload waits for: a phone with no passcode (or sign-in) sends nothing, so it says so instead of "carries on"
+String sendingNote(Store s) => !s.canCall
+    ? 'Saved on this phone. Not sent: enter the app passcode in Settings.'
+    : s.online
+        ? 'Everything is saved on this phone. It carries on by itself.'
+        : 'Waiting for signal. Everything is saved on this phone; the upload starts by itself when there is signal.';
