@@ -66,7 +66,7 @@ Use the mockup's final style (end of the `<style>` block in `reference/mockup-11
 - Paint: a top view of the car with each panel and its mils (High in red; a panel with no reading yet has the red frame); tap a panel to set its reading on a slider from 3.0 to 10+ mils, with - and + for 0.1 (10+ is more than 10), or to mark N/A; then panel photos, paint damage tiles, the Paint and panels row. A High reading ticks Panel repainted with that panel.
 - Tires & Wheels: four wheel cards (LF, LR, RR, RF; a card has the red frame until that wheel's tread depth is in), each with photos, damages and values in scroll pickers; the Match or Mismatch question.
 - Interior: number of keys first (0 red, 1 amber), sunroof and navigation (Works, Not working, No sunroof / No navigation; required, no default).
-- OBDII: Engine codes stored asks for the codes in a second drawer step.
+- OBDII: the scanner photos under the title Scanner Result. Engine codes stored asks for the codes in a second drawer step.
 - Mechanicals: road test starts as Not done.
 - Next stays off, with the reason, until the page is complete.
 
