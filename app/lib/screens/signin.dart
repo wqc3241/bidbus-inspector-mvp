@@ -1,7 +1,5 @@
 // Sign in with the scheduler account (docs/12-scheduler-sync.md): the email on the team list, then the emailed code.
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../services/api.dart';
 import '../services/team.dart';
@@ -71,13 +69,6 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: TitleBar(
         'Sign in',
-        back: false,
-        actions: [
-          IconButton(
-            icon: const Icon(LucideIcons.settings),
-            onPressed: () => context.push('/settings'),
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),

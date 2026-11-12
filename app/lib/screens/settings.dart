@@ -1,8 +1,7 @@
 // Server URL, app passcode, inspector name, default report email; shows the health check.
-// With scheduler sign-in (docs/12-scheduler-sync.md): who is signed in and Sign out, in place of the passcode and name.
+// Signed in to the scheduler (docs/12-scheduler-sync.md): who is signed in and Sign out, in place of the passcode and name.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../services/api.dart';
 import '../services/store.dart';
@@ -31,7 +30,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     setState(() => health = 'Checking');
     await team.checked; // a new server URL has said which sign-in it uses
     try {
-      final teamOn = team.on && url.text.trim() == store.server;
+      final teamOn = team.use && url.text.trim() == store.server;
       final tok = teamOn ? await team.token() : null;
       var r = await Api(url.text.trim(), teamOn ? tok ?? '' : pass.text.trim()).health();
       // refused: the phone's clock may be off, so the token is renewed once and asked again
@@ -41,7 +40,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       }
       if (!mounted) return;
       setState(() {
-        if (r['auth'] == 'team') {
+        if (teamOn && r['auth'] == 'team') {
           ok = r['ok'] == true && r['signed_in'] == true;
           health = r['ok'] != true
               ? 'Server error'
@@ -84,12 +83,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         appBar: const TitleBar('Settings'),
         body: ListView(padding: const EdgeInsets.all(16), children: [
           _f('Server URL', url, kb: TextInputType.url),
-          if (!team.on) ...[
+          if (!team.use) ...[
             _f('App passcode', pass, obscure: true),
             _f('Inspector name', name),
           ],
           _f('Default report email', email, kb: TextInputType.emailAddress),
-          if (team.on && team.signedIn)
+          if (team.use)
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Row(children: [
@@ -100,10 +99,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ]),
                 ),
                 TextButton(
-                  onPressed: () async {
-                    await team.signOut();
-                    if (context.mounted) context.go('/signin');
-                  },
+                  onPressed: () => team.signOut(),
                   child: const Text('Sign out', style: TextStyle(color: red, fontWeight: FontWeight.w600)),
                 ),
               ]),

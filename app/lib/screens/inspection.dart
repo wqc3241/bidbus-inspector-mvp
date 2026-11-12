@@ -11,6 +11,7 @@ import '../data/ql.dart';
 import '../logic/insp.dart';
 import '../logic/payload.dart';
 import '../services/store.dart';
+import '../services/team.dart';
 import '../widgets/ui.dart';
 import 'check_id.dart';
 import 'damages.dart';
@@ -150,7 +151,9 @@ Future<void> openReport(BuildContext context, String? url) async {
 
 // what the upload waits for: a phone with no passcode (or sign-in) sends nothing, so it says so instead of "carries on"
 String sendingNote(Store s) => !s.canCall
-    ? 'Saved on this phone. Not sent: enter the app passcode in Settings.'
+    ? team.on
+        ? 'Saved on this phone. Not sent: sign in, or enter the app passcode in Settings.'
+        : 'Saved on this phone. Not sent: enter the app passcode in Settings.'
     : s.online
         ? 'Everything is saved on this phone. It carries on by itself.'
         : 'Waiting for signal. Everything is saved on this phone; the upload starts by itself when there is signal.';

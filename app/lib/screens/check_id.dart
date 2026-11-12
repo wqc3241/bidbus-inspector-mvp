@@ -106,7 +106,7 @@ class _CheckIdScreenState extends ConsumerState<CheckIdScreen> {
     super.initState();
     // the seller may have just uploaded: the brief and its documents are fetched again
     final ap = store.ins[id]?['appt'] as Map?;
-    if (store.online && team.on && ap?['slot_id'] != null) team.loadBrief('${ap!['slot_id']}');
+    if (store.online && team.use && ap?['slot_id'] != null) team.loadBrief('${ap!['slot_id']}');
   }
 
   @override

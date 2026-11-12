@@ -6,7 +6,7 @@ The app signs inspectors in with their inspection scheduler account (hyc492/insp
 
 | Server env | App |
 |---|---|
-| `SUPABASE_URL` and `SUPABASE_ANON_KEY` set | Scheduler sign-in. Every `/api` call carries the inspector's Supabase access token. Passcode and Inspector name are hidden. |
+| `SUPABASE_URL` and `SUPABASE_ANON_KEY` set | Scheduler sign-in is offered, not required. Signed in: every `/api` call carries the inspector's Supabase access token, the home screen lists their booked jobs, and Passcode and Inspector name are hidden. Not signed in (Sign in is on the home screen's top bar): the app works as in the row below, with the app passcode and New inspection; it has no booked jobs, and it cannot read or change a signed-in inspector's inspection. |
 | Not set | App passcode (`APP_PASSCODE`) and Inspector name, as before. |
 
 The app asks `GET /api/health` (`auth: "team"`) at start and when the server URL changes.
@@ -28,7 +28,7 @@ Who may sign in: an active scheduler member with role inspector or admin.
 | `POST /api/auth/verify {email, code}` | Returns `access_token`, `refresh_token`, `expires_at`, `member {id, name, email}` |
 | `POST /api/auth/refresh {refresh_token}` | New tokens. The app renews when less than 10 minutes are left |
 
-The session is kept in the phone's secure storage. A refused sign-in (401 for a token that has not run out), a 403 (taken off the team list) or a server that stops using scheduler sign-in signs the app out and deletes the jobs, briefs and documents on the phone.
+The session is kept in the phone's secure storage. A refused sign-in (401 for a token that has not run out), a 403 (taken off the team list) or a server that stops using scheduler sign-in signs the app out and deletes the jobs, briefs and documents on the phone. A signed-out phone keeps working with the app passcode.
 
 ## Jobs
 

@@ -46,8 +46,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final s = ref.watch(storeProvider), t = ref.watch(teamProvider), list = s.list.where(t.mine).toList();
     final body = ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
-        if (t.on) ..._today(context, t),
-        if (t.on && list.isNotEmpty)
+        if (t.use) ..._today(context, t),
+        if (t.use && list.isNotEmpty)
           const Padding(padding: EdgeInsets.fromLTRB(16, 20, 16, 8), child: Text('Inspections', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
         RowList([
           for (final st in list)
@@ -70,8 +70,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ]),
       ]);
     return Scaffold(
-      appBar: TitleBar(t.on ? 'Today' : 'Inspections', back: false, actions: [IconButton(icon: const Icon(LucideIcons.settings), onPressed: () => context.push('/settings'))]),
-      body: t.on ? RefreshIndicator(onRefresh: () => team.refresh(force: true), child: body) : body,
+      appBar: TitleBar(t.use ? 'Today' : 'Inspections', back: false, actions: [
+        if (t.on && !t.signedIn) TextButton(onPressed: () => context.push('/signin'), child: const Text('Sign in', style: TextStyle(fontWeight: FontWeight.w600))),
+        IconButton(icon: const Icon(LucideIcons.settings), onPressed: () => context.push('/settings'))]),
+      body: t.use ? RefreshIndicator(onRefresh: () => team.refresh(force: true), child: body) : body,
       bottomNavigationBar: BottomBar(PBtn('New inspection', () => context.push('/new'), icon: LucideIcons.plus)),
     );
   }

@@ -64,7 +64,7 @@ void atTheCar(BuildContext context, J p) {
   }
   final car = carFromBrief(p), fuel = fuelChoices.contains(p['fuel']) ? p['fuel'] as String : null;
   final email = store.defaultEmail.trim().isNotEmpty ? store.defaultEmail.trim() : '${team.member?['email'] ?? ''}'.trim();
-  final inspector = (team.on && team.signedIn ? team.name : store.inspector).trim();
+  final inspector = (team.use ? team.name : store.inspector).trim();
   if (car == null || car['trim'] == '' || fuel == null || !emailOk(email) || inspector.isEmpty) {
     context.push('/new', extra: p);
     return;
@@ -82,7 +82,7 @@ class NewInspectionScreen extends StatefulWidget {
 
 class _NewInspectionScreenState extends State<NewInspectionScreen> {
   final vin = TextEditingController(), miles = TextEditingController(), owner = TextEditingController(), email = TextEditingController(text: store.defaultEmail);
-  final inspector = TextEditingController(text: team.on && team.signedIn ? team.name : store.inspector);
+  final inspector = TextEditingController(text: team.use ? team.name : store.inspector);
   // a pick from the list, or Other with the typed value
   final typed = {for (final k in ['year', 'make', 'model', 'trim']) k: TextEditingController()};
   final pick = <String, String?>{'year': null, 'make': null, 'model': null, 'trim': null};
@@ -172,7 +172,7 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
   bool get ready => inspector.text.trim().isNotEmpty && year != null && _val('make').isNotEmpty && _val('model').isNotEmpty && _val('trim').isNotEmpty && fuel != null && emailOk(email.text);
 
   void _go() {
-    if (store.inspector.isEmpty && !team.on) store.saveSettings(server: store.server, passcode: store.passcode, inspector: inspector.text, email: store.defaultEmail); // next time it is filled in
+    if (store.inspector.isEmpty && !team.use) store.saveSettings(server: store.server, passcode: store.passcode, inspector: inspector.text, email: store.defaultEmail); // next time it is filled in
     final id = createInspection(
       fuel: fuel!,
       email: email.text.trim(),
@@ -247,7 +247,7 @@ class _NewInspectionScreenState extends State<NewInspectionScreen> {
           _f('Mileage (optional)', miles, kb: TextInputType.number, max: 7),
           _f('Owner name (optional)', owner),
           _f('Report email', email, kb: TextInputType.emailAddress),
-          if (!team.on) _f('Inspector name', inspector),
+          if (!team.use) _f('Inspector name', inspector),
         ]),
         bottomNavigationBar: BottomBar(PBtn('At the car: check ID', ready ? _go : null)),
       );
