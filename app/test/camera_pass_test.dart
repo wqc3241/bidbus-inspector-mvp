@@ -121,6 +121,12 @@ void main() {
       expect(ids(capList('Mechanicals', s)), ['ph_engine_bay', 'ph_engine_oil', 'video_exhaust']);
       expect(ids(capList('Mechanicals', fresh('ev', fuel: ev))), ['ph_frunk', 'ph_ev_port']);
       expect(ids(capList('Interior', fresh('ev', fuel: ev))).where((x) => x.startsWith('ph_ev_') || x.startsWith('ph_obd_')), ['ph_ev_alerts', 'ph_ev_battery']);
+      // a Tesla adds the Hardware Version photo after the dash
+      final tesla = fresh('t', fuel: ev)..['car'] = {'year': 2022, 'make': 'Tesla', 'model': 'Model Y', 'trim': 'Long Range'};
+      expect(ids(capList('Interior', tesla)).sublist(5, 8), ['ph_int_dash', 'ph_tesla_hw', 'ph_int_screen']);
+      expect(ids(capList('Interior', fresh('ev', fuel: ev))).contains('ph_tesla_hw'), false);
+      expect(stepItems('Interior', tesla).media.map((it) => it['id']).contains('ph_tesla_hw'), true);
+      expect(short['ph_tesla_hw'], 'Hardware Version');
       // a panel not on the car drops out of the walk; engine sound and exhaust go when the engine will not start
       m(s, 'paint')['Roof'] = <String, dynamic>{'na': true};
       lst(s, 'probs', 'ck_engine').add('Will not start');

@@ -496,6 +496,16 @@
    "label": "Dash with the screen on"
   },
   {
+   "no": "P46",
+   "part": "Photos",
+   "section": "Interior",
+   "id": "ph_tesla_hw",
+   "kind": "photo",
+   "cars": "all",
+   "make": "Tesla",
+   "label": "Hardware Version"
+  },
+  {
    "no": "P24",
    "part": "Photos",
    "section": "Interior",
