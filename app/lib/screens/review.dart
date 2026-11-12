@@ -119,7 +119,9 @@ class ReviewScreen extends ConsumerWidget {
       t.add(ShotTile(shotLabel(x), file: has && !vid ? store.abs(fl[key]) : null, icon: vid ? LucideIcons.video : has ? LucideIcons.camera : sk ? LucideIcons.minus : LucideIcons.plus, missing: !has && !sk, onTap: retake));
       if (id == 'video_360' && has) t.add(ShotTile('360 view', icon: LucideIcons.rotateCw, dark: true, onTap: () => showSpin(context, st)));
     }
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Sub3('Photos', LucideIcons.camera), tiles(t)]);
+    // the OBDII scanner photos (current, past, emission codes and other screens) are the Scanner Result
+    final scan = rl.any((e) => (e.$1['id'] as String).startsWith('ph_obd_'));
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Sub3(scan ? 'Scanner Result' : 'Photos', LucideIcons.camera), tiles(t)]);
   }
 
   Widget _damages(BuildContext context, J st, String z, {String? w}) {
