@@ -34,13 +34,17 @@ Look and layout: `reference/condition-report/condition-report.html` (open it in 
 ## Dealer report only
 
 - Title "Vehicle details".
-- Tabs: Condition, Tires, Inspection, Specs (scroll to section).
+- Tabs: Condition, Tires, Inspection, Title, Specs (scroll to section).
 - Condition: overall condition, then a Purchase Protection badge when eligible, then one banner per Not listed, Red or Yellow issue (worst first, issue `text`), then the Highlight.
   - Purchase Protection: none when the light is Not listed, or the car is older than 2011, or the mileage is 150,000 or more; "Title, odometer, legal" (limited) when the light is Red; otherwise "Purchase Protection".
 - Issue lines carry a level tag for Red, Yellow and Not listed.
 - "No issues · N checks" on rows without issues.
 - Engine sound row (gas and hybrid): play buttons for the engine sound and exhaust videos and the Engine check result.
 - Videos row, and Inspector's note row.
+- Title Check (`server/app/title.py`, stored in the CR at the build as `title`): the title and history items of the ACV condition report that Bidbus can look up, in ACV wording. The Bidbus car is the appointment's car, else the newest Bidbus car with the inspected VIN.
+  - Title status: Title Present, or Title Absent: loan / lease with the lender.
+  - Items, each "No record · sources" or its findings with the source: Branded Title (Carfax, AutoCheck, title photo), Total Loss (Carfax, AutoCheck insurance loss), True Mileage Unknown/Not Actual Miles (Carfax and AutoCheck rollback, title odometer above the odometer; Mileage Inconsistency is Yellow), Possible Flood Damage and Fire Damage (Carfax, inspection), Stolen Vehicle/Theft Recovery (Including History) (Carfax, AutoCheck), Taxis, Livery, State, or Law Enforcement Vehicle (AutoCheck), Rental Vehicle (Carfax, AutoCheck), Lien on Title (title photo, title in hand only), Title Washing (Carfax, Bidbus risk rule; Yellow), Title VIN Mismatch (title photo).
+  - An item is shown only when one of its sources is there for the car. Items nothing can look up (Previous Canadian, Grey Market Vehicle, Sold on Bill of Sale, Repossession Papers) are left out.
 - Specs: VIN, year, make, model, trim, odometer, fuel, keys, battery health (EV).
 - No auction fields (starting bid, auction time, Auto Bid).
 
