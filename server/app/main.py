@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import ai, bidbus, config, email, hotspots, reports, spin, storage, team
+from . import ai, bidbus, config, email, hotspots, reports, spin, storage, team, title
 from .cr import build_cr
 from .db import File as FileRow
 from .db import Inspection, SessionLocal, get_session, now
@@ -287,6 +287,7 @@ def build(inspection_id: str) -> None:
                 email.send_failure(insp, insp.validation_errors)
                 return
             insp.report_token = insp.report_token or secrets.token_urlsafe(24)
+            out["title"] = title.check(_title_car(insp), insp.record, out["condition_report"]["issues"])
             insp.cr, insp.validation_errors = out, None
             s.commit()
             _send_report(insp)
@@ -301,6 +302,22 @@ def build(inspection_id: str) -> None:
             reason = str(e) if isinstance(e, EmailNotSent) else f"{type(e).__name__}: {e}"
             insp.status, insp.validation_errors = "failed", insp.validation_errors or [reason]
             s.commit()
+
+
+def _title_car(insp: Inspection) -> dict | None:
+    """the Bidbus car for the Title check: the appointment's car, else the newest Bidbus car with the inspected VIN; None when
+    Bidbus is not set up or not reached (the Title check then has only what the inspection itself looked up)"""
+    if not bidbus.enabled():
+        return None
+    car = (insp.record or {}).get("vehicle") or {}
+    vin = _norm_vin(car.get("vin_read") or car.get("vin_listing"))
+    try:
+        ids = [insp.vehicle_id] if insp.vehicle_id else bidbus.vehicle_ids(vin) if len(vin) == 17 else []
+        v = bidbus.vehicle(ids[0]) if ids else None
+    except bidbus.BidbusError:
+        log.exception("Bidbus car for the Title check of %s", insp.id)
+        return None
+    return v if v and len(vin) == 17 and _norm_vin(v.get("vin")) == vin else None
 
 
 def resume_builds() -> None:
