@@ -233,7 +233,8 @@ def test_report_viewer_settings(client, media_dir, monkeypatch, page):
     assert cfg["hotspots"] is None and asked == [iid]  # no list at all: the library fails on an empty one
     assert (cfg["filenameX"], cfg["amountX"], cfg["indexZeroBase"], cfg["hotspotTrigger"]) == ("spin-{index}.jpg", 36, 2, "click")
     assert "@cloudimage/360-view@4.10.0/dist/360-view.min.js" in html and 'id="spin360"' in html
-    # worked out: a dot per part, on its frames, with each damage's photo and line in the card; Red level is a red dot
+    # worked out: a dot per part, on its frames, with each damage's photo and line in the card; a Red damage is a red dot on the
+    # dealer report only (the seller report shows no levels)
     n_door, n_trunk = 1, 2  # bmw-x3: Left rear door Dent Moderate (Disclosed), Trunk Structure Severe (Red)
     hotspots.save(d, rec, [{"part": "Left rear door", "damages": [n_door], "positions": {"6": [40.5, 44.0]}},
                            {"part": "Trunk or liftgate", "damages": [n_trunk, n_door], "positions": {"13": [50.0, 40.0]}}])
@@ -243,7 +244,7 @@ def test_report_viewer_settings(client, media_dir, monkeypatch, page):
     assert a["id"] == "dmg-1" and a["positions"] == {"6": {"x": 40.5, "y": 44.0}} and a["orientation"] == "x"
     assert a["className"] == "hs-dmg" and a["label"] == "Left rear door"
     assert f'src="/r/{token}/media/damage-1.jpg"' in a["content"] and "<b>Left rear door</b>Dent, Moderate, 2 in" in a["content"]
-    assert b["className"] == "hs-dmg hs-sev hs-n2" and b["label"] == "Trunk or liftgate · 2 damages" and b["content"].count('class="hs-it"') == 2
+    assert b["className"] == ("hs-dmg hs-sev hs-n2" if page == "dealer" else "hs-dmg hs-n2") and b["label"] == "Trunk or liftgate · 2 damages" and b["content"].count('class="hs-it"') == 2
     assert "<script" not in html.split('id="spin-cfg">')[1].split("</script>")[0]  # the cards are data, never markup on the page
 
 

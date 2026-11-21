@@ -99,9 +99,9 @@ def paint_reads(rec: dict) -> list[dict]:
             for icon, word, p in (("↑", "Highest", hi), ("↓", "Lowest", lo))]
 
 
-def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict]) -> dict:
+def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict], levels: bool) -> dict:
     """the 360 viewer's settings, with a dot for each damaged part on the frames that show it; tapping a dot opens a card with each
-    damage's photo and line, and tapping a damage there opens its photo in the viewer"""
+    damage's photo and line, and tapping a damage there opens its photo in the viewer; levels: dots colored by level (dealer only)"""
     dmg = {d["n"]: d for d in rec.get("damages", [])}
     hs = []
     for i, s in enumerate(spots):
@@ -116,8 +116,8 @@ def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict]) -> dict:
             for d, x in zip(ds, lines))
         # keepOpen: the card stays until a tap elsewhere in the view (with a mouse it would close as the pointer leaves it)
         hs.append({"id": f"dmg-{i + 1}", "orientation": "x", "keepOpen": True, "label": s["part"] + (f" · {len(ds)} damages" if len(ds) > 1 else ""),
-                   # amber; red for a Red (or worse) damage; the number of damages when the part has several
-                   "className": " ".join(["hs-dmg"] + ({"yel": ["hs-yel"], "sev": ["hs-sev"], "stop": ["hs-sev"]}.get(worst, []))
+                   # amber; on the dealer report red for a Red (or worse) damage; the number of damages when the part has several
+                   "className": " ".join(["hs-dmg"] + ({"yel": ["hs-yel"], "sev": ["hs-sev"], "stop": ["hs-sev"]}.get(worst, []) if levels else [])
                                          + ([f"hs-n{min(len(ds), 9)}"] if len(ds) > 1 else [])),
                    "positions": {k: {"x": x, "y": y} for k, (x, y) in s["positions"].items()},
                    "content": f'<div class="hs-card">{items}</div>'})
@@ -137,7 +137,7 @@ def current_cr(insp: Inspection) -> dict:
     return insp.cr["condition_report"]
 
 
-def view(insp: Inspection) -> dict:
+def view(insp: Inspection, dealer: bool) -> dict:
     """everything both report templates show, from the CR (condition_report) and the record"""
     token, rec, car = insp.report_token, insp.record, insp.car or {}
     cr = current_cr(insp)
@@ -155,7 +155,7 @@ def view(insp: Inspection) -> dict:
     for g, _ in GROUPS:
         if g == "Exterior" and spin.have_frames(storage.folder(insp.id)):
             spots = hotspots.ensure(insp.id, storage.folder(insp.id), rec) or []
-            media.append({"g": g, "kind": "spin", "src": url(spin.frame(1)), "lbl": "360 view", "cfg": spin_cfg(url, rec, by_photo, spots)})
+            media.append({"g": g, "kind": "spin", "src": url(spin.frame(1)), "lbl": "360 view", "cfg": spin_cfg(url, rec, by_photo, spots, dealer)})
             media += [{"g": g, "kind": "img", "src": url(spin.frame(k)), "lbl": VIEW[slot]} for k, slot in SPIN_SLOTS]
         media += [{"g": g, "kind": "video", "src": url(x["file"]), "lbl": VIDEOS[x["question_id"]][1]}
                   for x in rec["videos"] if VIDEOS.get(x["question_id"], ("",))[0] == g]
@@ -231,12 +231,12 @@ def _built(token: str, s: Session) -> Inspection:
 
 @router.get("/{token}/seller")
 def seller(token: str, request: Request, s: Session = Depends(get_session)):
-    return templates.TemplateResponse(request, "seller.html", view(_built(token, s)))
+    return templates.TemplateResponse(request, "seller.html", view(_built(token, s), dealer=False))
 
 
 @router.get("/{token}/dealer")
 def dealer(token: str, request: Request, s: Session = Depends(get_session)):
-    return templates.TemplateResponse(request, "dealer.html", view(_built(token, s)))
+    return templates.TemplateResponse(request, "dealer.html", view(_built(token, s), dealer=True))
 
 
 @router.get("/{token}/media/{name}")
