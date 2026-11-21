@@ -6,7 +6,7 @@
 <header class="dh"><b class="dh-t">Vehicle details</b></header>
 <div class="d-head"><h1>{{ name }}</h1><p class="trim">{{ trim }}</p><p class="ml">{{ miles }} Miles · {{ date }}</p></div>
 {{ m.gallery("d") }}
-<nav class="d-tabs"><a class="on" href="#d-condition">Condition</a><a href="#d-tires">Tires</a><a href="#d-inspection">Inspection</a><a href="#d-specs">Specs</a></nav>
+<nav class="d-tabs"><a class="on" href="#d-condition">Condition</a><a href="#d-tires">Tires</a><a href="#d-inspection">Inspection</a>{% if tcheck %}<a href="#d-title">Title</a>{% endif %}<a href="#d-specs">Specs</a></nav>
 <section class="d-sec" id="d-condition"><h2>Condition</h2>
  <div class="d-score"><div class="ovc"><small>Overall condition</small><b>{{ overall }}</b></div>
   {%- if protection %}<div class="bbg{{ ' lim' if protection[1] }}">{{ I("shield", 18) }}{{ protection[0] }}</div>{% endif %}</div>
@@ -22,6 +22,10 @@
  {%- if videos %}<div class="ir"><dt>{{ I("video", 16) }}Videos</dt>{% for v in videos %}<dd class="vid"><span>{{ I("play", 12) }}</span><a href="{{ v.src }}">{{ v.lbl }}</a></dd>{% endfor %}</div>{% endif %}
  {%- if note %}<div class="ir"><dt>{{ I("clip", 16) }}Inspector's note</dt><dd class="neu"><span>–</span><div class="dtxt">{{ note }}</div></dd></div>{% endif %}
 </dl></section>
+{%- if tcheck %}<section class="d-sec" id="d-title"><h2>Title Check</h2><dl class="insp">
+ {%- if tcheck.status %}<div class="ir"><dt>{{ I("file", 16) }}Title status</dt><dd class="neu"><span>–</span><div class="dtxt">{{ tcheck.status }}</div></dd></div>{% endif %}
+ {%- for r in tcheck.rows %}<div class="ir"><dt>{{ I("file", 16) }}{{ r.name }}</dt>{{ m.lines(r, True) }}{% if not r.lines %}<dd class="pos"><span>✓</span>No record · {{ r.sources }}</dd>{% endif %}</div>{% endfor %}
+</dl></section>{% endif %}
 <section class="d-sec" id="d-specs"><h2>Vehicle Details</h2><dl class="spec2">{% for k, v in specs %}<div><dt>{{ k }}</dt><dd>{{ v if v is not none and v != "" else "–" }}</dd></div>{% endfor %}</dl></section>
 {% endblock %}
 {% block scripts %}<script>
