@@ -124,7 +124,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-# app icon: the Bidbus logo (reference/mockup/assets/logo.html) on brand green, rendered to tool/app_icon.png
+# app icon: Bidbus Field (white B with a green map pin on a dark tile), 1024 px in tool/app_icon.png
 flutter_launcher_icons:
   ios: true
   android: true
