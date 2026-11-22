@@ -29,11 +29,19 @@ function hli(n, html, dashed, cls) { if (NOHL) return '<span class="' + (cls || 
 // the CR mark: solid Bidbus green with white "CR"
 function crMark(cls) { return '<span class="crm ' + (cls || "") + '" title="Bidbus CR" aria-label="Bidbus CR">CR</span>'; }
 
+// a check problem that a damage photo in the same section already shows (same words, the damage adds its severity) shows only once, with the photo (Tom 11-22)
 function probs(g) {
-  return problems().filter(function (f) { return g === "Engine sound" ? f.id === ENG_CK : f.sec === g && f.id !== ENG_CK; }).map(function (f) {
+  var shot = g === "Engine sound" ? [] : dmgIn(g).map(dmgLine);
+  return problems().filter(function (f) { return g === "Engine sound" ? f.id === ENG_CK : f.sec === g && f.id !== ENG_CK; }).filter(function (f) {
+    return !shot.some(function (t) { return t === f.text || t.indexOf(f.text + ",") === 0 || t.indexOf(f.text + " (") === 0; });
+  }).map(function (f) {
     return { t: f.text, s: f.sub || "" };
   });
 }
+// the listing's announcement as the dealer portal shows it today (V1 shows no grade banners, Tom 11-22)
+var ANN = "Seller request pick up outside 30 miles from 90034";
+LU.megaphone = '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>';
+function annBar() { return '<div class="ann">' + I("megaphone", 18) + "<span>" + esc(ANN) + "</span></div>"; }
 function tireRows() { return [["lf", "Driver Front"], ["rf", "Passenger Front"], ["lr", "Driver Rear"], ["rr", "Passenger Rear"]]; }
 
 // ---------- shared sections of vehicle details (web and app use the same parts) ----------
@@ -108,6 +116,7 @@ function wDetails() {
   h += wGallery();
   h += '<div class="vm-bid"><div><b>2026-11-05 14:00 PST</b><small>Begins</small></div><div><b class="pr">' + c.price + '</b><small>Starting bid</small></div><div class="ab"><span class="rc-ab">' + I("zap", 15) + "Auto Bid</span><small>Not set bid proxy yet</small></div></div>";
   h += '<div class="vm-loc"><div><small>Seller location</small><b>' + I("pin", 15) + "Los Angeles, CA 90034</b></div><div><small>Send to store</small><b>" + I("store", 15) + 'Delta Ridge Toyota</b></div><div class="dist"><small>Distance</small><b>' + I("route", 15) + "14 miles</b></div></div>";
+  h += annBar();
   h += '<div class="vm-spec"><div><p><span>Mileage</span><b>' + c.miles.toLocaleString() + '</b></p><p><span>Vin</span><b>' + c.vin + ' <em>' + I("copy", 13) + "Copy</em></b></p><p><span>Wholesale Value</span><b>$19,400</b></p><p><span>Lending Value</span><b>$20,900</b></p></div>" +
     '<div><p><span>Title Status</span><b><i class="tst">LOAN</i></b></p><p><span>Lienholder</span><b>Toyota Financial Services</b></p><p><span>Location</span><b>' + I("pin", 15) + '90034 (Los Angeles)</b></p><p><span>Black Book</span><b>$20,100</b></p></div></div>';
   h += hl("1.2", secTires(), true) + hl("1.2", secCR());
@@ -148,6 +157,7 @@ function mDetails() {
   h += '<div class="d-head"><div class="eyebrow">Upcoming auction</div><div class="mt"><h1>' + esc(c.name) + "</h1>" + hli("1.2", crMark("lg")) + '</div><p class="trim">' + esc(c.trim) + '</p><p class="ml">' + c.miles.toLocaleString() + " Miles</p></div>";
   h += hl("1.2", gallery("d"), true, "mgal");
   h += '<div class="d-sum"><div><small>Begins</small><b>2026-11-05<br>14:00 PST</b></div><div><small>Starting bid</small><b class="sp">' + c.price + "</b></div></div>";
+  h += annBar();
   return h + "</div>" + mFooter();
 }
 function mDetailsLower() {

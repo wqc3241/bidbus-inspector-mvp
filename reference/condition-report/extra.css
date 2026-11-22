@@ -97,3 +97,7 @@
 .insp.s .ir:first-child { padding-top: 4px; }
 .ir dd .dtxt small { display: block; color: #6b7280; font-size: 12px; line-height: 17px; }
 .ir dd.dmg .dtxt { color: #111827; }
+/* V1 (Tom 11-22): the top banner is the listing's announcement as the dealer portal shows it; each inspection row heading counts checks and issues */
+.dann.ann { margin-top: 16px; background: #fefce8; border-left: 0; color: #713f12; }
+.dann.ann svg { color: #ca8a04; }
+.ir dt .irc { margin-left: auto; font-size: 12px; font-weight: 400; color: #687076; }

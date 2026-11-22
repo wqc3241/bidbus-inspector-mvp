@@ -6,8 +6,6 @@ var SECS = [["Exterior", "car", "side"], ["Paint", "brush", "detail"], ["Tires",
 var SEC_IC = {}; SECS.forEach(function (s) { SEC_IC[s[0]] = s[1]; });
 var LEVEL = { "Ends the visit": "stop", "Not listed until fixed": "stop", "Red": "sev", "Yellow": "yel", "Disclosed": "note", "Not checked": "skip", "Normal": "ok" };
 var LV_TXT = { stop: "Not listed", sev: "Red", yel: "Yellow", note: "Disclosed", skip: "Not checked" };
-var LIGHT_C = { green: "Green", yellow: "Yellow", red: "Red", stop: "Not listed" };
-var LIGHT_D = { green: "Starts and drives, no major faults", yellow: "A named system has a known issue", red: "Structure, title or major changes", stop: "Fix before listing" };
 var TIRES = [["lf", "Left front"], ["rf", "Right front"], ["rr", "Right rear"], ["lr", "Left rear"]];
 
 // ---------- two example inspections, fictional cars ----------
@@ -30,7 +28,7 @@ var EX = {
       ck_keys: [["Only one key", ""]],
     },
     damages: [{ z: "Exterior", p: "Front bumper", t: "Chip", v: "Minor", s: "1" }, { z: "Exterior", p: "Left front door", t: "Scratch", v: "Moderate", s: "4" }, { z: "Exterior", p: "Right rear door", t: "Dent", v: "Minor", s: "1" }, { z: "Tires", p: "Left front wheel", t: "Curb rash", v: "Minor", s: "2" }],
-    seller: "A. Seller", overall: "Just okay", sunroof: "Works", navigation: "Works",
+    seller: "A. Seller", overall: "Just okay", ann: "Seller request pick up outside 30 miles from 90034", sunroof: "Works", navigation: "Works",
     note: "Clean, straight car. Rear tires need replacing. Right rear door repainted, good quality. Light seep at the valve cover.",
   },
   ev: {
@@ -80,22 +78,12 @@ function problems() {
   X().damages.forEach(function (d) { out.push({ sec: "Damages", id: "damage", check: d.p, opt: d.t, note: [d.v, d.s ? d.s + " in" : ""].filter(Boolean).join(", "), lv: "note" }); });
   return out;
 }
-function lightOf(P) {
-  var has = function (k) { return P.some(function (f) { return f.lv === k; }); };
-  return has("stop") ? "stop" : has("sev") ? "red" : has("yel") ? "yellow" : "green";
-}
 function fText(f) { return f.text ? f.text + (f.sub ? " · " + f.sub : "") : f.check + ": " + f.opt; }
 function fTextOld(f) { return f.check + ": " + f.opt + (f.wheels && f.wheels.length ? " (" + wheelsText(f.wheels) + ")" : "") + (f.note ? ". " + f.note : ""); }
-// Purchase Protection for dealers: shown on the dealer report only
-function protection(light) {
-  var c = X().car, y = c.year, mi = c.miles;
-  if (light === "stop") return null;
-  if (light === "red") return { limited: true, label: "Title, odometer, legal" };
-  if (y < 2011 || mi >= 150000) return null;
-  return { label: "Purchase Protection" };
-}
+// V1 (Tom 11-22): no light, grade, level tag or Purchase Protection on the seller or dealer report
 
 // ---------- shared pieces ----------
+LU.megaphone = '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>';
 function areaIcons(P, cls) {
   return '<div class="xareas ' + (cls || "") + '">' + SECS.map(function (s) {
     var l = P.filter(function (f) { return f.sec === s[0] && f.lv !== "skip"; });
@@ -123,6 +111,8 @@ function highlights(P, cls) {
 // every damage the inspector recorded, with its photo, in the section it was recorded in (Tom 11-07 07:43: no separate Damages section)
 function dmgLine(d) { return d.p + ": " + d.t + ", " + d.v + (d.s ? ", " + d.s + " in" : ""); }
 function dmgIn(sec) { return X().damages.filter(function (d) { return d.z === sec; }); }
+// a check problem that a damage photo in the same section already shows (same words, the damage adds its severity) shows only once, with the photo (Tom 11-22)
+function notShot(l, dl) { var shot = dl.map(dmgLine); return l.filter(function (f) { return !f.text || !shot.some(function (t) { return t === f.text || t.indexOf(f.text + ",") === 0 || t.indexOf(f.text + " (") === 0; }); }); }
 function dmgDd(l) { return l.map(function (d) { return '<dd class="dmg"><div class="dth">' + art("detail") + '</div><div class="dtxt">' + esc(dmgLine(d)) + "</div></dd>"; }).join(""); }
 function issueDd(f, tags) { return '<dd class="neg"><span>×</span><div class="dtxt">' + esc(f.text) + (tags && LV_TXT[f.lv] && f.lv !== "note" ? ' <em class="lvt ' + f.lv + '">' + LV_TXT[f.lv] + "</em>" : "") + (f.sub ? "<small>" + esc(f.sub) + "</small>" : "") + "</div></dd>"; }
 function findingRows(P) {
@@ -273,16 +263,15 @@ function inspHTML() {
 
 // ---------- seller app ----------
 function sellerHTML() {
-  var x = X(), c = x.car, P = problems(), lt = lightOf(P);
+  var x = X(), c = x.car, P = problems();
   var h = '<header class="sh2"><span class="s-logo">bidbus</span><span class="s-r"><span>EN</span><span class="s-menu">Menu</span></span></header>';
   h += '<div class="scroller s-page" data-scroll="seller-report"><span class="s-crumb">Dashboard <b>› Condition report</b></span>';
-  h += '<div class="s-card pad"><div class="s-car">' + esc(c.name + " " + c.trim) + '</div><div class="s-meta">' + I("gauge", 14) + c.miles.toLocaleString() + " mi  " + I("calendar", 14) + esc(fmtDate(c.date)) + "</div>" +
-    '<div class="s-score"><div class="lt big ' + lt + '"><i></i>' + LIGHT_C[lt] + "</div></div></div>";
+  h += '<div class="s-card pad"><div class="s-car">' + esc(c.name + " " + c.trim) + '</div><div class="s-meta">' + I("gauge", 14) + c.miles.toLocaleString() + " mi  " + I("calendar", 14) + esc(fmtDate(c.date)) + "</div></div>";
   h += '<div class="s-card">' + gallery("s") + "</div>";
   h += '<div class="s-card pad">' + highlights(P, "s") + "</div>";
   h += '<div class="s-card pad"><div class="s-ch">' + I("tire", 18) + "</div>" + tireCells() + "</div>";
   h += '<div class="s-card pad"><div class="s-ch">' + I("clip", 18) + "<b>Bidbus Inspection</b></div><dl class=\"insp s\">" + SECS.filter(function (s) { return s[0] !== "Damages"; }).map(function (s) {
-    var l = P.filter(function (f) { return f.sec === s[0] && f.lv !== "skip"; }), dl = dmgIn(s[0]);
+    var dl = dmgIn(s[0]), l = notShot(P.filter(function (f) { return f.sec === s[0] && f.lv !== "skip"; }), dl);
     return '<div class="ir"><dt>' + I(s[1], 16) + esc(s[0] === "OBDII" ? "OBD-II" : s[0]) + "</dt>" + (l.length || dl.length ? l.map(function (f) { return issueDd(f, false); }).join("") + dmgDd(dl) : '<dd class="pos"><span>✓</span>No issues</dd>') + "</div>";
   }).join("") + "</dl></div>";
   h += '<div class="s-card pad why"><div class="s-row">' + I("dollar", 20, "c-green") + "<div><b>More accurate price</b></div></div>" +
@@ -293,18 +282,16 @@ function sellerHTML() {
 
 // ---------- dealer app ----------
 function dealerHTML() {
-  var x = X(), c = x.car, P = problems(), lt = lightOf(P), pr = protection(lt);
+  var x = X(), c = x.car, P = problems();
   var h = '<header class="dh"><span class="tb-btn">' + I("left", 22) + '</span><b class="dh-t">Vehicle details</b><span class="call">Call</span><span class="dmenu">' + I("menu", 22) + "</span></header>";
   h += '<div class="scroller d-page" data-scroll="dealer">';
   h += '<div class="d-head"><div class="eyebrow">Upcoming auction</div><h1>' + esc(c.name) + '</h1><p class="trim">' + esc(c.trim) + '</p><p class="ml">' + c.miles.toLocaleString() + " Miles</p></div>";
   h += gallery("d");
   h += '<div class="d-sum"><div><small>Begins</small><b>2026-11-05<br>14:00 PST</b></div><div><small>Starting bid</small><b class="sp">' + c.price + "</b></div></div>";
   h += '<nav class="d-tabs">' + [["condition", "Condition"], ["tires", "Tires"], ["inspection", "Inspection"], ["specs", "Specs"]].map(function (t, i) { return '<button type="button" class="' + (i === 0 ? "on" : "") + '" data-act="d-tab" data-v="' + t[0] + '">' + t[1] + "</button>"; }).join("") + "</nav>";
-  h += '<section class="d-sec" id="d-condition"><h2>Condition</h2><div class="d-score"><div class="lt big ' + lt + '"><i></i>' + LIGHT_C[lt] + "</div><small class=\"ltd\">" + esc(LIGHT_D[lt]) + "</small>" + '<div class="ovc"><small>Overall condition</small><b>' + esc(x.overall) + "</b></div>" +
-    (pr ? '<div class="bbg' + (pr.limited ? " lim" : "") + '">' + I("shield", 18) + esc(pr.label) + "</div>" : "") + "</div>";
-  var ORD = { stop: 0, sev: 1, yel: 2 };
-  var ann = P.filter(function (f) { return ORD[f.lv] !== undefined; }).sort(function (a, b) { return ORD[a.lv] - ORD[b.lv]; });
-  if (ann.length) h += '<div class="danns">' + ann.map(function (f) { return '<div class="dann ' + f.lv + '">' + I("alert", 16) + "<span>" + esc(fText(f)) + "</span></div>"; }).join("") + "</div>";
+  h += '<section class="d-sec" id="d-condition"><h2>Condition</h2><div class="d-score"><div class="ovc"><small>Overall condition</small><b>' + esc(x.overall) + "</b></div></div>";
+  // the top banner is the listing's announcement as the dealer portal shows it today, not issues picked by grade (Tom 11-22)
+  if (x.ann) h += '<div class="dann ann">' + I("megaphone", 16) + "<span>" + esc(x.ann) + "</span></div>";
   h += '<h3 class="d-h3">Highlight</h3>' + highlights(P, "d") + "</section>";
   h += '<section class="d-sec" id="d-tires"><h2>Tire Condition</h2><div class="tires2">' + TIRES.map(function (t) {
     var m = x.tread[t[0]], more = tireOf(t[0], "ck_tire").concat(tireOf(t[0], "ck_wheel"), tireOf(t[0], "ck_brakes"));
@@ -313,20 +300,23 @@ function dealerHTML() {
   // Engine sound is its own row after Mechanicals (Tom 11-05), on gas, hybrid and plug-in hybrid cars: the engine sound and
   // exhaust videos to play, and the result of the Engine check (which leaves the Mechanicals row)
   var ENG = byId("ck_engine"), engRow = !!(ENG && carOk(ENG)), ENG_V = ["video_engine", "video_exhaust"];
-  var irRows = function (l, n0, dl) {
+  var irRows = function (l, dl) {
     dl = dl || [];
-    return l.length || dl.length ? l.map(function (f) { return f.lv === "skip" ? '<dd class="neu"><span>–</span><div class="dtxt">' + esc(f.text) + "</div></dd>" : issueDd(f, true); }).join("") + dmgDd(dl)
-      : '<dd class="pos"><span>✓</span>No issues' + (n0 ? " · " + n0 + (n0 > 1 ? " checks" : " check") : "") + "</dd>";
+    return l.length || dl.length ? l.map(function (f) { return f.lv === "skip" ? '<dd class="neu"><span>–</span><div class="dtxt">' + esc(f.text) + "</div></dd>" : issueDd(f, false); }).join("") + dmgDd(dl)
+      : '<dd class="pos"><span>✓</span>No issues</dd>';
   };
+  // heading count: checks in the section, issues = problems + damages (Tom 11-22)
+  var irCount = function (n, l, dl) { var ni = l.length + (dl || []).length; return '<small class="irc">' + n + (n === 1 ? " check" : " checks") + (ni ? " · " + ni + (ni > 1 ? " issues" : " issue") : "") + "</small>"; };
   var vidName = function (it) { return it.label.replace(/ \(up to.*\)$/, "").replace(/:.*$/, "").replace(/, with sound$/, ""); };
   h += '<section class="d-sec" id="d-inspection"><h2>Bidbus Inspection</h2><dl class="insp">' + SECS.filter(function (s) { return s[0] !== "Damages"; }).map(function (s) {
-    var l = P.filter(function (f) { return f.sec === s[0] && f.id !== "ck_engine"; });
+    var dl = dmgIn(s[0]), l = notShot(P.filter(function (f) { return f.sec === s[0] && f.id !== "ck_engine"; }), dl);
     var n0 = inSec(s[0], "check").filter(function (it) { return it.id !== "ck_engine"; }).length;
-    var row = '<div class="ir"><dt>' + I(s[1], 16) + esc(s[0] === "OBDII" ? "OBD-II" : s[0]) + "</dt>" + irRows(l, n0, dmgIn(s[0])) + "</div>";
+    var row = '<div class="ir"><dt>' + I(s[1], 16) + esc(s[0] === "OBDII" ? "OBD-II" : s[0]) + irCount(n0, l, dl) + "</dt>" + irRows(l, dl) + "</div>";
     if (s[0] === "Mechanicals" && engRow) {
-      row += '<div class="ir"><dt>' + I("volume", 16) + "Engine sound</dt>" + inSec("Videos", "video").filter(function (it) { return ENG_V.indexOf(it.id) >= 0; }).map(function (it) {
+      var el = P.filter(function (f) { return f.id === "ck_engine"; });
+      row += '<div class="ir"><dt>' + I("volume", 16) + "Engine sound" + irCount(1, el) + "</dt>" + inSec("Videos", "video").filter(function (it) { return ENG_V.indexOf(it.id) >= 0; }).map(function (it) {
         return '<dd class="vid"><span>' + I("play", 12) + "</span>" + esc(vidName(it)) + "</dd>";
-      }).join("") + irRows(P.filter(function (f) { return f.id === "ck_engine"; }), 1) + "</div>";
+      }).join("") + irRows(el) + "</div>";
     }
     return row;
   }).join("") + '<div class="ir"><dt>' + I("video", 16) + "Videos</dt>" + inSec("Videos", "video").filter(function (it) { return !engRow || ENG_V.indexOf(it.id) < 0; }).map(function (it) { return '<dd class="pos"><span>' + I("play", 12) + "</span>" + esc(vidName(it)) + "</dd>"; }).join("") + "</div>" +

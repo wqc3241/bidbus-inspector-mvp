@@ -62,6 +62,7 @@ When the mockup and a doc differ, the doc wins. When `docs/` and `data/question-
 - The seller never sees anything about dealer protection, guarantees or buybacks.
 - The driver's license, registration and family proof are private: never on a report.
 - The condition report light is computed and stored, never shown on either report.
+- V1 reports show no grade at all: no light, no level tag, no Purchase Protection, no grade-coloured banner or dot (Tom, 2026-11-22).
 - No secrets in the repo. Keys come from environment variables (`.env.example`).
 - Keep the record shape identical to `samples/inspection-*.json` so `tools/cr_from_inspection.py` runs unchanged.
 
