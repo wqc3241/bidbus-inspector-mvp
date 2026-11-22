@@ -21,8 +21,8 @@
  <div class="hl2 {{ st }}"><span class="hli">{{ I(ic, 30) }}<em>{{ "✓" if st == "ok" else "–" if st == "na" else val if ic == "key" else "×" }}</em></span><span>{{ label }}</span><b>{{ val }}</b></div>{% endfor %}
 </div>{% endmacro %}
 
-{% macro lines(row, tags) %}{% for x in row.lines %}
- {%- set txt %}{{ x.text }}{% if tags and x.lv %} <em class="lvt {{ x.lv }}">{{ level_text[x.lv] }}</em>{% endif %}{% if x.sub %}<small>{{ x.sub }}</small>{% endif %}{% endset %}
+{% macro lines(row) %}{% for x in row.lines %}
+ {%- set txt %}{{ x.text }}{% if x.sub %}<small>{{ x.sub }}</small>{% endif %}{% endset %}
  {%- if x.photo %}<dd class="dmg"><a class="dth" href="{{ x.photo }}"><img src="{{ x.photo }}" alt="" loading="lazy"></a><div class="dtxt">{{ txt }}</div></dd>
  {%- else %}<dd class="neg"><span>×</span><div class="dtxt">{{ txt }}</div></dd>{% endif %}
 {%- endfor %}{% endmacro %}

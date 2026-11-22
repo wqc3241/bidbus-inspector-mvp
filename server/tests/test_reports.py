@@ -38,18 +38,19 @@ def test_pages_render_without_private_data(client, name):
         assert word not in seller.lower()
     assert "Dashboard <b>› Condition report</b>" in seller and "Same-day payment" in seller
     assert "Left rear door: Dent, Moderate, 2 in" in seller or name != "bmw-x3"
-    assert "<em class=\"lvt" not in seller  # no level tags for the seller
 
 
 def test_dealer_page_parts(client):
     token, _ = make("bmw-x3")
     html = client.get(f"/r/{token}/dealer").text
-    assert "Vehicle details" in html and "Title, odometer, legal" in html  # Red light: limited protection
-    assert html.index("Trunk or liftgate: Structure, Severe") < html.index("Warning lights: Check engine")  # Red before Yellow
-    assert '<em class="lvt sev">Red</em>' in html and "No issues · 1 check" in html  # Engine sound row, Engine check OK
+    assert "Vehicle details" in html and "Trunk or liftgate: Structure, Severe" in html and "Warning lights: Check engine" in html
+    for word in ("protection", "title, odometer, legal", 'class="lvt', 'class="dann', "hs-sev", "hs-yel"):  # V1: no grade anywhere
+        assert word not in html.lower(), word
+    assert 'Engine sound<small class="irc">1 check</small>' in html  # Engine sound row, Engine check OK
     assert "Engine sound at the first start" in html and "Inspector's note" in html
     for part in ("Exterior", "Paint", "Tires", "Underbody", "Mechanicals", "Engine sound", "Interior", "OBD-II", "Additionals"):
-        assert f"{part}</dt>" in html
+        assert f'{part}<small class="irc">' in html
+    assert re.search(r'<small class="irc">\d+ checks? · \d+ issues?</small>', html)  # a row with issues: N checks · N issues
     ev = client.get(f"/r/{make('tesla-model-y')[0]}/dealer").text
     assert "Engine sound</dt>" not in ev and "Battery health" in ev
 
@@ -83,7 +84,7 @@ def test_obd_screens_under_obd_problems(client, page):
     # gas car with Check engine and stored codes: the OBD-II block shows its five scan screens
     token, _ = make("bmw-x3")
     html = client.get(f"/r/{token}/{page}").text
-    block = html[html.index("OBD-II</dt>"):].split('<div class="ir">')[0]
+    block = html[re.search(r'OBD-II(</dt>|<small class="irc">)', html).start():].split('<div class="ir">')[0]
     shots = re.findall(r'<a class="dth scr" href="/r/' + token + r'/media/([^"]+)" title="([^"]+)">', block)
     assert shots == [("ph_obd_current.jpg", "OBD-II current codes"), ("ph_obd_past.jpg", "OBD-II past codes"),
                      ("ph_obd_emission.jpg", "OBD-II emission codes"), ("ph_obd_other-1.jpg", "OBD-II other"), ("ph_obd_other-2.jpg", "OBD-II other")]
@@ -98,7 +99,7 @@ def test_obd_screens_under_obd_problems(client, page):
                          report_token=tok, cr=build_cr(rec)))
         s.commit()
     html = client.get(f"/r/{tok}/{page}").text
-    assert 'class="dth scr"' not in html and "OBD-II</dt>" in html
+    assert 'class="dth scr"' not in html and re.search(r'OBD-II(</dt>|<small class="irc">)', html)
 
 
 @pytest.mark.parametrize("page", ["seller", "dealer"])

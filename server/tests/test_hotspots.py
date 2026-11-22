@@ -243,7 +243,7 @@ def test_report_viewer_settings(client, media_dir, monkeypatch, page):
     assert a["id"] == "dmg-1" and a["positions"] == {"6": {"x": 40.5, "y": 44.0}} and a["orientation"] == "x"
     assert a["className"] == "hs-dmg" and a["label"] == "Left rear door"
     assert f'src="/r/{token}/media/damage-1.jpg"' in a["content"] and "<b>Left rear door</b>Dent, Moderate, 2 in" in a["content"]
-    assert b["className"] == "hs-dmg hs-sev hs-n2" and b["label"] == "Trunk or liftgate · 2 damages" and b["content"].count('class="hs-it"') == 2
+    assert b["className"] == "hs-dmg hs-n2" and b["label"] == "Trunk or liftgate · 2 damages" and b["content"].count('class="hs-it"') == 2
     assert "<script" not in html.split('id="spin-cfg">')[1].split("</script>")[0]  # the cards are data, never markup on the page
 
 

@@ -77,9 +77,6 @@ WHEELS = ["lf", "rf", "rr", "lr"]
 VIEW = {"front_left": "Left front", "left_side": "Left side", "rear_left": "Left rear", "rear": "Rear", "rear_right": "Right rear",
         "right_side": "Right side", "front_right": "Right front", "front": "Front"}
 WHEEL_NAME = {w["wheel"]: w["name"] for w in CAT["wheels"]}
-LEVEL = {"Ends the visit": "stop", "Not listed until fixed": "stop", "Red": "sev", "Yellow": "yel"}
-LEVEL_TEXT = {"stop": "Not listed", "sev": "Red", "yel": "Yellow"}
-templates.env.globals["level_text"] = LEVEL_TEXT
 CHECK_ROW = {c["id"]: c["cr_row"] for c in CAT["checks"]} | {"ck_engine": "Engine sound"}  # the Engine check result sits in Engine sound
 FUEL_WORD = {"Gas or diesel": "Gas", "Electric (EV)": "Electric"}
 
@@ -108,17 +105,15 @@ def spin_cfg(url, rec: dict, by_photo: dict, spots: list[dict]) -> dict:
         ds = [dmg[n] for n in s["damages"] if n in dmg]
         if not ds:
             continue
-        lines = [by_photo[d["file"]] if d["file"] in by_photo else {"text": d["place"], "level": None} for d in ds]
-        worst = max((LEVEL.get(x.get("level")) for x in lines), key=lambda lv: ["yel", "sev", "stop"].index(lv) + 1 if lv else 0)
+        lines = [by_photo[d["file"]] if d["file"] in by_photo else {"text": d["place"]} for d in ds]
         items = "".join(
             f'<button type="button" class="hs-it" id="hsd-{escape(str(d["n"]))}"><img src="{escape(url(d["file"]))}" alt="">'
             f'<span><b>{escape(x["text"].split(": ", 1)[0])}</b>{escape(x["text"].split(": ", 1)[1] if ": " in x["text"] else "")}</span></button>'
             for d, x in zip(ds, lines))
         # keepOpen: the card stays until a tap elsewhere in the view (with a mouse it would close as the pointer leaves it)
         hs.append({"id": f"dmg-{i + 1}", "orientation": "x", "keepOpen": True, "label": s["part"] + (f" · {len(ds)} damages" if len(ds) > 1 else ""),
-                   # amber; red for a Red (or worse) damage; the number of damages when the part has several
-                   "className": " ".join(["hs-dmg"] + ({"yel": ["hs-yel"], "sev": ["hs-sev"], "stop": ["hs-sev"]}.get(worst, []))
-                                         + ([f"hs-n{min(len(ds), 9)}"] if len(ds) > 1 else [])),
+                   # one colour for every damage (V1 shows no grade); the number of damages when the part has several
+                   "className": " ".join(["hs-dmg"] + ([f"hs-n{min(len(ds), 9)}"] if len(ds) > 1 else [])),
                    "positions": {k: {"x": x, "y": y} for k, (x, y) in s["positions"].items()},
                    "content": f'<div class="hs-card">{items}</div>'})
     return {"folder": url(""), "filenameX": "spin-{index}.jpg", "amountX": spin.FRAMES, "indexZeroBase": 2,
@@ -146,7 +141,7 @@ def view(insp: Inspection) -> dict:
     by_photo = {i["photo"]: i for i in cr["issues"] if i["photo"]}
 
     def line(i):
-        return {"text": i["text"], "sub": i.get("sub"), "lv": LEVEL.get(i["level"]), "photo": i["photo"] and url(i["photo"])}
+        return {"text": i["text"], "sub": i.get("sub"), "photo": i["photo"] and url(i["photo"])}
 
     # photo and video viewer: one list grouped by section; the 360 view first in Exterior with its eight exterior views, damage photos where they were recorded
     photos = [p for p in rec["photos"] if not p.get("skipped")]
@@ -170,13 +165,18 @@ def view(insp: Inspection) -> dict:
     groups = [{"g": g, "icon": ic, "name": "OBD-II" if g == "OBDII" else g, "n": sum(1 for m in media if m["g"] == g)}
               for g, ic in GROUPS if any(m["g"] == g for m in media)]
 
-    # Bidbus Inspection: one block per CR row; check problems first, then damages with their photo
+    # Bidbus Inspection: one block per CR row; check problems first, then damages with their photo.
+    # A problem that also has a line with a photo (same words, the damage adds its severity) shows only the line with the photo.
+    def dedupe(lines):
+        shot = [x["text"] for x in lines if x["photo"]]
+        return [x for x in lines if x["photo"] or not any(t == x["text"] or t.startswith(x["text"] + ",") or t.startswith(x["text"] + " (") for t in shot)]
+
     rows = []
     for r in cr["rows"]:
         ids = [i for i in r["issues"] if issues[i].get("check") != "ck_engine"]
         if r["row"] == "Engine sound":
             ids = [i["id"] for i in cr["issues"] if i.get("check") == "ck_engine"]
-        lines = sorted((line(issues[i]) for i in ids), key=lambda x: bool(x["photo"]))
+        lines = dedupe(sorted((line(issues[i]) for i in ids), key=lambda x: bool(x["photo"])))
         checks = len({c["id"] for c in rec["checks"] if CHECK_ROW.get(c["id"]) == r["row"]})
         vids = [{"lbl": VIDEOS[x["question_id"]][1], "src": url(x["file"])} for x in rec["videos"]
                 if r["row"] == "Engine sound" and x["file"] in r["videos"]]
@@ -204,12 +204,8 @@ def view(insp: Inspection) -> dict:
                  ("wind", "ok" if odor == "OK" else "bad", "Odor", odor if odor == "OK" else ", ".join(odor)),
                  ("wrench", "bad" if h["mechanical"] == "Issue" else "ok", "Mechanical", h["mechanical"])]
 
-    # dealer only: Purchase Protection, banners for Not listed, Red and Yellow issues (worst first), specs
-    miles, light = v["mileage"] if v["mileage"] is not None else v["mileage_listing"], cr["light"]
-    year = int(car["year"]) if str(car.get("year") or "").isdigit() else 0
-    protection = (None if light == "Not listed" or year < 2011 or (miles or 0) >= 150000
-                  else ("Title, odometer, legal", True) if light == "Red" else ("Purchase Protection", False))
-    banners = sorted((line(i) for i in cr["issues"] if LEVEL.get(i["level"])), key=lambda x: ["stop", "sev", "yel"].index(x["lv"]))
+    # dealer only: specs. V1 shows no light, grade, level tag or Purchase Protection (Tom 11-22)
+    miles = v["mileage"] if v["mileage"] is not None else v["mileage_listing"]
     specs = [("VIN", v["vin"]), ("Year", car.get("year")), ("Make", car.get("make")), ("Model", car.get("model")), ("Trim", car.get("trim")),
              ("Odometer", f"{miles:,} mi" if miles is not None else None), ("Fuel", car["fuel"] if car.get("fuel") in ("Gas", "Diesel") else FUEL_WORD.get(v["fuel"], v["fuel"])), ("Keys", kc)]
     if v["fuel"] == "Electric (EV)" and v["ev_battery_health_pct"] is not None:
@@ -218,8 +214,7 @@ def view(insp: Inspection) -> dict:
     return {"name": " ".join(str(car[k]) for k in ("year", "make", "model") if car.get(k)), "trim": car.get("trim") or "", "title": car_line(car),
             "miles": f"{miles:,}" if miles is not None else "", "date": inspected_when(insp),
             "media": media, "groups": groups, "rows": rows, "videos": other_videos, "tires": tires, "highlight": highlight,
-            "overall": cr["overall_condition"], "note": (cr["inspector_note"] or "").strip(), "protection": protection,
-            "banners": banners, "specs": specs}
+            "overall": cr["overall_condition"], "note": (cr["inspector_note"] or "").strip(), "specs": specs}
 
 
 def _built(token: str, s: Session) -> Inspection:
